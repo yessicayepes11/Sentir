@@ -1,0 +1,106 @@
+
+body{
+    background-image:url("Shared/LoginResources/Fondo.png");
+    background-size:cover;
+    background-position:center;
+}
+
+@media(max-width:1024px){
+    body{
+        background-image:url("Shared/Recursos/FondoTablet.png");
+    }
+}
+
+@media(max-width:768px){
+    body{
+        background-image:url("Recursos/Celular.png");
+    }
+}
+.pantalla-inicio{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+
+
+.logo-container{
+    text-align:center;
+}
+
+.logo{
+    width:180px;
+    opacity:0;
+    transform:translateY(-30px);
+}
+
+.titulo{
+    color:#444;
+    font-weight:600;
+
+    opacity:0;
+}
+
+.personajes-container{
+    text-align:center;
+    margin-top:-10px;
+}
+
+.personajes{
+    opacity:0;
+    transform:translateY(30px);
+    font: weight 800%x;
+    width: 100%;     
+    max-width: 888px;     
+    height: auto;          
+    display: block;    
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+.btn-login{
+    background:#7C4DFF;
+    color:white;
+    border:none;
+    border-radius:30px;
+    padding:10px;
+    font-weight:600;
+    margin:0 auto;
+    width: 60%;
+    max-width: 380px;
+    height: 60px;
+    border-radius: 30px;
+    font-size: 1.2rem;
+
+}
+
+.btn-login:hover{
+    background:#6937ff;
+    color:white;
+}
+
+.btn-crear{
+    border:2px solid #7C4DFF;
+    color:#7C4DFF;
+    border-radius:30px;
+    padding:10px;
+    margin:0 auto;
+    width: 60%;
+    max-width: 380px;
+    height: 60px;
+    border-radius: 30px;
+    font-size: 1.2rem;
+}
+
+.btn-crear:hover{
+    background:#7C4DFF;
+    color:white;
+}
+
+.accesibilidad{
+    color:#666;
+    font-size:14px;
+}
+

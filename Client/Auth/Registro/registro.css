@@ -1,0 +1,298 @@
+/* =========================
+   FUENTE OFICIAL SENTIR
+========================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root{
+
+    /* COLORES PRINCIPALES */
+
+    --morado-sentir:#6C4DF6;
+    --morado-profundo:#4E2FC7;
+    --lavanda:#B8A8FF;
+
+    /* COLORES SECUNDARIOS */
+
+    --azul-bienestar:#65B8FF;
+    --celeste:#A7D8FF;
+
+    /* NEUTROS */
+
+    --silver-glow:#D8DCE8;
+    --silver-mist:#EEF1F7;
+    --white:#FFFFFF;
+
+    /* GRADIENTE OFICIAL */
+
+    --gradiente-sentir:linear-gradient(
+    135deg,
+    #4E2FC7 0%,
+    #6C4DF6 40%,
+    #8BA8FF 70%,
+    #65B8FF 100%
+    );
+}
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+/* =========================
+   BODY
+========================= */
+
+body{
+
+    min-height:100vh;
+
+    background-image:url("Recursos/Fondosact.png");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+
+    padding-right:8%;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media(max-width:1024px){
+
+    body{
+        background-image:url("Recursos/Fondo2-tb.png");
+        justify-content:center;
+        padding-right:0;
+        padding:30px;
+    }
+}
+
+/* =========================
+   MOVIL
+========================= */
+
+@media(max-width:768px){
+
+    body{
+        background-image:url("Recursos/Fondo2-mv.png");
+        justify-content:center;
+        padding:20px;
+    }
+}
+
+/* =========================
+   CONTENEDOR PRINCIPAL
+========================= */
+
+.container{
+
+    width:min(450px, 95%);
+
+    padding:18px;
+
+    border-radius:30px;
+
+    background:var(--gradiente-sentir);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    box-shadow:
+    0 15px 40px rgba(78,47,199,.25);
+
+    animation:fadeUp .8s ease;
+}
+
+/* =========================
+   TARJETA INTERNA
+========================= */
+
+.form-card{
+
+    width:100%;
+
+    padding:40px;
+
+    border-radius:25px;
+
+    background:rgba(255,255,255,.18);
+
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+
+    border:1px solid rgba(255,255,255,.25);
+}
+
+/* =========================
+   TITULO
+========================= */
+
+.form-card h2{
+
+    text-align:center;
+
+    color:white;
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    margin-bottom:25px;
+}
+
+/* =========================
+   FORMULARIO
+========================= */
+
+form{
+
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+input,
+select{
+
+    width:100%;
+
+    padding:14px 16px;
+
+    border:none;
+
+    border-radius:14px;
+
+    outline:none;
+
+    font-size:15px;
+
+    background:white;
+
+    color:#30345a;
+}
+
+/* =========================
+   FOCUS
+========================= */
+
+input:focus,
+select:focus{
+
+    box-shadow:
+    0 0 0 3px rgba(101,184,255,.35);
+}
+
+/* =========================
+   BOTON
+========================= */
+
+button{
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    color:white;
+
+    background:var(--gradiente-sentir);
+
+    transition:.3s;
+}
+
+button:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 10px 25px rgba(108,77,246,.35);
+}
+
+/* =========================
+   TEXTO
+========================= */
+
+p{
+
+    text-align:center;
+
+    margin-top:20px;
+
+    color:white;
+
+    font-size:.95rem;
+}
+
+a{
+
+    color:white;
+
+    font-weight:600;
+
+    text-decoration:none;
+}
+
+a:hover{
+
+    text-decoration:underline;
+}
+
+/* =========================
+   RESPONSIVE EXTRA
+========================= */
+
+@media(max-width:768px){
+
+    .container{
+        width:100%;
+    }
+
+    .form-card{
+        padding:28px;
+    }
+
+    .form-card h2{
+        font-size:1.7rem;
+    }
+}
+
+/* =========================
+   ANIMACION
+========================= */
+
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}

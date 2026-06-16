@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentir</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="Psicology.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        
+        <aside class="sidebar">
+            <div class="logo-area">
+                <img src="logos.png.png" alt="Sentir Logo" class="main-logo-img">
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Panel de Control</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Estudiantes</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span>Alertas Críticas</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Agenda y Citas</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-gears"></i>
+                    <span>Configuración</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <p class="quote">"El bienestar emocional es el primer paso para el éxito académico."</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <header class="top-header">
+                <div class="header-search">
+                    <i class="fa-solid fa-bars menu-toggle" id="menuToggleBtn"></i>
+                    <input type="text" placeholder="Buscar estudiante por nombre o ID..." id="dashboardSearch">
+                </div>
+                
+                <div class="header-profile">
+                    <div class="notification-bell" id="notifBell">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="badge">3</span>
+                        
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <div class="notif-header">Alertas Recientes</div>
+                            <div class="notif-item">⚠️ Mateo Silva requiere atención inmediata</div>
+                            <div class="notif-item">📅 Tienes una cita a las 14:30</div>
+                            <div class="notif-item">🤖 Nueva sugerencia de la IA disponible</div>
+                        </div>
+                    </div>
+                    <div class="profile-info">
+                        <img src="https://i.pinimg.com/736x/4c/8c/66/4c8c66044a8fc28263c2779d1fad16cf.jpg" alt="Avatar Orientador" class="avatar-img">
+                        <div>
+                            <h4>Juan Carlos</h4>
+                            <p>Psicólogo Escolar</p>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="grid-layout">
+                
+                <section class="left-column">
+                    
+                    <div class="welcome-box">
+                        <div class="welcome-text">
+                            <h1>¡Hola de nuevo, Juan Carlos!</h1>
+                            <h2>Tu espacio de cuidado y monitoreo diario.</h2>
+                            <p class="subtitle">Aquí tienes el panorama del ecosistema emocional de tu institución para el día de hoy.</p>
+                        </div>
+                        <div class="welcome-character">
+                            <img src="character.png" alt="Ilustración Bienvenida" onerror="this.style.display='none'">
+                        </div>
+                    </div>
+
+                    <div class="mood-status-card">
+                        <div class="mood-status-info">
+                            <div class="mood-status-text">
+                                <span>ESTADO ANÍMICO GENERAL DE LA INSTITUCIÓN</span>
+                                <h3>Predominantemente Estable</h3>
+                            </div>
+                            <div class="mood-emojis-indicator">
+                                <span class="mood-emoji happy">😊 62%</span>
+                                <span class="mood-emoji neutral">😐 24%</span>
+                                <span class="mood-emoji sad">😔 14%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <i class="fa-solid fa-users kpi-icon"></i>
+                            <h3 class="counter-number">1,240</h3>
+                            <p>Evaluados</p>
+                        </div>
+                        <div class="kpi-card alert">
+                            <i class="fa-solid fa-triangle-exclamation kpi-icon"></i>
+                            <h3 class="counter-number">12</h3>
+                            <p>Riesgo Alto</p>
+                        </div>
+                        <div class="kpi-card">
+                            <i class="fa-solid fa-circle-check kpi-icon"></i>
+                            <h3 class="counter-number">45</h3>
+                            <p>Casos Cerrados</p>
+                        </div>
+                        <div class="kpi-card">
+                            <i class="fa-solid fa-comments kpi-icon"></i>
+                            <h3 class="counter-number">8</h3>
+                            <p>Intervenciones Hoy</p>
+                        </div>
+                    </div>
+
+                    <div class="section-title-area">
+                        <h3>Casos Prioritarios con Alerta Activa</h3>
+                        <button class="btn-view-all">Ver todos los casos <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+
+                    <div class="cases-container">
+                        
+                        <div class="student-case-card">
+                            <div class="card-header">
+                                <div class="student-profile">
+                                    <img src="https://i.pinimg.com/1200x/12/c7/aa/12c7aaba085ad70b996ecb4b25588217.jpg" alt="Mateo Silva" class="student-case-avatar">
+                                    <div>
+                                        <h4>Mateo Silva </h4>
+                                        <p>Grado: 11°1 • ID: #8841</p>
+                                    </div>
+                                </div>
+                                <span class="time-tag">Hace 20 min</span>
+                            </div>
+                            <div class="case-body">
+                                <p class="emotional-state">Estado Emocional: <span class="high-risk-text">Ansiedad Severa / Frustración</span></p>
+                                <p class="detection-reason">
+                                    <strong>Motivo de alerta:</strong> El algoritmo IA identificó un patrón crítico de palabras de desmotivación profunda, aislamiento social e ideación evasiva en las últimas 3 interacciones de su diario emocional.
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="badge-risk high">RIESGO ALTO</span>
+                                <button class="btn-primary-action">Iniciar Protocolo</button>
+                            </div>
+                        </div>
+
+                        <div class="student-case-card">
+                            <div class="card-header">
+                                <div class="student-profile">
+                                    <img src="https://i.pinimg.com/736x/7e/bc/d4/7ebcd44c2049c791c8c02304bc2ac7ad.jpg" alt="Camila Andrea" class="student-case-avatar">
+                                    <div>
+                                        <h4>Camila Pérez</h4>
+                                        <p>Grado: 9°4 • ID: #3219</p>
+                                    </div>
+                                </div>
+                                <span class="time-tag">Hace 2 horas</span>
+                            </div>
+                            <div class="case-body">
+                                <p class="emotional-state">Estado Emocional: <span class="medium-risk-text">Tristeza prolongada</span></p>
+                                <p class="detection-reason">
+                                    <strong>Motivo de alerta:</strong> Caída constante del estado de ánimo reportado en la app durante 7 días consecutivos. Reporta problemas persistentes de sueño y desinterés generalizado en clases de arte.
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="badge-risk medium">RIESGO MEDIO</span>
+                                <button class="btn-primary-action">Revisar Historial</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <section class="right-column">
+                    
+                    <div class="ai-recommendation-card">
+                        <div class="ai-header">
+                            <i class="fa-solid fa-brain" style="color: var(--morado-sentir);"></i>
+                            <h4>Sugerencia de la IA</h4>
+                            <span class="ai-tag">SENTIR AI</span>
+                        </div>
+                        <p>Hemos notado un incremento del 15% en reportes de estrés y ansiedad académica en el grado <strong>11°1</strong> debido a la proximidad de los exámenes de estado.</p>
+                        <p class="ai-tip">💡 Tip: Te sugerimos agendar un taller de manejo del tiempo y técnicas de respiración diafragmática con este grupo académico esta semana.</p>
+                        <button class="btn-secondary" style="margin-top: 10px;">Crear Taller Grupal</button>
+                    </div>
+
+                    <div class="sidebar-box">
+                        <h3>Agenda de Intervenciones hoy:</h3>
+                        <ul class="agenda-list">
+                            <li>
+                                <span class="time">09:30</span>
+                                <div class="event-details">
+                                    <strong>Sesión Individual</strong>
+                                    <p>Estudiante: Carlos Mendoza (10°3)</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="time">11:00</span>
+                                <div class="event-details">
+                                    <strong>Seguimiento de Caso</strong>
+                                    <p>Estudiante: Sofía Gómez (8°2)</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="time">14:30</span>
+                                <div class="event-details">
+                                    <strong>Reunión de Acudientes</strong>
+                                    <p>Caso crítico: Alerta #8841</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-box">
+                        <h3>Accesos Rápidos</h3>
+                        <div class="quick-actions-list">
+                            <button class="action-pill">
+                                <i class="fa-solid fa-square-plus"></i>
+                                <span>Registrar derivación externa</span>
+                            </button>
+                            <button class="action-pill">
+                                <i class="fa-solid fa-file-export"></i>
+                                <span>Exportar reporte clínico PDF</span>
+                            </button>
+                            <button class="action-pill">
+                                <i class="fa-solid fa-envelope-open-text"></i>
+                                <span>Notificar a Coordinación</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+        </main>
+
+        <div class="panel-overlay" id="panelOverlay" onclick="closePanel()"></div>
+
+        <div class="sliding-panel" id="detailPanel">
+            <button class="close-panel-btn" onclick="closePanel()"><i class="fa-solid fa-xmark"></i> Cerrar Panel</button>
+            
+            <div class="panel-header">
+                <img src="" alt="Avatar Estudiante" class="panel-student-avatar" id="panelAvatar">
+                <h2 id="panelName">Expediente de Intervención</h2>
+                <p id="panelMeta">Análisis de Sentimiento Automatizado</p>
+                <span class="panel-sub-tag">Análisis de Sentimiento Automatizado</span>
+            </div>
+            
+            <div class="panel-body">
+                <h3><i class="fa-solid fa-triangle-exclamation"></i> Factores de Riesgo Detectados</h3>
+                <ul class="risk-factors-list">
+                    <li><i class="fa-solid fa-arrow-down"></i> Decremento drástico en uso de palabras positivas (-40%).</li>
+                    <li><i class="fa-solid fa-user-slash"></i> Aislamiento social reportado por docentes de área.</li>
+                    <li><i class="fa-solid fa-bed"></i> Cambios disruptivos en ritmos de sueño semanales.</li>
+                </ul>
+                
+                <h3><i class="fa-solid fa-shield-heart"></i> Acciones Inmediatas</h3>
+                <div class="panel-actions">
+                    <button class="btn-action-trigger alert-btn"><i class="fa-solid fa-phone"></i> Contactar Acudiente de Inmediato</button>
+                    <button class="btn-action-trigger primary-btn"><i class="fa-solid fa-file-medical"></i> Asignar Test de Escala de Ansiedad (GAD-7)</button>
+                    <button class="btn-action-trigger secondary-btn"><i class="fa-solid fa-house-medical"></i> Derivar a Red de Apoyo Médica</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="Psicology.js"></script>
+</body>
+</html>

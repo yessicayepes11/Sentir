@@ -1,19 +1,19 @@
 
 body{
-    background-image:url("Shared/LoginResources/Fondo.png");
+    background-image:url("/Sentir/Shared/LoginResources/Fondo.png");
     background-size:cover;
     background-position:center;
 }
 
 @media(max-width:1024px){
     body{
-        background-image:url("Shared/Recursos/FondoTablet.png");
+        background-image:url("/Sentir/Shared/LoginResources/Tablet.png");
     }
 }
 
 @media(max-width:768px){
     body{
-        background-image:url("Recursos/Celular.png");
+        background-image:url("/Sentir/Shared/LoginResources/Celular.png");
     }
 }
 .pantalla-inicio{

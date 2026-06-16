@@ -53,7 +53,7 @@ body{
 
     min-height:100vh;
 
-    background-image:url("Recursos/Fondosact.png");
+    background-image:url("/Sentir/Shared/LoginResources/Fondosact.png");
     background-size:cover;
     background-position:center;
     background-repeat:no-repeat;
@@ -72,7 +72,7 @@ body{
 @media(max-width:1024px){
 
     body{
-        background-image:url("Recursos/Fondo2-tb.png");
+        background-image:url("/Sentir/Shared/LoginResources/Fondo2-tb.png");
         justify-content:center;
         padding-right:0;
         padding:30px;
@@ -86,7 +86,7 @@ body{
 @media(max-width:768px){
 
     body{
-        background-image:url("Recursos/Fondo2-mv.png");
+        background-image:url("/Sentir/Shared/LoginResources/Fondo2-mv.png");
         justify-content:center;
         padding:20px;
     }

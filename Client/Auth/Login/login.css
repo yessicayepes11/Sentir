@@ -38,7 +38,7 @@ body{
 
     min-height:100svh;
 
-    background-image:url("Recursos/FondoLR.png");
+    background-image:url("/Sentir/Shared/LoginResources/FondoLR.png");
     background-size:cover;
     background-position:center;
     background-repeat:no-repeat;

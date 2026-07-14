@@ -17,6 +17,7 @@
 
     <div class="dashboard-container">
         
+        <!-- SIDEBAR ACTUALIZADA -->
         <aside class="sidebar">
             <div class="logo-area">
                 <img src="logos.png.png" alt="Sentir Logo" class="main-logo-img">
@@ -24,24 +25,20 @@
             
             <nav class="nav-menu">
                 <a href="#" class="nav-item active">
-                    <i class="fa-solid fa-chart-pie"></i>
-                    <span>Panel de Control</span>
+                    <i class="fa-solid fa-house"></i>
+                    <span>Inicio</span>
                 </a>
                 <a href="#" class="nav-item">
                     <i class="fa-solid fa-graduation-cap"></i>
                     <span>Estudiantes</span>
                 </a>
                 <a href="#" class="nav-item">
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                    <span>Alertas Críticas</span>
+                    <i class="fa-solid fa-comment-dots"></i>
+                    <span>Mensajes</span>
                 </a>
                 <a href="#" class="nav-item">
-                    <i class="fa-solid fa-calendar-days"></i>
-                    <span>Agenda y Citas</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fa-solid fa-gears"></i>
-                    <span>Configuración</span>
+                    <i class="fa-solid fa-user"></i>
+                    <span>Perfil</span>
                 </a>
             </nav>
             
@@ -84,14 +81,17 @@
                 
                 <section class="left-column">
                     
+                    <!-- TARJETA DE BIENVENIDA CON EL PSICÓLOGO PREMIUM -->
                     <div class="welcome-box">
                         <div class="welcome-text">
                             <h1>¡Hola de nuevo, Juan Carlos!</h1>
                             <h2>Tu espacio de cuidado y monitoreo diario.</h2>
                             <p class="subtitle">Aquí tienes el panorama del ecosistema emocional de tu institución para el día de hoy.</p>
                         </div>
-                        <div class="welcome-character">
-                            <img src="character.png" alt="Ilustración Bienvenida" onerror="this.style.display='none'">
+                        <div class="welcome-character-container">
+                            <div class="welcome-character-glow"></div>
+                            <!-- Asegúrate de nombrar a tu nueva imagen de psicólogo como 'character.png' -->
+                            <img src="psico.png" alt="Ilustración Bienvenida" class="welcome-character-img">
                         </div>
                     </div>
 
@@ -144,7 +144,7 @@
                                 <div class="student-profile">
                                     <img src="https://i.pinimg.com/1200x/12/c7/aa/12c7aaba085ad70b996ecb4b25588217.jpg" alt="Mateo Silva" class="student-case-avatar">
                                     <div>
-                                        <h4>Mateo Silva </h4>
+                                        <h4>Mateo Silva</h4>
                                         <p>Grado: 11°1 • ID: #8841</p>
                                     </div>
                                 </div>

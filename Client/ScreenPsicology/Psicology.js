@@ -30,14 +30,17 @@ function initSlidingPanelActions() {
             const card = button.closest('.student-case-card');
             if (!card || !panel || !overlay) return;
 
+            // Extracción dinámica de datos de la tarjeta seleccionada
             const studentName = card.querySelector('.student-profile h4').innerText;
             const studentMeta = card.querySelector('.student-profile p').innerText;
             const studentAvatar = card.querySelector('.student-case-avatar').src;
 
+            // Inyección de datos en el panel deslizante lateral
             document.getElementById('panelName').innerText = studentName;
             document.getElementById('panelMeta').innerText = studentMeta;
             document.getElementById('panelAvatar').src = studentAvatar;
 
+            // Cambiar comportamiento dinámico del botón principal dentro del panel
             const panelMainBtn = panel.querySelector('.panel-actions .primary-btn');
             if (panelMainBtn) {
                 if (button.innerText.includes('Protocolo')) {
@@ -47,6 +50,8 @@ function initSlidingPanelActions() {
                 }
             }
 
+            // Bloquear scroll de fondo para mejorar UX y activar el panel con clase 'open'
+            document.body.style.overflow = 'hidden';
             overlay.classList.add('show');
             panel.classList.add('open');
         });
@@ -56,11 +61,14 @@ function initSlidingPanelActions() {
 function closePanel() {
     const panel = document.getElementById('detailPanel');
     const overlay = document.getElementById('panelOverlay');
+    const sidebar = document.querySelector('.sidebar');
     
-    if (panel && overlay) {
-        panel.classList.remove('open');
-        overlay.classList.remove('show');
-    }
+    if (panel) panel.classList.remove('open');
+    if (overlay) overlay.classList.remove('show');
+    if (sidebar) sidebar.classList.remove('active'); // Cerrar en caso de móvil
+
+    // Restablecer el comportamiento natural del scroll
+    document.body.style.overflow = '';
 }
 
 /* ==========================================================================
@@ -76,9 +84,11 @@ function initNotificationDropdown() {
             e.stopPropagation();
             dropdown.classList.toggle('show');
             
+            // Efecto feedback táctil/visual de escala
             bell.style.transform = 'scale(1.15)';
             setTimeout(() => bell.style.transform = 'scale(1)', 180);
             
+            // Limpiar badge indicador al abrir por primera vez
             if (badge) badge.style.display = 'none';
         });
 
@@ -166,7 +176,7 @@ function initViewAllCases() {
             viewAllBtn.style.transform = 'scale(0.95)';
             setTimeout(() => viewAllBtn.style.transform = 'translateY(-2px)', 150);
 
-            // Simulación estética: Carga de un nuevo set de casos inyectados dinámicamente con transiciones suaves
+            // Simulación estética: Carga de un nuevo set de casos inyectados dinámicamente
             const container = document.querySelector('.cases-container');
             
             // Verificar si los casos extra ya fueron añadidos para no duplicar
@@ -201,7 +211,7 @@ function initViewAllCases() {
             `;
             
             container.insertAdjacentHTML('beforeend', extraCasesHTML);
-            // Re-vincular las acciones del panel deslizante para que el nuevo caso responda al clic
+            // Re-vincular las acciones del panel deslizante para que el nuevo caso responda perfectamente al clic
             initSlidingPanelActions();
         });
     }
@@ -270,13 +280,13 @@ function initQuickActions() {
         button.addEventListener('click', () => {
             const actionText = button.querySelector('span').innerText;
             
-            // Feedback visual rápido
+            // Feedback visual rápido al hacer clic
             button.style.background = '#EDF2F7';
             setTimeout(() => button.style.background = 'var(--bg-light)', 200);
 
             // Respuestas simuladas con lógica contextual avanzada
             if (actionText.includes('PDF')) {
-                alert('Generando y empaquetando reporte clínico institucional de forma segura bajo cifrado... Tu descarga comenzará en breve.');
+                alert('Generando y empaquetando reporte clínico de forma segura bajo cifrado... Tu descarga comenzará en breve.');
             } else if (actionText.includes('derivación')) {
                 alert('Abriendo pasarela de comunicación encriptada con la EPS / Red de apoyo externa afiliada.');
             } else {
@@ -298,7 +308,7 @@ function initPsychologistProfileMenu() {
         profileContainer.addEventListener('click', (e) => {
             e.stopPropagation();
             
-            // Verificar si el menú ya existe para cerrarlo o abrirlo
+            // Si el menú ya existe, lo removemos para alternarlo (Toggle)
             const existingMenu = document.getElementById('profileDropdownMenu');
             if (existingMenu) {
                 existingMenu.remove();
@@ -337,6 +347,7 @@ function initPsychologistProfileMenu() {
                 });
             });
 
+            // Cerrar menú con un solo click fuera de él
             document.addEventListener('click', () => profileDropdown.remove(), { once: true });
         });
     }
@@ -348,17 +359,44 @@ function initPsychologistProfileMenu() {
 function initMobileSidebar() {
     const toggleBtn = document.getElementById('menuToggleBtn');
     const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('panelOverlay');
 
     if (toggleBtn && sidebar) {
         toggleBtn.addEventListener('click', (e) => {
             e.stopPropagation();
+            sidebar.classList.toggle('active');
+            
+            // Si tu menú en CSS usa '.mobile-open', mantenemos la compatibilidad cruzada:
             sidebar.classList.toggle('mobile-open');
+
+            if (overlay) {
+                overlay.classList.toggle('show', sidebar.classList.contains('active') || sidebar.classList.contains('mobile-open'));
+            }
         });
 
+        // Cerrar al hacer clic fuera del sidebar móvil
         document.addEventListener('click', (e) => {
-            if (sidebar.classList.contains('mobile-open') && !sidebar.contains(e.target)) {
+            const isSidebarOpen = sidebar.classList.contains('active') || sidebar.classList.contains('mobile-open');
+            if (isSidebarOpen && !sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
+                sidebar.classList.remove('active');
                 sidebar.classList.remove('mobile-open');
+                if (overlay) overlay.classList.remove('show');
             }
+        });
+
+        // Eventos para cerrar sidebar automáticamente al presionar opciones del menú lateral
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                navItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.remove('active');
+                    sidebar.classList.remove('mobile-open');
+                    if (overlay) overlay.classList.remove('show');
+                }
+            });
         });
     }
 }

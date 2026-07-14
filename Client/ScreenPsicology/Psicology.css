@@ -323,7 +323,7 @@ body {
 .welcome-character-img {
     position: absolute;
     bottom: -36px;       /* Sobresale un poco más hacia el borde inferior para un look 3D */
-    max-width: 490px;    /* Aumentado de 180px */
+    max-width: 500px;    /* Aumentado de 180px */
     height: 360px;       /* Aumentado de 280px */
     object-fit: contain;
     z-index: 2;

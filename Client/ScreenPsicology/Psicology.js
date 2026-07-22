@@ -3,18 +3,71 @@
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
+    initViewRouter();
     initSlidingPanelActions();
     initNotificationDropdown();
     initOdometerCounters();
     initLiveFilterSearch();
     initMobileSidebar();
-    
-    // Nuevas interacciones solicitadas
+
+    // Interacciones de la vista Inicio
     initViewAllCases();
     initCreateGroupWorkshop();
     initQuickActions();
     initPsychologistProfileMenu();
+
+    // Interacciones de las nuevas vistas
+    initStudentsView();
+    initMessagesView();
 });
+
+/* ==========================================================================
+   0°. MOTOR DE NAVEGACIÓN ENTRE VISTAS (SPA SIN RECARGA)
+   ========================================================================== */
+function initViewRouter() {
+    const navItems = document.querySelectorAll('.nav-item[data-view]');
+    const views = document.querySelectorAll('.view');
+
+    function goToView(viewKey) {
+        views.forEach(view => {
+            view.classList.remove('active');
+        });
+
+        const target = document.getElementById(`view-${viewKey}`);
+        if (target) {
+            // Forzar reinicio de animación de entrada
+            void target.offsetWidth;
+            target.classList.add('active');
+        }
+
+        navItems.forEach(item => item.classList.toggle('active', item.dataset.view === viewKey));
+
+        // Reiniciar contadores tipo odómetro cada vez que se visita Inicio o Perfil
+        if (viewKey === 'inicio' || viewKey === 'perfil') {
+            initOdometerCounters(target);
+        }
+
+        // Llevar el scroll arriba al cambiar de sección
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    navItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            const viewKey = item.dataset.view;
+            goToView(viewKey);
+
+            // Cerrar sidebar automáticamente en móvil
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.getElementById('panelOverlay');
+            if (window.innerWidth <= 900 && sidebar) {
+                sidebar.classList.remove('active');
+                sidebar.classList.remove('mobile-open');
+                if (overlay) overlay.classList.remove('show');
+            }
+        });
+    });
+}
 
 /* ==========================================================================
    1°. CONTROL DINÁMICO DEL PANEL LATERAL E INYECCIÓN DE DATOS
@@ -22,35 +75,67 @@ document.addEventListener('DOMContentLoaded', () => {
 function initSlidingPanelActions() {
     const panel = document.getElementById('detailPanel');
     const overlay = document.getElementById('panelOverlay');
-    const actionButtons = document.querySelectorAll('.btn-primary-action');
 
-    actionButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
+    function bindCard(card, triggerBtn) {
+        triggerBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            const card = button.closest('.student-case-card');
-            if (!card || !panel || !overlay) return;
+            e.stopPropagation();
+            if (!panel || !overlay) return;
 
-            // Extracción dinámica de datos de la tarjeta seleccionada
-            const studentName = card.querySelector('.student-profile h4').innerText;
-            const studentMeta = card.querySelector('.student-profile p').innerText;
-            const studentAvatar = card.querySelector('.student-case-avatar').src;
+            const nameEl = card.querySelector('h4');
+            const metaEl = card.querySelector('p');
+            const avatarEl = card.querySelector('img');
 
-            // Inyección de datos en el panel deslizante lateral
+            const studentName = nameEl ? nameEl.innerText : 'Estudiante';
+            const studentMeta = metaEl ? metaEl.innerText : '';
+            const studentAvatar = avatarEl ? avatarEl.src : '';
+
             document.getElementById('panelName').innerText = studentName;
             document.getElementById('panelMeta').innerText = studentMeta;
             document.getElementById('panelAvatar').src = studentAvatar;
 
-            // Cambiar comportamiento dinámico del botón principal dentro del panel
             const panelMainBtn = panel.querySelector('.panel-actions .primary-btn');
             if (panelMainBtn) {
-                if (button.innerText.includes('Protocolo')) {
+                if (triggerBtn.innerText.includes('Protocolo')) {
                     panelMainBtn.innerHTML = `<i class="fa-solid fa-play"></i> Ejecutar Protocolo de Crisis`;
                 } else {
                     panelMainBtn.innerHTML = `<i class="fa-solid fa-file-medical"></i> Asignar Test de Ansiedad (GAD-7)`;
                 }
             }
 
-            // Bloquear scroll de fondo para mejorar UX y activar el panel con clase 'open'
+            document.body.style.overflow = 'hidden';
+            overlay.classList.add('show');
+            panel.classList.add('open');
+        });
+    }
+
+    // Tarjetas grandes de casos prioritarios (Inicio)
+    document.querySelectorAll('.student-case-card').forEach(card => {
+        const btn = card.querySelector('.btn-primary-action');
+        if (btn) bindCard(card, btn);
+    });
+
+    // Mini tarjetas de la vista Estudiantes (todo el card es clicable)
+    document.querySelectorAll('.mini-student-card').forEach(card => {
+        card.addEventListener('click', () => {
+            if (!panel || !overlay) return;
+
+            const name = card.querySelector('h4').innerText;
+            const meta = card.querySelector('p').innerText;
+            const avatar = card.querySelector('img').src;
+            const risk = card.dataset.risk;
+
+            document.getElementById('panelName').innerText = name;
+            document.getElementById('panelMeta').innerText = meta;
+            document.getElementById('panelAvatar').src = avatar;
+
+            const panelMainBtn = panel.querySelector('.panel-actions .primary-btn');
+            if (panelMainBtn) {
+                panelMainBtn.innerHTML = risk === 'high'
+                    ? `<i class="fa-solid fa-play"></i> Ejecutar Protocolo de Crisis`
+                    : `<i class="fa-solid fa-file-medical"></i> Asignar Test de Ansiedad (GAD-7)`;
+            }
+
             document.body.style.overflow = 'hidden';
             overlay.classList.add('show');
             panel.classList.add('open');
@@ -65,9 +150,8 @@ function closePanel() {
     
     if (panel) panel.classList.remove('open');
     if (overlay) overlay.classList.remove('show');
-    if (sidebar) sidebar.classList.remove('active'); // Cerrar en caso de móvil
+    if (sidebar) sidebar.classList.remove('active');
 
-    // Restablecer el comportamiento natural del scroll
     document.body.style.overflow = '';
 }
 
@@ -84,11 +168,9 @@ function initNotificationDropdown() {
             e.stopPropagation();
             dropdown.classList.toggle('show');
             
-            // Efecto feedback táctil/visual de escala
             bell.style.transform = 'scale(1.15)';
             setTimeout(() => bell.style.transform = 'scale(1)', 180);
             
-            // Limpiar badge indicador al abrir por primera vez
             if (badge) badge.style.display = 'none';
         });
 
@@ -103,8 +185,9 @@ function initNotificationDropdown() {
 /* ==========================================================================
    3°. ANIMACIÓN DE NÚMEROS EN CONTADORES KPI (EFECTO ODOMETER)
    ========================================================================== */
-function initOdometerCounters() {
-    const elements = document.querySelectorAll('.counter-number');
+function initOdometerCounters(scope) {
+    const root = scope || document;
+    const elements = root.querySelectorAll('.counter-number');
     
     elements.forEach(element => {
         const rawValue = element.innerText.replace(/,/g, '');
@@ -135,11 +218,9 @@ function initOdometerCounters() {
    ========================================================================== */
 function initLiveFilterSearch() {
     const searchInput = document.getElementById('dashboardSearch');
-    const caseCards = document.querySelectorAll('.student-case-card');
     const searchWrapper = searchInput ? searchInput.closest('.header-search') : null;
 
     if (searchInput) {
-        // Efecto visual estético de foco en la barra de búsqueda
         searchInput.addEventListener('focus', () => {
             if (searchWrapper) searchWrapper.style.border = '1px solid var(--morado-sentir)';
         });
@@ -149,6 +230,7 @@ function initLiveFilterSearch() {
 
         searchInput.addEventListener('input', (e) => {
             const query = e.target.value.toLowerCase().trim();
+            const caseCards = document.querySelectorAll('#view-inicio .student-case-card');
 
             caseCards.forEach(card => {
                 const name = card.querySelector('.student-profile h4').innerText.toLowerCase();
@@ -161,6 +243,12 @@ function initLiveFilterSearch() {
                     card.style.display = 'none';
                 }
             });
+
+            // Si hay texto y estamos buscando, saltamos también a la vista Estudiantes con el mismo filtro
+            const studentsSearch = document.getElementById('studentsSearch');
+            if (studentsSearch && query.length > 0) {
+                studentsSearch.value = e.target.value;
+            }
         });
     }
 }
@@ -172,14 +260,11 @@ function initViewAllCases() {
     const viewAllBtn = document.querySelector('.btn-view-all');
     if (viewAllBtn) {
         viewAllBtn.addEventListener('click', () => {
-            // Animación de feedback al botón
             viewAllBtn.style.transform = 'scale(0.95)';
             setTimeout(() => viewAllBtn.style.transform = 'translateY(-2px)', 150);
 
-            // Simulación estética: Carga de un nuevo set de casos inyectados dinámicamente
-            const container = document.querySelector('.cases-container');
+            const container = document.querySelector('#view-inicio .cases-container');
             
-            // Verificar si los casos extra ya fueron añadidos para no duplicar
             if (document.getElementById('extra-case-1')) {
                 alert('Todos los casos vigentes ya se encuentran desplegados en pantalla.');
                 return;
@@ -211,7 +296,6 @@ function initViewAllCases() {
             `;
             
             container.insertAdjacentHTML('beforeend', extraCasesHTML);
-            // Re-vincular las acciones del panel deslizante para que el nuevo caso responda perfectamente al clic
             initSlidingPanelActions();
         });
     }
@@ -224,7 +308,6 @@ function initCreateGroupWorkshop() {
     const createBtn = document.querySelector('.ai-recommendation-card .btn-secondary');
     if (createBtn) {
         createBtn.addEventListener('click', () => {
-            // Creamos un modal estético in-situ para la gestión del taller
             const modalOverlay = document.createElement('div');
             modalOverlay.style.cssText = `
                 position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -248,13 +331,11 @@ function initCreateGroupWorkshop() {
             
             document.body.appendChild(modalOverlay);
             
-            // Animación de entrada
             setTimeout(() => {
                 modalOverlay.style.opacity = '1';
                 modalOverlay.querySelector('div').style.transform = 'scale(1)';
             }, 50);
 
-            // Acciones del modal
             modalOverlay.querySelector('#cancelWorkshop').addEventListener('click', () => closeModal(modalOverlay));
             modalOverlay.querySelector('#confirmWorkshop').addEventListener('click', () => {
                 alert('¡Éxito! Taller agendado correctamente. Se han enviado las notificaciones al grupo de 11°1.');
@@ -280,11 +361,9 @@ function initQuickActions() {
         button.addEventListener('click', () => {
             const actionText = button.querySelector('span').innerText;
             
-            // Feedback visual rápido al hacer clic
             button.style.background = '#EDF2F7';
             setTimeout(() => button.style.background = 'var(--bg-light)', 200);
 
-            // Respuestas simuladas con lógica contextual avanzada
             if (actionText.includes('PDF')) {
                 alert('Generando y empaquetando reporte clínico de forma segura bajo cifrado... Tu descarga comenzará en breve.');
             } else if (actionText.includes('derivación')) {
@@ -308,7 +387,6 @@ function initPsychologistProfileMenu() {
         profileContainer.addEventListener('click', (e) => {
             e.stopPropagation();
             
-            // Si el menú ya existe, lo removemos para alternarlo (Toggle)
             const existingMenu = document.getElementById('profileDropdownMenu');
             if (existingMenu) {
                 existingMenu.remove();
@@ -326,20 +404,21 @@ function initPsychologistProfileMenu() {
 
             profileDropdown.innerHTML = `
                 <div style="padding: 12px 16px; font-size:11px; font-weight:700; color:var(--text-muted); background:var(--bg-light);">SESIÓN ACTIVA</div>
-                <div class="p-item" style="padding:12px 16px; font-size:12px; color:var(--dark-slate); border-bottom:1px solid #F1F5F9; cursor:pointer;"><i class="fa-solid fa-id-card" style="margin-right:10px; color:var(--morado-sentir)"></i> Mi Licencia Profesional</div>
+                <div class="p-item" data-goto="perfil" style="padding:12px 16px; font-size:12px; color:var(--dark-slate); border-bottom:1px solid #F1F5F9; cursor:pointer;"><i class="fa-solid fa-id-card" style="margin-right:10px; color:var(--morado-sentir)"></i> Mi Licencia Profesional</div>
                 <div class="p-item" style="padding:12px 16px; font-size:12px; color:var(--dark-slate); border-bottom:1px solid #F1F5F9; cursor:pointer;"><i class="fa-solid fa-clock-rotate-left" style="margin-right:10px; color:var(--morado-sentir)"></i> Historial de Turnos</div>
                 <div class="p-item" style="padding:12px 16px; font-size:12px; color:var(--riesgo-alto); cursor:pointer;"><i class="fa-solid fa-right-from-bracket" style="margin-right:10px;"></i> Cerrar Sesión</div>
             `;
 
             document.body.appendChild(profileDropdown);
 
-            // Agregar efectos hover dinámicos a los ítems del menú creado
             profileDropdown.querySelectorAll('.p-item').forEach(item => {
                 item.addEventListener('mouseenter', () => item.style.background = '#F8FAFC');
                 item.addEventListener('mouseleave', () => item.style.background = 'transparent');
                 item.addEventListener('click', () => {
-                    if(item.innerText.includes('Cerrar')) {
+                    if (item.innerText.includes('Cerrar')) {
                         alert('Cerrando sesión del sistema Sentir de manera segura...');
+                    } else if (item.dataset.goto === 'perfil') {
+                        document.querySelector('.nav-item[data-view="perfil"]').click();
                     } else {
                         alert(`Accediendo a: ${item.innerText.trim()}`);
                     }
@@ -347,14 +426,187 @@ function initPsychologistProfileMenu() {
                 });
             });
 
-            // Cerrar menú con un solo click fuera de él
             document.addEventListener('click', () => profileDropdown.remove(), { once: true });
         });
     }
 }
 
 /* ==========================================================================
-   9°. COMPORTAMIENTO DEL MENÚ HAMBURGUESA PARA DISPOSITIVOS MÓVILES
+   9°. VISTA ESTUDIANTES: FILTRO POR RIESGO + BÚSQUEDA
+   ========================================================================== */
+function initStudentsView() {
+    const grid = document.getElementById('studentsGrid');
+    const searchInput = document.getElementById('studentsSearch');
+    const chips = document.querySelectorAll('#view-estudiantes .chip');
+    const emptyMsg = document.getElementById('studentsEmptyMsg');
+    const addBtn = document.getElementById('addStudentBtn');
+
+    if (!grid) return;
+
+    const cards = Array.from(grid.querySelectorAll('.mini-student-card'));
+    let currentFilter = 'all';
+
+    function applyFilters() {
+        const query = (searchInput ? searchInput.value : '').toLowerCase().trim();
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+            const matchesRisk = currentFilter === 'all' || card.dataset.risk === currentFilter;
+            const matchesQuery = query === '' ||
+                card.dataset.name.includes(query) ||
+                card.dataset.id.toLowerCase().includes(query);
+
+            const show = matchesRisk && matchesQuery;
+            card.style.display = show ? 'block' : 'none';
+            if (show) visibleCount++;
+        });
+
+        if (emptyMsg) emptyMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+
+    chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            chips.forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            currentFilter = chip.dataset.filter;
+            applyFilters();
+        });
+    });
+
+    if (searchInput) {
+        searchInput.addEventListener('input', applyFilters);
+    }
+
+    if (addBtn) {
+        addBtn.addEventListener('click', () => {
+            alert('Se abrirá el formulario de registro de un nuevo estudiante en el ecosistema Sentir.');
+        });
+    }
+}
+
+/* ==========================================================================
+   10°. VISTA MENSAJES: CAMBIO DE CONVERSACIÓN + ENVÍO DE MENSAJES
+   ========================================================================== */
+function initMessagesView() {
+    const convItems = document.querySelectorAll('.conv-item');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatName = document.getElementById('chatName');
+    const chatMeta = document.getElementById('chatMeta');
+    const chatAvatar = document.getElementById('chatAvatar');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendMsgBtn');
+    const openPanelBtn = document.getElementById('chatOpenPanelBtn');
+
+    if (!chatMessages) return;
+
+    const mockThreads = {
+        'Mateo Silva': [
+            { type: 'received', text: 'Hola profe Juan Carlos, ¿tiene un minuto?' },
+            { type: 'received', text: 'Esta semana me ha costado mucho dormir y concentrarme en clase.' },
+            { type: 'sent', text: 'Hola Mateo, claro que sí. Gracias por contarme, eso que sientes es válido. ¿Quieres que hablemos hoy a las 2:30pm?' },
+            { type: 'received', text: 'Sí, me parece bien. Gracias por escucharme hoy.' }
+        ],
+        'Camila Pérez': [
+            { type: 'received', text: 'Buenos días, quería confirmar la cita de seguimiento.' },
+            { type: 'sent', text: 'Hola Camila, va a las 11:00am en el consultorio principal. ¿Te sirve?' },
+            { type: 'received', text: 'Sí, ahí estaré a la hora acordada.' }
+        ],
+        'Alejandro Toro': [
+            { type: 'sent', text: 'Hola Alejandro, ¿cómo te fue con el ejercicio de respiración que practicamos?' },
+            { type: 'received', text: 'Me sirvió mucho el ejercicio de respiración.' },
+            { type: 'received', text: 'Lo hice antes del examen de matemáticas y bajé la ansiedad bastante.' }
+        ],
+        'Sofía Gómez': [
+            { type: 'received', text: 'Profe, ¿el taller de arte sigue en pie esta semana?' },
+            { type: 'sent', text: 'Sí Sofía, sigue en pie. Cualquier novedad te aviso con anticipación.' },
+            { type: 'received', text: 'Vale, cualquier cosa te escribo.' }
+        ],
+        'Acudiente · Familia Ortiz': [
+            { type: 'sent', text: 'Buenas tardes, les escribo para agendar la próxima cita de seguimiento de Daniel.' },
+            { type: 'received', text: 'Buenas tardes, muchas gracias por el acompañamiento.' },
+            { type: 'received', text: 'Quedamos atentos a la próxima cita.' }
+        ]
+    };
+
+    function loadConversation(item) {
+        convItems.forEach(c => c.classList.remove('active'));
+        item.classList.add('active');
+
+        const name = item.dataset.name;
+        const meta = item.dataset.meta;
+        const avatar = item.dataset.avatar;
+
+        chatName.innerText = name;
+        chatMeta.innerHTML = `<span class="online-dot"></span> ${meta} · En línea`;
+        chatAvatar.src = avatar;
+
+        const unread = item.querySelector('.unread-dot');
+        if (unread) unread.remove();
+
+        const thread = mockThreads[name] || [
+            { type: 'received', text: '¡Hola! Empecemos la conversación.' }
+        ];
+
+        chatMessages.innerHTML = '<span class="chat-day-divider">Hoy</span>';
+        thread.forEach(m => {
+            const div = document.createElement('div');
+            div.className = `msg ${m.type}`;
+            div.innerText = m.text;
+            chatMessages.appendChild(div);
+        });
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    convItems.forEach(item => {
+        item.addEventListener('click', () => loadConversation(item));
+    });
+
+    function sendMessage() {
+        const text = chatInput.value.trim();
+        if (text === '') return;
+
+        const div = document.createElement('div');
+        div.className = 'msg sent';
+        div.innerText = text;
+        chatMessages.appendChild(div);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        chatInput.value = '';
+
+        // Respuesta simulada del estudiante para dar sensación de conversación viva
+        setTimeout(() => {
+            const reply = document.createElement('div');
+            reply.className = 'msg received';
+            reply.innerText = 'Gracias profe, lo tendré en cuenta 🙏';
+            chatMessages.appendChild(reply);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 1100);
+    }
+
+    if (sendBtn) sendBtn.addEventListener('click', sendMessage);
+    if (chatInput) {
+        chatInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    }
+
+    if (openPanelBtn) {
+        openPanelBtn.addEventListener('click', () => {
+            const activeConv = document.querySelector('.conv-item.active');
+            if (!activeConv) return;
+
+            document.getElementById('panelName').innerText = activeConv.dataset.name;
+            document.getElementById('panelMeta').innerText = activeConv.dataset.meta;
+            document.getElementById('panelAvatar').src = activeConv.dataset.avatar;
+
+            document.body.style.overflow = 'hidden';
+            document.getElementById('panelOverlay').classList.add('show');
+            document.getElementById('detailPanel').classList.add('open');
+        });
+    }
+}
+
+/* ==========================================================================
+   11°. COMPORTAMIENTO DEL MENÚ HAMBURGUESA PARA DISPOSITIVOS MÓVILES
    ========================================================================== */
 function initMobileSidebar() {
     const toggleBtn = document.getElementById('menuToggleBtn');
@@ -365,8 +617,6 @@ function initMobileSidebar() {
         toggleBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             sidebar.classList.toggle('active');
-            
-            // Si tu menú en CSS usa '.mobile-open', mantenemos la compatibilidad cruzada:
             sidebar.classList.toggle('mobile-open');
 
             if (overlay) {
@@ -374,7 +624,6 @@ function initMobileSidebar() {
             }
         });
 
-        // Cerrar al hacer clic fuera del sidebar móvil
         document.addEventListener('click', (e) => {
             const isSidebarOpen = sidebar.classList.contains('active') || sidebar.classList.contains('mobile-open');
             if (isSidebarOpen && !sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
@@ -382,21 +631,6 @@ function initMobileSidebar() {
                 sidebar.classList.remove('mobile-open');
                 if (overlay) overlay.classList.remove('show');
             }
-        });
-
-        // Eventos para cerrar sidebar automáticamente al presionar opciones del menú lateral
-        const navItems = document.querySelectorAll('.nav-item');
-        navItems.forEach(item => {
-            item.addEventListener('click', () => {
-                navItems.forEach(i => i.classList.remove('active'));
-                item.classList.add('active');
-                
-                if (window.innerWidth <= 768) {
-                    sidebar.classList.remove('active');
-                    sidebar.classList.remove('mobile-open');
-                    if (overlay) overlay.classList.remove('show');
-                }
-            });
         });
     }
 }

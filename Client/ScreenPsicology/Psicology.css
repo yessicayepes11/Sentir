@@ -1380,6 +1380,332 @@ body {
 }
 
 /* ==========================================================================
+   BÚSQUEDA CON FOCO UNIFICADO (cualquier .header-search)
+   ========================================================================== */
+.header-search:focus-within {
+    border-color: var(--morado-sentir);
+    box-shadow: 0 0 0 3px rgba(108, 77, 246, 0.1);
+}
+
+/* ==========================================================================
+   AVATAR EDITABLE DE PERFIL
+   ========================================================================== */
+.profile-hero-avatar-wrap {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.avatar-edit-btn {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--morado-sentir);
+    color: var(--white);
+    border: 3px solid var(--white);
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.avatar-edit-btn:hover {
+    background: var(--morado-profundo);
+    transform: scale(1.1) rotate(-8deg);
+}
+
+.profile-hero-avatar.avatar-pop {
+    animation: avatarPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes avatarPop {
+    0% { transform: scale(0.7) rotate(-10deg); opacity: 0.4; }
+    60% { transform: scale(1.08) rotate(3deg); }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* ==========================================================================
+   ESTADO VACÍO DE CONVERSACIONES
+   ========================================================================== */
+.conv-empty-state {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.conv-empty-state i {
+    font-size: 22px;
+    color: var(--lavanda);
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* ==========================================================================
+   MODALES DE FORMULARIO (Nuevo Estudiante / Editar Perfil)
+   ========================================================================== */
+.sentir-modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(30, 27, 75, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    padding: 20px;
+}
+
+.sentir-modal-overlay.show { opacity: 1; }
+
+.sentir-modal-box {
+    background: var(--white);
+    width: 440px;
+    max-width: 100%;
+    max-height: 88vh;
+    overflow-y: auto;
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 25px 60px rgba(30, 27, 75, 0.25);
+    transform: scale(0.9) translateY(10px);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.sentir-modal-overlay.show .sentir-modal-box {
+    transform: scale(1) translateY(0);
+}
+
+.sentir-modal-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 6px;
+}
+
+.sentir-modal-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: var(--gradiente-sentir);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.sentir-modal-header h3 { font-size: 16px; font-weight: 700; color: var(--dark-slate); }
+.sentir-modal-header p { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+.sentir-modal-body { margin-top: 20px; display: flex; flex-direction: column; gap: 16px; }
+
+.modal-field label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.4px;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.modal-field input[type="text"],
+.modal-field input[type="email"],
+.modal-field select {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid #E2E8F0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background: var(--bg-light);
+    color: var(--dark-slate);
+}
+
+.modal-field input:focus,
+.modal-field select:focus {
+    border-color: var(--morado-sentir);
+    box-shadow: 0 0 0 3px rgba(108, 77, 246, 0.1);
+    background: var(--white);
+}
+
+.modal-field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.risk-select-group {
+    display: flex;
+    gap: 8px;
+}
+
+.risk-option {
+    flex: 1;
+    text-align: center;
+    padding: 10px 6px;
+    border-radius: 12px;
+    border: 1px solid #E2E8F0;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--text-muted);
+    background: var(--bg-light);
+    transition: all 0.2s ease;
+}
+
+.risk-option[data-risk="high"].selected { background: #FEF2F2; border-color: var(--riesgo-alto); color: var(--riesgo-alto); }
+.risk-option[data-risk="medium"].selected { background: #FFFBEB; border-color: var(--riesgo-medio); color: var(--riesgo-medio); }
+.risk-option[data-risk="stable"].selected { background: #F0FDF4; border-color: var(--riesgo-estable); color: var(--riesgo-estable); }
+
+.modal-avatar-preview {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    background: var(--bg-light);
+    border-radius: 14px;
+}
+
+.modal-avatar-preview img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--lavanda);
+    transition: all 0.3s ease;
+}
+
+.modal-avatar-preview span {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.sentir-modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+.modal-btn-cancel {
+    background: var(--bg-light);
+    border: 1px solid #E5E7EB;
+    color: var(--text-muted);
+    padding: 11px 18px;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.modal-btn-cancel:hover { background: #EDF2F7; }
+
+.modal-btn-confirm {
+    background: var(--gradiente-sentir);
+    border: none;
+    color: var(--white);
+    padding: 11px 20px;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modal-btn-confirm:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(108, 77, 246, 0.3); }
+
+.modal-error {
+    font-size: 11px;
+    color: var(--riesgo-alto);
+    display: none;
+    align-items: center;
+    gap: 6px;
+    margin-top: -8px;
+}
+.modal-error.show { display: flex; }
+
+/* Tarjeta nueva insertada dinámicamente */
+.mini-student-card.card-pop-in {
+    animation: cardPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes cardPopIn {
+    0% { opacity: 0; transform: scale(0.8) translateY(14px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ==========================================================================
+   TOASTS (NOTIFICACIONES FLOTANTES)
+   ========================================================================== */
+.toast-container {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 3000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sentir-toast {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 14px 18px;
+    box-shadow: 0 15px 35px rgba(30, 27, 75, 0.18);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 280px;
+    max-width: 320px;
+    border-left: 4px solid var(--morado-sentir);
+    transform: translateX(120%);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sentir-toast.show { transform: translateX(0); opacity: 1; }
+
+.sentir-toast.success { border-left-color: var(--riesgo-estable); }
+.sentir-toast.info { border-left-color: var(--azul-bienestar); }
+
+.sentir-toast-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(108, 77, 246, 0.1);
+    color: var(--morado-sentir);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+}
+
+.sentir-toast.success .sentir-toast-icon { background: rgba(34, 197, 94, 0.12); color: var(--riesgo-estable); }
+.sentir-toast.info .sentir-toast-icon { background: rgba(101, 184, 255, 0.15); color: #0284C7; }
+
+.sentir-toast-text strong { font-size: 12.5px; display: block; color: var(--dark-slate); }
+.sentir-toast-text p { font-size: 11px; color: var(--text-muted); margin-top: 2px; line-height: 1.4; }
+
+/* ==========================================================================
    RESPONSIVE
    ========================================================================== */
 @media (max-width: 1024px) {

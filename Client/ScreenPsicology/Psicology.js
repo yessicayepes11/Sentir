@@ -19,7 +19,69 @@ document.addEventListener('DOMContentLoaded', () => {
     // Interacciones de las nuevas vistas
     initStudentsView();
     initMessagesView();
+
+    // Interactividad "super wow" solicitada: nuevo estudiante, buscadores y editar perfil
+    initNewStudentModal();
+    initEditProfileModal();
+    initAvatarShuffle();
 });
+
+/* ==========================================================================
+   TOASTS — NOTIFICACIONES FLOTANTES REUTILIZABLES
+   ========================================================================== */
+function getToastContainer() {
+    let container = document.querySelector('.toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+    }
+    return container;
+}
+
+function showToast({ title, message, icon = 'fa-circle-check', type = 'success' }) {
+    const container = getToastContainer();
+    const toast = document.createElement('div');
+    toast.className = `sentir-toast ${type}`;
+    toast.innerHTML = `
+        <div class="sentir-toast-icon"><i class="fa-solid ${icon}"></i></div>
+        <div class="sentir-toast-text">
+            <strong>${title}</strong>
+            ${message ? `<p>${message}</p>` : ''}
+        </div>
+    `;
+    container.appendChild(toast);
+
+    requestAnimationFrame(() => toast.classList.add('show'));
+
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 400);
+    }, 3400);
+}
+
+/* ==========================================================================
+   MODAL GENÉRICO REUTILIZABLE
+   ========================================================================== */
+function openSentirModal(innerHTML) {
+    const overlay = document.createElement('div');
+    overlay.className = 'sentir-modal-overlay';
+    overlay.innerHTML = `<div class="sentir-modal-box">${innerHTML}</div>`;
+    document.body.appendChild(overlay);
+
+    requestAnimationFrame(() => overlay.classList.add('show'));
+
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeSentirModal(overlay);
+    });
+
+    return overlay;
+}
+
+function closeSentirModal(overlay) {
+    overlay.classList.remove('show');
+    setTimeout(() => overlay.remove(), 300);
+}
 
 /* ==========================================================================
    0°. MOTOR DE NAVEGACIÓN ENTRE VISTAS (SPA SIN RECARGA)
@@ -116,30 +178,34 @@ function initSlidingPanelActions() {
     });
 
     // Mini tarjetas de la vista Estudiantes (todo el card es clicable)
-    document.querySelectorAll('.mini-student-card').forEach(card => {
-        card.addEventListener('click', () => {
-            if (!panel || !overlay) return;
+    document.querySelectorAll('.mini-student-card').forEach(card => bindMiniStudentCard(card));
+}
 
-            const name = card.querySelector('h4').innerText;
-            const meta = card.querySelector('p').innerText;
-            const avatar = card.querySelector('img').src;
-            const risk = card.dataset.risk;
+function bindMiniStudentCard(card) {
+    card.addEventListener('click', () => {
+        const panel = document.getElementById('detailPanel');
+        const overlay = document.getElementById('panelOverlay');
+        if (!panel || !overlay) return;
 
-            document.getElementById('panelName').innerText = name;
-            document.getElementById('panelMeta').innerText = meta;
-            document.getElementById('panelAvatar').src = avatar;
+        const name = card.querySelector('h4').innerText;
+        const meta = card.querySelector('p').innerText;
+        const avatar = card.querySelector('img').src;
+        const risk = card.dataset.risk;
 
-            const panelMainBtn = panel.querySelector('.panel-actions .primary-btn');
-            if (panelMainBtn) {
-                panelMainBtn.innerHTML = risk === 'high'
-                    ? `<i class="fa-solid fa-play"></i> Ejecutar Protocolo de Crisis`
-                    : `<i class="fa-solid fa-file-medical"></i> Asignar Test de Ansiedad (GAD-7)`;
-            }
+        document.getElementById('panelName').innerText = name;
+        document.getElementById('panelMeta').innerText = meta;
+        document.getElementById('panelAvatar').src = avatar;
 
-            document.body.style.overflow = 'hidden';
-            overlay.classList.add('show');
-            panel.classList.add('open');
-        });
+        const panelMainBtn = panel.querySelector('.panel-actions .primary-btn');
+        if (panelMainBtn) {
+            panelMainBtn.innerHTML = risk === 'high'
+                ? `<i class="fa-solid fa-play"></i> Ejecutar Protocolo de Crisis`
+                : `<i class="fa-solid fa-file-medical"></i> Asignar Test de Ansiedad (GAD-7)`;
+        }
+
+        document.body.style.overflow = 'hidden';
+        overlay.classList.add('show');
+        panel.classList.add('open');
     });
 }
 
@@ -229,25 +295,35 @@ function initLiveFilterSearch() {
         });
 
         searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase().trim();
-            const caseCards = document.querySelectorAll('#view-inicio .student-case-card');
+            const rawQuery = e.target.value;
+            const query = rawQuery.toLowerCase().trim();
+            const activeView = document.querySelector('.view.active');
+            const activeViewId = activeView ? activeView.id : 'view-inicio';
 
-            caseCards.forEach(card => {
-                const name = card.querySelector('.student-profile h4').innerText.toLowerCase();
-                const id = card.querySelector('.student-profile p').innerText.toLowerCase();
-                
-                if (name.includes(query) || id.includes(query)) {
-                    card.style.display = 'block';
-                    card.style.animation = 'fadeIn 0.25s ease forwards';
-                } else {
-                    card.style.display = 'none';
+            if (activeViewId === 'view-inicio') {
+                const caseCards = document.querySelectorAll('#view-inicio .student-case-card');
+                caseCards.forEach(card => {
+                    const name = card.querySelector('.student-profile h4').innerText.toLowerCase();
+                    const id = card.querySelector('.student-profile p').innerText.toLowerCase();
+
+                    if (name.includes(query) || id.includes(query)) {
+                        card.style.display = 'block';
+                        card.style.animation = 'fadeIn 0.25s ease forwards';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            } else if (activeViewId === 'view-estudiantes') {
+                const studentsSearch = document.getElementById('studentsSearch');
+                if (studentsSearch) {
+                    studentsSearch.value = rawQuery;
+                    if (window.sentirStudents) window.sentirStudents.applyFilters();
                 }
-            });
-
-            // Si hay texto y estamos buscando, saltamos también a la vista Estudiantes con el mismo filtro
-            const studentsSearch = document.getElementById('studentsSearch');
-            if (studentsSearch && query.length > 0) {
-                studentsSearch.value = e.target.value;
+            } else if (activeViewId === 'view-mensajes') {
+                if (window.sentirMessages) {
+                    window.sentirMessages.convSearchInput.value = rawQuery;
+                    window.sentirMessages.filterConversations(rawQuery);
+                }
             }
         });
     }
@@ -439,14 +515,13 @@ function initStudentsView() {
     const searchInput = document.getElementById('studentsSearch');
     const chips = document.querySelectorAll('#view-estudiantes .chip');
     const emptyMsg = document.getElementById('studentsEmptyMsg');
-    const addBtn = document.getElementById('addStudentBtn');
 
     if (!grid) return;
 
-    const cards = Array.from(grid.querySelectorAll('.mini-student-card'));
     let currentFilter = 'all';
 
     function applyFilters() {
+        const cards = Array.from(grid.querySelectorAll('.mini-student-card'));
         const query = (searchInput ? searchInput.value : '').toLowerCase().trim();
         let visibleCount = 0;
 
@@ -477,11 +552,160 @@ function initStudentsView() {
         searchInput.addEventListener('input', applyFilters);
     }
 
-    if (addBtn) {
-        addBtn.addEventListener('click', () => {
-            alert('Se abrirá el formulario de registro de un nuevo estudiante en el ecosistema Sentir.');
+    // Se expone para que el buscador superior y el modal de nuevo estudiante puedan usarlo
+    window.sentirStudents = { applyFilters, grid };
+}
+
+/* ==========================================================================
+   12°. MODAL "NUEVO ESTUDIANTE" — CREACIÓN EN VIVO CON PREVIEW DE AVATAR
+   ========================================================================== */
+function initNewStudentModal() {
+    const addBtn = document.getElementById('addStudentBtn');
+    if (!addBtn) return;
+
+    const riskConfig = {
+        high: { label: 'RIESGO ALTO', badgeClass: 'high', moodClass: 'sad', moodDefault: 'Requiere seguimiento cercano', color: 'EF4444' },
+        medium: { label: 'RIESGO MEDIO', badgeClass: 'medium', moodClass: 'neutral', moodDefault: 'En observación', color: 'F59E0B' },
+        stable: { label: 'ESTABLE', badgeClass: 'stable', moodClass: 'happy', moodDefault: 'Ánimo estable', color: '22C55E' }
+    };
+
+    addBtn.addEventListener('click', () => {
+        const overlay = openSentirModal(`
+            <div class="sentir-modal-header">
+                <div class="sentir-modal-icon"><i class="fa-solid fa-user-plus"></i></div>
+                <div>
+                    <h3>Registrar Nuevo Estudiante</h3>
+                    <p>Se sumará al ecosistema emocional de la institución</p>
+                </div>
+            </div>
+            <div class="sentir-modal-body">
+                <div class="modal-avatar-preview">
+                    <img id="newStudentAvatarPreview" src="https://ui-avatars.com/api/?name=Nuevo+Estudiante&background=B8A8FF&color=1E1B4B&bold=true" alt="Vista previa">
+                    <span>El avatar se genera automáticamente a partir del nombre y el nivel de riesgo seleccionado.</span>
+                </div>
+
+                <div class="modal-field">
+                    <label>NOMBRE COMPLETO</label>
+                    <input type="text" id="newStudentName" placeholder="Ej. Laura Jiménez Restrepo">
+                </div>
+
+                <div class="modal-field-row">
+                    <div class="modal-field">
+                        <label>GRADO</label>
+                        <input type="text" id="newStudentGrade" placeholder="Ej. 10°2">
+                    </div>
+                    <div class="modal-field">
+                        <label>ID ESTUDIANTE</label>
+                        <input type="text" id="newStudentId" placeholder="Autogenerado">
+                    </div>
+                </div>
+
+                <div class="modal-field">
+                    <label>NIVEL DE RIESGO</label>
+                    <div class="risk-select-group" id="newStudentRiskGroup">
+                        <div class="risk-option selected" data-risk="stable">Estable</div>
+                        <div class="risk-option" data-risk="medium">Medio</div>
+                        <div class="risk-option" data-risk="high">Alto</div>
+                    </div>
+                </div>
+
+                <div class="modal-field">
+                    <label>NOTA EMOCIONAL (OPCIONAL)</label>
+                    <input type="text" id="newStudentMood" placeholder="Ej. Ánimo estable, buena participación">
+                </div>
+
+                <p class="modal-error" id="newStudentError"><i class="fa-solid fa-circle-exclamation"></i> Escribe al menos el nombre y el grado del estudiante.</p>
+            </div>
+            <div class="sentir-modal-actions">
+                <button class="modal-btn-cancel" id="newStudentCancel">Cancelar</button>
+                <button class="modal-btn-confirm" id="newStudentConfirm"><i class="fa-solid fa-check"></i> Registrar Estudiante</button>
+            </div>
+        `);
+
+        let selectedRisk = 'stable';
+        const nameInput = overlay.querySelector('#newStudentName');
+        const gradeInput = overlay.querySelector('#newStudentGrade');
+        const avatarPreview = overlay.querySelector('#newStudentAvatarPreview');
+        const riskOptions = overlay.querySelectorAll('.risk-option');
+        const errorMsg = overlay.querySelector('#newStudentError');
+
+        function refreshAvatarPreview() {
+            const displayName = nameInput.value.trim() || 'Nuevo Estudiante';
+            const color = riskConfig[selectedRisk].color;
+            avatarPreview.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=${color}&color=fff&bold=true`;
+        }
+
+        nameInput.addEventListener('input', refreshAvatarPreview);
+
+        riskOptions.forEach(opt => {
+            opt.addEventListener('click', () => {
+                riskOptions.forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
+                selectedRisk = opt.dataset.risk;
+                refreshAvatarPreview();
+            });
         });
-    }
+
+        overlay.querySelector('#newStudentCancel').addEventListener('click', () => closeSentirModal(overlay));
+
+        overlay.querySelector('#newStudentConfirm').addEventListener('click', () => {
+            const name = nameInput.value.trim();
+            const grade = gradeInput.value.trim();
+
+            if (!name || !grade) {
+                errorMsg.classList.add('show');
+                return;
+            }
+            errorMsg.classList.remove('show');
+
+            const idInput = overlay.querySelector('#newStudentId').value.trim();
+            const moodInput = overlay.querySelector('#newStudentMood').value.trim();
+            const studentId = idInput || `#${Math.floor(1000 + Math.random() * 9000)}`;
+            const config = riskConfig[selectedRisk];
+            const moodText = moodInput || config.moodDefault;
+            const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=${config.color}&color=fff&bold=true`;
+
+            const card = document.createElement('div');
+            card.className = 'mini-student-card card-pop-in';
+            card.dataset.risk = selectedRisk;
+            card.dataset.name = name.toLowerCase();
+            card.dataset.id = studentId;
+            card.innerHTML = `
+                <span class="badge-risk ${config.badgeClass}">${config.label}</span>
+                <img src="${avatarUrl}" class="mini-avatar" alt="${name}">
+                <h4>${name}</h4>
+                <p>Grado: ${grade} • ID: ${studentId}</p>
+                <span class="mood-pill ${config.moodClass}">${selectedRisk === 'stable' ? '😊' : selectedRisk === 'medium' ? '😐' : '😔'} ${moodText}</span>
+            `;
+
+            const grid = document.getElementById('studentsGrid');
+            grid.prepend(card);
+            bindMiniStudentCard(card);
+
+            // Actualizar contador del chip correspondiente y el de "Todos"
+            bumpChipCount('all', 1);
+            bumpChipCount(selectedRisk, 1);
+
+            if (window.sentirStudents) window.sentirStudents.applyFilters();
+
+            closeSentirModal(overlay);
+            showToast({
+                title: 'Estudiante registrado',
+                message: `${name} ya hace parte del ecosistema Sentir.`,
+                icon: 'fa-user-plus',
+                type: 'success'
+            });
+        });
+    });
+}
+
+function bumpChipCount(filterKey, delta) {
+    const chip = document.querySelector(`#view-estudiantes .chip[data-filter="${filterKey}"]`);
+    if (!chip) return;
+    const span = chip.querySelector('span');
+    if (!span) return;
+    const current = parseInt(span.innerText.replace(/,/g, ''), 10) || 0;
+    span.innerText = (current + delta).toLocaleString('es-CO');
 }
 
 /* ==========================================================================
@@ -603,6 +827,164 @@ function initMessagesView() {
             document.getElementById('detailPanel').classList.add('open');
         });
     }
+
+    // Buscador de conversaciones (barra superior de la bandeja de Mensajes)
+    const convSearchInput = document.getElementById('convSearchInput');
+    const convEmptyState = document.getElementById('convEmptyState');
+
+    function filterConversations(rawQuery) {
+        const query = (rawQuery || '').toLowerCase().trim();
+        let visibleCount = 0;
+
+        convItems.forEach(item => {
+            const matches = query === '' || item.dataset.name.toLowerCase().includes(query);
+            item.style.display = matches ? 'flex' : 'none';
+            if (matches) visibleCount++;
+        });
+
+        if (convEmptyState) convEmptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+
+    if (convSearchInput) {
+        convSearchInput.addEventListener('input', (e) => filterConversations(e.target.value));
+    }
+
+    // Se expone para que el buscador superior del header también pueda filtrar conversaciones
+    window.sentirMessages = { filterConversations, convSearchInput };
+}
+
+/* ==========================================================================
+   13°. MODAL "EDITAR PERFIL" — ACTUALIZACIÓN EN VIVO DE LA VISTA PERFIL
+   ========================================================================== */
+function initEditProfileModal() {
+    const editBtn = document.getElementById('editProfileBtn');
+    if (!editBtn) return;
+
+    editBtn.addEventListener('click', () => {
+        const currentName = document.getElementById('profileHeroName').innerText;
+        const currentSubtitle = document.getElementById('profileHeroSubtitle').innerText;
+        const currentEmail = document.getElementById('infoEmail').innerText;
+        const currentEspecialidad = document.getElementById('infoEspecialidad').innerText;
+        const currentSedes = document.getElementById('infoSedes').innerText;
+        const currentHorario = document.getElementById('infoHorario').innerText;
+        const currentIdiomas = document.getElementById('infoIdiomas').innerText;
+
+        const overlay = openSentirModal(`
+            <div class="sentir-modal-header">
+                <div class="sentir-modal-icon"><i class="fa-solid fa-user-pen"></i></div>
+                <div>
+                    <h3>Editar Perfil Profesional</h3>
+                    <p>Estos datos se verán reflejados en toda la plataforma Sentir</p>
+                </div>
+            </div>
+            <div class="sentir-modal-body">
+                <div class="modal-field">
+                    <label>NOMBRE COMPLETO</label>
+                    <input type="text" id="editName" value="${currentName}">
+                </div>
+                <div class="modal-field">
+                    <label>CARGO Y SEDE</label>
+                    <input type="text" id="editSubtitle" value="${currentSubtitle}">
+                </div>
+                <div class="modal-field">
+                    <label>CORREO INSTITUCIONAL</label>
+                    <input type="email" id="editEmail" value="${currentEmail}">
+                </div>
+                <div class="modal-field">
+                    <label>ESPECIALIDAD</label>
+                    <input type="text" id="editEspecialidad" value="${currentEspecialidad}">
+                </div>
+                <div class="modal-field-row">
+                    <div class="modal-field">
+                        <label>SEDES A CARGO</label>
+                        <input type="text" id="editSedes" value="${currentSedes}">
+                    </div>
+                    <div class="modal-field">
+                        <label>IDIOMAS</label>
+                        <input type="text" id="editIdiomas" value="${currentIdiomas}">
+                    </div>
+                </div>
+                <div class="modal-field">
+                    <label>HORARIO DE ATENCIÓN</label>
+                    <input type="text" id="editHorario" value="${currentHorario}">
+                </div>
+                <p class="modal-error" id="editProfileError"><i class="fa-solid fa-circle-exclamation"></i> El nombre no puede quedar vacío.</p>
+            </div>
+            <div class="sentir-modal-actions">
+                <button class="modal-btn-cancel" id="editProfileCancel">Cancelar</button>
+                <button class="modal-btn-confirm" id="editProfileConfirm"><i class="fa-solid fa-check"></i> Guardar Cambios</button>
+            </div>
+        `);
+
+        overlay.querySelector('#editProfileCancel').addEventListener('click', () => closeSentirModal(overlay));
+
+        overlay.querySelector('#editProfileConfirm').addEventListener('click', () => {
+            const name = overlay.querySelector('#editName').value.trim();
+            const errorMsg = overlay.querySelector('#editProfileError');
+
+            if (!name) {
+                errorMsg.classList.add('show');
+                return;
+            }
+            errorMsg.classList.remove('show');
+
+            document.getElementById('profileHeroName').innerText = name;
+            document.getElementById('profileHeroSubtitle').innerText = overlay.querySelector('#editSubtitle').value.trim();
+            document.getElementById('infoEmail').innerText = overlay.querySelector('#editEmail').value.trim();
+            document.getElementById('infoEspecialidad').innerText = overlay.querySelector('#editEspecialidad').value.trim();
+            document.getElementById('infoSedes').innerText = overlay.querySelector('#editSedes').value.trim();
+            document.getElementById('infoIdiomas').innerText = overlay.querySelector('#editIdiomas').value.trim();
+            document.getElementById('infoHorario').innerText = overlay.querySelector('#editHorario').value.trim();
+
+            // Reflejar el primer nombre en el header también, para consistencia
+            const headerNameEl = document.querySelector('.profile-info h4');
+            if (headerNameEl) headerNameEl.innerText = name.split(' ').slice(0, 2).join(' ');
+
+            closeSentirModal(overlay);
+            showToast({
+                title: 'Perfil actualizado',
+                message: 'Tus datos profesionales se guardaron correctamente.',
+                icon: 'fa-user-pen',
+                type: 'success'
+            });
+        });
+    });
+}
+
+/* ==========================================================================
+   14°. CAMBIO DE FOTO DE PERFIL (AVATAR SHUFFLE)
+   ========================================================================== */
+function initAvatarShuffle() {
+    const avatarBtn = document.getElementById('avatarEditBtn');
+    const heroAvatar = document.getElementById('profileHeroAvatar');
+    if (!avatarBtn || !heroAvatar) return;
+
+    const avatarOptions = [
+        'https://i.pinimg.com/736x/4c/8c/66/4c8c66044a8fc28263c2779d1fad16cf.jpg',
+        'https://ui-avatars.com/api/?name=Juan+Carlos&background=6C4DF6&color=fff&bold=true',
+        'https://ui-avatars.com/api/?name=Juan+Carlos&background=65B8FF&color=1E1B4B&bold=true',
+        'https://ui-avatars.com/api/?name=Juan+Carlos&background=4E2FC7&color=fff&bold=true'
+    ];
+    let currentIndex = 0;
+
+    avatarBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % avatarOptions.length;
+        heroAvatar.src = avatarOptions[currentIndex];
+
+        heroAvatar.classList.remove('avatar-pop');
+        void heroAvatar.offsetWidth;
+        heroAvatar.classList.add('avatar-pop');
+
+        const headerAvatar = document.querySelector('.avatar-img');
+        if (headerAvatar) headerAvatar.src = avatarOptions[currentIndex];
+
+        showToast({
+            title: 'Foto de perfil actualizada',
+            message: 'Tu nueva foto ya es visible en toda la plataforma.',
+            icon: 'fa-camera',
+            type: 'info'
+        });
+    });
 }
 
 /* ==========================================================================

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sentir</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700"display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            </button>
+            <a href="/Sentir/Client/Auth/Student/inicio.html"><img src="/Sentir/Shared/StudentResources/Logo-nombrelado.png" alt="Logo sentir" class="sentir"></a>
+
+            <button class="icon-btn">
+                <i class="fa-regular fa-bell"></i>
+            </button>
+
+        </header>
+
+        <!-- Bienvenida -->
+
+        <section class="hero">
+
+            <div class="hero-text">
+
+                <h2>¡Hola, Usuario! 👋</h2>
+
+                <h3>¿Cómo te sientes hoy?</h3>
+
+                <p>
+                    Tu bienestar importa,
+                    estamos aquí para acompañarte.
+                </p>
+
+            </div>
+
+        </section>
+
+        <div class="Estudiante"><img src="/Sentir/Shared/StudentResources/Estudiante.png" alt="Estudiante"></div>
+        <!-- Estado de ánimo -->
+
+        <section class="mood-card">
+            
+            <h4>¿Cuál es tu estado de ánimo ahora?</h4>
+
+        <div class="moods">
+            <button class="mood" data-mood="excelente"><span class="emoji-pic">😊</span><span>Muy bien</span></button>
+            <button class="mood" data-mood="bien"><span class="emoji-pic">🙂</span><span>Bien</span></button>
+            <button class="mood" data-mood="regular"><span class="emoji-pic">😐</span><span>Regular</span></button>
+            <button class="mood" data-mood="mal"><span class="emoji-pic">🙁</span><span>Mal</span></button>
+            <button class="mood" data-mood="muy-mal"><span class="emoji-pic">😢</span><span>Muy mal</span></button>
+        </div>
+                <!-- Modal -->
+        <div id="moodModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h3 id="modal-title">¿Por qué te sientes así?</h3>
+                <p id="modal-emoji" style="font-size: 50px; text-align: center; margin: 15px 0;"></p>
+                
+                <textarea id="reason" placeholder="Escribe aquí por qué te sientes de esta forma... (opcional)" rows="5"></textarea>
+                
+                <div class="modal-buttons">
+                    <button class="btn-cancel">Cancelar</button>
+                    <button class="btn-save">Guardar</button>
+                </div>
+            </div>
+        </div>
+        </section>
+
+        <script>
+    const modal = document.getElementById('moodModal');
+    const closeBtn = document.querySelector('.close-btn');
+    const cancelBtn = document.querySelector('.btn-cancel');
+    const saveBtn = document.querySelector('.btn-save');
+    const moodButtons = document.querySelectorAll('.mood');
+
+    let selectedMood = '';
+
+    // Abrir modal al hacer clic en un mood
+    moodButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            selectedMood = button.getAttribute('data-mood');
+            const emoji = button.querySelector('.emoji-pic').textContent;
+            
+            document.getElementById('modal-emoji').textContent = emoji;
+            document.getElementById('modal-title').textContent = `¿Por qué te sientes ${button.textContent.trim()}?`;
+            
+            modal.style.display = 'flex';
+            document.getElementById('reason').focus();
+        });
+    });
+
+    // Cerrar modal
+    function closeModal() {
+        modal.style.display = 'none';
+        document.getElementById('reason').value = '';
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    cancelBtn.addEventListener('click', closeModal);
+
+    // Guardar (por ahora solo muestra en consola)
+    saveBtn.addEventListener('click', () => {
+        const reason = document.getElementById('reason').value.trim();
+        
+        console.log(`Estado de ánimo: ${selectedMood}`);
+        console.log(`Justificación: ${reason || 'No escribió justificación'}`);
+        
+        alert('✅ ¡Registro guardado!');
+        closeModal();
+        
+        // Aquí más adelante puedes guardar en localStorage o enviar a servidor
+    });
+
+    // Cerrar al hacer clic fuera del modal
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+</script>
+
+        <!-- Herramientas -->
+
+        <section class="tools">
+
+            <h4 class="exp">Explora herramientas para ti</h4>
+
+    
+            <div class="tool">
+                <div class="tool-icon1">
+                        <a href="/Sentir/Client/Auth/Student/seguimiento.html"><i>📈</i></a>
+                </div>
+
+                <div>
+                    <h5>Mi seguimiento</h5>
+                    <p>Registra y conoce tu evolución</p>
+                </div>
+            </div>
+       
+
+            <div class="tool">
+
+                <div class="tool-icon2">
+                    <a href="/Sentir/Client/Auth/Student/Relajacion.html"><i>🧘</i></a>
+                </div>
+
+                <div>
+                    <h5>Relajación</h5>
+                    <p>Ejercicios para tu bienestar</p>
+                </div>
+
+            </div>
+
+            <div class="tool">
+
+                <div class="tool-icon3">
+                    <a href="/Sentir/Client/Auth/Student/actividades.html"><i>🎨</i></a>
+                </div>
+
+                <div>
+                    <h5>Actividades</h5>
+                    <p>Recursos y dinámicas para ti</p>
+                </div>
+
+            </div>
+
+            <div class="tool">
+
+                <div class="tool-icon4">
+                    <a href="/Sentir/Client/Auth/Student/pedir-ayuda.html"><i>🆘</i></a>
+                </div>
+
+                <div>
+                    <h5>Pedir ayuda</h5>
+                    <p>Habla con alguien de confianza</p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</body>
+
+</html>

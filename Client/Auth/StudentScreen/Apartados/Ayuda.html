@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentir — Ayuda</title>
+    <link rel="stylesheet" href="ayuda.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <a href="/Client/Auth/StudentScreen/inicio.html" class="back-btn" title="Volver al inicio">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-life-ring"></i>
+                </div>
+                <span class="logo-text">Ayuda</span>
+            </div>
+            <div class="spacer"></div>
+        </header>
+
+        <!-- Intro -->
+        <section class="intro">
+            <h1>¿Necesitas apoyo?</h1>
+            <p>Si estás pasando por un momento difícil, no estás solo/a. Usa el botón de abajo para contactar a alguien de confianza o a un servicio de ayuda.</p>
+        </section>
+
+        <!-- Selector de destinatario -->
+        <section class="card contact-card">
+            <h2><i class="fa-regular fa-envelope"></i> ¿A quién quieres escribir?</h2>
+
+            <div class="contact-options">
+                <label class="contact-option">
+                    <input type="radio" name="contact" value="personal" checked>
+                    <div class="option-content">
+                        <span class="option-icon">👤</span>
+                        <div>
+                            <strong>Persona de confianza</strong>
+                            <small>Un familiar o amigo</small>
+                        </div>
+                    </div>
+                </label>
+
+                <label class="contact-option">
+                    <input type="radio" name="contact" value="profesional">
+                    <div class="option-content">
+                        <span class="option-icon">🩺</span>
+                        <div>
+                            <strong>Profesional / Terapeuta</strong>
+                            <small>Tu psicólogo o médico</small>
+                        </div>
+                    </div>
+                </label>
+
+                <label class="contact-option">
+                    <input type="radio" name="contact" value="emergencia">
+                    <div class="option-content">
+                        <span class="option-icon">🆘</span>
+                        <div>
+                            <strong>Línea de ayuda</strong>
+                            <small>Ejemplo: apoyo emocional</small>
+                        </div>
+                    </div>
+                </label>
+            </div>
+
+            <div class="email-input-wrap">
+                <label for="email-to">Correo del destinatario</label>
+                <input type="email" id="email-to" placeholder="ejemplo@correo.com" value="juanorozcol@iesantaelena.edu.co">
+                <p class="hint">Cambia este correo por el real de la persona o servicio que quieras contactar.</p>
+            </div>
+        </section>
+
+        <!-- Mensaje opcional -->
+        <section class="card">
+            <h2><i class="fa-regular fa-comment-dots"></i> Mensaje (opcional)</h2>
+            <textarea id="message" rows="4" placeholder="Puedes escribir cómo te sientes o dejar el mensaje predeterminado..."></textarea>
+            <div class="preset-btns">
+                <button type="button" class="preset-btn" data-msg="Hola, estoy pasando por un momento difícil y me vendría bien hablar. ¿Puedes escribirme o llamarme cuando puedas?">Necesito hablar</button>
+                <button type="button" class="preset-btn" data-msg="Hola, solo quería avisar que hoy no me siento muy bien. No es urgente, pero me gustaría que estuvieras al tanto.">Aviso suave</button>
+                <button type="button" class="preset-btn" data-msg="Hola, necesito apoyo ahora mismo. Por favor contáctame lo antes posible.">Urgente</button>
+            </div>
+        </section>
+
+        <!-- Botón grande de ayuda -->
+        <section class="sos-section">
+            <button type="button" id="sos-btn" class="sos-btn">
+                <span class="sos-icon"><i class="fa-solid fa-paper-plane"></i></span>
+                <span class="sos-text">Enviar pedido de ayuda</span>
+                <span class="sos-sub">Se abrirá tu correo con el mensaje listo</span>
+            </button>
+            <p class="sos-note">
+                <i class="fa-solid fa-info-circle"></i>
+                Esto abrirá tu aplicación de correo (Gmail, Outlook, etc.) con el mensaje preparado. Tú solo tendrás que pulsar Enviar.
+            </p>
+        </section>
+
+        <!-- Recursos útiles -->
+        <section class="card resources">
+            <h2><i class="fa-solid fa-heart-pulse"></i> Recursos de apoyo</h2>
+            <ul class="resource-list">
+                <li>
+                    <strong>Línea Amiga</strong>
+                    <span>604 444 44 488</span>
+                </li>
+                <li>
+                    <strong>IASP – Recursos internacionales</strong>
+                    <a href="https://www.iasp.info/suicidalthoughts/" target="_blank" rel="noopener">Ver recursos por país</a>
+                </li>
+            </ul>
+            <p class="resource-note">Si estás en crisis, contacta también a servicios de emergencia locales o acude a un centro de salud.</p>
+        </section>
+
+        <footer class="footer">
+            <p>Hecho con 💜 para cuidar tu bienestar</p>
+        </footer>
+    </div>
+
+    <script src="/Client/Auth/StudentScreen/Apartados/Scripts/Ayuda.js"></script>
+</body>
+</html>

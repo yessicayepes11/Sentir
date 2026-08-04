@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentir — Insignias</title>
+    <link rel="stylesheet" href="insignias.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <a href="/Client/Auth/StudentScreen/inicio.html" class="back-btn" title="Volver al diario">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-medal"></i>
+                </div>
+                <span class="logo-text">Insignias</span>
+            </div>
+            <div class="progress-badge" id="progress-summary">
+                <span id="unlocked-count">0</span>/<span id="total-count">8</span>
+            </div>
+        </header>
+
+        <!-- Intro -->
+        <section class="intro">
+            <h1>Tus logros</h1>
+            <p>Completa acciones en tu diario emocional para desbloquear insignias. ¡Cada una celebra tu avance!</p>
+        </section>
+
+        <!-- Barra de progreso general -->
+        <div class="overall-progress card">
+            <div class="progress-info">
+                <span>Progreso total</span>
+                <span id="progress-percent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Grid de insignias -->
+        <section class="badges-grid" id="badges-grid">
+            <!-- Se llenan con JS -->
+        </section>
+
+        <!-- Tips -->
+        <section class="tips card">
+            <h3><i class="fa-solid fa-lightbulb"></i> Cómo desbloquear</h3>
+            <p>Las insignias se actualizan automáticamente según tus entradas en el diario. Escribe, usa etiquetas y mantén la constancia para ir desbloqueándolas.</p>
+            <a href="/Client/Auth/StudentScreen/Apartados/Diario.html" class="btn-primary">
+                <i class="fa-solid fa-pen"></i> Ir al diario
+            </a>
+        </section>
+
+        <footer class="footer">
+            <p>Hecho con 💜 para cuidar tu bienestar</p>
+        </footer>
+    </div>
+
+    <!-- Modal detalle de insignia -->
+    <div id="badge-modal" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="modal-badge-icon" id="modal-icon"></div>
+            <h2 id="modal-title"></h2>
+            <p id="modal-desc"></p>
+            <div class="modal-status" id="modal-status"></div>
+            <div class="modal-requirement" id="modal-requirement"></div>
+        </div>
+    </div>
+
+    <script src="/Client/Auth/StudentScreen/Apartados/Scripts/insignias.js"></script>
+</body>
+</html>

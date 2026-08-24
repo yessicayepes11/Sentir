@@ -206,7 +206,13 @@ body{
 
     font-weight:500;
 }
+.o{
+    color: white;
+    display: flex;
+  justify-content: center; /* Centra horizontalmente (izquierda a derecha) */
+  align-items: center;  
 
+}
 .input-group input{
 
     padding:14px 16px;

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Recuperar contraseña | Sentir</title>
+
+    <!-- Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/Sentir/Client/Auth/Forget/Forget.css">
+
+</head>
+
+<body>
+
+    <main class="contenedor">
+
+        <!-- =========================
+             PANEL IZQUIERDO
+        ========================== -->
+
+        <section class="panel-informacion">
+
+            <!-- LOGO -->
+            <div class="logo-contenedor">
+
+                <!-- CAMBIAR POR TU LOGO -->
+                <img src="/Sentir/Shared/LoginResources/logo-sentir.png" alt="Logo Sentir" class="logo">
+
+            </div>
+
+            <!-- TEXTO -->
+
+            <div class="texto-principal">
+
+                <h1>
+                    Recupera tu contraseña
+                </h1>
+
+                <div class="corazon">
+                    ❤
+                </div>
+
+                <p>
+                    No te preocupes, pasa a todos.
+                    Ingresa tu correo electrónico de Google y te enviaremos
+                    un enlace para que puedas crear una nueva contraseña.
+                </p>
+
+            </div>
+
+            <!-- PERSONAJES -->
+
+            <div class="personajes">
+
+                <!-- AQUÍ VAS A PONER LOS PERSONAJES PNG -->
+
+                <img src="/Sentir/Shared/ForgetResources/MuñecosForget.png"
+                    alt="Personajes Sentir"
+                    class="img-personajes">
+
+            </div>
+
+        </section>
+
+        <!-- =========================
+             PANEL DERECHO
+        ========================== -->
+
+        <section class="panel-formulario">
+
+            <div class="tarjeta">
+
+                <!-- ICONO -->
+
+                <div class="icono-correo">
+
+                    <!-- Puedes reemplazarlo después -->
+                    <img src="/Sentir/Shared/ForgetResources/correo.png"
+                        alt="Correo Google">
+
+                </div>
+
+                <!-- TITULO -->
+
+                <h2>
+                    Verifica tu correo
+                </h2>
+
+                <p class="descripcion">
+
+                    Ingresa el correo electrónico de Google asociado
+                    a tu cuenta de Sentir.
+
+                </p>
+
+                <!-- FORMULARIO -->
+
+                <form id="formRecuperar">
+
+                    <label for="correo">
+
+                        Correo electrónico de Google
+
+                    </label>
+
+                    <div class="input-contenedor">
+
+                        <img src="/Sentir/Shared/ForgetResources/iconoGoogle.webp"
+                            alt="Google">
+
+                        <input
+                            type="email"
+                            id="correo"
+                            placeholder="tu.correo@gmail.com"
+                            required>
+
+                    </div>
+
+                    <!-- MENSAJE ERROR -->
+
+                    <span id="mensajeError"
+                        class="mensaje-error">
+
+                    </span>
+
+                    <!-- BOTON -->
+
+                    <button
+                        type="submit"
+                        class="btn-principal">
+
+                        <span>
+                            Enviar enlace de recuperación
+                        </span>
+
+                        <span class="flecha">
+                            →
+                        </span>
+
+                    </button>
+
+                </form>
+
+                <!-- DIVISOR -->
+
+                <div class="separador">
+
+                    <span></span>
+
+                    <p>o</p>
+
+                    <span></span>
+
+                </div>
+
+                <!-- VOLVER -->
+
+                <a href="/Sentir/Client/Auth/Login/Login.html"
+                    class="btn-secundario">
+
+                    ← Volver al inicio de sesión
+
+                </a>
+
+                <!-- SEGURIDAD -->
+
+                <div class="seguridad">
+
+                    <span>
+                        🔒
+                    </span>
+
+                    <p>
+
+                        Por tu seguridad, solo se permite la recuperación
+                        mediante cuentas de Google.
+
+                    </p>
+
+                </div>
+
+                <!-- MENSAJE ÉXITO -->
+
+                <div id="mensajeExito"
+                    class="mensaje-exito oculto">
+
+                    ✅ Correo enviado correctamente.
+                    Revisa tu bandeja de entrada.
+
+                </div>
+
+                <!-- LOADER -->
+
+                <div id="loader"
+                    class="loader oculto">
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- JS -->
+
+    <script src="/Sentir/Client/Auth/Forget/Forget.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentir — Diario Emocional</title>
+    <link rel="stylesheet" href="Diario.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header>
+             <a href="/Client/Auth/StudentScreen/inicio.html" class="back-btn" title="Volver al inicio">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+        </header>
+
+        <!-- Hero / Saludo -->
+        <section class="hero">
+            <div class="hero-text">
+                <h1>¡Hola, Usuario! <span class="wave">👋</span></h1>
+                <p class="hero-question">¿Cómo te sientes hoy?</p>
+                <p class="hero-sub">Tu bienestar importa, estamos aquí para acompañarte.</p>
+            </div>
+        </section>
+
+        <!-- Formulario principal -->
+        <section class="details-card card" id="details-card">
+            <div class="date-row">
+                <label for="entry-date"><i class="fa-regular fa-calendar"></i> Fecha</label>
+                <input type="date" id="entry-date">
+            </div>
+
+            <div class="intensity-section">
+                <div class="intensity-header">
+                    <label>Intensidad emocional</label>
+                    <span id="intensity-value">5</span>
+                </div>
+                <input type="range" id="intensity" min="1" max="10" value="5">
+                <div class="intensity-labels">
+                    <span>Baja</span>
+                    <span>Alta</span>
+                </div>
+            </div>
+
+            <div class="text-section">
+                <label for="entry-text"><i class="fa-regular fa-pen-to-square"></i> Cuéntanos más</label>
+                <textarea id="entry-text" rows="5" placeholder="¿Qué pasó hoy? ¿Cómo te sientes realmente?"></textarea>
+            </div>
+
+            <div class="tags-section">
+                <label>Etiquetas</label>
+                <div class="tags">
+                    <button type="button" class="tag-btn" data-tag="trabajo">Trabajo</button>
+                    <button type="button" class="tag-btn" data-tag="familia">Familia</button>
+                    <button type="button" class="tag-btn" data-tag="amigos">Amigos</button>
+                    <button type="button" class="tag-btn" data-tag="salud">Salud</button>
+                    <button type="button" class="tag-btn" data-tag="amor">Amor</button>
+                    <button type="button" class="tag-btn" data-tag="estudio">Estudio</button>
+                </div>
+            </div>
+
+            <button type="button" id="save-btn" class="btn-primary">
+                <i class="fa-solid fa-heart"></i> Guardar en mi diario
+            </button>
+        </section>
+
+        <!-- Historial / Mi seguimiento -->
+        <section class="history-card card">
+            <div class="history-header">
+                <h2><i class="fa-solid fa-chart-simple"></i> Mi seguimiento</h2>
+                <button type="button" id="clear-btn" class="icon-btn small" title="Borrar historial">
+                    <i class="fa-regular fa-trash-can"></i>
+                </button>
+            </div>
+            <div id="entries-list" class="entries-list">
+                <p class="empty-msg">Aún no hay entradas. ¡Empieza registrando cómo te sientes!</p>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>Hecho con 💜 para cuidar tu bienestar</p>
+            
+        </footer>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <p id="modal-text">¿Borrar todo el historial? Perderas tus insignias. Esta acción no se puede deshacer.</p>
+            <div class="modal-actions">
+                <button id="modal-cancel" class="btn-ghost">Cancelar</button>
+                <button id="modal-confirm" class="btn-danger">Confirmar</button>
+                
+            </div>
+        </div>
+    </div>
+    
+
+    <script src="/Client/Auth/StudentScreen/Apartados/Scripts/Diario.js"></script>
+</body>
+</html>

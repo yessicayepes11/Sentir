@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mis insignias | Sentir</title>
+
+    <!-- TIPOGRAFÍA -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/Sentir/Client/ScreenStudents/Insigneas/insigneas.css">
+</head>
+
+
+<body>
+
+    <!-- DECORACIÓN DE FONDO -->
+
+    <div class="background-shape shape-one"></div>
+    <div class="background-shape shape-two"></div>
+
+
+    <!-- ================= APP ================= -->
+
+    <div class="app">
+
+
+        <!-- ================= HEADER ================= -->
+
+        <header class="topbar">
+
+            <button class="menu-button" id="menuButton" aria-label="Abrir menú">
+                ☰
+            </button>
+
+
+            <div class="brand">
+
+                <!-- CAMBIA ESTA RUTA POR TU LOGO -->
+
+                <img src="images/logo-sentir.png"
+                    alt="Logo de Sentir">
+
+                <span>sentir</span>
+
+            </div>
+
+
+            <button class="profile-button"
+                aria-label="Perfil">
+
+                ♡
+
+            </button>
+
+        </header>
+
+
+
+        <!-- ================= CONTENIDO ================= -->
+
+        <main class="main-content">
+
+
+            <!-- ================= HERO ================= -->
+
+            <section class="hero">
+
+                <div class="hero-text">
+
+                    <span class="section-tag">
+                        ✦ Tu camino de bienestar
+                    </span>
+
+
+                    <h1>
+                        Mis
+                        <span>insignias</span>
+                    </h1>
+
+
+                    <p>
+                        Cada pequeño paso cuenta. Aquí puedes
+                        descubrir y guardar los logros que has
+                        conseguido durante tu camino en Sentir.
+                    </p>
+
+                </div>
+
+
+                <!-- ESPACIO PARA PERSONAJE -->
+
+                <div class="hero-character">
+
+                    <!--
+
+                    AQUÍ PUEDES PONER TU PERSONAJE
+
+                    <img src="images/personaje-insignias.png"
+                         alt="Personaje de Sentir">
+
+                    -->
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= RESUMEN ================= -->
+
+            <section class="summary">
+
+
+                <div class="summary-card main-summary">
+
+                    <div class="summary-icon">
+                        ✦
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            MIS LOGROS
+                        </span>
+
+                        <strong id="unlockedNumber">
+                            0
+                        </strong>
+
+                        <small>
+                            insignias desbloqueadas
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="summary-card">
+
+                    <div class="summary-icon blue">
+                        ◈
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            POR DESBLOQUEAR
+                        </span>
+
+                        <strong id="lockedNumber">
+                            0
+                        </strong>
+
+                        <small>
+                            sigue avanzando
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="summary-card">
+
+                    <div class="summary-icon silver">
+                        ♢
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            PROGRESO
+                        </span>
+
+                        <strong id="globalProgress">
+                            0%
+                        </strong>
+
+                        <small>
+                            de tus insignias
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= MIS INSIGNIAS ================= -->
+
+            <section class="badge-section">
+
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="mini-label">
+                            CONSEGUIDAS
+                        </span>
+
+                        <h2>
+                            Mis insignias
+                        </h2>
+
+                    </div>
+
+
+                    <span class="counter"
+                        id="unlockedCounter">
+                        0 desbloqueadas
+                    </span>
+
+                </div>
+
+
+
+                <div class="badges-grid"
+                    id="unlockedBadges">
+
+                    <!-- JS INSERTA AQUÍ -->
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= CASI DESBLOQUEADAS ================= -->
+
+            <section class="badge-section">
+
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="mini-label">
+                            ESTÁS CERCA
+                        </span>
+
+                        <h2>
+                            Ya casi desbloqueadas
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="badges-grid"
+                    id="almostBadges">
+
+                    <!-- JS INSERTA AQUÍ -->
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= POR DESBLOQUEAR ================= -->
+
+            <section class="badge-section">
+
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="mini-label">
+                            PRÓXIMOS LOGROS
+                        </span>
+
+                        <h2>
+                            Por desbloquear
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="badges-grid"
+                    id="lockedBadges">
+
+                    <!-- JS INSERTA AQUÍ -->
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= MENSAJE ================= -->
+
+            <section class="motivation">
+
+                <div class="motivation-icon">
+                    ♡
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Tu bienestar no es una carrera.
+                    </strong>
+
+                    <p>
+                        Las insignias solo reconocen los pequeños
+                        momentos en los que decides cuidarte.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+        </main>
+
+
+
+        <!-- ================= NAVEGACIÓN ================= -->
+
+        <nav class="bottom-navigation">
+
+            <a href="#" class="nav-item">
+
+                <span>⌂</span>
+
+                <small>
+                    Inicio
+                </small>
+
+            </a>
+
+
+            <a href="#" class="nav-item">
+
+                <span>♡</span>
+
+                <small>
+                    Seguimiento
+                </small>
+
+            </a>
+
+
+            <a href="#" class="nav-item nav-center">
+
+                <span>
+                    +
+                </span>
+
+            </a>
+
+
+            <a href="#" class="nav-item">
+
+                <span>✦</span>
+
+                <small>
+                    Insignias
+                </small>
+
+            </a>
+
+
+            <a href="#" class="nav-item">
+
+                <span>♙</span>
+
+                <small>
+                    Perfil
+                </small>
+
+            </a>
+
+        </nav>
+
+    </div>
+
+
+
+    <!-- ================= MODAL ================= -->
+
+    <div class="modal-overlay"
+        id="badgeModal">
+
+        <div class="modal">
+
+            <button class="close-modal"
+                id="closeModal"
+                aria-label="Cerrar">
+                ×
+            </button>
+
+
+            <div class="modal-badge"
+                id="modalIcon">
+                ✦
+            </div>
+
+
+            <span class="modal-status"
+                id="modalStatus">
+                INSIGNIA
+            </span>
+
+
+            <h2 id="modalTitle">
+                Nombre
+            </h2>
+
+
+            <p class="modal-description"
+                id="modalDescription">
+                Descripción
+            </p>
+
+
+            <div class="modal-info">
+
+                <div>
+
+                    <span>
+                        ¿Por qué se desbloquea?
+                    </span>
+
+                    <p id="modalReason">
+                        -
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Tu progreso
+                    </span>
+
+                    <div class="modal-progress">
+
+                        <div class="modal-progress-fill"
+                            id="modalProgressFill">
+                        </div>
+
+                    </div>
+
+                    <strong id="modalProgressText">
+                        0 / 0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <button class="modal-button"
+                id="modalButton">
+
+                Entendido
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="/Sentir/Client/ScreenStudents/Insigneas/insigneas.js"></script>
+
+</body>
+
+</html>

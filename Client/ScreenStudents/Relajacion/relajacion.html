@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Relajación | Sentir</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="relajacion.css">
+</head>
+
+<body>
+
+    <!-- FONDO DECORATIVO -->
+    <div class="background-decoration decoration-one"></div>
+    <div class="background-decoration decoration-two"></div>
+
+    <!-- CONTENEDOR GENERAL -->
+    <div class="app">
+
+        <!-- ================= HEADER ================= -->
+        <header class="topbar">
+
+            <button class="menu-button" id="menuButton" aria-label="Abrir menú">
+                ☰
+            </button>
+
+            <div class="brand">
+                <!-- AQUÍ PUEDES COLOCAR EL LOGO -->
+                <img class="Logo" src="/Sentir/Shared/StudentResources/Logo-nombrelado.png" alt="Logo de Sentir">
+            </div>
+
+            <button class="notification-button" aria-label="Notificaciones">
+                ♡
+            </button>
+
+        </header>
+
+
+        <!-- ================= CONTENIDO ================= -->
+        <main class="main-content">
+
+            <!-- HERO -->
+            <section class="hero">
+
+                <div class="hero-text">
+
+                    <span class="section-tag">
+                        🌿 Bienestar emocional
+                    </span>
+
+                    <h1>
+                        Un momento para
+                        <span>respirar</span>
+                    </h1>
+
+                    <p>
+                        Tómate unos minutos para relajarte,
+                        respirar y conectar contigo.
+                    </p>
+
+                </div>
+
+                <!-- ESPACIO PARA PERSONAJE -->
+                <div class="hero-image">
+                    <!--
+                    AQUÍ PUEDES COLOCAR EL PERSONAJE DE SENTIR
+
+                    <img src="images/personaje-relajacion.png"
+                         alt="Personaje de Sentir">
+                    -->
+                </div>
+
+            </section>
+
+
+            <!-- ================= PANEL PRINCIPAL ================= -->
+            <section class="relax-layout">
+
+                <!-- EJERCICIO -->
+                <article class="breathing-card">
+
+                    <div class="card-header">
+
+                        <div>
+                            <span class="small-title">
+                                EJERCICIO ACTUAL
+                            </span>
+
+                            <h2>
+                                Respiración consciente
+                            </h2>
+                        </div>
+
+                        <span class="status-badge" id="exerciseStatus">
+                            Listo
+                        </span>
+
+                    </div>
+
+
+                    <!-- CÍRCULO DE RESPIRACIÓN -->
+                    <div class="breathing-area">
+
+                        <div class="breathing-circle" id="breathingCircle">
+
+                            <div class="circle-content">
+
+                                <span id="breathingText">
+                                    Prepárate
+                                </span>
+
+                                <strong id="breathingTimer">
+                                    00
+                                </strong>
+
+                                <small>
+                                    segundos
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- INSTRUCCIÓN -->
+                    <div class="instruction">
+
+                        <span id="instructionIcon">
+                            🫁
+                        </span>
+
+                        <div>
+                            <strong id="instructionTitle">
+                                Comienza cuando estés listo/a
+                            </strong>
+
+                            <p id="instructionText">
+                                Sigue el ritmo del círculo y concéntrate
+                                en tu respiración.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <!-- CONTROLES -->
+                    <div class="controls">
+
+                        <button
+                            class="primary-button"
+                            id="startBreathing">
+                            Comenzar
+                        </button>
+
+                        <button
+                            class="secondary-button"
+                            id="resetBreathing">
+                            Reiniciar
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+                <!-- PANEL DERECHO -->
+                <aside class="side-panel">
+
+                    <!-- PROGRESO -->
+                    <div class="progress-card">
+
+                        <div class="progress-top">
+
+                            <div>
+                                <span class="small-title">
+                                    TU PROGRESO
+                                </span>
+
+                                <h3>
+                                    Sesión de hoy
+                                </h3>
+                            </div>
+
+                            <span id="progressPercent">
+                                0%
+                            </span>
+
+                        </div>
+
+                        <div class="progress-bar">
+                            <div
+                                class="progress-fill"
+                                id="progressFill">
+                            </div>
+                        </div>
+
+                        <p>
+                            Completa una sesión para avanzar
+                            en tu bienestar.
+                        </p>
+
+                    </div>
+
+
+                    <!-- RECURSOS -->
+                    <div class="resources-card">
+
+                        <div class="resources-header">
+                            <span class="small-title">
+                                EXPLORA
+                            </span>
+
+                            <h3>
+                                Herramientas para ti
+                            </h3>
+                        </div>
+
+
+                        <button
+                            class="resource-item active"
+                            data-resource="respiracion">
+
+                            <div class="resource-icon purple">
+                                🫁
+                            </div>
+
+                            <div>
+                                <strong>
+                                    Respiración
+                                </strong>
+
+                                <span>
+                                    Ejercicios para encontrar calma
+                                </span>
+                            </div>
+
+                            <b>›</b>
+
+                        </button>
+
+
+                        <button
+                            class="resource-item"
+                            data-resource="meditacion">
+
+                            <div class="resource-icon blue">
+                                🧘
+                            </div>
+
+                            <div>
+                                <strong>
+                                    Meditación
+                                </strong>
+
+                                <span>
+                                    Un espacio para conectar contigo
+                                </span>
+                            </div>
+
+                            <b>›</b>
+
+                        </button>
+
+
+                        <button
+                            class="resource-item"
+                            data-resource="consejos">
+
+                            <div class="resource-icon silver">
+                                ✦
+                            </div>
+
+                            <div>
+                                <strong>
+                                    Consejos
+                                </strong>
+
+                                <span>
+                                    Estrategias para tu bienestar
+                                </span>
+                            </div>
+
+                            <b>›</b>
+
+                        </button>
+
+                    </div>
+
+                </aside>
+
+            </section>
+
+
+            <!-- ================= MENSAJE INFERIOR ================= -->
+            <section class="bottom-message">
+
+                <div class="message-icon">
+                    ♡
+                </div>
+
+                <div>
+                    <strong>
+                        Recuerda cuidar de ti
+                    </strong>
+
+                    <p>
+                        No tienes que resolver todo de una vez.
+                        Date un momento para respirar.
+                    </p>
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <!-- ================= NAVEGACIÓN ================= -->
+        <nav class="bottom-navigation">
+
+            <a href="/Sentir/Client/ScreenStudents/estudiante.html" class="nav-item">
+                <span>⌂</span>
+                <small>Inicio</small>
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>♡</span>
+                <small>Seguimiento</small>
+            </a>
+
+            <a href="#" class="nav-item nav-center">
+                <span>+</span>
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>☁</span>
+                <small>Mensajes</small>
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>♙</span>
+                <small>Perfil</small>
+            </a>
+
+        </nav>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+    <script src="relajacion.js"></script>
+
+</body>
+</html>

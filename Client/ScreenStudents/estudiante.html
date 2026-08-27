@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sentir | Estudiante</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Iconos -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="estudiante.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-logo">
+            <!-- Reemplaza este div por tu logo cuando quieras -->
+            <div class="logo-symbol">
+                <a href=""><img src="/Logo-nombrelado (1).png" alt="" id="logoSentir"></a>
+            </div>
+
+           
+        </div>
+
+        <nav class="menu">
+
+            <a href="#" class="menu-item active">
+                <i class="fa-solid fa-house"></i>
+                <span>Inicio</span>
+            </a>
+
+            <a href="#seguimiento" class="menu-item">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Mi seguimiento</span>
+            </a>
+
+            <a href="#recursos" class="menu-item">
+                <i class="fa-solid fa-leaf"></i>
+                <span>Recursos</span>
+            </a>
+
+            <a href="#diario" class="menu-item">
+                <i class="fa-solid fa-book"></i>
+                <span>Diario emocional</span>
+            </a>
+
+            <a href="#actividades" class="menu-item">
+                <i class="fa-solid fa-star"></i>
+                <span>Actividades</span>
+            </a>
+
+            <a href="#ayuda" class="menu-item">
+                <i class="fa-solid fa-hands-helping"></i>
+                <span>Pedir ayuda</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="privacy-box">
+                <i class="fa-solid fa-shield-heart"></i>
+
+                <div>
+                    <strong>Tu bienestar importa</strong>
+                    <small>Tu información está protegida.</small>
+                </div>
+            </div>
+
+            <button class="logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <a href="/Sentir/Client/index.html">Cerrar sesión</a>
+                
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= CONTENIDO ================= -->
+
+    <main class="main-content">
+
+        <!-- HEADER -->
+
+        <header class="topbar">
+
+            <button class="mobile-menu" id="mobileMenu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="mobile-logo">
+                <div class="logo-symbol small">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+                <span>sentir</span>
+            </div>
+
+            <div class="top-actions">
+
+                <button class="notification">
+                    <i class="fa-regular fa-bell"></i>
+                    <span></span>
+                </button>
+
+                <div class="profile">
+
+                    <div class="profile-avatar">
+                        A
+                    </div>
+
+                    <div class="profile-info">
+                        <strong>Ana</strong>
+                        <small>Estudiante</small>
+                    </div>
+
+                    <i class="fa-solid fa-chevron-down"></i>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= HERO ================= -->
+
+        <section class="welcome-section">
+
+            <div class="welcome-text">
+
+                <span class="welcome-tag">
+                    <i class="fa-solid fa-sparkles"></i>
+                    Tu espacio seguro
+                </span>
+
+                <h1>
+                    ¡Hola, Ana! 👋
+                </h1>
+
+                <h2>
+                    ¿Cómo te sientes hoy?
+                </h2>
+
+                <p>
+                    Tu bienestar importa. Registra cómo te sientes
+                    y descubre herramientas que pueden acompañarte.
+                </p>
+
+            </div>
+
+            <!-- Imagen del personaje -->
+            <div class="character-container">
+
+                <!-- AQUÍ PUEDES PONER TU PERSONAJE -->
+                <img src="images/personaje-estudiante.png"
+                     alt="Personaje estudiante">
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= ESTADO DE ÁNIMO ================= -->
+
+        <section class="emotion-section">
+  <div class="emotions">
+
+    <!-- Muy Bien (Happy) -->
+    <button class="emotion very-good" data-emotion="Muy bien">
+      <div class="emoji happy">
+        <input name="feedback" value="5" type="radio" />
+        <div>
+          <svg class="eye left"><use href="#eye"/></svg>
+          <svg class="eye right"><use href="#eye"/></svg>
+        </div>
+      </div>
+      <strong>Muy bien</strong>
+      <small>Me siento genial</small>
+    </button>
+
+    <!-- Bien (Good) -->
+    <button class="emotion good" data-emotion="Bien">
+      <div class="emoji good">
+        <input checked name="feedback" value="4" type="radio" />
+        <div>
+          <svg class="eye left"><use href="#eye"/></svg>
+          <svg class="eye right"><use href="#eye"/></svg>
+          <svg class="mouth"><use href="#mouth"/></svg>
+        </div>
+      </div>
+      <strong>Bien</strong>
+      <small>Estoy tranquilo/a</small>
+    </button>
+
+    <!-- Regular (Ok) -->
+    <button class="emotion regular" data-emotion="Regular">
+      <div class="emoji ok">
+        <input name="feedback" value="3" type="radio" />
+        <div></div>
+      </div>
+      <strong>Regular</strong>
+      <small>Estoy estable</small>
+    </button>
+
+    <!-- Mal (Sad) -->
+    <button class="emotion bad" data-emotion="Mal">
+      <div class="emoji sad">
+        <input name="feedback" value="2" type="radio" />
+        <div>
+          <svg class="eye left"><use href="#eye"/></svg>
+          <svg class="eye right"><use href="#eye"/></svg>
+          <svg class="mouth"><use href="#mouth"/></svg>
+        </div>
+      </div>
+      <strong>Mal</strong>
+      <small>No estoy muy bien</small>
+    </button>
+
+    <!-- Muy Mal (Angry) -->
+    <button class="emotion very-bad" data-emotion="Muy mal">
+      <div class="emoji angry">
+        <input name="feedback" value="1" type="radio" />
+        <div>
+          <svg class="eye left"><use href="#eye"/></svg>
+          <svg class="eye right"><use href="#eye"/></svg>
+          <svg class="mouth"><use href="#mouth"/></svg>
+        </div>
+      </div>
+      <strong>Muy mal</strong>
+      <small>Necesito apoyo</small>
+    </button>
+
+  </div>
+
+  <!-- SVG Globales compartidos por los emojis -->
+  <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="eye" viewBox="0 0 7 4">
+      <path d="M1,1 C1.83333333,2.16666667 2.66666667,2.75 3.5,2.75 C4.33333333,2.75 5.16666667,2.16666667 6,1"></path>
+    </symbol>
+    <symbol id="mouth" viewBox="0 0 18 7">
+      <path d="M1,5.5 C3.66666667,2.5 6.33333333,1 9,1 C11.6666667,1 14.3333333,2.5 17,5.5"></path>
+    </symbol>
+  </svg>
+</section>
+
+            <!-- PREGUNTA QUE SE DESPLIEGA -->
+
+            <div class="emotion-question" id="emotionQuestion">
+
+                <div class="question-icon">
+                    <i class="fa-solid fa-comment-heart"></i>
+                </div>
+
+                <div class="question-content">
+
+                    <span id="selectedEmotion">
+                        ¿Cómo te sientes?
+                    </span>
+
+                    <h3 id="questionTitle">
+                        ¿Quieres contarnos un poco más?
+                    </h3>
+
+                    <p>
+                        Tu respuesta puede ayudarte a reconocer
+                        lo que estás sintiendo.
+                    </p>
+
+                    <div class="question-buttons">
+
+                        <button class="primary-btn" id="openDiary">
+                            <i class="fa-solid fa-pen"></i>
+                            <a href="/Sentir/Client/ScreenStudents/DiarioEmocional/DiaryEmotional/diario.html">Escribir en mi diario</a>
+                        </button>
+
+                        <button class="secondary-btn" id="closeQuestion">
+                            Ahora no
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= PANEL PRINCIPAL ================= -->
+
+        <section class="dashboard-grid">
+
+
+            <!-- SEGUIMIENTO -->
+
+            <article class="feature-card tracking-card" id="seguimiento">
+
+                <div class="card-top">
+
+                    <div class="card-icon purple">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+
+                    <span class="card-tag">
+                        MI PROCESO
+                    </span>
+
+                </div>
+
+                <h3>Mi seguimiento</h3>
+
+                <p>
+                    Registra y conoce cómo ha evolucionado
+                    tu bienestar emocional.
+                </p>
+
+                <div class="mini-chart">
+
+                    <div class="chart-bars">
+
+                        <span style="height:35%"></span>
+                        <span style="height:55%"></span>
+                        <span style="height:42%"></span>
+                        <span style="height:70%"></span>
+                        <span style="height:60%"></span>
+                        <span style="height:80%"></span>
+                        <span style="height:68%"></span>
+
+                    </div>
+
+                    <div class="chart-text">
+                        Tu evolución emocional
+                    </div>
+
+                </div>
+
+                <button class="card-link">
+                    Ver seguimiento
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </article>
+
+
+            <!-- RELAJACIÓN -->
+
+            <article class="feature-card relaxation-card">
+
+                <div class="card-top">
+
+                    <div class="card-icon blue">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+
+                    <span class="card-tag blue-tag">
+                        BIENESTAR
+                    </span>
+
+                </div>
+
+                <h3>Relajación</h3>
+
+                <p>
+                    Encuentra ejercicios para ayudarte
+                    a relajarte y cuidar tu bienestar.
+                </p>
+
+                <div class="relax-visual">
+
+                    <div class="breathing-circle">
+                        <i class="fa-solid fa-wind"></i>
+                    </div>
+
+                    <span>
+                        Respira y tómate un momento
+                    </span>
+
+                </div>
+
+                <button class="card-link">
+                    <a href="/Sentir/Client/ScreenStudents/Relajacion/relajacion.html">Explorar ejercicios</a>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </article>
+
+
+            <!-- ACTIVIDADES -->
+
+            <article class="feature-card activities-card" id="actividades">
+
+                <div class="card-top">
+
+                    <div class="card-icon violet">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+
+                    <span class="card-tag violet-tag">
+                        INTERACTIVO
+                    </span>
+
+                </div>
+
+                <h3>Actividades</h3>
+
+                <p>
+                    Recursos y dinámicas para explorar
+                    y reconocer tus emociones.
+                </p>
+
+                <div class="activity-preview">
+
+                    <div class="activity-item">
+                        <i class="fa-solid fa-puzzle-piece"></i>
+                        <span>Explorar emociones</span>
+                    </div>
+
+                    <div class="activity-item">
+                        <i class="fa-solid fa-face-smile"></i>
+                        <span>Reconocer cómo me siento</span>
+                    </div>
+
+                </div>
+
+                <button class="card-link">
+                    Ver actividades
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </article>
+
+
+            <!-- DIARIO -->
+
+            <article class="feature-card diary-card" id="diario">
+
+                <div class="card-top">
+
+                    <div class="card-icon silver">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+
+                    <span class="card-tag silver-tag">
+                        PRIVADO
+                    </span>
+
+                </div>
+
+                <h3>Diario emocional</h3>
+
+                <p>
+                    Un espacio para registrar lo que sientes
+                    y expresar tus emociones.
+                </p>
+
+                <div class="diary-line">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <span>
+                        Solo tú puedes acceder a tu diario.
+                    </span>
+
+                </div>
+
+                <button class="card-link">
+                    <a href="/Sentir/Client/ScreenStudents/DiarioEmocional/Diario emocional/diario.html">Abrir diario</a>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </article>
+
+
+            <!-- RECURSOS -->
+
+            <article class="wide-card resources-card" id="recursos">
+
+                <div class="wide-content">
+
+                    <span class="section-label">
+                        HERRAMIENTAS PARA TI
+                    </span>
+
+                    <h2>
+                        Recursos de bienestar
+                    </h2>
+
+                    <p>
+                        Explora recursos de apoyo pensados
+                        para acompañarte en diferentes momentos.
+                    </p>
+
+                    <button class="primary-btn">
+                        Explorar recursos
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </div>
+
+                <div class="resource-icons">
+
+                    <div>
+                        <i class="fa-solid fa-lungs"></i>
+                        <span>Respiración</span>
+                    </div>
+
+                    <div>
+                        <i class="fa-solid fa-leaf"></i>
+                        <span>Relajación</span>
+                    </div>
+
+                    <div>
+                        <i class="fa-solid fa-lightbulb"></i>
+                        <span>Consejos</span>
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- PEDIR AYUDA -->
+
+            <article class="help-card" id="ayuda">
+
+                <div class="help-icon">
+                    <i class="fa-solid fa-hands-holding-heart"></i>
+                </div>
+
+                <div class="help-text">
+
+                    <span>¿NECESITAS APOYO?</span>
+
+                    <h2>
+                        No tienes que hacerlo todo solo/a.
+                    </h2>
+
+                    <p>
+                        Puedes pedir ayuda cuando lo necesites.
+                    </p>
+
+                </div>
+
+                <button class="help-button">
+                    Pedir ayuda
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </article>
+
+
+        </section>
+
+
+        <!-- ================= ALERTA ================= -->
+
+        <button class="floating-alert" id="alertButton">
+
+            <i class="fa-solid fa-triangle-exclamation"></i>
+
+            <span>
+                Necesito ayuda
+            </span>
+
+        </button>
+
+
+        <!-- ================= FOOTER ================= -->
+
+        <footer>
+
+            <div class="footer-logo">
+                sentir
+            </div>
+
+            <span>
+                Tu bienestar importa.
+            </span>
+
+            <div class="footer-security">
+                <i class="fa-solid fa-shield"></i>
+                Espacio seguro
+            </div>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+<!-- ================= MODAL ALERTA ================= -->
+
+<div class="modal-overlay" id="alertModal">
+
+    <div class="modal">
+
+        <button class="modal-close" id="closeAlert">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="modal-icon alert">
+            <i class="fa-solid fa-heart"></i>
+        </div>
+
+        <h2>
+            ¿Necesitas ayuda?
+        </h2>
+
+        <p>
+            Puedes solicitar apoyo cuando lo necesites.
+            Tu bienestar es importante.
+        </p>
+
+        <div class="modal-actions">
+
+            <button class="primary-btn">
+                Pedir ayuda
+            </button>
+
+            <button class="secondary-btn" id="cancelAlert">
+                Cancelar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="estudiante.js"></script>
+
+</body>
+</html>

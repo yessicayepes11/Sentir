@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Diario Emocional | SENTIR</title>
+
+    <!-- Tipografía -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="diario.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         PANTALLA DE ACCESO
+    ====================================================== -->
+
+    <section id="pantallaAcceso" class="access-screen">
+
+        <div class="access-decoration decoration-one"></div>
+        <div class="access-decoration decoration-two"></div>
+
+        <div class="access-card">
+
+            <div class="logo-area">
+                <!-- CAMBIA ESTA RUTA POR TU LOGO -->
+                <img src="Logo-nombrelado (1).png" alt="Logo SENTIR" class="logo">
+            </div>
+
+            <div class="lock-icon">
+                🔐
+            </div>
+
+            <h1 id="tituloAcceso">Tu diario es privado</h1>
+
+            <p id="textoAcceso">
+                Crea una clave personal para proteger este espacio.
+            </p>
+
+            <!-- CREAR CLAVE -->
+            <div id="crearClaveBox">
+
+                <label for="nuevaClave">
+                    Crea tu clave
+                </label>
+
+                <div class="password-container">
+
+                    <input
+                        type="password"
+                        id="nuevaClave"
+                        placeholder="Escribe tu clave"
+                        autocomplete="new-password"
+                    >
+
+                    <button
+                        type="button"
+                        class="show-password"
+                        onclick="mostrarClave('nuevaClave', this)"
+                    >
+                        👁
+                    </button>
+
+                </div>
+
+                <small>
+                    Esta clave será necesaria para entrar nuevamente.
+                </small>
+
+                <button class="primary-button" onclick="crearClave()">
+                    Crear clave y entrar
+                </button>
+
+            </div>
+
+
+            <!-- INGRESAR CLAVE -->
+
+            <div id="ingresarClaveBox" class="hidden">
+
+                <label for="claveIngreso">
+                    Ingresa tu clave
+                </label>
+
+                <div class="password-container">
+
+                    <input
+                        type="password"
+                        id="claveIngreso"
+                        placeholder="Escribe tu clave"
+                        autocomplete="current-password"
+                    >
+
+                    <button
+                        type="button"
+                        class="show-password"
+                        onclick="mostrarClave('claveIngreso', this)"
+                    >
+                        👁
+                    </button>
+
+                </div>
+
+                <button class="primary-button" onclick="verificarClave()">
+                    Abrir mi diario
+                </button>
+
+                <button class="secondary-button" onclick="cambiarClave()">
+                    Cambiar clave
+                </button>
+
+            </div>
+
+            <p id="mensajeAcceso" class="access-message"></p>
+
+            <div class="privacy-note">
+                <span>🔒</span>
+                <p>
+                    Este espacio está pensado para que puedas expresarte
+                    con tranquilidad y privacidad.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         DIARIO EMOCIONAL
+    ====================================================== -->
+
+    <main id="diarioApp" class="diary-app hidden">
+
+        <!-- HEADER -->
+
+        <header class="top-header">
+
+            <div class="brand">
+
+                <!-- LOGO -->
+                <img
+                    src="Logo-nombrelado (1).png"
+                    alt="SENTIR"
+                    class="header-logo"
+                >
+
+            </div>
+
+            <div class="header-actions">
+
+                <div class="date-display">
+                    <span>📅</span>
+                    <span id="fechaActual"></span>
+                </div>
+
+                <button
+                    class="lock-button"
+                    onclick="bloquearDiario()"
+                    title="Bloquear diario"
+                >
+                    🔒 <span>Bloquear</span>
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- CONTENIDO -->
+
+        <section class="diary-content">
+
+            <!-- ENCABEZADO -->
+
+            <div class="welcome-section">
+
+                <div>
+
+                    <span class="section-tag">
+                        MI ESPACIO PERSONAL
+                    </span>
+
+                    <h1>
+                        Diario emocional
+                    </h1>
+
+                    <p>
+                        Un lugar para detenerte, reconocer lo que sientes
+                        y expresar lo que llevas dentro.
+                    </p>
+
+                </div>
+
+                <div class="welcome-illustration">
+                    💜
+                </div>
+
+            </div>
+
+
+            <!-- ESTADÍSTICAS -->
+
+            <section class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon purple">
+                        📖
+                    </div>
+
+                    <div>
+                        <span>Entradas</span>
+                        <strong id="totalEntradas">0</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        💙
+                    </div>
+
+                    <div>
+                        <span>Estado frecuente</span>
+                        <strong id="emocionFrecuente">
+                            —
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon silver">
+                        📅
+                    </div>
+
+                    <div>
+                        <span>Última entrada</span>
+                        <strong id="ultimaEntrada">
+                            —
+                        </strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- GRID PRINCIPAL -->
+
+            <section class="main-grid">
+
+
+                <!-- ==========================================
+                     NUEVA ENTRADA
+                =========================================== -->
+
+                <div class="new-entry-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <span class="small-label">
+                                HOY
+                            </span>
+
+                            <h2>
+                                ¿Cómo te sientes?
+                            </h2>
+
+                        </div>
+
+                        <div class="heart-decoration">
+                            ♡
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-section">
+  <label>¿Cómo te sientes hoy?</label>
+
+  <div class="emotion-grid">
+
+    <!-- Muy bien -->
+    <button type="button" class="emotion-option" data-emotion="Muy bien">
+      <div class="emoji happy">
+        <input name="feedback" value="5" type="radio" hidden />
+        <div>
+          <svg class="eye left"><use href="#eye"/></svg>
+          <svg class="eye right"><use href="#eye"/></svg>
+        </div>
+      </div>
+      <strong>Muy bien</strong>
+      <small>Me siento genial</small>
+    </button>
+
+    <!-- Bien -->
+    <button type="button" class="emotion-option selected" data-emotion="Bien">
+      <div class="emoji good">
+        <input checked name="feedback" value="4" type="radio" hidden />
+        <div>
+          <svg class="eye left"><use href="#eye"/></svg>
+          <svg class="eye right"><use href="#eye"/></svg>
+          <svg class="mouth"><use href="#mouth"/></svg>
+        </div>
+      </div>
+      <strong>Bien</strong>
+      <small>Estoy tranquilo/a</small>
+    </button>
+
+    <!-- Regular -->
+    <button type="button" class="emotion-option" data-emotion="Regular">
+      <div class="emoji ok">
+        <input name="feedback" value="3" type="radio" hidden />
+        <div></div>
+      </div>
+      <strong>Regular</strong>
+      <small>Estoy estable</small>
+    </button>
+
+    <!-- Mal -->
+    <button type="button" class="emotion-option" data-emotion="Mal">
+      <div class="emoji sad">
+        <input name="feedback" value="2" type="radio" hidden />
+        <div>
+          <svg class="eye left"><use href="#eye"/></svg>
+          <svg class="eye right"><use href="#eye"/></svg>
+          <svg class="mouth"><use href="#mouth"/></svg>
+        </div>
+      </div>
+      <strong>Mal</strong>
+      <small>No estoy muy bien</small>
+    </button>
+
+    <!-- Muy mal -->
+    <button type="button" class="emotion-option" data-emotion="Muy mal">
+      <div class="emoji angry">
+        <input name="feedback" value="1" type="radio" hidden />
+        <div>
+          <svg class="eye left"><use href="#eye"/></svg>
+          <svg class="eye right"><use href="#eye"/></svg>
+          <svg class="mouth"><use href="#mouth"/></svg>
+        </div>
+      </div>
+      <strong>Muy mal</strong>
+      <small>Necesito apoyo</small>
+    </button>
+
+  </div>
+
+  <!-- Trazos SVG compartidos -->
+  <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="eye" viewBox="0 0 7 4">
+      <path d="M1,1 C1.83333333,2.16666667 2.66666667,2.75 3.5,2.75 C4.33333333,2.75 5.16666667,2.16666667 6,1"></path>
+    </symbol>
+    <symbol id="mouth" viewBox="0 0 18 7">
+      <path d="M1,5.5 C3.66666667,2.5 6.33333333,1 9,1 C11.6666667,1 14.3333333,2.5 17,5.5"></path>
+    </symbol>
+  </svg>
+</div>
+                    <!-- INTENSIDAD -->
+
+                    <div class="form-section">
+
+                        <div class="label-row">
+
+                            <label for="intensidad">
+                                ¿Qué tan fuerte es lo que sientes?
+                            </label>
+
+                            <span id="valorIntensidad">
+                                5/10
+                            </span>
+
+                        </div>
+
+                        <input
+                            type="range"
+                            id="intensidad"
+                            min="1"
+                            max="10"
+                            value="5"
+                        >
+
+                        <div class="range-labels">
+                            <span>Leve</span>
+                            <span>Muy intenso</span>
+                        </div>
+
+                    </div>
+
+
+                    <!-- TEXTO -->
+
+                    <div class="form-section">
+
+                        <label for="textoDiario">
+                            ¿Quieres contarlo?
+                        </label>
+
+                        <textarea
+                            id="textoDiario"
+                            placeholder="Escribe aquí lo que estás sintiendo, qué ocurrió o simplemente lo que quieras expresar..."
+                        ></textarea>
+
+                        <div class="character-counter">
+                            <span id="contadorCaracteres">
+                                0
+                            </span>
+                            / 1000
+                        </div>
+
+                    </div>
+
+
+                    <!-- BOTONES -->
+
+                    <div class="entry-actions">
+
+                        <button
+                            class="clear-button"
+                            onclick="limpiarEntrada()"
+                        >
+                            Limpiar
+                        </button>
+
+                        <button
+                            class="save-button"
+                            onclick="guardarEntrada()"
+                        >
+                            💜 Guardar entrada
+                        </button>
+
+                    </div>
+
+                    <p id="mensajeEntrada" class="entry-message"></p>
+
+                </div>
+
+
+                <!-- ==========================================
+                     HISTORIAL
+                =========================================== -->
+
+                <aside class="history-card">
+
+                    <div class="history-header">
+
+                        <div>
+
+                            <span class="small-label">
+                                TU RECORRIDO
+                            </span>
+
+                            <h2>
+                                Historial
+                            </h2>
+
+                        </div>
+
+                        <span class="history-count" id="contadorHistorial">
+                            0
+                        </span>
+
+                    </div>
+
+
+                    <!-- BUSCADOR -->
+
+                    <div class="search-box">
+
+                        <span>🔎</span>
+
+                        <input
+                            type="text"
+                            id="buscador"
+                            placeholder="Buscar en tu diario..."
+                        >
+
+                    </div>
+
+
+                    <!-- LISTA -->
+
+                    <div
+                        id="listaHistorial"
+                        class="history-list"
+                    >
+
+                        <div class="empty-history">
+
+                            <div>
+                                📖
+                            </div>
+
+                            <h3>
+                                Todavía no hay entradas
+                            </h3>
+
+                            <p>
+                                Tu primera entrada aparecerá aquí.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </aside>
+
+            </section>
+
+
+            <!-- MENSAJE INFERIOR -->
+
+            <section class="bottom-message">
+
+                <div class="message-icon">
+                    💜
+                </div>
+
+                <div>
+
+                    <strong>
+                        Recuerda
+                    </strong>
+
+                    <p>
+                        Todas las emociones son válidas.
+                        Reconocer cómo te sientes también es una forma de cuidarte.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </section>
+
+    </main>
+
+
+    <!-- MODAL DE DETALLE -->
+
+    <div id="modalEntrada" class="modal hidden">
+
+        <div class="modal-overlay" onclick="cerrarModal()"></div>
+
+        <div class="modal-content">
+
+            <button
+                class="close-modal"
+                onclick="cerrarModal()"
+            >
+                ×
+            </button>
+
+            <span class="small-label">
+                ENTRADA DEL DIARIO
+            </span>
+
+            <div id="detalleEntrada"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+    <script src="diario.js"></script>
+
+</body>
+</html>

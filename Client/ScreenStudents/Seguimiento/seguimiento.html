@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Seguimiento | Sentir</title>
+
+    <!-- Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="seguimiento.css">
+</head>
+
+
+<body>
+
+    <!-- ==========================================
+         FONDO DECORATIVO
+    =========================================== -->
+
+    <div class="bg-decoration bg-one"></div>
+    <div class="bg-decoration bg-two"></div>
+
+
+    <!-- ==========================================
+         SIDEBAR / MENÚ HAMBURGUESA
+    =========================================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+
+            <div class="sidebar-brand">
+
+                <!-- COLOCA AQUÍ TU LOGO -->
+                <img
+                    src="images/logo-sentir.png"
+                    alt="Logo Sentir">
+
+                <span>sentir</span>
+
+            </div>
+
+
+            <button
+                class="close-menu"
+                id="closeMenu"
+                aria-label="Cerrar menú">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <div class="profile-mini">
+
+            <div class="profile-avatar">
+                M
+            </div>
+
+            <div>
+
+                <strong>
+                    Mi espacio
+                </strong>
+
+                <span>
+                    Estudiante
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <p class="nav-title">
+                MI ESPACIO
+            </p>
+
+
+            <a href="#" class="side-link">
+
+                <span class="side-icon">⌂</span>
+
+                <span>Inicio</span>
+
+            </a>
+
+
+            <a href="#" class="side-link active">
+
+                <span class="side-icon">◈</span>
+
+                <span>Seguimiento</span>
+
+            </a>
+
+
+            <a href="#" class="side-link">
+
+                <span class="side-icon">♡</span>
+
+                <span>Diario emocional</span>
+
+            </a>
+
+
+            <a href="#" class="side-link">
+
+                <span class="side-icon">☁</span>
+
+                <span>Relajación</span>
+
+            </a>
+
+
+            <a href="#" class="side-link">
+
+                <span class="side-icon">✦</span>
+
+                <span>Insignias</span>
+
+            </a>
+
+
+            <p class="nav-title second">
+                BIENESTAR
+            </p>
+
+
+            <a href="#" class="side-link">
+
+                <span class="side-icon">🌱</span>
+
+                <span>Recursos</span>
+
+            </a>
+
+
+            <a href="#" class="side-link">
+
+                <span class="side-icon">💬</span>
+
+                <span>Espacio de apoyo</span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <button class="logout-button">
+
+                <span>↪</span>
+
+                Cerrar sesión
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ==========================================
+         OVERLAY
+    =========================================== -->
+
+    <div
+        class="overlay"
+        id="overlay">
+    </div>
+
+
+
+    <!-- ==========================================
+         CONTENEDOR PRINCIPAL
+    =========================================== -->
+
+    <div class="page">
+
+
+        <!-- ======================================
+             HEADER
+        ======================================= -->
+
+        <header class="topbar">
+
+            <button
+                class="hamburger"
+                id="openMenu"
+                aria-label="Abrir menú">
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </button>
+
+
+            <div class="top-brand">
+
+                <!-- TU LOGO -->
+                <img
+                    src="images/logo-sentir.png"
+                    alt="Sentir">
+
+                <span>
+                    sentir
+                </span>
+
+            </div>
+
+
+            <div class="top-actions">
+
+                <button class="notification">
+                    ♡
+                    <span></span>
+                </button>
+
+
+                <div class="user-profile">
+
+                    <div class="user-avatar">
+                        M
+                    </div>
+
+                    <div class="user-name">
+
+                        <strong>
+                            Mi espacio
+                        </strong>
+
+                        <small>
+                            Estudiante
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ======================================
+             CONTENIDO
+        ======================================= -->
+
+        <main class="content">
+
+
+            <!-- ==================================
+                 HERO
+            =================================== -->
+
+            <section class="hero">
+
+                <div class="hero-text">
+
+                    <span class="tag">
+                        ✦ CONOCE TU PROCESO
+                    </span>
+
+
+                    <h1>
+                        Tu
+                        <span>seguimiento</span>
+                        emocional
+                    </h1>
+
+
+                    <p>
+                        Observa cómo te has sentido durante estos días
+                        y conoce mejor tus emociones. Este espacio es
+                        solo para ti.
+                    </p>
+
+                </div>
+
+
+                <!-- ESPACIO PARA PERSONAJE -->
+
+                <div class="hero-character">
+
+                    <!--
+
+                    AQUÍ PUEDES COLOCAR TU PERSONAJE:
+
+                    <img
+                        src="images/personaje-seguimiento.png"
+                        alt="Personaje Sentir">
+
+                    -->
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ==================================
+                 RESUMEN
+            =================================== -->
+
+            <section class="summary-grid">
+
+
+                <article class="summary-card purple">
+
+                    <div class="summary-icon">
+                        ♡
+                    </div>
+
+                    <div>
+
+                        <span>
+                            EMOCIÓN MÁS REGISTRADA
+                        </span>
+
+                        <strong id="mainEmotion">
+                            Tranquilo
+                        </strong>
+
+                        <small>
+                            Durante este periodo
+                        </small>
+
+                    </div>
+
+                </article>
+
+
+
+                <article class="summary-card">
+
+                    <div class="summary-icon blue">
+                        ◈
+                    </div>
+
+                    <div>
+
+                        <span>
+                            REGISTROS
+                        </span>
+
+                        <strong id="recordCount">
+                            12
+                        </strong>
+
+                        <small>
+                            estados registrados
+                        </small>
+
+                    </div>
+
+                </article>
+
+
+
+                <article class="summary-card">
+
+                    <div class="summary-icon silver">
+                        ✦
+                    </div>
+
+                    <div>
+
+                        <span>
+                            CONSTANCIA
+                        </span>
+
+                        <strong>
+                            80%
+                        </strong>
+
+                        <small>
+                            esta semana
+                        </small>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+
+
+            <!-- ==================================
+                 PANEL PRINCIPAL
+            =================================== -->
+
+            <section class="tracking-layout">
+
+
+                <!-- GRÁFICA -->
+
+                <article class="panel chart-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="mini-label">
+                                ÚLTIMOS DÍAS
+                            </span>
+
+                            <h2>
+                                ¿Cómo me he sentido?
+                            </h2>
+
+                        </div>
+
+
+                        <select id="periodSelect">
+
+                            <option value="week">
+                                Esta semana
+                            </option>
+
+                            <option value="month">
+                                Este mes
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="chart">
+
+                        <div class="chart-y">
+
+                            <span>Muy bien</span>
+                            <span>Bien</span>
+                            <span>Neutral</span>
+                            <span>Difícil</span>
+
+                        </div>
+
+
+                        <div class="chart-area">
+
+                            <div class="chart-lines">
+
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+
+                            </div>
+
+
+                            <div class="chart-bars">
+
+                                <div
+                                    class="bar-wrapper"
+                                    data-day="Lun">
+
+                                    <div
+                                        class="bar"
+                                        style="height:55%">
+                                    </div>
+
+                                    <span>
+                                        Lun
+                                    </span>
+
+                                </div>
+
+
+                                <div
+                                    class="bar-wrapper"
+                                    data-day="Mar">
+
+                                    <div
+                                        class="bar"
+                                        style="height:72%">
+                                    </div>
+
+                                    <span>
+                                        Mar
+                                    </span>
+
+                                </div>
+
+
+                                <div
+                                    class="bar-wrapper"
+                                    data-day="Mié">
+
+                                    <div
+                                        class="bar"
+                                        style="height:45%">
+                                    </div>
+
+                                    <span>
+                                        Mié
+                                    </span>
+
+                                </div>
+
+
+                                <div
+                                    class="bar-wrapper"
+                                    data-day="Jue">
+
+                                    <div
+                                        class="bar"
+                                        style="height:78%">
+                                    </div>
+
+                                    <span>
+                                        Jue
+                                    </span>
+
+                                </div>
+
+
+                                <div
+                                    class="bar-wrapper"
+                                    data-day="Vie">
+
+                                    <div
+                                        class="bar"
+                                        style="height:62%">
+                                    </div>
+
+                                    <span>
+                                        Vie
+                                    </span>
+
+                                </div>
+
+
+                                <div
+                                    class="bar-wrapper"
+                                    data-day="Sáb">
+
+                                    <div
+                                        class="bar"
+                                        style="height:84%">
+                                    </div>
+
+                                    <span>
+                                        Sáb
+                                    </span>
+
+                                </div>
+
+
+                                <div
+                                    class="bar-wrapper"
+                                    data-day="Dom">
+
+                                    <div
+                                        class="bar"
+                                        style="height:70%">
+                                    </div>
+
+                                    <span>
+                                        Dom
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="chart-message"
+                        id="chartMessage">
+
+                        Tu registro muestra variaciones en tus
+                        emociones. Recuerda que todas son válidas.
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- EMOCIONES -->
+
+                <article class="panel emotions-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="mini-label">
+                                REGISTROS
+                            </span>
+
+                            <h2>
+                                Mis emociones
+                            </h2>
+
+                        </div>
+
+                        <button
+                            class="view-button"
+                            id="viewAll">
+
+                            Ver todo
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="emotion-list">
+
+
+                        <div class="emotion-row">
+
+                            <div class="emotion-circle purple-circle">
+                                😊
+                            </div>
+
+                            <div class="emotion-info">
+
+                                <strong>
+                                    Feliz
+                                </strong>
+
+                                <span>
+                                    Registrado hoy
+                                </span>
+
+                            </div>
+
+                            <div class="emotion-level">
+                                32%
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="emotion-row">
+
+                            <div class="emotion-circle blue-circle">
+                                😌
+                            </div>
+
+                            <div class="emotion-info">
+
+                                <strong>
+                                    Tranquilo
+                                </strong>
+
+                                <span>
+                                    Registrado ayer
+                                </span>
+
+                            </div>
+
+                            <div class="emotion-level">
+                                27%
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="emotion-row">
+
+                            <div class="emotion-circle silver-circle">
+                                😐
+                            </div>
+
+                            <div class="emotion-info">
+
+                                <strong>
+                                    Neutral
+                                </strong>
+
+                                <span>
+                                    Hace 3 días
+                                </span>
+
+                            </div>
+
+                            <div class="emotion-level">
+                                18%
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="emotion-row">
+
+                            <div class="emotion-circle purple-circle">
+                                😟
+                            </div>
+
+                            <div class="emotion-info">
+
+                                <strong>
+                                    Preocupado
+                                </strong>
+
+                                <span>
+                                    Hace 4 días
+                                </span>
+
+                            </div>
+
+                            <div class="emotion-level">
+                                12%
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+
+
+            <!-- ==================================
+                 PARTE INFERIOR
+            =================================== -->
+
+            <section class="bottom-grid">
+
+
+                <!-- ACTIVIDAD -->
+
+                <article class="panel activity-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="mini-label">
+                                TU PROCESO
+                            </span>
+
+                            <h2>
+                                Esta semana
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="activity-progress">
+
+                        <div class="progress-circle">
+
+                            <span>
+                                80%
+                            </span>
+
+                        </div>
+
+
+                        <div class="activity-text">
+
+                            <strong>
+                                ¡Has sido constante!
+                            </strong>
+
+                            <p>
+                                Has registrado tus emociones
+                                durante 5 de los últimos 7 días.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="days">
+
+                        <span class="completed">
+                            L
+                        </span>
+
+                        <span class="completed">
+                            M
+                        </span>
+
+                        <span class="completed">
+                            M
+                        </span>
+
+                        <span class="completed">
+                            J
+                        </span>
+
+                        <span class="completed">
+                            V
+                        </span>
+
+                        <span>
+                            S
+                        </span>
+
+                        <span>
+                            D
+                        </span>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- RECOMENDACIÓN -->
+
+                <article class="panel recommendation-panel">
+
+                    <div class="recommendation-icon">
+                        🌱
+                    </div>
+
+
+                    <div>
+
+                        <span class="mini-label">
+                            PARA TI
+                        </span>
+
+                        <h2>
+                            Un pequeño consejo
+                        </h2>
+
+                        <p id="recommendationText">
+
+                            Si hoy sientes que tienes muchas cosas
+                            en la cabeza, intenta hacer una pausa
+                            y respirar durante unos minutos.
+
+                        </p>
+
+
+                        <button
+                            class="primary-button"
+                            id="relaxButton">
+
+                            Ir a relajación
+                            <span>→</span>
+
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+
+
+            <!-- ==================================
+                 CTA DIARIO
+            =================================== -->
+
+            <section class="daily-card">
+
+                <div class="daily-icon">
+                    ♡
+                </div>
+
+
+                <div>
+
+                    <span>
+                        ¿AÚN NO REGISTRAS HOY?
+                    </span>
+
+                    <h2>
+                        Tómate un momento para preguntarte:
+                        ¿cómo me siento?
+                    </h2>
+
+                </div>
+
+
+                <button
+                    class="daily-button"
+                    id="diaryButton">
+
+                    Abrir diario
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+
+
+    <!-- ==========================================
+         TOOLTIP / DETALLE EMOCIÓN
+    =========================================== -->
+
+    <div
+        class="toast"
+        id="toast">
+
+        <span>♡</span>
+
+        <p id="toastText">
+            Información actualizada.
+        </p>
+
+    </div>
+
+
+
+    <script src="seguimiento.js"></script>
+
+</body>
+
+</html>

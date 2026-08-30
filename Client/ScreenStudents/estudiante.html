@@ -25,71 +25,60 @@
 
     <!-- ================= SIDEBAR ================= -->
 
-    <aside class="sidebar" id="sidebar">
+   <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+    <i class="fa-solid fa-bars"></i>
+</button>
 
-        <div class="sidebar-logo">
-            <!-- Reemplaza este div por tu logo cuando quieras -->
-            <div class="logo-symbol">
-                <a href=""><img src="/Logo-nombrelado (1).png" alt="" id="logoSentir"></a>
-            </div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-           
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <div class="logo-symbol">
+            <a href=""><img src="/Logo-nombrelado (1).png" alt="" id="logoSentir"></a>
         </div>
+    </div>
+    
+    <nav class="menu">
+        <a href="#" class="menu-item active">
+            <i class="fa-solid fa-house"></i>
+            <span>Inicio</span>
+        </a>
+        <a href="#seguimiento" class="menu-item">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Mi seguimiento</span>
+        </a>
+        <a href="#recursos" class="menu-item">
+            <i class="fa-solid fa-leaf"></i>
+            <span>Recursos</span>
+        </a>
+        <a href="#diario" class="menu-item">
+            <i class="fa-solid fa-book"></i>
+            <span>Diario emocional</span>
+        </a>
+        <a href="#actividades" class="menu-item">
+            <i class="fa-solid fa-star"></i>
+            <span>Actividades</span>
+        </a>
+        <a href="#ayuda" class="menu-item">
+            <i class="fa-solid fa-hands-helping"></i>
+            <span>Pedir ayuda</span>
+        </a>
+    </nav>
 
-        <nav class="menu">
-
-            <a href="#" class="menu-item active">
-                <i class="fa-solid fa-house"></i>
-                <span>Inicio</span>
-            </a>
-
-            <a href="#seguimiento" class="menu-item">
-                <i class="fa-solid fa-chart-line"></i>
-                <span>Mi seguimiento</span>
-            </a>
-
-            <a href="#recursos" class="menu-item">
-                <i class="fa-solid fa-leaf"></i>
-                <span>Recursos</span>
-            </a>
-
-            <a href="#diario" class="menu-item">
-                <i class="fa-solid fa-book"></i>
-                <span>Diario emocional</span>
-            </a>
-
-            <a href="#actividades" class="menu-item">
-                <i class="fa-solid fa-star"></i>
-                <span>Actividades</span>
-            </a>
-
-            <a href="#ayuda" class="menu-item">
-                <i class="fa-solid fa-hands-helping"></i>
-                <span>Pedir ayuda</span>
-            </a>
-
-        </nav>
-
-        <div class="sidebar-bottom">
-
-            <div class="privacy-box">
-                <i class="fa-solid fa-shield-heart"></i>
-
-                <div>
-                    <strong>Tu bienestar importa</strong>
-                    <small>Tu información está protegida.</small>
-                </div>
+    <div class="sidebar-bottom">
+        <div class="privacy-box">
+            <i class="fa-solid fa-shield-heart"></i>
+            <div>
+                <strong>Tu bienestar importa</strong>
+                <small>Tu información está protegida.</small>
             </div>
-
-            <button class="logout">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                <a href="/Sentir/Client/index.html">Cerrar sesión</a>
-                
-            </button>
-
         </div>
-
-    </aside>
+        <button class="logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <a href="/Sentir/Client/index.html">Cerrar sesión</a>
+        </button>
+    </div>
+</aside>
 
 
     <!-- ================= CONTENIDO ================= -->

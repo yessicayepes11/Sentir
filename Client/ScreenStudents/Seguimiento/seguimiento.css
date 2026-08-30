@@ -125,122 +125,180 @@ body {
 /* =====================================================
    SIDEBAR
    ===================================================== */
+   .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 17px;
+    border-radius: 15px;
+    color: var(--texto-suave);
+    font-size: 14px;
+    font-weight: 500;
+    transition: .25s ease;
+    text-decoration: none; /* <-- Agrega esta línea para quitar el subrayado */
+}
 
+   :root {
+    --morado: #6c4df6;
+    --texto-suave: #7e7e8f;
+}
+/* Tu CSS Original del Sidebar */
 .sidebar {
-
+    width: 270px;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #ffffff 0%, #f5f2ff 100%);
+    border-right: 1px solid rgba(108, 77, 246, .10);
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
     position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    transition: transform 0.3s ease-in-out; /* Animación fluida al abrir/cerrar */
+}
 
+/* LOGO */
+#logoSentir {
+    width: 200px;
+    height: auto;
+}
+
+/* MENU */
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 17px;
+    border-radius: 15px;
+    color: var(--texto-suave);
+    font-size: 14px;
+    font-weight: 500;
+    transition: .25s ease;
+}
+
+.menu-item i {
+    width: 20px;
+    text-align: center;
+}
+
+.menu-item:hover {
+    background: rgba(108,77,246,.08);
+    color: var(--morado);
+}
+
+.menu-item.active {
+    background: linear-gradient(90deg, rgba(108,77,246,.15), rgba(101,184,255,.08));
+    color: var(--morado);
+    font-weight: 700;
+}
+
+/* SIDEBAR BOTTOM */
+.sidebar-bottom {
+    margin-top: auto;
+}
+
+.privacy-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px;
+    background: rgba(108,77,246,.06);
+    border-radius: 16px;
+    margin-bottom: 15px;
+}
+
+.privacy-box > i {
+    color: var(--morado);
+    font-size: 22px;
+}
+
+.privacy-box strong {
+    display: block;
+    font-size: 11px;
+}
+
+.privacy-box small {
+    display: block;
+    font-size: 9px;
+    color: var(--texto-suave);
+}
+
+.logout {
+    width: 100%;
+    background: transparent;
+    color: var(--texto-suave);
+    padding: 12px;
+    text-align: left;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+}
+
+.logout i {
+    margin-right: 10px;
+}
+
+/* --- NUEVOS ESTILOS PARA EL MENÚ DE HAMBURGUESA Y RESPONSIVO --- */
+
+/* Botón de Hamburguesa */
+.menu-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 101;
+    background: #ffffff;
+    border: 1px solid rgba(108, 77, 246, .2);
+    color: var(--morado, #6c4df6);
+    font-size: 20px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(108, 77, 246, 0.1);
+    display: none; /* Por defecto oculto en pantallas grandes si deseas que sea fijo, o cámbialo según prefieras */
+}
+
+/* Fondo oscuro translúcido al abrir el menú en móviles */
+.sidebar-overlay {
+    position: fixed;
     top: 0;
     left: 0;
-
-    width: 285px;
+    width: 100vw;
     height: 100vh;
-
-    padding: 25px 20px;
-
-    background:
-        rgba(255,255,255,.96);
-
-    backdrop-filter:
-        blur(20px);
-
-    border-right:
-        1px solid
-        rgba(108,77,246,.08);
-
-    box-shadow:
-        15px 0 45px
-        rgba(50,40,100,.08);
-
-    z-index: 100;
-
-    transform:
-        translateX(-100%);
-
-    transition:
-        transform .35s ease;
-
-    display: flex;
-
-    flex-direction: column;
-
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
 }
 
+/* Comportamiento cuando la pantalla es pequeña o si quieres que funcione siempre con hamburguesa */
+@media (max-width: 1024px) {
+    .topbar .hamburger {
+        display: none !important;
+    }
 
-.sidebar.open {
+    .sidebar {
+        transform: translateX(-100%); /* Oculta el sidebar fuera de la pantalla a la izquierda */
+    }
 
-    transform:
-        translateX(0);
+    /* Cuando se activa la clase 'open', el sidebar se muestra */
+    .sidebar.open {
+        transform: translateX(0);
+    }
 
+    /* Muestra el fondo oscuro cuando el sidebar está abierto */
+    .sidebar-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
 }
-
-
-
-/* ================= SIDEBAR HEADER ================= */
-
-.sidebar-header {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    margin-bottom: 30px;
-
-}
-
-
-.sidebar-brand {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    color:
-        var(--morado-sentir);
-
-    font-size: 25px;
-
-    font-weight: 700;
-
-}
-
-
-.sidebar-brand img {
-
-    width: 38px;
-    height: 38px;
-
-    object-fit: contain;
-
-}
-
-
-.close-menu {
-
-    width: 38px;
-    height: 38px;
-
-    border: none;
-
-    border-radius: 12px;
-
-    background:
-        var(--gris-claro);
-
-    color:
-        var(--texto);
-
-    font-size: 25px;
-
-    cursor: pointer;
-
-}
-
-
 
 /* ================= PERFIL ================= */
 
@@ -2192,4 +2250,23 @@ body {
 
     }
 
+}
+
+/* =====================================================
+   AJUSTE DE CONTENIDO PARA EL SIDEBAR FIJO
+   ===================================================== */
+
+/* Empuja toda la página principal a la derecha para dejar espacio al sidebar en PC */
+.page {
+    margin-left: 270px;
+    width: calc(100% - 270px);
+    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+/* En pantallas pequeñas (tablets y celulares), el sidebar se oculta y la página vuelve a ocupar el 100% */
+@media (max-width: 1024px) {
+    .page {
+        margin-left: 0;
+        width: 100%;
+    }
 }

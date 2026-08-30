@@ -29,149 +29,61 @@
     <div class="bg-decoration bg-two"></div>
 
 
-    <!-- ==========================================
-         SIDEBAR / MENÚ HAMBURGUESA
-    =========================================== -->
-
-    <aside class="sidebar" id="sidebar">
-
-        <div class="sidebar-header">
-
-            <div class="sidebar-brand">
-
-                <!-- COLOCA AQUÍ TU LOGO -->
-                <img
-                    src="images/logo-sentir.png"
-                    alt="Logo Sentir">
-
-                <span>sentir</span>
-
-            </div>
+    <!-- ================= SIDEBAR ================= -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 
-            <button
-                class="close-menu"
-                id="closeMenu"
-                aria-label="Cerrar menú">
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-                ×
-
-            </button>
-
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <div class="logo-symbol">
+            <a href=""><img src="/Logo-nombrelado (1).png" alt="" id="logoSentir"></a>
         </div>
+    </div>
+    
+    <nav class="menu">
+        <a href="#" class="menu-item active">
+            <i class="fa-solid fa-house"></i>
+            <span>Inicio</span>
+        </a>
+        <a href="#seguimiento" class="menu-item">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Mi seguimiento</span>
+        </a>
+        <a href="#recursos" class="menu-item">
+            <i class="fa-solid fa-leaf"></i>
+            <span>Recursos</span>
+        </a>
+        <a href="#diario" class="menu-item">
+            <i class="fa-solid fa-book"></i>
+            <span>Diario emocional</span>
+        </a>
+        <a href="#actividades" class="menu-item">
+            <i class="fa-solid fa-star"></i>
+            <span>Actividades</span>
+        </a>
+        <a href="#ayuda" class="menu-item">
+            <i class="fa-solid fa-hands-helping"></i>
+            <span>Pedir ayuda</span>
+        </a>
+    </nav>
 
-
-        <div class="profile-mini">
-
-            <div class="profile-avatar">
-                M
-            </div>
-
+    <div class="sidebar-bottom">
+        <div class="privacy-box">
+            <i class="fa-solid fa-shield-heart"></i>
             <div>
-
-                <strong>
-                    Mi espacio
-                </strong>
-
-                <span>
-                    Estudiante
-                </span>
-
+                <strong>Tu bienestar importa</strong>
+                <small>Tu información está protegida.</small>
             </div>
-
         </div>
+        <button class="logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <a href="/Sentir/Client/index.html">Cerrar sesión</a>
+        </button>
+    </div>
+</aside>
 
-
-        <nav class="sidebar-nav">
-
-            <p class="nav-title">
-                MI ESPACIO
-            </p>
-
-
-            <a href="#" class="side-link">
-
-                <span class="side-icon">⌂</span>
-
-                <span>Inicio</span>
-
-            </a>
-
-
-            <a href="#" class="side-link active">
-
-                <span class="side-icon">◈</span>
-
-                <span>Seguimiento</span>
-
-            </a>
-
-
-            <a href="#" class="side-link">
-
-                <span class="side-icon">♡</span>
-
-                <span>Diario emocional</span>
-
-            </a>
-
-
-            <a href="#" class="side-link">
-
-                <span class="side-icon">☁</span>
-
-                <span>Relajación</span>
-
-            </a>
-
-
-            <a href="#" class="side-link">
-
-                <span class="side-icon">✦</span>
-
-                <span>Insignias</span>
-
-            </a>
-
-
-            <p class="nav-title second">
-                BIENESTAR
-            </p>
-
-
-            <a href="#" class="side-link">
-
-                <span class="side-icon">🌱</span>
-
-                <span>Recursos</span>
-
-            </a>
-
-
-            <a href="#" class="side-link">
-
-                <span class="side-icon">💬</span>
-
-                <span>Espacio de apoyo</span>
-
-            </a>
-
-        </nav>
-
-
-        <div class="sidebar-bottom">
-
-            <button class="logout-button">
-
-                <span>↪</span>
-
-                Cerrar sesión
-
-            </button>
-
-        </div>
-
-    </aside>
 
 
     <!-- ==========================================

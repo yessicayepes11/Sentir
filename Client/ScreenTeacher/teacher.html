@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sentir | Panel Docente</title>
+
+    <link rel="stylesheet" href="teacher.css">
+
+    <!-- Tipografía -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Fondo decorativo -->
+    <div class="background-decoration decoration-one"></div>
+    <div class="background-decoration decoration-two"></div>
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-top">
+
+            <div class="logo-container">
+                <!-- REEMPLAZAR POR TU LOGO -->
+                <img src="Logo-nombrelado.png" alt="Logo Sentir" class="logo">
+            </div>
+
+            <button class="close-sidebar" id="closeSidebar">
+                ×
+            </button>
+
+            <div class="profile-mini">
+
+                <!-- REEMPLAZAR POR IMAGEN DEL DOCENTE -->
+                <img src="ImgenDocentes.png"
+                     alt="Docente"
+                     class="teacher-avatar">
+
+                <div>
+                    <strong>Docente</strong>
+                    <span>Entorno educativo</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- NAVEGACIÓN -->
+
+        <nav class="navigation">
+
+            <p class="navigation-title">
+                PANEL PRINCIPAL
+            </p>
+
+            <button class="nav-item active" data-section="inicio">
+
+                <span class="nav-icon">⌂</span>
+
+                <span>Inicio</span>
+
+            </button>
+
+
+            <button class="nav-item" data-section="estudiantes">
+
+                <span class="nav-icon">♧</span>
+
+                <span>Estudiantes</span>
+
+            </button>
+
+
+            <button class="nav-item" data-section="casos">
+
+                <span class="nav-icon">!</span>
+
+                <span>Alertas y casos</span>
+
+                <span class="notification-small">
+                    3
+                </span>
+
+            </button>
+
+
+            <p class="navigation-title secondary">
+                RECURSOS
+            </p>
+
+
+            <button class="nav-item" data-section="recursos">
+
+                <span class="nav-icon">▣</span>
+
+                <span>Recursos y consejos</span>
+
+            </button>
+
+
+            <button class="nav-item" data-section="reportes">
+
+                <span class="nav-icon">◩</span>
+
+                <span>Reportes</span>
+
+            </button>
+
+        </nav>
+
+
+        <!-- PARTE INFERIOR -->
+
+        <div class="sidebar-bottom">
+
+            <div class="privacy-box">
+
+                <div class="privacy-icon">
+                    ♡
+                </div>
+
+                <div>
+                    <strong>Privacidad primero</strong>
+
+                    <p>
+                        La información confidencial
+                        está protegida.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <button class="logout-button">
+
+                <span>↪</span>
+
+                Cerrar sesión
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         CONTENIDO PRINCIPAL
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- HEADER -->
+
+        <header class="topbar">
+
+            <button class="menu-button" id="openSidebar">
+                ☰
+            </button>
+
+
+            <div class="topbar-left">
+
+                <div class="breadcrumb">
+                    Sentir
+                    <span>/</span>
+                    Panel docente
+                </div>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <button class="top-icon">
+                    ⌕
+                </button>
+
+                <button class="top-icon notification-button">
+
+                    ♧
+
+                    <span class="notification-dot">
+                        3
+                    </span>
+
+                </button>
+
+
+                <div class="top-profile">
+
+                    <img src="ImgenDocentes.png"
+                         alt="Docente">
+
+                    <div>
+
+                        <strong>Docente</strong>
+
+                        <span>Panel educativo</span>
+
+                    </div>
+                     <section class="view" id="view-perfil">
+
+
+                    <span class="profile-arrow">
+                        ▾
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             CONTENIDO
+        ================================================== -->
+
+        <section class="dashboard">
+
+
+            <!-- HERO -->
+
+            <section class="hero">
+
+                <div class="hero-text">
+
+                    <div class="welcome-tag">
+                        ✦ PANEL DOCENTE
+                    </div>
+
+                    <h1>
+                        ¡Hola, Docente!
+                        <span>👋</span>
+                    </h1>
+
+                    <h2>
+                        El bienestar también
+                        hace parte del aprendizaje.
+                    </h2>
+
+                    <p>
+                        Consulta el panorama general de tu grupo,
+                        identifica alertas y encuentra recursos
+                        para acompañar a tus estudiantes.
+                    </p>
+
+
+                    <div class="hero-actions">
+
+                        <button class="primary-button"
+                                data-scroll="resumen">
+
+                            Ver resumen general
+                            <span>→</span>
+
+                        </button>
+
+                        <button class="secondary-button"
+                                data-scroll="casos">
+
+                            Revisar alertas
+                            <span>3</span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hero-character">
+
+                    <!-- IMAGEN DEL PERSONAJE -->
+                    <img src="ImgenDocentes.png"
+                         alt="Personaje docente">
+
+                    <div class="floating-message">
+
+                        <span class="floating-icon">
+                            ♡
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Tu acompañamiento
+                                importa
+                            </strong>
+
+                            <small>
+                                Cada acción puede marcar
+                                una diferencia.
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 MÉTRICAS
+            ================================================== -->
+
+            <section class="metrics" id="resumen">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                            VISIÓN GENERAL
+                        </span>
+
+                        <h2>
+                            Bienestar de tu grupo
+                        </h2>
+
+                    </div>
+
+                    <span class="update-time">
+                        Actualizado recientemente
+                    </span>
+
+                </div>
+
+
+                <div class="metric-grid">
+
+
+                    <!-- TARJETA 1 -->
+
+                    <article class="metric-card purple-card">
+
+                        <div class="metric-top">
+
+                            <div class="metric-icon">
+                                ♡
+                            </div>
+
+                            <span class="metric-trend positive">
+                                ↑
+                            </span>
+
+                        </div>
+
+                        <div class="metric-number">
+                            78%
+                        </div>
+
+                        <p>
+                            Bienestar general
+                        </p>
+
+                        <div class="progress">
+
+                            <span style="width:78%"></span>
+
+                        </div>
+
+                        <small>
+                            Panorama general del grupo
+                        </small>
+
+                    </article>
+
+
+                    <!-- TARJETA 2 -->
+
+                    <article class="metric-card blue-card">
+
+                        <div class="metric-top">
+
+                            <div class="metric-icon">
+                                ◉
+                            </div>
+
+                            <span class="metric-trend positive">
+                                ↑
+                            </span>
+
+                        </div>
+
+                        <div class="metric-number">
+                            64%
+                        </div>
+
+                        <p>
+                            Estado emocional favorable
+                        </p>
+
+                        <div class="progress">
+
+                            <span style="width:64%"></span>
+
+                        </div>
+
+                        <small>
+                            Registros recientes
+                        </small>
+
+                    </article>
+
+
+                    <!-- TARJETA 3 -->
+
+                    <article class="metric-card silver-card">
+
+                        <div class="metric-top">
+
+                            <div class="metric-icon">
+                                ◌
+                            </div>
+
+                            <span class="metric-trend neutral">
+                                =
+                            </span>
+
+                        </div>
+
+                        <div class="metric-number">
+                            18
+                        </div>
+
+                        <p>
+                            Estudiantes monitoreados
+                        </p>
+
+                        <div class="student-avatars">
+
+                            <span>👩🏻</span>
+                            <span>👦🏽</span>
+                            <span>👩🏽</span>
+                            <span>+15</span>
+
+                        </div>
+
+                        <small>
+                            Seguimiento general
+                        </small>
+
+                    </article>
+
+
+                    <!-- TARJETA 4 -->
+
+                    <article class="metric-card alert-card">
+
+                        <div class="metric-top">
+
+                            <div class="metric-icon">
+                                !
+                            </div>
+
+                            <span class="metric-trend alert">
+                                Atención
+                            </span>
+
+                        </div>
+
+                        <div class="metric-number">
+                            3
+                        </div>
+
+                        <p>
+                            Alertas activas
+                        </p>
+
+                        <button class="card-link"
+                                data-scroll="casos">
+
+                            Revisar casos
+                            →
+                            
+                        </button>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 ZONA CENTRAL
+            ================================================== -->
+
+            <section class="content-grid">
+
+
+                <!-- ESTADO GENERAL -->
+
+                <article class="large-card emotional-overview">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <span class="section-label">
+                                ESTADO EMOCIONAL
+                            </span>
+
+                            <h3>
+                                Panorama del grupo
+                            </h3>
+
+                        </div>
+
+                        <button class="more-button">
+                            ⋯
+                        </button>
+
+                    </div>
+
+
+                    <div class="emotional-content">
+
+
+                        <div class="emotion-chart">
+
+                            <div class="chart-center">
+
+                                <strong>
+                                    78%
+                                </strong>
+
+                                <span>
+                                    Bienestar
+                                </span>
+
+                            </div>
+
+                            <div class="chart-ring"></div>
+
+                        </div>
+
+
+                        <div class="emotion-list">
+
+                            <div class="emotion-item">
+
+                                <span class="emotion-face good">
+                                    😊
+                                </span>
+
+                                <div class="emotion-info">
+
+                                    <div>
+
+                                        <strong>
+                                            Bien
+                                        </strong>
+
+                                        <span>
+                                            42%
+                                        </span>
+
+                                    </div>
+
+                                    <div class="mini-progress">
+                                        <span style="width:42%"></span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="emotion-item">
+
+                                <span class="emotion-face regular">
+                                    😐
+                                </span>
+
+                                <div class="emotion-info">
+
+                                    <div>
+
+                                        <strong>
+                                            Regular
+                                        </strong>
+
+                                        <span>
+                                            26%
+                                        </span>
+
+                                    </div>
+
+                                    <div class="mini-progress">
+                                        <span style="width:26%"></span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="emotion-item">
+
+                                <span class="emotion-face bad">
+                                    😟
+                                </span>
+
+                                <div class="emotion-info">
+
+                                    <div>
+
+                                        <strong>
+                                            Requiere atención
+                                        </strong>
+
+                                        <span>
+                                            10%
+                                        </span>
+
+                                    </div>
+
+                                    <div class="mini-progress">
+                                        <span style="width:10%"></span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- ACCIONES -->
+
+                <article class="large-card quick-actions">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <span class="section-label">
+                                HERRAMIENTAS
+                            </span>
+
+                            <h3>
+                                Acciones rápidas
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="actions-list">
+
+
+                        <button class="action-card"
+                                data-section="casos">
+
+                            <div class="action-icon alert-icon">
+                                !
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Alertas y casos
+                                </strong>
+
+                                <span>
+                                    Consulta situaciones que
+                                    requieren atención.
+                                </span>
+
+                            </div>
+
+                            <b>
+                                →
+                            </b>
+
+                        </button>
+
+
+                        <button class="action-card"
+                                data-section="recursos">
+
+                            <div class="action-icon resource-icon">
+                                ▣
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Recursos y consejos
+                                </strong>
+
+                                <span>
+                                    Encuentra estrategias para
+                                    apoyar a tus estudiantes.
+                                </span>
+
+                            </div>
+
+                            <b>
+                                →
+                            </b>
+
+                        </button>
+
+
+                        <button class="action-card"
+                                data-section="reportes">
+
+                            <div class="action-icon report-icon">
+                                ◩
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Reportes
+                                </strong>
+
+                                <span>
+                                    Consulta informes y
+                                    estadísticas del curso.
+                                </span>
+
+                            </div>
+
+                            <b>
+                                →
+                            </b>
+
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <!-- =================================================
+                 ALERTAS + ACTIVIDAD
+            ================================================== -->
+
+            <section class="bottom-grid" id="casos">
+
+
+                <!-- ALERTAS -->
+
+                <article class="large-card cases-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <span class="section-label">
+                                ATENCIÓN
+                            </span>
+
+                            <h3>
+                                Alertas y casos
+                            </h3>
+
+                        </div>
+
+                        <button class="view-all">
+                            Ver todos →
+                        </button>
+
+                    </div>
+
+
+                    <div class="case-list">
+
+
+                        <div class="case-item">
+
+                            <div class="case-avatar">
+                                👦🏽
+                            </div>
+
+                            <div class="case-data">
+
+                                <strong>
+                                    Caso #2314
+                                </strong>
+
+                                <span>
+                                    Alerta de atención
+                                </span>
+
+                            </div>
+
+                            <span class="risk high">
+                                Riesgo alto
+                            </span>
+
+                        </div>
+
+
+                        <div class="case-item">
+
+                            <div class="case-avatar">
+                                👧🏻
+                            </div>
+
+                            <div class="case-data">
+
+                                <strong>
+                                    Caso #2315
+                                </strong>
+
+                                <span>
+                                    Requiere seguimiento
+                                </span>
+
+                            </div>
+
+                            <span class="risk medium">
+                                Riesgo medio
+                            </span>
+
+                        </div>
+
+
+                        <div class="case-item">
+
+                            <div class="case-avatar">
+                                🧑🏽
+                            </div>
+
+                            <div class="case-data">
+
+                                <strong>
+                                    Caso #2316
+                                </strong>
+
+                                <span>
+                                    En seguimiento
+                                </span>
+
+                            </div>
+
+                            <span class="risk low">
+                                Seguimiento
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- PRIVACIDAD -->
+
+                <article class="privacy-card">
+
+                    <div class="privacy-large-icon">
+                        ♡
+                    </div>
+
+                    <span class="section-label">
+                        ACOMPAÑAMIENTO RESPONSABLE
+                    </span>
+
+                    <h3>
+                        Cuidar también
+                        es saber respetar.
+                    </h3>
+
+                    <p>
+                        Sentir protege la información
+                        confidencial de los estudiantes.
+                        Como docente, tienes acceso a
+                        herramientas de acompañamiento
+                        acordes con tu rol.
+                    </p>
+
+                    <div class="privacy-line">
+
+                        <span>✓</span>
+
+                        <span>
+                            Información general protegida
+                        </span>
+
+                    </div>
+
+                    <div class="privacy-line">
+
+                        <span>✓</span>
+
+                        <span>
+                            Seguimiento responsable
+                        </span>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <!-- FOOTER -->
+
+            <footer class="dashboard-footer">
+
+                <div>
+
+                    <strong>
+                        sentir
+                    </strong>
+
+                    <span>
+                        Entiende lo que sientes,
+                        transforma tu bienestar.
+                    </span>
+
+                </div>
+
+                <span>
+                    Bienestar emocional para
+                    la comunidad educativa.
+                </span>
+
+            </footer>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         OVERLAY MOBILE
+    ====================================================== -->
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+
+    <script src="docente.js"></script>
+
+</body>
+</html>

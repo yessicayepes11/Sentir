@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedir ayuda | Sentir</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="ayuda.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- ================= SIDEBAR ================= -->
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-symbol">
+                <a href="../estudiante.html">
+                    <img src="../images/logo-sentir.png" alt="Sentir" id="logoSentir" onerror="this.style.display='none'">
+                </a>
+            </div>
+        </div>
+
+        <nav class="menu">
+            <a href="../estudiante.html" class="menu-item" data-page="estudiante">
+                <i class="fa-solid fa-house"></i>
+                <span>Inicio</span>
+            </a>
+            <a href="../Seguimiento/seguimiento.html" class="menu-item" data-page="seguimiento">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Mi seguimiento</span>
+            </a>
+            <a href="../Recursos/recursos.html" class="menu-item" data-page="recursos">
+                <i class="fa-solid fa-leaf"></i>
+                <span>Recursos</span>
+            </a>
+            <a href="../DiarioEmocional/diario.html" class="menu-item" data-page="diario">
+                <i class="fa-solid fa-book"></i>
+                <span>Diario emocional</span>
+            </a>
+            <a href="../Actividades/actividades.html" class="menu-item" data-page="actividades">
+                <i class="fa-solid fa-star"></i>
+                <span>Actividades</span>
+            </a>
+            <a href="ayuda.html" class="menu-item active" data-page="ayuda">
+                <i class="fa-solid fa-hands-helping"></i>
+                <span>Pedir ayuda</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="privacy-box">
+                <i class="fa-solid fa-shield-heart"></i>
+                <div>
+                    <strong>Tu bienestar importa</strong>
+                    <small>Tu información está protegida.</small>
+                </div>
+            </div>
+            <button class="logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <a href="/Sentir/Client/index.html">Cerrar sesión</a>
+            </button>
+        </div>
+    </aside>
+
+    <!-- ================= CONTENIDO ================= -->
+    <main class="main-content">
+
+        <!-- HEADER -->
+        <header class="topbar">
+            <button class="mobile-menu" id="mobileMenu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="mobile-logo">
+                <div class="logo-symbol small">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+                <span>sentir</span>
+            </div>
+
+            <div class="top-actions">
+                <button class="notification">
+                    <i class="fa-regular fa-bell"></i>
+                    <span></span>
+                </button>
+
+                <div class="profile">
+                    <div class="profile-avatar">A</div>
+                    <div class="profile-info">
+                        <strong>Ana</strong>
+                        <small>Estudiante</small>
+                    </div>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- ================= HERO ================= -->
+        <section class="welcome-section">
+            <div class="welcome-text">
+                <span class="welcome-tag">
+                    <i class="fa-solid fa-hands-holding-heart"></i>
+                    Estamos aquí contigo
+                </span>
+
+                <h1>No tienes que hacerlo solo/a</h1>
+
+                <h2>Pedir ayuda es un acto de valentía</h2>
+
+                <p>
+                    Si estás pasando por un momento difícil, hay personas y
+                    recursos listos para acompañarte. Elige la opción que
+                    más se adapte a lo que necesitas ahora.
+                </p>
+            </div>
+
+            <div class="character-container">
+                <div class="help-illustration">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= OPCIONES DE AYUDA ================= -->
+        <section class="help-options">
+
+            <!-- Opción 1: Hablar con alguien de confianza -->
+            <article class="help-card primary">
+                <div class="card-icon-wrap purple">
+                    <i class="fa-solid fa-user-friends"></i>
+                </div>
+                <div class="card-body">
+                    <span class="card-label">CERCANO</span>
+                    <h3>Hablar con alguien de confianza</h3>
+                    <p>
+                        A veces solo necesitas ser escuchado/a. Puedes
+                        hablar con un amigo, familiar, tutor o orientador
+                        de tu colegio.
+                    </p>
+                    <button class="card-btn" id="btnConfianza">
+                        Cómo empezar
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </article>
+
+            <!-- Opción 2: Solicitar apoyo profesional -->
+            <article class="help-card">
+                <div class="card-icon-wrap blue">
+                    <i class="fa-solid fa-user-doctor"></i>
+                </div>
+                <div class="card-body">
+                    <span class="card-label blue-label">PROFESIONAL</span>
+                    <h3>Solicitar apoyo profesional</h3>
+                    <p>
+                        Puedes pedir que un orientador o profesional de
+                        bienestar se ponga en contacto contigo de forma
+                        confidencial.
+                    </p>
+                    <button class="card-btn" id="btnProfesional">
+                        Pedir apoyo
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </article>
+
+            <!-- Opción 3: Líneas de emergencia -->
+            <article class="help-card urgent">
+                <div class="card-icon-wrap red">
+                    <i class="fa-solid fa-phone-volume"></i>
+                </div>
+                <div class="card-body">
+                    <span class="card-label red-label">URGENTE</span>
+                    <h3>Necesito ayuda ahora</h3>
+                    <p>
+                        Si sientes que estás en crisis o en peligro,
+                        contacta de inmediato con una línea de ayuda.
+                    </p>
+                    <button class="card-btn urgent-btn" id="btnUrgente">
+                        Ver líneas de ayuda
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- ================= LÍNEAS DE AYUDA ================= -->
+        <section class="hotlines-section" id="lineasAyuda">
+            <div class="section-header">
+                <span class="section-label">RECURSOS DE APOYO</span>
+                <h2>Líneas de ayuda disponibles</h2>
+                <p>Puedes llamar o escribir de forma gratuita y confidencial.</p>
+            </div>
+
+            <div class="hotlines-grid">
+
+                <article class="hotline-card">
+                    <div class="hotline-icon">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <div class="hotline-info">
+                        <strong>Línea de la Vida</strong>
+                        <span>Apoyo en crisis emocional (Colombia)</span>
+                        <a href="tel:106" class="hotline-number">106</a>
+                    </div>
+                </article>
+
+                <article class="hotline-card">
+                    <div class="hotline-icon">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <div class="hotline-info">
+                        <strong>WhatsApp de apoyo</strong>
+                        <span>Chat de contención emocional</span>
+                        <a href="https://wa.me/573007549193" target="_blank" class="hotline-number">
+                            +57 300 754 9193
+                        </a>
+                    </div>
+                </article>
+
+                <article class="hotline-card">
+                    <div class="hotline-icon">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+                    <div class="hotline-info">
+                        <strong>Línea Nacional</strong>
+                        <span>Orientación y contención</span>
+                        <a href="tel:192" class="hotline-number">192 opción 4</a>
+                    </div>
+                </article>
+
+                <article class="hotline-card">
+                    <div class="hotline-icon">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <div class="hotline-info">
+                        <strong>Orientación escolar</strong>
+                        <span>Contacta a tu colegio</span>
+                        <span class="hotline-note">Habla con tu tutor o coordinador</span>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ================= FORMULARIO DE SOLICITUD ================= -->
+        <section class="request-section" id="solicitud">
+            <div class="request-card">
+                <div class="request-header">
+                    <div class="request-icon">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </div>
+                    <div>
+                        <span class="section-label">SOLICITUD CONFIDENCIAL</span>
+                        <h2>¿Quieres que alguien te contacte?</h2>
+                        <p>
+                            Completa este formulario y un profesional de
+                            bienestar se pondrá en contacto contigo.
+                            Tu información es privada.
+                        </p>
+                    </div>
+                </div>
+
+                <form id="helpForm" class="help-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nombre">Nombre (opcional)</label>
+                            <input type="text" id="nombre" placeholder="Cómo te gustaría que te llamen">
+                        </div>
+                        <div class="form-group">
+                            <label for="contacto">Forma de contacto preferida</label>
+                            <select id="contacto">
+                                <option value="">Selecciona una opción</option>
+                                <option value="mensaje">Mensaje en la plataforma</option>
+                                <option value="correo">Correo electrónico</option>
+                                <option value="llamada">Llamada telefónica</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="motivo">¿Qué te está pasando? (opcional)</label>
+                        <textarea id="motivo" rows="4" placeholder="Puedes escribir lo que sientes o lo que necesitas. No es obligatorio."></textarea>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="urgente">
+                            <span>Marca esta casilla si sientes que necesitas ayuda de forma urgente</span>
+                        </label>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="primary-btn" id="enviarSolicitud">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            Enviar solicitud
+                        </button>
+                        <p class="privacy-note">
+                            <i class="fa-solid fa-lock"></i>
+                            Solo el equipo de bienestar podrá ver esta información.
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ================= MENSAJE DE APOYO ================= -->
+        <section class="support-message">
+            <div class="support-content">
+                <i class="fa-solid fa-quote-left"></i>
+                <p>
+                    “Pedir ayuda no significa que seas débil.
+                    Significa que eres lo suficientemente fuerte
+                    para reconocer que necesitas apoyo.”
+                </p>
+                <span>— Equipo Sentir</span>
+            </div>
+        </section>
+
+        <!-- ================= FOOTER ================= -->
+        <footer>
+            <div class="footer-logo">sentir</div>
+            <span>Tu bienestar importa.</span>
+            <div class="footer-security">
+                <i class="fa-solid fa-shield"></i>
+                Espacio seguro
+            </div>
+        </footer>
+
+    </main>
+</div>
+
+<!-- ================= MODAL CONFIRMACIÓN ================= -->
+<div class="modal-overlay" id="confirmModal">
+    <div class="modal">
+        <button class="modal-close" id="closeModal">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="modal-icon success">
+            <i class="fa-solid fa-check"></i>
+        </div>
+
+        <h2>Solicitud enviada</h2>
+        <p>
+            Hemos recibido tu pedido de ayuda. Un profesional
+            se pondrá en contacto contigo pronto.
+            Gracias por confiar en nosotros.
+        </p>
+
+        <button class="primary-btn" id="cerrarConfirmacion">
+            Entendido
+        </button>
+    </div>
+</div>
+
+<!-- ================= MODAL CONSEJOS ================= -->
+<div class="modal-overlay" id="consejosModal">
+    <div class="modal">
+        <button class="modal-close" id="closeConsejos">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="modal-icon info">
+            <i class="fa-solid fa-comments"></i>
+        </div>
+
+        <h2>Cómo empezar a hablar</h2>
+        <div class="consejos-list">
+            <div class="consejo-item">
+                <span>1</span>
+                <p>Elige a alguien en quien confíes (amigo, familiar, profesor o tutor).</p>
+            </div>
+            <div class="consejo-item">
+                <span>2</span>
+                <p>Puedes empezar con algo simple: “Necesito hablar contigo de algo que me está pasando”.</p>
+            </div>
+            <div class="consejo-item">
+                <span>3</span>
+                <p>No tienes que contar todo de una vez. Ve a tu ritmo.</p>
+            </div>
+            <div class="consejo-item">
+                <span>4</span>
+                <p>Si no te sientes listo/a para hablar en persona, puedes escribir un mensaje.</p>
+            </div>
+        </div>
+
+        <button class="primary-btn" id="cerrarConsejos">
+            Entendido
+        </button>
+    </div>
+</div>
+
+<script src="ayuda.js"></script>
+</body>
+</html>

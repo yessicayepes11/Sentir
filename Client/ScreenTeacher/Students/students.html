@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sentir - Estudiantes</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="students.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+
+            <div class="logo">
+                sentir
+            </div>
+
+            <button class="close-sidebar" id="closeSidebar">
+                ×
+            </button>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <button class="nav-item" data-section="inicio">
+                <span class="nav-icon">⌂</span>
+                <span>Inicio</span>
+            </button>
+
+
+            <button class="nav-item active" data-section="estudiantes">
+                <span class="nav-icon">♙</span>
+                <span>Estudiantes</span>
+            </button>
+
+
+            <button class="nav-item" data-section="casos">
+                <span class="nav-icon">♡</span>
+                <span>Casos y alertas</span>
+            </button>
+
+
+            <button class="nav-item" data-section="recursos">
+                <span class="nav-icon">✦</span>
+                <span>Recursos</span>
+            </button>
+
+
+            <button class="nav-item" data-section="reportes">
+                <span class="nav-icon">▥</span>
+                <span>Reportes</span>
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <button class="logout-button" id="logoutButton">
+                <span>↪</span>
+                Cerrar sesión
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         OVERLAY MOBILE
+    ====================================================== -->
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+
+    <!-- =====================================================
+         CONTENIDO PRINCIPAL
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- HEADER -->
+
+        <header class="top-header">
+
+            <button class="open-sidebar" id="openSidebar">
+                ☰
+            </button>
+
+
+            <div class="header-text">
+
+                <h1>
+                    Estudiantes
+                </h1>
+
+                <p>
+                    Consulta y seguimiento del bienestar estudiantil
+                </p>
+
+            </div>
+
+
+            <button class="notification-button">
+                ♡
+                <span class="notification-dot"></span>
+            </button>
+
+        </header>
+
+
+
+        <!-- =================================================
+             CONTENIDO
+        ================================================== -->
+
+        <section class="students-section">
+
+
+            <!-- ENCABEZADO -->
+
+            <div class="section-title">
+
+                <div>
+
+                    <h2>
+                        Mis estudiantes
+                    </h2>
+
+                    <p>
+                        Selecciona un curso para consultar sus estudiantes.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 FILTRO DE CURSO
+            ================================================== -->
+
+            <div class="course-card">
+
+                <div class="course-icon">
+                    ♧
+                </div>
+
+
+                <div class="course-information">
+
+                    <label for="courseFilter">
+                        Selecciona un curso
+                    </label>
+
+                    <select id="courseFilter">
+
+                        <option value="todos">
+                            Todos los cursos
+                        </option>
+
+                        <optgroup label="Sexto">
+
+                            <option value="6°1">6°1</option>
+                            <option value="6°2">6°2</option>
+                            <option value="6°3">6°3</option>
+                            <option value="6°4">6°4</option>
+                            <option value="6°5">6°5</option>
+
+                        </optgroup>
+
+
+                        <optgroup label="Séptimo">
+
+                            <option value="7°1">7°1</option>
+                            <option value="7°2">7°2</option>
+                            <option value="7°3">7°3</option>
+                            <option value="7°4">7°4</option>
+
+                        </optgroup>
+
+
+                        <optgroup label="Octavo">
+
+                            <option value="8°1">8°1</option>
+                            <option value="8°2">8°2</option>
+                            <option value="8°3">8°3</option>
+
+                        </optgroup>
+
+
+                        <optgroup label="Noveno">
+
+                            <option value="9°1">9°1</option>
+                            <option value="9°2">9°2</option>
+                            <option value="9°3">9°3</option>
+
+                        </optgroup>
+
+
+                        <optgroup label="Décimo">
+
+                            <option value="10°1">10°1</option>
+                            <option value="10°2">10°2</option>
+                            <option value="10°3">10°3</option>
+                            <option value="10°4">10°4</option>
+
+                        </optgroup>
+
+
+                        <optgroup label="Undécimo">
+
+                            <option value="11°1">11°1</option>
+                            <option value="11°2">11°2</option>
+                            <option value="11°3">11°3</option>
+                            <option value="11°4">11°4</option>
+
+                        </optgroup>
+
+                    </select>
+
+                </div>
+
+
+                <div class="course-counter">
+
+                    <span id="studentCount">
+                        0
+                    </span>
+
+                    <small>
+                        estudiantes
+                    </small>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 TABLA DE ESTUDIANTES
+            ================================================== -->
+
+            <div class="students-card">
+
+
+                <div class="students-card-header">
+
+                    <div>
+
+                        <h3>
+                            Lista de estudiantes
+                        </h3>
+
+                        <p id="selectedCourseText">
+                            Mostrando todos los cursos
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="table-container">
+
+                    <table class="students-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    #
+                                </th>
+
+                                <th>
+                                    Estudiante
+                                </th>
+
+                                <th>
+                                    Curso
+                                </th>
+
+                                <th>
+                                    Estado emocional
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="studentsList">
+                        </tbody>
+
+                    </table>
+
+
+                    <!-- MENSAJE CUANDO NO HAY ESTUDIANTES -->
+
+                    <div class="empty-state" id="emptyState">
+
+                        <div class="empty-icon">
+                            ♡
+                        </div>
+
+                        <h3>
+                            No hay estudiantes
+                        </h3>
+
+                        <p>
+                            No se encontraron estudiantes para este curso.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="students.js"></script>
+
+</body>
+
+</html>

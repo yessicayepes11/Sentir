@@ -24,6 +24,19 @@ document.addEventListener('DOMContentLoaded', () => {
     initNewStudentModal();
     initEditProfileModal();
     initAvatarShuffle();
+
+    // Registro e historial de intervenciones psicológicas
+    initInterventionModals();
+
+    // Interactividad completa del panel de expediente (contacto, protocolo, derivación)
+    initPanelPrimaryAction();
+    initPanelSecondaryActions();
+
+    // Interactividad extra: logo, KPIs, agenda, notificaciones, perfil y chat
+    initLogoHome();
+    initHomeInteractivity();
+    initProfileInteractivity();
+    initChatAttachButton();
 });
 
 /* ==========================================================================
@@ -90,6 +103,15 @@ function initViewRouter() {
     const navItems = document.querySelectorAll('.nav-item[data-view]');
     const views = document.querySelectorAll('.view');
 
+    function updateHeaderSearchVisibility(viewKey) {
+        const searchWrapper = document.getElementById('dashboardSearchWrapper');
+        if (!searchWrapper) return;
+        // La barra de búsqueda superior general solo se muestra en Inicio
+        // (Estudiantes, Mensajes y Perfil ya tienen su propio buscador o no lo necesitan)
+        const shouldHide = viewKey === 'mensajes' || viewKey === 'perfil' || viewKey === 'estudiantes';
+        searchWrapper.classList.toggle('is-hidden', shouldHide);
+    }
+
     function goToView(viewKey) {
         views.forEach(view => {
             view.classList.remove('active');
@@ -103,6 +125,8 @@ function initViewRouter() {
         }
 
         navItems.forEach(item => item.classList.toggle('active', item.dataset.view === viewKey));
+
+        updateHeaderSearchVisibility(viewKey);
 
         // Reiniciar contadores tipo odómetro cada vez que se visita Inicio o Perfil
         if (viewKey === 'inicio' || viewKey === 'perfil') {
@@ -129,6 +153,10 @@ function initViewRouter() {
             }
         });
     });
+
+    // Estado inicial correcto de la barra de búsqueda al cargar la página
+    const initialView = document.querySelector('.nav-item.active[data-view]');
+    updateHeaderSearchVisibility(initialView ? initialView.dataset.view : 'inicio');
 }
 
 /* ==========================================================================
@@ -155,6 +183,7 @@ function initSlidingPanelActions() {
             document.getElementById('panelName').innerText = studentName;
             document.getElementById('panelMeta').innerText = studentMeta;
             document.getElementById('panelAvatar').src = studentAvatar;
+            panel.dataset.currentStudent = studentName;
 
             const panelMainBtn = panel.querySelector('.panel-actions .primary-btn');
             if (panelMainBtn) {
@@ -195,6 +224,7 @@ function bindMiniStudentCard(card) {
         document.getElementById('panelName').innerText = name;
         document.getElementById('panelMeta').innerText = meta;
         document.getElementById('panelAvatar').src = avatar;
+        panel.dataset.currentStudent = name;
 
         const panelMainBtn = panel.querySelector('.panel-actions .primary-btn');
         if (panelMainBtn) {
@@ -441,12 +471,164 @@ function initQuickActions() {
             setTimeout(() => button.style.background = 'var(--bg-light)', 200);
 
             if (actionText.includes('PDF')) {
-                alert('Generando y empaquetando reporte clínico de forma segura bajo cifrado... Tu descarga comenzará en breve.');
+                simulateExportReport();
             } else if (actionText.includes('derivación')) {
-                alert('Abriendo pasarela de comunicación encriptada con la EPS / Red de apoyo externa afiliada.');
+                openQuickDeriveModal();
             } else {
-                alert('Formulario de contingencia enviado directamente al correo de la Coordinación Académica.');
+                openNotifyCoordinationModal();
             }
+        });
+    });
+}
+
+/* ==========================================================================
+   ACCESOS RÁPIDOS — MODALES DE CADA ACCIÓN
+   ========================================================================== */
+function simulateExportReport() {
+    showToast({
+        title: 'Generando reporte clínico',
+        message: 'Empaquetando la información bajo cifrado seguro...',
+        icon: 'fa-file-export',
+        type: 'info'
+    });
+
+    setTimeout(() => {
+        showToast({
+            title: 'Reporte listo',
+            message: 'El PDF clínico se descargó correctamente en tu equipo.',
+            icon: 'fa-circle-check',
+            type: 'success'
+        });
+    }, 1800);
+}
+
+function openQuickDeriveModal() {
+    const today = new Date().toISOString().split('T')[0];
+
+    const overlay = openSentirModal(`
+        <div class="sentir-modal-header">
+            <div class="sentir-modal-icon"><i class="fa-solid fa-square-plus"></i></div>
+            <div>
+                <h3>Registrar Derivación Externa</h3>
+                <p>Remisión rápida a una red de apoyo externa</p>
+            </div>
+        </div>
+        <div class="sentir-modal-body">
+            <div class="modal-field">
+                <label>ESTUDIANTE</label>
+                <input type="text" id="quickDeriveStudent" placeholder="Nombre del estudiante">
+            </div>
+            <div class="modal-field">
+                <label>ENTIDAD DESTINO</label>
+                <input type="text" id="quickDeriveEntity" placeholder="Ej. EPS Sura, Fundación de apoyo...">
+            </div>
+            <div class="modal-field">
+                <label>FECHA</label>
+                <input type="date" id="quickDeriveDate" value="${today}">
+            </div>
+            <div class="modal-field">
+                <label>MOTIVO</label>
+                <textarea id="quickDeriveReason" rows="3" placeholder="Motivo de la derivación"></textarea>
+            </div>
+            <p class="modal-error" id="quickDeriveError"><i class="fa-solid fa-circle-exclamation"></i> Escribe al menos el nombre del estudiante y la entidad destino.</p>
+        </div>
+        <div class="sentir-modal-actions">
+            <button class="modal-btn-cancel" id="cancelQuickDerive">Cancelar</button>
+            <button class="modal-btn-confirm" id="confirmQuickDerive"><i class="fa-solid fa-check"></i> Registrar</button>
+        </div>
+    `);
+
+    overlay.querySelector('#cancelQuickDerive').addEventListener('click', () => closeSentirModal(overlay));
+
+    overlay.querySelector('#confirmQuickDerive').addEventListener('click', () => {
+        const student = overlay.querySelector('#quickDeriveStudent').value.trim();
+        const entity = overlay.querySelector('#quickDeriveEntity').value.trim();
+        const errorMsg = overlay.querySelector('#quickDeriveError');
+
+        if (!student || !entity) {
+            errorMsg.classList.add('show');
+            return;
+        }
+        errorMsg.classList.remove('show');
+
+        const reason = overlay.querySelector('#quickDeriveReason').value.trim();
+
+        addInterventionRecord(student, {
+            fecha: new Date().toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' }),
+            titulo: `Derivación externa a ${entity}`,
+            detalle: reason || 'Derivación registrada desde Accesos Rápidos.'
+        });
+
+        closeSentirModal(overlay);
+        showToast({
+            title: 'Derivación registrada',
+            message: `${student} fue remitido a ${entity}.`,
+            icon: 'fa-square-plus',
+            type: 'success'
+        });
+    });
+}
+
+function openNotifyCoordinationModal() {
+    const overlay = openSentirModal(`
+        <div class="sentir-modal-header">
+            <div class="sentir-modal-icon"><i class="fa-solid fa-envelope-open-text"></i></div>
+            <div>
+                <h3>Notificar a Coordinación</h3>
+                <p>Envía un aviso directo al equipo de coordinación académica</p>
+            </div>
+        </div>
+        <div class="sentir-modal-body">
+            <div class="modal-field">
+                <label>ASUNTO</label>
+                <input type="text" id="notifySubject" placeholder="Ej. Seguimiento caso riesgo alto">
+            </div>
+            <div class="modal-field">
+                <label>MENSAJE</label>
+                <textarea id="notifyMessage" rows="3" placeholder="Describe la situación a reportar"></textarea>
+            </div>
+            <div class="modal-field">
+                <label>PRIORIDAD</label>
+                <div class="risk-select-group" id="notifyPriorityGroup">
+                    <div class="risk-option" data-priority="normal">Normal</div>
+                    <div class="risk-option selected" data-priority="urgente">Urgente</div>
+                </div>
+            </div>
+            <p class="modal-error" id="notifyError"><i class="fa-solid fa-circle-exclamation"></i> Escribe al menos el mensaje a enviar.</p>
+        </div>
+        <div class="sentir-modal-actions">
+            <button class="modal-btn-cancel" id="cancelNotify">Cancelar</button>
+            <button class="modal-btn-confirm" id="confirmNotify"><i class="fa-solid fa-paper-plane"></i> Enviar Notificación</button>
+        </div>
+    `);
+
+    let priority = 'urgente';
+    overlay.querySelectorAll('#notifyPriorityGroup .risk-option').forEach(opt => {
+        opt.addEventListener('click', () => {
+            overlay.querySelectorAll('#notifyPriorityGroup .risk-option').forEach(o => o.classList.remove('selected'));
+            opt.classList.add('selected');
+            priority = opt.dataset.priority;
+        });
+    });
+
+    overlay.querySelector('#cancelNotify').addEventListener('click', () => closeSentirModal(overlay));
+
+    overlay.querySelector('#confirmNotify').addEventListener('click', () => {
+        const message = overlay.querySelector('#notifyMessage').value.trim();
+        const errorMsg = overlay.querySelector('#notifyError');
+
+        if (!message) {
+            errorMsg.classList.add('show');
+            return;
+        }
+        errorMsg.classList.remove('show');
+
+        closeSentirModal(overlay);
+        showToast({
+            title: 'Coordinación notificada',
+            message: `Se envió tu aviso con prioridad ${priority === 'urgente' ? 'urgente' : 'normal'}.`,
+            icon: 'fa-envelope-open-text',
+            type: priority === 'urgente' ? 'success' : 'info'
         });
     });
 }
@@ -481,7 +663,7 @@ function initPsychologistProfileMenu() {
             profileDropdown.innerHTML = `
                 <div style="padding: 12px 16px; font-size:11px; font-weight:700; color:var(--text-muted); background:var(--bg-light);">SESIÓN ACTIVA</div>
                 <div class="p-item" data-goto="perfil" style="padding:12px 16px; font-size:12px; color:var(--dark-slate); border-bottom:1px solid #F1F5F9; cursor:pointer;"><i class="fa-solid fa-id-card" style="margin-right:10px; color:var(--morado-sentir)"></i> Mi Licencia Profesional</div>
-                <div class="p-item" style="padding:12px 16px; font-size:12px; color:var(--dark-slate); border-bottom:1px solid #F1F5F9; cursor:pointer;"><i class="fa-solid fa-clock-rotate-left" style="margin-right:10px; color:var(--morado-sentir)"></i> Historial de Turnos</div>
+                <div class="p-item" data-action="turnos" style="padding:12px 16px; font-size:12px; color:var(--dark-slate); border-bottom:1px solid #F1F5F9; cursor:pointer;"><i class="fa-solid fa-clock-rotate-left" style="margin-right:10px; color:var(--morado-sentir)"></i> Historial de Turnos</div>
                 <div class="p-item" style="padding:12px 16px; font-size:12px; color:var(--riesgo-alto); cursor:pointer;"><i class="fa-solid fa-right-from-bracket" style="margin-right:10px;"></i> Cerrar Sesión</div>
             `;
 
@@ -495,6 +677,8 @@ function initPsychologistProfileMenu() {
                         alert('Cerrando sesión del sistema Sentir de manera segura...');
                     } else if (item.dataset.goto === 'perfil') {
                         document.querySelector('.nav-item[data-view="perfil"]').click();
+                    } else if (item.dataset.action === 'turnos') {
+                        openShiftHistoryModal();
                     } else {
                         alert(`Accediendo a: ${item.innerText.trim()}`);
                     }
@@ -818,9 +1002,12 @@ function initMessagesView() {
             const activeConv = document.querySelector('.conv-item.active');
             if (!activeConv) return;
 
+            const panel = document.getElementById('detailPanel');
+
             document.getElementById('panelName').innerText = activeConv.dataset.name;
             document.getElementById('panelMeta').innerText = activeConv.dataset.meta;
             document.getElementById('panelAvatar').src = activeConv.dataset.avatar;
+            if (panel) panel.dataset.currentStudent = activeConv.dataset.name;
 
             document.body.style.overflow = 'hidden';
             document.getElementById('panelOverlay').classList.add('show');
@@ -985,6 +1172,805 @@ function initAvatarShuffle() {
             type: 'info'
         });
     });
+}
+
+/* ==========================================================================
+   15°. HISTORIAL Y REGISTRO DE INTERVENCIONES PSICOLÓGICAS
+   ========================================================================== */
+
+// Base de datos simulada (en memoria) del historial de intervenciones por estudiante.
+// Se usa el nombre visible en el panel como llave para asociar los registros.
+const interventionHistoryStore = {
+    'Mateo Silva': [
+        {
+            fecha: '10 Jun 2026',
+            titulo: 'Intervención por riesgo alto',
+            detalle: 'Se identificó ansiedad severa y aislamiento social a partir del diario emocional. Se activó protocolo de acompañamiento y se contactó al acudiente para seguimiento conjunto.'
+        },
+        {
+            fecha: '2 Mar 2026',
+            titulo: 'Seguimiento académico',
+            detalle: 'Reporte docente por bajo rendimiento asociado a estrés. Se brindaron pautas de manejo del tiempo y técnicas de respiración.'
+        }
+    ],
+    'Isabella Castro': [
+        {
+            fecha: '22 Jul 2026',
+            titulo: 'Caso de alto riesgo anterior',
+            detalle: 'Episodio de aislamiento social prolongado detectado por el ecosistema Sentir. Se realizó acompañamiento semanal durante 6 semanas con evolución positiva.'
+        },
+        {
+            fecha: '30 Ene 2026',
+            titulo: 'Primera valoración',
+            detalle: 'Ingreso al proceso de acompañamiento psicológico por remisión docente. Se estableció plan inicial de seguimiento.'
+        }
+    ],
+    'Camila Pérez': [
+        {
+            fecha: '15 Ago 2026',
+            titulo: 'Seguimiento de tristeza prolongada',
+            detalle: 'Se evidenció caída sostenida del ánimo reportado en la app durante 7 días. Se citó a sesión individual y se acordó seguimiento quincenal.'
+        }
+    ]
+};
+
+function getStudentHistory(name) {
+    return interventionHistoryStore[name] || [];
+}
+
+function addInterventionRecord(name, record) {
+    if (!interventionHistoryStore[name]) interventionHistoryStore[name] = [];
+    interventionHistoryStore[name].unshift(record);
+}
+
+function initInterventionModals() {
+    const panel = document.getElementById('detailPanel');
+    const registerBtn = document.getElementById('registerInterventionBtn');
+    const historyBtn = document.getElementById('viewInterventionHistoryBtn');
+
+    if (!panel) return;
+
+    function getCurrentStudentName() {
+        return panel.dataset.currentStudent || document.getElementById('panelName').innerText;
+    }
+
+    if (registerBtn) {
+        registerBtn.addEventListener('click', () => {
+            openRegisterInterventionModal(getCurrentStudentName());
+        });
+    }
+
+    if (historyBtn) {
+        historyBtn.addEventListener('click', () => {
+            openInterventionHistoryModal(getCurrentStudentName());
+        });
+    }
+}
+
+function openInterventionHistoryModal(studentName) {
+    const history = getStudentHistory(studentName);
+
+    const listHTML = history.length
+        ? history.map(item => `
+            <div class="history-entry">
+                <div class="history-entry-dot"></div>
+                <div class="history-entry-content">
+                    <div class="history-entry-top">
+                        <strong>${item.titulo}</strong>
+                        <span>${item.fecha}</span>
+                    </div>
+                    <p>${item.detalle}</p>
+                </div>
+            </div>
+        `).join('')
+        : `<p class="history-empty"><i class="fa-solid fa-folder-open" style="display:block; font-size:20px; margin-bottom:8px; color:var(--lavanda);"></i>Este estudiante aún no registra intervenciones previas en el sistema.</p>`;
+
+    const overlay = openSentirModal(`
+        <div class="sentir-modal-header">
+            <div class="sentir-modal-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+            <div>
+                <h3>Historial de Intervenciones</h3>
+                <p>${studentName} · Proceso de acompañamiento psicológico</p>
+            </div>
+        </div>
+        <div class="sentir-modal-body">
+            <div class="history-timeline">
+                ${listHTML}
+            </div>
+        </div>
+        <div class="sentir-modal-actions">
+            <button class="modal-btn-cancel" id="closeHistoryModal">Cerrar</button>
+        </div>
+    `);
+
+    overlay.querySelector('#closeHistoryModal').addEventListener('click', () => closeSentirModal(overlay));
+}
+
+function openRegisterInterventionModal(studentName) {
+    const today = new Date().toISOString().split('T')[0];
+
+    const overlay = openSentirModal(`
+        <div class="sentir-modal-header">
+            <div class="sentir-modal-icon"><i class="fa-solid fa-notes-medical"></i></div>
+            <div>
+                <h3>Registrar Intervención</h3>
+                <p>${studentName} · Se sumará al historial de acompañamiento</p>
+            </div>
+        </div>
+        <div class="sentir-modal-body">
+            <div class="modal-field">
+                <label>FECHA DE LA INTERVENCIÓN</label>
+                <input type="date" id="interventionDate" value="${today}">
+            </div>
+            <div class="modal-field">
+                <label>FACTORES IDENTIFICADOS</label>
+                <textarea id="interventionFactors" rows="2" placeholder="Ej. Ansiedad, aislamiento social, bajo rendimiento académico..."></textarea>
+            </div>
+            <div class="modal-field">
+                <label>SITUACIÓN</label>
+                <textarea id="interventionSituation" rows="2" placeholder="Describe brevemente la situación actual del estudiante"></textarea>
+            </div>
+            <div class="modal-field">
+                <label>CAUSAS IDENTIFICADAS</label>
+                <textarea id="interventionCauses" rows="2" placeholder="Posibles causas asociadas a la situación"></textarea>
+            </div>
+            <div class="modal-field">
+                <label>PROCESO REALIZADO</label>
+                <textarea id="interventionProcess" rows="2" placeholder="Acciones y estrategias aplicadas durante la intervención"></textarea>
+            </div>
+            <div class="modal-field">
+                <label>AVANCE / EVOLUCIÓN</label>
+                <textarea id="interventionProgress" rows="2" placeholder="Evolución observada tras la intervención"></textarea>
+            </div>
+            <p class="modal-error" id="interventionError"><i class="fa-solid fa-circle-exclamation"></i> Describe al menos la situación y el proceso realizado.</p>
+        </div>
+        <div class="sentir-modal-actions">
+            <button class="modal-btn-cancel" id="cancelIntervention">Cancelar</button>
+            <button class="modal-btn-confirm" id="confirmIntervention"><i class="fa-solid fa-check"></i> Guardar Intervención</button>
+        </div>
+    `);
+
+    overlay.querySelector('#cancelIntervention').addEventListener('click', () => closeSentirModal(overlay));
+
+    overlay.querySelector('#confirmIntervention').addEventListener('click', () => {
+        const situation = overlay.querySelector('#interventionSituation').value.trim();
+        const process = overlay.querySelector('#interventionProcess').value.trim();
+        const errorMsg = overlay.querySelector('#interventionError');
+
+        if (!situation || !process) {
+            errorMsg.classList.add('show');
+            return;
+        }
+        errorMsg.classList.remove('show');
+
+        const factors = overlay.querySelector('#interventionFactors').value.trim();
+        const causes = overlay.querySelector('#interventionCauses').value.trim();
+        const progress = overlay.querySelector('#interventionProgress').value.trim();
+        const dateValue = overlay.querySelector('#interventionDate').value;
+        const formattedDate = dateValue
+            ? new Date(dateValue + 'T00:00:00').toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' })
+            : 'Sin fecha';
+
+        const detailParts = [];
+        if (factors) detailParts.push(`Factores: ${factors}.`);
+        detailParts.push(`Situación: ${situation}.`);
+        if (causes) detailParts.push(`Causas: ${causes}.`);
+        detailParts.push(`Proceso realizado: ${process}.`);
+        if (progress) detailParts.push(`Avance: ${progress}.`);
+
+        addInterventionRecord(studentName, {
+            fecha: formattedDate,
+            titulo: 'Intervención registrada',
+            detalle: detailParts.join(' ')
+        });
+
+        closeSentirModal(overlay);
+        showToast({
+            title: 'Intervención registrada',
+            message: `Se guardó el nuevo registro en el historial de ${studentName}.`,
+            icon: 'fa-notes-medical',
+            type: 'success'
+        });
+    });
+}
+
+/* ==========================================================================
+   16°. CLIC EN EL LOGO — SIEMPRE REGRESA A LA VISTA DE INICIO
+   ========================================================================== */
+function initLogoHome() {
+    const logo = document.getElementById('logoHomeBtn');
+    if (!logo) return;
+
+    logo.addEventListener('click', () => {
+        const inicioNavItem = document.querySelector('.nav-item[data-view="inicio"]');
+        if (inicioNavItem) inicioNavItem.click();
+    });
+}
+
+/* ==========================================================================
+   17°. UTILIDADES DE NAVEGACIÓN CONTEXTUAL (compartidas entre vistas)
+   ========================================================================== */
+function openPanelForStudentName(name) {
+    const target = Array.from(document.querySelectorAll('.student-case-card, .mini-student-card'))
+        .find(card => card.querySelector('h4') && card.querySelector('h4').innerText.trim() === name);
+
+    if (target) {
+        const triggerBtn = target.querySelector('.btn-primary-action');
+        if (triggerBtn) {
+            triggerBtn.click();
+        } else {
+            target.click();
+        }
+        return;
+    }
+
+    // Si la tarjeta no está visible en pantalla, igual mostramos el expediente disponible
+    const panel = document.getElementById('detailPanel');
+    const overlay = document.getElementById('panelOverlay');
+    if (!panel || !overlay) return;
+
+    document.getElementById('panelName').innerText = name;
+    panel.dataset.currentStudent = name;
+    document.body.style.overflow = 'hidden';
+    overlay.classList.add('show');
+    panel.classList.add('open');
+}
+
+function goToStudentsFilter(filterKey) {
+    const estudiantesNav = document.querySelector('.nav-item[data-view="estudiantes"]');
+    if (estudiantesNav) estudiantesNav.click();
+
+    setTimeout(() => {
+        const chip = document.querySelector(`#view-estudiantes .chip[data-filter="${filterKey}"]`);
+        if (chip) chip.click();
+    }, 350);
+}
+
+/* ==========================================================================
+   18°. INTERACTIVIDAD EXTRA — VISTA INICIO (KPIs, ánimo, agenda, notificaciones)
+   ========================================================================== */
+function initHomeInteractivity() {
+    // Tarjetas KPI clicables: llevan al filtro o vista relacionada
+    document.querySelectorAll('#view-inicio .kpi-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const label = card.querySelector('p').innerText.toLowerCase();
+
+            if (label.includes('riesgo alto')) {
+                goToStudentsFilter('high');
+            } else if (label.includes('evaluados')) {
+                goToStudentsFilter('all');
+            } else if (label.includes('casos cerrados')) {
+                showToast({
+                    title: 'Casos cerrados este período',
+                    message: '45 casos fueron cerrados con seguimiento satisfactorio.',
+                    icon: 'fa-circle-check',
+                    type: 'success'
+                });
+            } else if (label.includes('intervenciones hoy')) {
+                document.querySelector('.nav-item[data-view="mensajes"]').click();
+            }
+        });
+    });
+
+    // Indicadores de ánimo institucional: muestran detalle rápido
+    document.querySelectorAll('#view-inicio .mood-emoji').forEach(pill => {
+        pill.addEventListener('click', () => {
+            const text = pill.innerText;
+            showToast({
+                title: 'Distribución de ánimo institucional',
+                message: `${text} de los estudiantes evaluados hoy se encuentran en este estado.`,
+                icon: 'fa-face-smile',
+                type: 'info'
+            });
+        });
+    });
+
+    // Agenda de intervenciones: abre el expediente del estudiante relacionado
+    document.querySelectorAll('#view-inicio .agenda-list li').forEach(item => {
+        item.addEventListener('click', () => {
+            const text = item.innerText.replace(/\s+/g, ' ').trim();
+            let studentName = null;
+
+            if (text.includes('Carlos Mendoza')) studentName = 'Carlos Mendoza';
+            else if (text.includes('Sofía Gómez')) studentName = 'Sofía Gómez';
+            else if (text.includes('#8841')) studentName = 'Mateo Silva';
+
+            if (studentName) {
+                openPanelForStudentName(studentName);
+            } else {
+                showToast({ title: 'Detalle de la cita', message: text, icon: 'fa-calendar-check', type: 'info' });
+            }
+        });
+    });
+
+    // Notificaciones del desplegable de la campana: navegación contextual
+    document.querySelectorAll('.notif-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const text = item.innerText;
+            const dropdown = document.getElementById('notifDropdown');
+
+            if (text.includes('Mateo Silva')) {
+                document.querySelector('.nav-item[data-view="inicio"]').click();
+                setTimeout(() => openPanelForStudentName('Mateo Silva'), 500);
+            } else if (text.includes('cita')) {
+                document.querySelector('.nav-item[data-view="inicio"]').click();
+                setTimeout(() => {
+                    const agenda = document.querySelector('#view-inicio .sidebar-box');
+                    if (agenda) agenda.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 400);
+            } else if (text.includes('sugerencia')) {
+                document.querySelector('.nav-item[data-view="inicio"]').click();
+                setTimeout(() => {
+                    const aiCard = document.querySelector('.ai-recommendation-card');
+                    if (aiCard) aiCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 400);
+            }
+
+            if (dropdown) dropdown.classList.remove('show');
+        });
+    });
+}
+
+/* ==========================================================================
+   19°. INTERACTIVIDAD EXTRA — VISTA PERFIL (tags, switches, actividad reciente)
+   ========================================================================== */
+function initProfileInteractivity() {
+    // Tags de credenciales profesionales: muestran información ampliada
+    document.querySelectorAll('#view-perfil .profile-tags span').forEach(tag => {
+        tag.addEventListener('click', () => {
+            const text = tag.innerText.trim();
+            showToast({
+                title: text,
+                message: 'Información verificada dentro del sistema Sentir.',
+                icon: 'fa-circle-info',
+                type: 'info'
+            });
+        });
+    });
+
+    // Switches de preferencias: feedback inmediato al activar/desactivar
+    document.querySelectorAll('#view-perfil .toggle-row .switch input').forEach(input => {
+        input.addEventListener('change', () => {
+            const label = input.closest('.toggle-row').querySelector('strong').innerText;
+            showToast({
+                title: 'Preferencia actualizada',
+                message: `${label}: ${input.checked ? 'activado' : 'desactivado'}.`,
+                icon: input.checked ? 'fa-toggle-on' : 'fa-toggle-off',
+                type: input.checked ? 'success' : 'info'
+            });
+        });
+    });
+
+    // Actividad reciente: navega al contexto relacionado con cada evento
+    document.querySelectorAll('#view-perfil .activity-list li').forEach(item => {
+        item.addEventListener('click', () => {
+            const text = item.innerText;
+
+            if (text.includes('Mateo Silva')) {
+                openActivityDetailModal({
+                    icon: 'fa-file-medical',
+                    title: 'Test GAD-7 asignado',
+                    time: 'Hace 20 min',
+                    description: 'Enviaste la Escala de Ansiedad Generalizada (GAD-7) a Mateo Silva (Grado 11°1) tras la alerta de riesgo alto detectada por Sentir AI. El estudiante recibirá el test en su perfil de la app y quedarás notificado en cuanto lo complete.',
+                    actionLabel: 'Ver expediente del estudiante',
+                    onAction: () => {
+                        document.querySelector('.nav-item[data-view="inicio"]').click();
+                        setTimeout(() => openPanelForStudentName('Mateo Silva'), 500);
+                    }
+                });
+            } else if (text.includes('Camila Pérez')) {
+                openActivityDetailModal({
+                    icon: 'fa-comments',
+                    title: 'Mensaje respondido',
+                    time: 'Hace 3 horas',
+                    description: 'Le confirmaste a Camila Pérez (Grado 9°4) la cita de seguimiento a las 11:00am en el consultorio principal, en respuesta a su mensaje por el canal de comunicación directa.',
+                    actionLabel: 'Abrir conversación',
+                    onAction: () => {
+                        document.querySelector('.nav-item[data-view="mensajes"]').click();
+                        setTimeout(() => {
+                            const convItem = Array.from(document.querySelectorAll('.conv-item')).find(c => c.dataset.name === 'Camila Pérez');
+                            if (convItem) convItem.click();
+                        }, 350);
+                    }
+                });
+            } else if (text.includes('taller grupal')) {
+                openActivityDetailModal({
+                    icon: 'fa-users-gear',
+                    title: 'Taller grupal agendado',
+                    time: 'Ayer',
+                    description: 'Agendaste un taller grupal de manejo del tiempo y técnicas de respiración diafragmática para el grado 11°1, siguiendo la sugerencia de Sentir AI por el incremento del 15% en reportes de estrés académico ante la proximidad de los exámenes de estado.',
+                    actionLabel: 'Ver sugerencia de la IA',
+                    onAction: () => {
+                        document.querySelector('.nav-item[data-view="inicio"]').click();
+                        setTimeout(() => {
+                            const aiCard = document.querySelector('.ai-recommendation-card');
+                            if (aiCard) aiCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 400);
+                    }
+                });
+            } else if (text.includes('red de apoyo')) {
+                openActivityDetailModal({
+                    icon: 'fa-house-medical',
+                    title: 'Derivación a red de apoyo médica',
+                    time: 'Hace 2 días',
+                    description: 'Derivaste un caso de aislamiento social prolongado a la red de apoyo médica externa institucional, con el fin de complementar el proceso de acompañamiento psicológico con atención especializada.'
+                });
+            }
+        });
+    });
+}
+
+/* ==========================================================================
+   25°. MODAL DE DETALLE — "ACTIVIDAD RECIENTE" (VISTA PERFIL)
+   ========================================================================== */
+function openActivityDetailModal(detail) {
+    const overlay = openSentirModal(`
+        <div class="sentir-modal-header">
+            <div class="sentir-modal-icon"><i class="fa-solid ${detail.icon}"></i></div>
+            <div>
+                <h3>${detail.title}</h3>
+                <p>${detail.time}</p>
+            </div>
+        </div>
+        <div class="sentir-modal-body">
+            <p class="activity-detail-text">${detail.description}</p>
+        </div>
+        <div class="sentir-modal-actions">
+            <button class="modal-btn-cancel" id="closeActivityDetail">Cerrar</button>
+            ${detail.actionLabel ? `<button class="modal-btn-confirm" id="activityDetailAction"><i class="fa-solid fa-arrow-right"></i> ${detail.actionLabel}</button>` : ''}
+        </div>
+    `);
+
+    overlay.querySelector('#closeActivityDetail').addEventListener('click', () => closeSentirModal(overlay));
+
+    const actionBtn = overlay.querySelector('#activityDetailAction');
+    if (actionBtn && detail.onAction) {
+        actionBtn.addEventListener('click', () => {
+            closeSentirModal(overlay);
+            detail.onAction();
+        });
+    }
+}
+
+/* ==========================================================================
+   20°. BOTÓN DE ADJUNTAR ARCHIVO/EVIDENCIA EN EL CHAT (VISTA MENSAJES)
+   ========================================================================== */
+function initChatAttachButton() {
+    const attachBtn = document.querySelector('.chat-input-area .chat-icon-btn[title="Adjuntar"]');
+    const chatMessages = document.getElementById('chatMessages');
+    if (!attachBtn || !chatMessages) return;
+
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.id = 'chatFileInput';
+    fileInput.style.display = 'none';
+    document.body.appendChild(fileInput);
+
+    attachBtn.addEventListener('click', () => fileInput.click());
+
+    fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        if (!file) return;
+
+        const bubble = document.createElement('div');
+        bubble.className = 'msg sent file-msg';
+        bubble.innerHTML = `<i class="fa-solid fa-paperclip"></i> ${file.name}`;
+        chatMessages.appendChild(bubble);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        showToast({
+            title: 'Evidencia adjuntada',
+            message: `"${file.name}" se envió como evidencia dentro de la conversación.`,
+            icon: 'fa-paperclip',
+            type: 'success'
+        });
+
+        fileInput.value = '';
+    });
+}
+
+/* ==========================================================================
+   21°. CONTACTOS DE ACUDIENTE — "CONTACTAR ACUDIENTE DE INMEDIATO"
+   ========================================================================== */
+
+// Directorio simulado de contactos de acudientes por estudiante
+const guardianContactsStore = {
+    'Mateo Silva': [
+        { nombre: 'Marcela Silva', parentesco: 'Madre', telefono: '+57 300 456 7812', principal: true },
+        { nombre: 'Andrés Silva', parentesco: 'Padre', telefono: '+57 315 220 9034', principal: false }
+    ],
+    'Camila Pérez': [
+        { nombre: 'Luisa Pérez', parentesco: 'Madre', telefono: '+57 301 998 2245', principal: true },
+        { nombre: 'Jorge Pérez', parentesco: 'Padre', telefono: '+57 320 447 1189', principal: false }
+    ],
+    'Isabella Castro': [
+        { nombre: 'Diana Castro', parentesco: 'Madre', telefono: '+57 312 764 1120', principal: true },
+        { nombre: 'Rosa Castro', parentesco: 'Tía · Contacto de emergencia', telefono: '+57 300 812 4471', principal: false }
+    ],
+    'Alejandro Toro Restrepo': [
+        { nombre: 'Marta Restrepo', parentesco: 'Madre', telefono: '+57 313 502 6640', principal: true }
+    ],
+    'Daniel Ortiz': [
+        { nombre: 'Familia Ortiz', parentesco: 'Acudiente principal', telefono: '+57 302 771 9930', principal: true }
+    ]
+};
+
+function getGuardianContacts(name) {
+    return guardianContactsStore[name] || [
+        { nombre: 'Acudiente registrado', parentesco: 'Contacto principal en el sistema', telefono: 'No registrado', principal: true }
+    ];
+}
+
+function openContactGuardianModal(studentName) {
+    const contacts = getGuardianContacts(studentName);
+
+    const listHTML = contacts.map(c => `
+        <div class="contact-entry ${c.principal ? 'is-principal' : ''}">
+            <div class="contact-entry-icon"><i class="fa-solid fa-user"></i></div>
+            <div class="contact-entry-info">
+                <div class="contact-entry-top">
+                    <strong>${c.nombre}</strong>
+                    ${c.principal ? '<span class="contact-principal-tag">Contacto principal</span>' : ''}
+                </div>
+                <p>${c.parentesco}</p>
+            </div>
+            <a class="contact-call-btn" href="tel:${c.telefono.replace(/\s+/g, '')}" data-tel="${c.telefono}">
+                <i class="fa-solid fa-phone"></i> ${c.telefono}
+            </a>
+        </div>
+    `).join('');
+
+    const overlay = openSentirModal(`
+        <div class="sentir-modal-header">
+            <div class="sentir-modal-icon" style="background:#FEF2F2; color:var(--riesgo-alto);"><i class="fa-solid fa-phone-volume"></i></div>
+            <div>
+                <h3>Contactar Acudiente</h3>
+                <p>${studentName} · Contactos registrados de emergencia</p>
+            </div>
+        </div>
+        <div class="sentir-modal-body">
+            <div class="contact-list">${listHTML}</div>
+        </div>
+        <div class="sentir-modal-actions">
+            <button class="modal-btn-cancel" id="closeContactModal">Cerrar</button>
+        </div>
+    `);
+
+    overlay.querySelectorAll('.contact-call-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            showToast({
+                title: 'Llamando…',
+                message: `Iniciando llamada a ${btn.dataset.tel}`,
+                icon: 'fa-phone',
+                type: 'info'
+            });
+        });
+    });
+
+    overlay.querySelector('#closeContactModal').addEventListener('click', () => closeSentirModal(overlay));
+}
+
+/* ==========================================================================
+   22°. PROTOCOLO DE CRISIS / ASIGNAR TEST GAD-7 (BOTÓN PRINCIPAL DEL PANEL)
+   ========================================================================== */
+function openCrisisProtocolModal(studentName) {
+    const overlay = openSentirModal(`
+        <div class="sentir-modal-header">
+            <div class="sentir-modal-icon" style="background: var(--gradiente-sentir);"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div>
+                <h3>Ejecutar Protocolo de Crisis</h3>
+                <p>${studentName} · Ruta institucional de atención inmediata</p>
+            </div>
+        </div>
+        <div class="sentir-modal-body">
+            <div class="protocol-steps">
+                <div class="protocol-step"><i class="fa-solid fa-circle-check"></i> Aislar al estudiante en un espacio seguro y acompañado</div>
+                <div class="protocol-step"><i class="fa-solid fa-circle-check"></i> Notificar de inmediato a Coordinación y Rectoría</div>
+                <div class="protocol-step"><i class="fa-solid fa-circle-check"></i> Contactar al acudiente principal registrado</div>
+                <div class="protocol-step"><i class="fa-solid fa-circle-check"></i> Activar ruta de remisión a red de apoyo externa si aplica</div>
+                <div class="protocol-step"><i class="fa-solid fa-circle-check"></i> Registrar la activación en la bitácora institucional</div>
+            </div>
+            <p class="protocol-warning"><i class="fa-solid fa-circle-exclamation"></i> Esta acción notificará de inmediato a todo el equipo de bienestar.</p>
+        </div>
+        <div class="sentir-modal-actions">
+            <button class="modal-btn-cancel" id="cancelCrisisProtocol">Cancelar</button>
+            <button class="modal-btn-confirm" id="confirmCrisisProtocol" style="background:var(--riesgo-alto);"><i class="fa-solid fa-bolt"></i> Confirmar Activación</button>
+        </div>
+    `);
+
+    overlay.querySelector('#cancelCrisisProtocol').addEventListener('click', () => closeSentirModal(overlay));
+
+    overlay.querySelector('#confirmCrisisProtocol').addEventListener('click', () => {
+        closeSentirModal(overlay);
+        showToast({
+            title: 'Protocolo de crisis activado',
+            message: `Se notificó a coordinación y a los acudientes de ${studentName}. Equipo de bienestar en camino.`,
+            icon: 'fa-triangle-exclamation',
+            type: 'success'
+        });
+
+        addInterventionRecord(studentName, {
+            fecha: new Date().toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' }),
+            titulo: 'Protocolo de crisis activado',
+            detalle: 'Se activó la ruta institucional de crisis: aislamiento seguro, notificación a coordinación y contacto con acudientes.'
+        });
+    });
+}
+
+function openAssignTestConfirmation(studentName) {
+    const overlay = openSentirModal(`
+        <div class="sentir-modal-header">
+            <div class="sentir-modal-icon"><i class="fa-solid fa-file-medical"></i></div>
+            <div>
+                <h3>Asignar Test de Ansiedad (GAD-7)</h3>
+                <p>${studentName} · Escala de ansiedad generalizada</p>
+            </div>
+        </div>
+        <div class="sentir-modal-body">
+            <p style="font-size:12.5px; color:#4B5563; line-height:1.6;">Se enviará el test GAD-7 directamente al perfil del estudiante en la app Sentir. Recibirás una notificación en cuanto lo complete.</p>
+        </div>
+        <div class="sentir-modal-actions">
+            <button class="modal-btn-cancel" id="cancelAssignTest">Cancelar</button>
+            <button class="modal-btn-confirm" id="confirmAssignTest"><i class="fa-solid fa-paper-plane"></i> Enviar Test</button>
+        </div>
+    `);
+
+    overlay.querySelector('#cancelAssignTest').addEventListener('click', () => closeSentirModal(overlay));
+
+    overlay.querySelector('#confirmAssignTest').addEventListener('click', () => {
+        closeSentirModal(overlay);
+        showToast({
+            title: 'Test GAD-7 enviado',
+            message: `${studentName} recibirá el test de ansiedad en su perfil de la app.`,
+            icon: 'fa-file-medical',
+            type: 'success'
+        });
+
+        addInterventionRecord(studentName, {
+            fecha: new Date().toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' }),
+            titulo: 'Test GAD-7 asignado',
+            detalle: 'Se envió la escala de ansiedad generalizada (GAD-7) al perfil del estudiante en la app.'
+        });
+    });
+}
+
+function initPanelPrimaryAction() {
+    const btn = document.getElementById('panelPrimaryActionBtn');
+    if (!btn) return;
+
+    btn.addEventListener('click', () => {
+        const panel = document.getElementById('detailPanel');
+        const studentName = panel.dataset.currentStudent || document.getElementById('panelName').innerText;
+
+        if (btn.innerText.includes('Protocolo de Crisis')) {
+            openCrisisProtocolModal(studentName);
+        } else {
+            openAssignTestConfirmation(studentName);
+        }
+    });
+}
+
+/* ==========================================================================
+   23°. DERIVAR A RED DE APOYO MÉDICA (BOTÓN DEL PANEL)
+   ========================================================================== */
+function openDeriveNetworkModal(studentName) {
+    const today = new Date().toISOString().split('T')[0];
+
+    const overlay = openSentirModal(`
+        <div class="sentir-modal-header">
+            <div class="sentir-modal-icon"><i class="fa-solid fa-house-medical"></i></div>
+            <div>
+                <h3>Derivar a Red de Apoyo Médica</h3>
+                <p>${studentName} · Remisión a atención externa</p>
+            </div>
+        </div>
+        <div class="sentir-modal-body">
+            <div class="modal-field">
+                <label>RED / ENTIDAD DE DESTINO</label>
+                <select id="deriveNetworkSelect">
+                    <option>EPS Sura</option>
+                    <option>Nueva EPS</option>
+                    <option>Fundación Apoyo Emocional Local</option>
+                    <option>Hospital Universitario de referencia</option>
+                    <option>Otra red externa</option>
+                </select>
+            </div>
+            <div class="modal-field">
+                <label>FECHA DE REMISIÓN</label>
+                <input type="date" id="deriveDate" value="${today}">
+            </div>
+            <div class="modal-field">
+                <label>MOTIVO DE LA DERIVACIÓN</label>
+                <textarea id="deriveReason" rows="3" placeholder="Describe brevemente el motivo de la remisión"></textarea>
+            </div>
+        </div>
+        <div class="sentir-modal-actions">
+            <button class="modal-btn-cancel" id="cancelDerive">Cancelar</button>
+            <button class="modal-btn-confirm" id="confirmDerive"><i class="fa-solid fa-check"></i> Confirmar Derivación</button>
+        </div>
+    `);
+
+    overlay.querySelector('#cancelDerive').addEventListener('click', () => closeSentirModal(overlay));
+
+    overlay.querySelector('#confirmDerive').addEventListener('click', () => {
+        const network = overlay.querySelector('#deriveNetworkSelect').value;
+        const reason = overlay.querySelector('#deriveReason').value.trim();
+
+        closeSentirModal(overlay);
+        showToast({
+            title: 'Derivación registrada',
+            message: `${studentName} fue remitido a ${network}.`,
+            icon: 'fa-house-medical',
+            type: 'success'
+        });
+
+        addInterventionRecord(studentName, {
+            fecha: new Date().toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' }),
+            titulo: `Derivación a ${network}`,
+            detalle: reason || 'Se remitió el caso a la red de apoyo médica externa para atención complementaria.'
+        });
+    });
+}
+
+function initPanelSecondaryActions() {
+    const contactBtn = document.getElementById('panelContactBtn');
+    const deriveBtn = document.getElementById('panelDeriveBtn');
+    const panel = document.getElementById('detailPanel');
+    if (!panel) return;
+
+    function getCurrentStudentName() {
+        return panel.dataset.currentStudent || document.getElementById('panelName').innerText;
+    }
+
+    if (contactBtn) {
+        contactBtn.addEventListener('click', () => openContactGuardianModal(getCurrentStudentName()));
+    }
+
+    if (deriveBtn) {
+        deriveBtn.addEventListener('click', () => openDeriveNetworkModal(getCurrentStudentName()));
+    }
+}
+
+/* ==========================================================================
+   24°. HISTORIAL DE TURNOS DE HOY (MENÚ DE PERFIL DEL PSICÓLOGO)
+   ========================================================================== */
+function openShiftHistoryModal() {
+    const shifts = [
+        { hora: '09:30', nombre: 'Carlos Mendoza', motivo: 'Sesión Individual', estado: 'Atendido' },
+        { hora: '11:00', nombre: 'Sofía Gómez', motivo: 'Seguimiento de Caso', estado: 'Atendido' },
+        { hora: '13:15', nombre: 'Mateo Silva', motivo: 'Intervención por riesgo alto', estado: 'Atendido' },
+        { hora: '14:30', nombre: 'Familia Ortiz', motivo: 'Reunión de Acudientes', estado: 'En curso' }
+    ];
+
+    const listHTML = shifts.map(s => `
+        <div class="shift-entry">
+            <span class="shift-time">${s.hora}</span>
+            <div class="shift-entry-info">
+                <strong>${s.nombre}</strong>
+                <p>${s.motivo}</p>
+            </div>
+            <span class="shift-status ${s.estado === 'Atendido' ? 'done' : 'progress'}">${s.estado}</span>
+        </div>
+    `).join('');
+
+    const overlay = openSentirModal(`
+        <div class="sentir-modal-header">
+            <div class="sentir-modal-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+            <div>
+                <h3>Historial de Turnos de Hoy</h3>
+                <p>Casos atendidos durante la jornada</p>
+            </div>
+        </div>
+        <div class="sentir-modal-body">
+            <div class="shift-list">${listHTML}</div>
+        </div>
+        <div class="sentir-modal-actions">
+            <button class="modal-btn-cancel" id="closeShiftModal">Cerrar</button>
+        </div>
+    `);
+
+    overlay.querySelector('#closeShiftModal').addEventListener('click', () => closeSentirModal(overlay));
 }
 
 /* ==========================================================================

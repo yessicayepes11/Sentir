@@ -19,7 +19,7 @@
         
         <!-- SIDEBAR ACTUALIZADA -->
         <aside class="sidebar">
-            <div class="logo-area">
+            <div class="logo-area" id="logoHomeBtn" title="Ir a Inicio">
                 <img src="logos.png.png" alt="Sentir Logo" class="main-logo-img">
             </div>
             
@@ -51,7 +51,7 @@
         <main class="main-content">
             
             <header class="top-header">
-                <div class="header-search">
+                <div class="header-search" id="dashboardSearchWrapper">
                     <i class="fa-solid fa-bars menu-toggle" id="menuToggleBtn"></i>
                     <input type="text" placeholder="Buscar estudiante por nombre o ID..." id="dashboardSearch">
                 </div>
@@ -581,18 +581,13 @@
             </div>
             
             <div class="panel-body">
-                <h3><i class="fa-solid fa-triangle-exclamation"></i> Factores de Riesgo Detectados</h3>
-                <ul class="risk-factors-list">
-                    <li><i class="fa-solid fa-arrow-down"></i> Decremento drástico en uso de palabras positivas (-40%).</li>
-                    <li><i class="fa-solid fa-user-slash"></i> Aislamiento social reportado por docentes de área.</li>
-                    <li><i class="fa-solid fa-bed"></i> Cambios disruptivos en ritmos de sueño semanales.</li>
-                </ul>
-                
                 <h3><i class="fa-solid fa-shield-heart"></i> Acciones Inmediatas</h3>
                 <div class="panel-actions">
-                    <button class="btn-action-trigger alert-btn"><i class="fa-solid fa-phone"></i> Contactar Acudiente de Inmediato</button>
-                    <button class="btn-action-trigger primary-btn"><i class="fa-solid fa-file-medical"></i> Asignar Test de Escala de Ansiedad (GAD-7)</button>
-                    <button class="btn-action-trigger secondary-btn"><i class="fa-solid fa-house-medical"></i> Derivar a Red de Apoyo Médica</button>
+                    <button class="btn-action-trigger register-btn" id="registerInterventionBtn"><i class="fa-solid fa-notes-medical"></i> Registrar Intervención</button>
+                    <button class="btn-action-trigger alert-btn" id="panelContactBtn"><i class="fa-solid fa-phone"></i> Contactar Acudiente de Inmediato</button>
+                    <button class="btn-action-trigger primary-btn" id="panelPrimaryActionBtn"><i class="fa-solid fa-file-medical"></i> Asignar Test de Escala de Ansiedad (GAD-7)</button>
+                    <button class="btn-action-trigger secondary-btn" id="panelDeriveBtn"><i class="fa-solid fa-house-medical"></i> Derivar a Red de Apoyo Médica</button>
+                    <button class="btn-action-trigger history-btn" id="viewInterventionHistoryBtn"><i class="fa-solid fa-clock-rotate-left"></i> Historial de Intervenciones</button>
                 </div>
             </div>
         </div>

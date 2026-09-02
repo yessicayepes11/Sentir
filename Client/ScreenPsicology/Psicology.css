@@ -50,6 +50,12 @@ body {
     margin-bottom: 5px;
     display: flex;
     justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.logo-area:hover {
+    transform: scale(1.03);
 }
 
 .main-logo-img {
@@ -144,6 +150,8 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
+    position: relative;
+    z-index: 50;
 }
 
 .header-search {
@@ -155,6 +163,10 @@ body {
     width: 400px;
     border: 1px solid #E5E7EB;
     transition: border-color 0.2s ease;
+}
+
+.header-search.is-hidden {
+    display: none;
 }
 
 .header-search input {
@@ -181,6 +193,7 @@ body {
     display: flex;
     align-items: center;
     gap: 25px;
+    margin-left: auto;
 }
 
 /* CAMPANA DE NOTIFICACIONES Y DESPLEGABLE */
@@ -221,7 +234,7 @@ body {
     display: none;
     flex-direction: column;
     overflow: hidden;
-    z-index: 100;
+    z-index: 1500;
 }
 
 .notif-dropdown.show {
@@ -243,6 +256,7 @@ body {
     font-size: 12px;
     border-bottom: 1px solid #F1F5F9;
     color: var(--dark-slate);
+    cursor: pointer;
 }
 
 .notif-item:hover {
@@ -449,6 +463,12 @@ body {
     font-weight: 600;
     padding: 6px 14px;
     border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.mood-emoji:hover {
+    transform: translateY(-2px) scale(1.05);
 }
 
 .mood-emoji.happy { background-color: rgba(101, 184, 255, 0.15); color: #0284C7; }
@@ -469,6 +489,14 @@ body {
     border-radius: 18px;
     border: 1px solid #E5E7EB;
     position: relative;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.kpi-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 26px rgba(30, 27, 75, 0.07);
+    border-color: var(--lavanda);
 }
 
 .kpi-icon {
@@ -690,6 +718,15 @@ body {
 .agenda-list li {
     display: flex;
     gap: 15px;
+    cursor: pointer;
+    padding: 6px;
+    margin: -6px;
+    border-radius: 12px;
+    transition: background 0.2s ease;
+}
+
+.agenda-list li:hover {
+    background: var(--bg-light);
 }
 
 .agenda-list .time {
@@ -1084,6 +1121,14 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.profile-tags span:hover {
+    background: var(--morado-sentir);
+    color: var(--white);
+    transform: translateY(-1px);
 }
 
 .profile-kpis { margin-top: 4px; }
@@ -1184,8 +1229,16 @@ body {
     gap: 12px;
     font-size: 12px;
     color: var(--dark-slate);
-    padding-bottom: 14px;
+    padding: 6px 8px 14px 8px;
+    margin: -6px -8px 0 -8px;
     border-bottom: 1px solid #F1F5F9;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background 0.2s ease;
+}
+
+.activity-list li:hover {
+    background: var(--bg-light);
 }
 
 .activity-list li:last-child { border-bottom: none; padding-bottom: 0; }
@@ -1367,6 +1420,27 @@ body {
     background: #EDF2F7;
 }
 
+.btn-action-trigger.register-btn {
+    background: rgba(101, 184, 255, 0.12);
+    color: #0284C7;
+}
+
+.btn-action-trigger.register-btn:hover {
+    background: var(--azul-bienestar);
+    color: var(--white);
+}
+
+.btn-action-trigger.history-btn {
+    background: var(--white);
+    color: var(--morado-profundo);
+    border: 1.5px dashed var(--lavanda);
+}
+
+.btn-action-trigger.history-btn:hover {
+    background: rgba(184, 168, 255, 0.12);
+    border-color: var(--morado-sentir);
+}
+
 /* ANIMACIÓN GENÉRICA */
 @keyframes fadeIn {
     from {
@@ -1447,7 +1521,7 @@ body {
 }
 
 /* ==========================================================================
-   MODALES DE FORMULARIO (Nuevo Estudiante / Editar Perfil)
+   MODALES DE FORMULARIO (Nuevo Estudiante / Editar Perfil / Intervenciones)
    ========================================================================== */
 .sentir-modal-overlay {
     position: fixed;
@@ -1519,7 +1593,9 @@ body {
 
 .modal-field input[type="text"],
 .modal-field input[type="email"],
-.modal-field select {
+.modal-field input[type="date"],
+.modal-field select,
+.modal-field textarea {
     width: 100%;
     padding: 12px 14px;
     border-radius: 12px;
@@ -1532,8 +1608,15 @@ body {
     color: var(--dark-slate);
 }
 
+.modal-field textarea {
+    resize: vertical;
+    min-height: 56px;
+    line-height: 1.5;
+}
+
 .modal-field input:focus,
-.modal-field select:focus {
+.modal-field select:focus,
+.modal-field textarea:focus {
     border-color: var(--morado-sentir);
     box-shadow: 0 0 0 3px rgba(108, 77, 246, 0.1);
     background: var(--white);
@@ -1653,6 +1736,94 @@ body {
 }
 
 /* ==========================================================================
+   HISTORIAL DE INTERVENCIONES (LÍNEA DE TIEMPO EN MODAL)
+   ========================================================================== */
+.history-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.history-entry {
+    display: flex;
+    gap: 14px;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.history-entry:last-child {
+    padding-bottom: 0;
+}
+
+.history-entry-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--morado-sentir);
+    margin-top: 5px;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 4px rgba(108, 77, 246, 0.12);
+    position: relative;
+    z-index: 1;
+}
+
+.history-entry:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 16px;
+    bottom: 0;
+    width: 2px;
+    background: #EDE9FE;
+}
+
+.history-entry-content {
+    flex: 1;
+    background: var(--bg-light);
+    border-radius: 14px;
+    padding: 12px 16px;
+}
+
+.history-entry-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 4px;
+}
+
+.history-entry-top strong {
+    font-size: 13px;
+    color: var(--dark-slate);
+}
+
+.history-entry-top span {
+    font-size: 11px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    font-weight: 600;
+}
+
+.history-entry-content p {
+    font-size: 12px;
+    color: #4B5563;
+    line-height: 1.6;
+}
+
+.activity-detail-text {
+    font-size: 12.5px;
+    color: #4B5563;
+    line-height: 1.7;
+}
+
+.history-empty {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 12.5px;
+    padding: 30px 10px;
+}
+
+/* ==========================================================================
    TOASTS (NOTIFICACIONES FLOTANTES)
    ========================================================================== */
 .toast-container {
@@ -1727,4 +1898,200 @@ body {
     .header-search { width: 220px; }
     .messages-layout { grid-template-columns: 1fr; height: auto; }
     .conversations-list { max-height: 260px; }
+}
+
+/* ==========================================================================
+   CONTACTOS DE ACUDIENTE (MODAL "CONTACTAR ACUDIENTE")
+   ========================================================================== */
+.contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.contact-entry {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg-light);
+    border-radius: 14px;
+    padding: 12px 14px;
+    border: 1px solid transparent;
+    flex-wrap: wrap;
+}
+
+.contact-entry.is-principal {
+    border-color: rgba(108, 77, 246, 0.25);
+    background: rgba(108, 77, 246, 0.05);
+}
+
+.contact-entry-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--morado-sentir);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+}
+
+.contact-entry-info {
+    flex: 1;
+    min-width: 140px;
+}
+
+.contact-entry-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.contact-entry-top strong {
+    font-size: 12.5px;
+    color: var(--dark-slate);
+}
+
+.contact-principal-tag {
+    font-size: 9px;
+    font-weight: 700;
+    background: var(--morado-sentir);
+    color: var(--white);
+    padding: 2px 8px;
+    border-radius: 20px;
+}
+
+.contact-entry-info p {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.contact-call-btn {
+    background: var(--white);
+    border: 1px solid #E5E7EB;
+    color: var(--riesgo-alto);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 8px 12px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.2s ease;
+    flex-shrink: 0;
+}
+
+.contact-call-btn:hover {
+    background: #FEF2F2;
+}
+
+/* ==========================================================================
+   PROTOCOLO DE CRISIS (MODAL)
+   ========================================================================== */
+.protocol-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.protocol-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12.5px;
+    color: #4B5563;
+    background: var(--bg-light);
+    border-radius: 12px;
+    padding: 10px 14px;
+}
+
+.protocol-step i {
+    color: var(--riesgo-estable);
+    font-size: 13px;
+    flex-shrink: 0;
+}
+
+.protocol-warning {
+    font-size: 11.5px;
+    color: var(--riesgo-alto);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #FEF2F2;
+    padding: 10px 12px;
+    border-radius: 10px;
+}
+
+/* ==========================================================================
+   HISTORIAL DE TURNOS (MODAL DEL MENÚ DE PERFIL)
+   ========================================================================== */
+.shift-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.shift-entry {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg-light);
+    border-radius: 14px;
+    padding: 10px 14px;
+    flex-wrap: wrap;
+}
+
+.shift-time {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--morado-sentir);
+    flex-shrink: 0;
+}
+
+.shift-entry-info {
+    flex: 1;
+    min-width: 140px;
+}
+
+.shift-entry-info strong {
+    font-size: 12.5px;
+    color: var(--dark-slate);
+    display: block;
+}
+
+.shift-entry-info p {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.shift-status {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    flex-shrink: 0;
+}
+
+.shift-status.done { background: #F0FDF4; color: var(--riesgo-estable); }
+.shift-status.progress { background: #FFFBEB; color: var(--riesgo-medio); }
+
+/* Estado de selección genérico para grupos tipo risk-option usados fuera del contexto de riesgo */
+.risk-option.selected {
+    background: rgba(108, 77, 246, 0.08);
+    border-color: var(--morado-sentir);
+    color: var(--morado-sentir);
+}
+
+/* Mensajes de archivo/evidencia adjuntada en el chat */
+.msg.file-msg {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }

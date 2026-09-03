@@ -372,7 +372,12 @@ function initViewAllCases() {
             const container = document.querySelector('#view-inicio .cases-container');
             
             if (document.getElementById('extra-case-1')) {
-                alert('Todos los casos vigentes ya se encuentran desplegados en pantalla.');
+                showToast({
+                    title: 'Todos los casos ya están visibles',
+                    message: 'No hay más casos prioritarios pendientes por desplegar en este momento.',
+                    icon: 'fa-circle-check',
+                    type: 'info'
+                });
                 return;
             }
 
@@ -403,6 +408,7 @@ function initViewAllCases() {
             
             container.insertAdjacentHTML('beforeend', extraCasesHTML);
             initSlidingPanelActions();
+            viewAllBtn.innerHTML = '<i class="fa-solid fa-check"></i> Todos los casos visibles';
         });
     }
 }
@@ -412,49 +418,48 @@ function initViewAllCases() {
    ========================================================================== */
 function initCreateGroupWorkshop() {
     const createBtn = document.querySelector('.ai-recommendation-card .btn-secondary');
-    if (createBtn) {
-        createBtn.addEventListener('click', () => {
-            const modalOverlay = document.createElement('div');
-            modalOverlay.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-                background: rgba(30, 27, 75, 0.5); backdrop-filter: blur(4px);
-                z-index: 2000; display: flex; align-items: center; justify-content: center;
-                opacity: 0; transition: opacity 0.3s ease;
-            `;
-            
-            modalOverlay.innerHTML = `
-                <div style="background: white; padding: 30px; border-radius: 20px; width: 400px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); transform: scale(0.9); transition: transform 0.3s ease;">
-                    <h3 style="margin-bottom: 15px; font-size:16px; color:var(--dark-slate); font-weight:700;"><i class="fa-solid fa-users-gear" style="color:var(--morado-sentir)"></i> Agendar Taller Grupal 11°1</h3>
-                    <p style="font-size:12px; color:var(--text-muted); margin-bottom: 20px;">La IA preconfiguró los objetivos: Manejo del tiempo y reducción del estrés ante exámenes de estado.</p>
-                    <label style="font-size:11px; font-weight:700; display:block; margin-bottom:5px;">SELECCIONAR FECHA DE LA AGENDA:</label>
-                    <input type="date" style="width:100%; padding:10px; border-radius:8px; border:1px solid #E2E8F0; margin-bottom:20px; font-family:'Poppins'; font-size:13px;">
-                    <div style="display:flex; gap:10px; justify-content:flex-end;">
-                        <button id="cancelWorkshop" style="background:#F1F5F9; border:none; padding:10px 15px; border-radius:10px; font-size:12px; font-weight:600; cursor:pointer;">Cancelar</button>
-                        <button id="confirmWorkshop" style="background:var(--gradiente-sentir); color:white; border:none; padding:10px 15px; border-radius:10px; font-size:12px; font-weight:600; cursor:pointer;">Confirmar y Notificar</button>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(modalOverlay);
-            
-            setTimeout(() => {
-                modalOverlay.style.opacity = '1';
-                modalOverlay.querySelector('div').style.transform = 'scale(1)';
-            }, 50);
+    if (!createBtn) return;
 
-            modalOverlay.querySelector('#cancelWorkshop').addEventListener('click', () => closeModal(modalOverlay));
-            modalOverlay.querySelector('#confirmWorkshop').addEventListener('click', () => {
-                alert('¡Éxito! Taller agendado correctamente. Se han enviado las notificaciones al grupo de 11°1.');
-                closeModal(modalOverlay);
+    createBtn.addEventListener('click', () => {
+        const today = new Date().toISOString().split('T')[0];
+
+        const overlay = openSentirModal(`
+            <div class="sentir-modal-header">
+                <div class="sentir-modal-icon"><i class="fa-solid fa-users-gear"></i></div>
+                <div>
+                    <h3>Agendar Taller Grupal 11°1</h3>
+                    <p>La IA preconfiguró los objetivos según la alerta detectada</p>
+                </div>
+            </div>
+            <div class="sentir-modal-body">
+                <p class="activity-detail-text">Objetivos sugeridos: manejo del tiempo y técnicas de respiración diafragmática, para reducir el estrés académico ante la proximidad de los exámenes de estado.</p>
+                <div class="modal-field">
+                    <label>FECHA DEL TALLER</label>
+                    <input type="date" id="workshopDate" value="${today}">
+                </div>
+                <div class="modal-field">
+                    <label>NOTA PARA EL GRUPO (OPCIONAL)</label>
+                    <textarea id="workshopNote" rows="2" placeholder="Ej. Traer ropa cómoda, se realizará en el salón de bienestar..."></textarea>
+                </div>
+            </div>
+            <div class="sentir-modal-actions">
+                <button class="modal-btn-cancel" id="cancelWorkshop">Cancelar</button>
+                <button class="modal-btn-confirm" id="confirmWorkshop"><i class="fa-solid fa-check"></i> Confirmar y Notificar</button>
+            </div>
+        `);
+
+        overlay.querySelector('#cancelWorkshop').addEventListener('click', () => closeSentirModal(overlay));
+
+        overlay.querySelector('#confirmWorkshop').addEventListener('click', () => {
+            closeSentirModal(overlay);
+            showToast({
+                title: 'Taller agendado',
+                message: 'Se notificó al grupo 11°1 sobre el taller grupal programado.',
+                icon: 'fa-users-gear',
+                type: 'success'
             });
         });
-    }
-
-    function closeModal(modal) {
-        modal.style.opacity = '0';
-        modal.querySelector('div').style.transform = 'scale(0.9)';
-        setTimeout(() => modal.remove(), 300);
-    }
+    });
 }
 
 /* ==========================================================================
@@ -674,13 +679,23 @@ function initPsychologistProfileMenu() {
                 item.addEventListener('mouseleave', () => item.style.background = 'transparent');
                 item.addEventListener('click', () => {
                     if (item.innerText.includes('Cerrar')) {
-                        alert('Cerrando sesión del sistema Sentir de manera segura...');
+                        showToast({
+                            title: 'Sesión cerrada',
+                            message: 'Saliste de forma segura del sistema Sentir.',
+                            icon: 'fa-right-from-bracket',
+                            type: 'info'
+                        });
                     } else if (item.dataset.goto === 'perfil') {
                         document.querySelector('.nav-item[data-view="perfil"]').click();
                     } else if (item.dataset.action === 'turnos') {
                         openShiftHistoryModal();
                     } else {
-                        alert(`Accediendo a: ${item.innerText.trim()}`);
+                        showToast({
+                            title: item.innerText.trim(),
+                            message: 'Esta opción estará disponible próximamente.',
+                            icon: 'fa-circle-info',
+                            type: 'info'
+                        });
                     }
                     profileDropdown.remove();
                 });
@@ -883,6 +898,18 @@ function initNewStudentModal() {
     });
 }
 
+function decrementMessagesBadge() {
+    const badge = document.getElementById('navMsgBadge');
+    if (!badge) return;
+    const current = parseInt(badge.innerText, 10) || 0;
+    const next = Math.max(0, current - 1);
+    if (next === 0) {
+        badge.style.display = 'none';
+    } else {
+        badge.innerText = next;
+    }
+}
+
 function bumpChipCount(filterKey, delta) {
     const chip = document.querySelector(`#view-estudiantes .chip[data-filter="${filterKey}"]`);
     if (!chip) return;
@@ -949,7 +976,10 @@ function initMessagesView() {
         chatAvatar.src = avatar;
 
         const unread = item.querySelector('.unread-dot');
-        if (unread) unread.remove();
+        if (unread) {
+            unread.remove();
+            decrementMessagesBadge();
+        }
 
         const thread = mockThreads[name] || [
             { type: 'received', text: '¡Hola! Empecemos la conversación.' }

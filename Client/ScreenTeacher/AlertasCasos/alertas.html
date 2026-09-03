@@ -4,234 +4,257 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Alertas y casos | SENTIR</title>
+    <title>Alertas y casos | Sentir</title>
 
     <link rel="stylesheet" href="alertas.css">
 
+    <!-- Tipografías -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
 </head>
 
 <body>
 
-    <!-- =========================
-         OVERLAY MOBILE
-    ========================== -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-
-    <!-- =========================
+    <!-- =====================================
          SIDEBAR
-    ========================== -->
+    ====================================== -->
+
     <aside class="sidebar" id="sidebar">
 
-        <div class="sidebar-header">
+        <!-- ESPACIO PARA EL LOGO -->
 
-            <div class="logo-container">
-                <div class="logo-symbol">
-                    ♥
-                </div>
+        <div class="logo-area">
 
-                <div class="logo-text">
-                    <span>SENTIR</span>
-                    <small>Bienestar emocional</small>
-                </div>
+            <!--
+                AQUÍ VA TU LOGO
+
+                Cuando tengas el archivo puedes poner:
+
+                <img src="img/logo-sentir.png" alt="Sentir">
+            -->
+
+            <div class="logo-placeholder">
+                <div class="logo-heart">♥</div>
+
+                <span>sentir</span>
             </div>
-
-            <button class="close-sidebar" id="closeSidebar">
-                ×
-            </button>
 
         </div>
 
 
-        <nav class="sidebar-nav">
+        <!-- MENÚ -->
 
-            <p class="nav-title">PRINCIPAL</p>
+        <nav class="menu">
 
-            <a href="panel-docente.html" class="nav-item">
-                <span class="nav-icon">⌂</span>
+            <a href="panel-docente.html" class="menu-item">
+
+                <span class="menu-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M3 10.8L12 3l9 7.8v9.2a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>
+                    </svg>
+                </span>
+
                 <span>Inicio</span>
+
             </a>
 
-            <a href="estudiantes.html" class="nav-item">
-                <span class="nav-icon">👥</span>
+
+            <a href="estudiantes.html" class="menu-item">
+
+                <span class="menu-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M3 9l9-4 9 4-9 4-9-4z"/>
+                        <path d="M6 11.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5"/>
+                        <path d="M21 9v7"/>
+                    </svg>
+                </span>
+
                 <span>Estudiantes</span>
+
             </a>
 
-            <a href="alertas.html" class="nav-item active">
-                <span class="nav-icon">⚠</span>
-                <span>Alertas y casos</span>
-                <span class="nav-badge">5</span>
-            </a>
 
-            <a href="#" class="nav-item">
-                <span class="nav-icon">📊</span>
-                <span>Seguimiento</span>
-            </a>
+            <a href="#" class="menu-item">
 
-            <p class="nav-title second-title">GESTIÓN</p>
+                <span class="menu-icon message-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 11.5c0 4.1-3.6 7.5-8 7.5-1.1 0-2.2-.2-3.2-.6L4 20l1.3-3.5C4.5 15.3 4 13.5 4 11.5 4 7.4 7.6 4 12 4s8 3.4 8 7.5z"/>
+                        <circle cx="8.5" cy="11.5" r="1"/>
+                        <circle cx="12" cy="11.5" r="1"/>
+                        <circle cx="15.5" cy="11.5" r="1"/>
+                    </svg>
+                </span>
 
-            <a href="#" class="nav-item">
-                <span class="nav-icon">📅</span>
-                <span>Agenda</span>
-            </a>
-
-            <a href="#" class="nav-item">
-                <span class="nav-icon">💬</span>
                 <span>Mensajes</span>
+
+                <span class="message-count">3</span>
+
             </a>
 
-            <a href="#" class="nav-item">
-                <span class="nav-icon">⚙</span>
-                <span>Configuración</span>
+
+            <a href="#" class="menu-item">
+
+                <span class="menu-icon">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="7" r="4"/>
+                        <path d="M4 21c.5-4.2 3.5-7 8-7s7.5 2.8 8 7"/>
+                    </svg>
+                </span>
+
+                <span>Perfil</span>
+
             </a>
 
         </nav>
-
-
-        <div class="sidebar-bottom">
-
-            <div class="user-mini">
-
-                <div class="user-avatar">
-                    DP
-                </div>
-
-                <div class="user-info">
-                    <strong>Docente</strong>
-                    <span>Panel docente</span>
-                </div>
-
-                <button class="user-menu">
-                    ⋮
-                </button>
-
-            </div>
-
-            <button class="logout-btn" id="logoutBtn">
-                <span>↪</span>
-                Cerrar sesión
-            </button>
-
-        </div>
 
     </aside>
 
 
 
-    <!-- =========================
-         MAIN
-    ========================== -->
+    <!-- =====================================
+         OVERLAY MOBILE
+    ====================================== -->
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+
+
+    <!-- =====================================
+         CONTENIDO PRINCIPAL
+    ====================================== -->
+
     <main class="main-content">
 
         <!-- HEADER -->
+
         <header class="top-header">
 
-            <button class="menu-btn" id="openSidebar">
-                ☰
+            <button class="mobile-menu" id="mobileMenu">
+
+                <span></span>
+                <span></span>
+                <span></span>
+
             </button>
+
 
             <div class="header-title">
 
-                <div>
-                    <h1>Alertas y casos</h1>
+                <h1>Alertas y casos</h1>
 
-                    <p>
-                        Revisa las señales de alerta y realiza el seguimiento
-                        necesario a cada estudiante.
-                    </p>
-                </div>
+                <p>
+                    Revisa las situaciones que requieren acompañamiento.
+                </p>
 
             </div>
 
 
-           <button class="notification-btn" aria-label="Notificaciones">
+            <!-- CAMPANITA -->
 
-    <svg
-        class="bell-icon"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-    >
-        <path
-            d="M18 8C18 5.23858 15.7614 3 13 3H11C8.23858 3 6 5.23858 6 8C6 13 4 14 4 16H20C20 14 18 13 18 8Z"
-            stroke="currentColor"
-            stroke-width="1.7"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        />
+            <button
+                class="notification-btn"
+                aria-label="Notificaciones"
+            >
 
-        <path
-            d="M10 19C10.4 20.2 11.1 21 12 21C12.9 21 13.6 20.2 14 19"
-            stroke="currentColor"
-            stroke-width="1.7"
-            stroke-linecap="round"
-        />
-    </svg>
+                <svg
+                    class="bell-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                >
 
-    <span class="notification-dot"></span>
+                    <path
+                        d="M18 8C18 5.23858 15.7614 3 13 3H11C8.23858 3 6 5.23858 6 8C6 13 4 14 4 16H20C20 14 18 13 18 8Z"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
 
-</button>
+                    <path
+                        d="M10 19C10.4 20.2 11.1 21 12 21C12.9 21 13.6 20.2 14 19"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        stroke-linecap="round"
+                    />
+
+                </svg>
+
+                <span class="notification-dot"></span>
+
+            </button>
 
         </header>
 
 
 
-        <!-- =========================
-             CONTENT
-        ========================== -->
-        <section class="page-content">
+        <!-- =====================================
+             CONTENIDO
+        ====================================== -->
+
+        <section class="content">
 
 
-            <!-- =========================
-                 SUMMARY CARDS
-            ========================== -->
+            <!-- RESUMEN -->
 
-            <div class="summary-grid">
+            <div class="summary">
 
-                <div class="summary-card high">
+                <div class="summary-card">
 
-                    <div class="summary-icon">
-                        🔴
+                    <div class="summary-number high">
+                        <span id="highCount">0</span>
                     </div>
 
-                    <div class="summary-info">
-                        <span>Riesgo alto</span>
-                        <strong id="highCount">0</strong>
-                        <small>Requieren atención prioritaria</small>
-                    </div>
+                    <div>
 
-                </div>
+                        <h3>Riesgo alto</h3>
 
+                        <p>
+                            Atención prioritaria
+                        </p>
 
-                <div class="summary-card medium">
-
-                    <div class="summary-icon">
-                        🟠
-                    </div>
-
-                    <div class="summary-info">
-                        <span>Requieren atención</span>
-                        <strong id="mediumCount">0</strong>
-                        <small>Señales que deben revisarse</small>
                     </div>
 
                 </div>
 
 
-                <div class="summary-card follow">
+                <div class="summary-card">
 
-                    <div class="summary-icon">
-                        🟢
+                    <div class="summary-number medium">
+                        <span id="mediumCount">0</span>
                     </div>
 
-                    <div class="summary-info">
-                        <span>En seguimiento</span>
-                        <strong id="followCount">0</strong>
-                        <small>Casos actualmente acompañados</small>
+                    <div>
+
+                        <h3>Requieren atención</h3>
+
+                        <p>
+                            Señales para revisar
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="summary-number follow">
+                        <span id="followCount">0</span>
+                    </div>
+
+                    <div>
+
+                        <h3>En seguimiento</h3>
+
+                        <p>
+                            Acompañamiento activo
+                        </p>
+
                     </div>
 
                 </div>
@@ -240,34 +263,35 @@
 
 
 
-            <!-- =========================
-                 FILTERS
-            ========================== -->
+            <!-- FILTROS -->
 
-            <div class="filters-card">
+            <div class="filters">
 
-                <div class="filters-header">
+                <div class="filter-title">
 
                     <div>
-                        <h2>Filtrar casos</h2>
-                        <p>Selecciona los criterios que deseas consultar.</p>
+
+                        <h2>Casos</h2>
+
+                        <p>
+                            Consulta y organiza las alertas registradas.
+                        </p>
+
                     </div>
 
-                    <button id="clearFilters" class="clear-btn">
+                    <button id="clearFilters">
                         Limpiar filtros
                     </button>
 
                 </div>
 
 
-                <div class="filters-grid">
+                <div class="filter-row">
 
-                    <!-- CURSO -->
-                    <div class="filter-group">
 
-                        <label for="courseFilter">
-                            Curso
-                        </label>
+                    <div class="filter">
+
+                        <label>Curso</label>
 
                         <select id="courseFilter">
 
@@ -276,61 +300,44 @@
                             </option>
 
                             <optgroup label="Sexto">
-
                                 <option value="6°1">6°1</option>
                                 <option value="6°2">6°2</option>
                                 <option value="6°3">6°3</option>
                                 <option value="6°4">6°4</option>
                                 <option value="6°5">6°5</option>
-
                             </optgroup>
 
-
                             <optgroup label="Séptimo">
-
                                 <option value="7°1">7°1</option>
                                 <option value="7°2">7°2</option>
                                 <option value="7°3">7°3</option>
                                 <option value="7°4">7°4</option>
-
                             </optgroup>
 
-
                             <optgroup label="Octavo">
-
                                 <option value="8°1">8°1</option>
                                 <option value="8°2">8°2</option>
                                 <option value="8°3">8°3</option>
-
                             </optgroup>
 
-
                             <optgroup label="Noveno">
-
                                 <option value="9°1">9°1</option>
                                 <option value="9°2">9°2</option>
                                 <option value="9°3">9°3</option>
-
                             </optgroup>
 
-
                             <optgroup label="Décimo">
-
                                 <option value="10°1">10°1</option>
                                 <option value="10°2">10°2</option>
                                 <option value="10°3">10°3</option>
                                 <option value="10°4">10°4</option>
-
                             </optgroup>
 
-
                             <optgroup label="Undécimo">
-
                                 <option value="11°1">11°1</option>
                                 <option value="11°2">11°2</option>
                                 <option value="11°3">11°3</option>
                                 <option value="11°4">11°4</option>
-
                             </optgroup>
 
                         </select>
@@ -338,13 +345,9 @@
                     </div>
 
 
+                    <div class="filter">
 
-                    <!-- NIVEL -->
-                    <div class="filter-group">
-
-                        <label for="levelFilter">
-                            Nivel de alerta
-                        </label>
+                        <label>Nivel</label>
 
                         <select id="levelFilter">
 
@@ -353,15 +356,15 @@
                             </option>
 
                             <option value="high">
-                                🔴 Riesgo alto
+                                Riesgo alto
                             </option>
 
                             <option value="medium">
-                                🟠 Requiere atención
+                                Requiere atención
                             </option>
 
                             <option value="follow">
-                                🟢 En seguimiento
+                                En seguimiento
                             </option>
 
                         </select>
@@ -369,13 +372,9 @@
                     </div>
 
 
+                    <div class="filter">
 
-                    <!-- ESTADO -->
-                    <div class="filter-group">
-
-                        <label for="statusFilter">
-                            Estado
-                        </label>
+                        <label>Estado</label>
 
                         <select id="statusFilter">
 
@@ -405,71 +404,51 @@
 
 
 
-            <!-- =========================
-                 CASES SECTION
-            ========================== -->
+            <!-- =====================================
+                 CASOS
+            ====================================== -->
 
-            <div class="cases-layout">
+            <div class="cases-wrapper">
 
 
                 <!-- LISTA -->
-                <div class="cases-card">
 
-                    <div class="cases-header">
+                <div class="cases-list">
+
+                    <div class="cases-list-header">
 
                         <div>
 
-                            <h2>Casos detectados</h2>
+                            <h2>Alertas registradas</h2>
 
-                            <p>
-                                <span id="resultsCount">0</span>
-                                casos encontrados
-                            </p>
+                            <span>
+                                <strong id="resultsCount">0</strong>
+                                resultados
+                            </span>
 
                         </div>
-
-                        <button class="sort-btn" id="sortBtn">
-                            ↕ Más recientes
-                        </button>
 
                     </div>
 
 
-                    <div class="table-container">
-
-                        <table>
-
-                            <thead>
-
-                                <tr>
-                                    <th>Estudiante</th>
-                                    <th>Curso</th>
-                                    <th>Alerta</th>
-                                    <th>Fecha</th>
-                                    <th>Estado</th>
-                                </tr>
-
-                            </thead>
-
-                            <tbody id="casesTable">
-
-                            </tbody>
-
-                        </table>
-
-                    </div>
+                    <div id="casesContainer"></div>
 
 
-                    <div class="empty-state" id="emptyState">
+                    <div
+                        class="empty-state"
+                        id="emptyState"
+                    >
 
-                        <div class="empty-icon">
-                            🔎
+                        <div class="empty-circle">
+                            ✓
                         </div>
 
-                        <h3>No encontramos casos</h3>
+                        <h3>
+                            No hay casos para mostrar
+                        </h3>
 
                         <p>
-                            Intenta cambiar los filtros seleccionados.
+                            Prueba cambiando los filtros.
                         </p>
 
                     </div>
@@ -478,66 +457,57 @@
 
 
 
-                <!-- =========================
-                     DETAIL PANEL
-                ========================== -->
+                <!-- DETALLE -->
 
-                <aside class="detail-card" id="detailCard">
+                <div
+                    class="case-detail"
+                    id="caseDetail"
+                >
 
-                    <div class="detail-empty">
+                    <div class="detail-placeholder">
 
-                        <div class="detail-empty-icon">
-                            👤
+                        <div class="placeholder-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <circle
+                                    cx="12"
+                                    cy="8"
+                                    r="4"
+                                />
+
+                                <path
+                                    d="M4 21c.5-4.2 3.5-7 8-7s7.5 2.8 8 7"
+                                />
+
+                            </svg>
+
                         </div>
 
-                        <h3>Selecciona un caso</h3>
+                        <h3>
+                            Selecciona un caso
+                        </h3>
 
                         <p>
-                            Selecciona un estudiante de la lista para
-                            consultar los detalles de la alerta.
+                            Aquí podrás consultar la información
+                            y realizar el seguimiento.
                         </p>
 
                     </div>
 
 
-                    <div class="detail-content" id="detailContent">
+                    <div
+                        class="detail-content"
+                        id="detailContent"
+                    ></div>
 
-                        <!-- JS -->
-
-                    </div>
-
-                </aside>
+                </div>
 
             </div>
 
         </section>
 
     </main>
-
-
-
-    <!-- =========================
-         NOTIFICATION
-    ========================== -->
-
-    <div class="toast" id="toast">
-
-        <span class="toast-icon">
-            ✓
-        </span>
-
-        <div>
-            <strong id="toastTitle">
-                Seguimiento registrado
-            </strong>
-
-            <p id="toastMessage">
-                La información fue guardada correctamente.
-            </p>
-        </div>
-
-    </div>
-
 
 
     <script src="alertas.js"></script>

@@ -1,5 +1,5 @@
 /* =========================================
-   DATOS DE CASOS
+   CASOS DE EJEMPLO
 ========================================= */
 
 const cases = [
@@ -12,14 +12,19 @@ const cases = [
         alert: "Riesgo alto",
         date: "01/09/2026",
         status: "pending",
-        reason: "Se han identificado cambios emocionales importantes y una disminución constante en su interacción habitual.",
+
+        reason:
+            "Se han identificado cambios emocionales importantes y una disminución en su interacción habitual.",
+
         indicators: [
             "Cambios frecuentes en el estado emocional",
             "Aislamiento durante actividades grupales",
             "Disminución de la participación académica"
         ],
+
         history: []
     },
+
 
     {
         id: 2,
@@ -29,19 +34,25 @@ const cases = [
         alert: "Requiere atención",
         date: "31/08/2026",
         status: "followup",
-        reason: "Se observan cambios en los registros emocionales durante los últimos días.",
+
+        reason:
+            "Se observan cambios en los registros emocionales durante los últimos días.",
+
         indicators: [
             "Cambios en el registro emocional",
             "Menor participación en clase",
             "Variaciones en sus interacciones"
         ],
+
         history: [
             {
                 date: "31/08/2026",
-                text: "Se realizó un primer acercamiento con el estudiante."
+                text:
+                    "Se realizó un primer acercamiento con el estudiante."
             }
         ]
     },
+
 
     {
         id: 3,
@@ -51,23 +62,31 @@ const cases = [
         alert: "En seguimiento",
         date: "30/08/2026",
         status: "followup",
-        reason: "El estudiante cuenta actualmente con un proceso de acompañamiento.",
+
+        reason:
+            "El estudiante cuenta actualmente con un proceso de acompañamiento.",
+
         indicators: [
             "Variaciones emocionales recientes",
             "Necesidad de acompañamiento",
             "Seguimiento activo"
         ],
+
         history: [
             {
                 date: "30/08/2026",
-                text: "Se inició seguimiento por parte del equipo de acompañamiento."
+                text:
+                    "Se inició seguimiento por parte del equipo de acompañamiento."
             },
+
             {
                 date: "01/09/2026",
-                text: "Se revisó nuevamente la evolución del caso."
+                text:
+                    "Se revisó nuevamente la evolución del caso."
             }
         ]
     },
+
 
     {
         id: 4,
@@ -77,14 +96,19 @@ const cases = [
         alert: "Requiere atención",
         date: "29/08/2026",
         status: "pending",
-        reason: "Se identificó un cambio reciente en sus registros emocionales.",
+
+        reason:
+            "Se identificó un cambio reciente en sus registros emocionales.",
+
         indicators: [
             "Cambios en el estado emocional",
             "Menor comunicación",
             "Disminución de participación"
         ],
+
         history: []
     },
+
 
     {
         id: 5,
@@ -94,19 +118,25 @@ const cases = [
         alert: "Riesgo alto",
         date: "29/08/2026",
         status: "followup",
-        reason: "Se han identificado señales que requieren acompañamiento prioritario.",
+
+        reason:
+            "Se han identificado señales que requieren acompañamiento prioritario.",
+
         indicators: [
             "Cambios emocionales persistentes",
             "Aislamiento social",
             "Cambios en el rendimiento académico"
         ],
+
         history: [
             {
                 date: "29/08/2026",
-                text: "El caso fue remitido al equipo correspondiente para valoración."
+                text:
+                    "El caso fue remitido al equipo correspondiente para valoración."
             }
         ]
     },
+
 
     {
         id: 6,
@@ -116,22 +146,30 @@ const cases = [
         alert: "Requiere atención",
         date: "28/08/2026",
         status: "attended",
-        reason: "Se detectaron cambios puntuales que fueron revisados por el equipo de acompañamiento.",
+
+        reason:
+            "Se detectaron cambios puntuales que fueron revisados por el equipo de acompañamiento.",
+
         indicators: [
             "Cambio temporal del estado emocional",
             "Menor interacción"
         ],
+
         history: [
             {
                 date: "28/08/2026",
-                text: "Se realizó acompañamiento inicial."
+                text:
+                    "Se realizó acompañamiento inicial."
             },
+
             {
                 date: "30/08/2026",
-                text: "El caso fue atendido y cerrado."
+                text:
+                    "El caso fue atendido."
             }
         ]
     },
+
 
     {
         id: 7,
@@ -141,18 +179,24 @@ const cases = [
         alert: "En seguimiento",
         date: "27/08/2026",
         status: "followup",
-        reason: "Actualmente se encuentra en un proceso de acompañamiento.",
+
+        reason:
+            "Actualmente se encuentra en un proceso de acompañamiento.",
+
         indicators: [
             "Cambios emocionales recientes",
             "Seguimiento activo"
         ],
+
         history: [
             {
                 date: "27/08/2026",
-                text: "Se inició proceso de seguimiento."
+                text:
+                    "Se inició proceso de seguimiento."
             }
         ]
     },
+
 
     {
         id: 8,
@@ -162,14 +206,19 @@ const cases = [
         alert: "Riesgo alto",
         date: "26/08/2026",
         status: "pending",
-        reason: "Se identificaron cambios significativos que requieren atención prioritaria.",
+
+        reason:
+            "Se identificaron cambios significativos que requieren atención prioritaria.",
+
         indicators: [
             "Cambios emocionales frecuentes",
             "Aislamiento",
             "Baja participación académica"
         ],
+
         history: []
     },
+
 
     {
         id: 9,
@@ -179,18 +228,24 @@ const cases = [
         alert: "Requiere atención",
         date: "25/08/2026",
         status: "attended",
-        reason: "Se identificaron señales de alerta que fueron atendidas.",
+
+        reason:
+            "Se identificaron señales de alerta que fueron atendidas.",
+
         indicators: [
             "Cambios en el comportamiento",
             "Variaciones emocionales"
         ],
+
         history: [
             {
                 date: "25/08/2026",
-                text: "Se realizó acompañamiento."
+                text:
+                    "Se realizó acompañamiento."
             }
         ]
     },
+
 
     {
         id: 10,
@@ -200,15 +255,20 @@ const cases = [
         alert: "En seguimiento",
         date: "24/08/2026",
         status: "followup",
-        reason: "Se mantiene seguimiento preventivo.",
+
+        reason:
+            "Se mantiene seguimiento preventivo.",
+
         indicators: [
             "Cambios leves en el estado emocional",
             "Seguimiento preventivo"
         ],
+
         history: [
             {
                 date: "24/08/2026",
-                text: "Se inició seguimiento preventivo."
+                text:
+                    "Se inició seguimiento preventivo."
             }
         ]
     }
@@ -221,48 +281,59 @@ const cases = [
    ELEMENTOS
 ========================================= */
 
-const courseFilter = document.getElementById("courseFilter");
-const levelFilter = document.getElementById("levelFilter");
-const statusFilter = document.getElementById("statusFilter");
+const courseFilter =
+    document.getElementById("courseFilter");
 
-const casesTable = document.getElementById("casesTable");
+const levelFilter =
+    document.getElementById("levelFilter");
 
-const resultsCount = document.getElementById("resultsCount");
+const statusFilter =
+    document.getElementById("statusFilter");
 
-const emptyState = document.getElementById("emptyState");
+const casesContainer =
+    document.getElementById("casesContainer");
 
-const detailCard = document.getElementById("detailCard");
-const detailContent = document.getElementById("detailContent");
+const resultsCount =
+    document.getElementById("resultsCount");
 
-const highCount = document.getElementById("highCount");
-const mediumCount = document.getElementById("mediumCount");
-const followCount = document.getElementById("followCount");
+const emptyState =
+    document.getElementById("emptyState");
 
-const clearFilters = document.getElementById("clearFilters");
+const detailPlaceholder =
+    document.querySelector(".detail-placeholder");
 
-const toast = document.getElementById("toast");
-const toastTitle = document.getElementById("toastTitle");
-const toastMessage = document.getElementById("toastMessage");
+const detailContent =
+    document.getElementById("detailContent");
+
+const highCount =
+    document.getElementById("highCount");
+
+const mediumCount =
+    document.getElementById("mediumCount");
+
+const followCount =
+    document.getElementById("followCount");
 
 
 
 /* =========================================
-   INICIALIZAR
+   INICIAR
 ========================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    updateSummary();
+        updateSummary();
 
-    renderCases();
+        renderCases();
 
-    setupSidebar();
+        setupFilters();
 
-    setupFilters();
+        setupMobileMenu();
 
-    setupButtons();
-
-});
+    }
+);
 
 
 
@@ -272,24 +343,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function updateSummary() {
 
-    const high = cases.filter(
-        item => item.level === "high"
-    ).length;
-
-    const medium = cases.filter(
-        item => item.level === "medium"
-    ).length;
-
-    const follow = cases.filter(
-        item => item.level === "follow"
-    ).length;
+    highCount.textContent =
+        cases.filter(
+            item => item.level === "high"
+        ).length;
 
 
-    highCount.textContent = high;
+    mediumCount.textContent =
+        cases.filter(
+            item => item.level === "medium"
+        ).length;
 
-    mediumCount.textContent = medium;
 
-    followCount.textContent = follow;
+    followCount.textContent =
+        cases.filter(
+            item => item.level === "follow"
+        ).length;
 
 }
 
@@ -306,10 +375,12 @@ function setupFilters() {
         renderCases
     );
 
+
     levelFilter.addEventListener(
         "change",
         renderCases
     );
+
 
     statusFilter.addEventListener(
         "change",
@@ -317,41 +388,41 @@ function setupFilters() {
     );
 
 
-    clearFilters.addEventListener(
-        "click",
-        () => {
+    document
+        .getElementById("clearFilters")
+        .addEventListener(
+            "click",
+            () => {
 
-            courseFilter.value = "all";
+                courseFilter.value = "all";
 
-            levelFilter.value = "all";
+                levelFilter.value = "all";
 
-            statusFilter.value = "all";
+                statusFilter.value = "all";
 
-            renderCases();
+                renderCases();
 
-            showToast(
-                "Filtros limpiados",
-                "Se muestran nuevamente todos los casos."
-            );
-
-        }
-    );
+            }
+        );
 
 }
 
 
 
 /* =========================================
-   OBTENER CASOS FILTRADOS
+   FILTRAR
 ========================================= */
 
 function getFilteredCases() {
 
-    const course = courseFilter.value;
+    const course =
+        courseFilter.value;
 
-    const level = levelFilter.value;
+    const level =
+        levelFilter.value;
 
-    const status = statusFilter.value;
+    const status =
+        statusFilter.value;
 
 
     return cases.filter(item => {
@@ -384,116 +455,106 @@ function getFilteredCases() {
 
 
 /* =========================================
-   RENDERIZAR CASOS
+   MOSTRAR CASOS
 ========================================= */
 
 function renderCases() {
 
-    const filteredCases = getFilteredCases();
+    const filtered =
+        getFilteredCases();
 
-    casesTable.innerHTML = "";
+
+    casesContainer.innerHTML = "";
 
 
     resultsCount.textContent =
-        filteredCases.length;
+        filtered.length;
 
 
-    if (filteredCases.length === 0) {
+    if (filtered.length === 0) {
 
-        emptyState.style.display = "block";
+        emptyState.style.display =
+            "block";
 
         return;
 
     }
 
 
-    emptyState.style.display = "none";
+    emptyState.style.display =
+        "none";
 
 
-    filteredCases.forEach(item => {
+    filtered.forEach(item => {
 
-        const row =
-            document.createElement("tr");
-
-
-        row.dataset.id = item.id;
+        const card =
+            document.createElement("div");
 
 
-        row.innerHTML = `
+        card.className =
+            "case-card";
 
-            <td>
 
-                <div class="student-cell">
+        card.dataset.id =
+            item.id;
 
-                    <div class="student-avatar">
 
-                        ${getInitials(item.student)}
+        card.innerHTML = `
 
-                    </div>
+            <div class="case-avatar">
+                ${getInitials(item.student)}
+            </div>
 
-                    <div class="student-name">
 
-                        <strong>
-                            ${item.student}
-                        </strong>
+            <div class="case-main">
 
-                        <span>
-                            Caso #${item.id}
-                        </span>
+                <div class="case-name">
+                    ${item.student}
+                </div>
 
-                    </div>
+                <div class="case-course">
+                    Curso ${item.course}
+                </div>
+
+
+                <div class="case-alert">
+
+                    <span
+                        class="alert-dot ${item.level}"
+                    ></span>
+
+                    <span class="alert-text">
+                        ${item.alert}
+                    </span>
 
                 </div>
 
-            </td>
+            </div>
 
 
-            <td>
-
-                <span class="course-badge">
-                    ${item.course}
-                </span>
-
-            </td>
+            <div class="case-date">
+                ${item.date}
+            </div>
 
 
-            <td>
-
-                <span class="alert-badge ${item.level}">
-                    ${getLevelIcon(item.level)}
-                    ${item.alert}
-                </span>
-
-            </td>
-
-
-            <td>
-
-                <span class="date-cell">
-                    ${item.date}
-                </span>
-
-            </td>
-
-
-            <td>
-
-                <span class="status-badge ${item.status}">
-                    ${getStatusText(item.status)}
-                </span>
-
-            </td>
+            <span class="status ${item.status}">
+                ${getStatusText(item.status)}
+            </span>
 
         `;
 
 
-        row.addEventListener(
+        card.addEventListener(
             "click",
-            () => selectCase(item.id)
+            () => {
+
+                selectCase(item.id);
+
+            }
         );
 
 
-        casesTable.appendChild(row);
+        casesContainer.appendChild(card);
 
     });
 
@@ -502,41 +563,47 @@ function renderCases() {
 
 
 /* =========================================
-   SELECCIONAR CASO
+   SELECCIONAR
 ========================================= */
 
 function selectCase(id) {
 
     const item =
-        cases.find(caseItem => caseItem.id === id);
+        cases.find(
+            caseItem => caseItem.id === id
+        );
 
 
     if (!item) return;
 
 
     document
-        .querySelectorAll("#casesTable tr")
-        .forEach(row => {
+        .querySelectorAll(".case-card")
+        .forEach(card => {
 
-            row.classList.remove("selected");
+            card.classList.remove(
+                "selected"
+            );
 
         });
 
 
-    const selectedRow =
+    const selected =
         document.querySelector(
-            `#casesTable tr[data-id="${id}"]`
+            `.case-card[data-id="${id}"]`
         );
 
 
-    if (selectedRow) {
+    if (selected) {
 
-        selectedRow.classList.add("selected");
+        selected.classList.add(
+            "selected"
+        );
 
     }
 
 
-    showCaseDetails(item);
+    showDetail(item);
 
 }
 
@@ -546,26 +613,24 @@ function selectCase(id) {
    DETALLE
 ========================================= */
 
-function showCaseDetails(item) {
+function showDetail(item) {
 
-    detailCard.querySelector(
-        ".detail-empty"
-    ).style.display = "none";
+    detailPlaceholder.style.display =
+        "none";
 
 
-    detailContent.style.display = "block";
+    detailContent.style.display =
+        "block";
 
 
     detailContent.innerHTML = `
 
-        <div class="detail-top">
+        <div class="detail-header">
 
-            <div class="detail-student">
+            <div class="detail-person">
 
                 <div class="detail-avatar">
-
                     ${getInitials(item.student)}
-
                 </div>
 
                 <div>
@@ -575,7 +640,7 @@ function showCaseDetails(item) {
                     </h3>
 
                     <p>
-                        Curso ${item.course} · Caso #${item.id}
+                        ${item.course} · Caso #${item.id}
                     </p>
 
                 </div>
@@ -585,24 +650,24 @@ function showCaseDetails(item) {
         </div>
 
 
-
         <div class="detail-body">
 
 
-            <div class="detail-alert ${item.level}">
+            <div class="detail-level ${item.level}">
 
-                <div class="detail-alert-title">
+                <div class="detail-level-title">
 
                     <strong>
                         ${getLevelIcon(item.level)}
                         ${item.alert}
                     </strong>
 
-                    <span class="status-badge ${item.status}">
+                    <span class="status ${item.status}">
                         ${getStatusText(item.status)}
                     </span>
 
                 </div>
+
 
                 <p>
                     ${item.reason}
@@ -615,37 +680,13 @@ function showCaseDetails(item) {
             <div class="detail-section">
 
                 <h4>
-                    Información del caso
+                    Información
                 </h4>
 
-                <div class="info-grid">
-
-                    <div class="info-box">
-
-                        <span>
-                            FECHA DE DETECCIÓN
-                        </span>
-
-                        <strong>
-                            ${item.date}
-                        </strong>
-
-                    </div>
-
-
-                    <div class="info-box">
-
-                        <span>
-                            ESTADO
-                        </span>
-
-                        <strong>
-                            ${getStatusText(item.status)}
-                        </strong>
-
-                    </div>
-
-                </div>
+                <p>
+                    Fecha de detección:
+                    <strong>${item.date}</strong>
+                </p>
 
             </div>
 
@@ -657,14 +698,17 @@ function showCaseDetails(item) {
                     Señales identificadas
                 </h4>
 
-                <div class="indicator-list">
+
+                <div class="indicators">
 
                     ${item.indicators
-                        .map(indicator => `
-                            <div class="indicator">
-                                ${indicator}
-                            </div>
-                        `)
+                        .map(
+                            indicator => `
+                                <div class="indicator">
+                                    ${indicator}
+                                </div>
+                            `
+                        )
                         .join("")
                     }
 
@@ -677,7 +721,7 @@ function showCaseDetails(item) {
             <div class="detail-section">
 
                 <h4>
-                    Historial de seguimiento
+                    Historial
                 </h4>
 
 
@@ -686,35 +730,40 @@ function showCaseDetails(item) {
 
                     ?
 
-                    `<div class="follow-history">
+                    `
+                    <div class="history">
 
                         ${item.history
-                            .map(history => `
+                            .map(
+                                history => `
 
-                                <div class="history-item">
+                                    <div class="history-item">
 
-                                    <span class="history-date">
-                                        ${history.date}
-                                    </span>
+                                        <span>
+                                            ${history.date}
+                                        </span>
 
-                                    <p>
-                                        ${history.text}
-                                    </p>
+                                        <p>
+                                            ${history.text}
+                                        </p>
 
-                                </div>
+                                    </div>
 
-                            `)
+                                `
+                            )
                             .join("")
                         }
 
-                    </div>`
+                    </div>
+                    `
 
                     :
 
-                    `<p>
-                        Todavía no se ha registrado
-                        ningún seguimiento.
-                    </p>`
+                    `
+                    <p>
+                        No hay seguimientos registrados.
+                    </p>
+                    `
                 }
 
             </div>
@@ -722,14 +771,11 @@ function showCaseDetails(item) {
 
 
             <button
-                class="followup-btn"
+                class="follow-button"
                 onclick="registerFollowUp(${item.id})"
             >
-
                 + Registrar seguimiento
-
             </button>
-
 
         </div>
 
@@ -746,7 +792,9 @@ function showCaseDetails(item) {
 function registerFollowUp(id) {
 
     const item =
-        cases.find(caseItem => caseItem.id === id);
+        cases.find(
+            caseItem => caseItem.id === id
+        );
 
 
     if (!item) return;
@@ -758,11 +806,16 @@ function registerFollowUp(id) {
         );
 
 
-    item.status = "followup";
+    item.level =
+        "follow";
 
-    item.level = "follow";
 
-    item.alert = "En seguimiento";
+    item.alert =
+        "En seguimiento";
+
+
+    item.status =
+        "followup";
 
 
     item.history.push({
@@ -779,13 +832,7 @@ function registerFollowUp(id) {
 
     renderCases();
 
-    showCaseDetails(item);
-
-
-    showToast(
-        "Seguimiento registrado",
-        `El caso de ${item.student} quedó en seguimiento.`
-    );
+    showDetail(item);
 
 }
 
@@ -797,13 +844,13 @@ function registerFollowUp(id) {
 
 function getInitials(name) {
 
-    const parts =
+    const words =
         name.trim().split(" ");
 
 
-    if (parts.length === 1) {
+    if (words.length === 1) {
 
-        return parts[0]
+        return words[0]
             .substring(0, 2)
             .toUpperCase();
 
@@ -811,8 +858,8 @@ function getInitials(name) {
 
 
     return (
-        parts[0][0] +
-        parts[1][0]
+        words[0][0] +
+        words[1][0]
     ).toUpperCase();
 
 }
@@ -820,7 +867,7 @@ function getInitials(name) {
 
 
 /* =========================================
-   ICONOS DE NIVEL
+   ICONO ALERTA
 ========================================= */
 
 function getLevelIcon(level) {
@@ -846,12 +893,12 @@ function getLevelIcon(level) {
 
 
 /* =========================================
-   ESTADOS
+   ESTADO
 ========================================= */
 
 function getStatusText(status) {
 
-    const statusMap = {
+    const statusNames = {
 
         pending: "Pendiente",
 
@@ -862,144 +909,44 @@ function getStatusText(status) {
     };
 
 
-    return statusMap[status] ||
-        status;
+    return (
+        statusNames[status] ||
+        status
+    );
 
 }
 
 
 
 /* =========================================
-   TOAST
+   MENÚ MOBILE
 ========================================= */
 
-function showToast(
-    title,
-    message
-) {
+function setupMobileMenu() {
 
-    toastTitle.textContent = title;
-
-    toastMessage.textContent = message;
-
-
-    toast.classList.add("show");
-
-
-    setTimeout(() => {
-
-        toast.classList.remove("show");
-
-    }, 3500);
-
-}
-
-
-
-/* =========================================
-   BOTONES
-========================================= */
-
-function setupButtons() {
-
-    document
-        .getElementById("notificationBtn")
-        .addEventListener(
-            "click",
-            () => {
-
-                showToast(
-                    "Notificaciones",
-                    "Tienes casos que requieren revisión."
-                );
-
-            }
-        );
-
-
-    document
-        .getElementById("logoutBtn")
-        .addEventListener(
-            "click",
-            () => {
-
-                const confirmLogout =
-                    confirm(
-                        "¿Deseas cerrar sesión?"
-                    );
-
-
-                if (confirmLogout) {
-
-                    window.location.href =
-                        "login.html";
-
-                }
-
-            }
-        );
-
-
-    document
-        .getElementById("sortBtn")
-        .addEventListener(
-            "click",
-            () => {
-
-                cases.reverse();
-
-                renderCases();
-
-                showToast(
-                    "Orden actualizado",
-                    "Los casos fueron reorganizados."
-                );
-
-            }
-        );
-
-}
-
-
-
-/* =========================================
-   SIDEBAR RESPONSIVE
-========================================= */
-
-function setupSidebar() {
+    const menu =
+        document.getElementById("mobileMenu");
 
     const sidebar =
         document.getElementById("sidebar");
 
     const overlay =
-        document.getElementById("sidebarOverlay");
-
-    const open =
-        document.getElementById("openSidebar");
-
-    const close =
-        document.getElementById("closeSidebar");
+        document.getElementById(
+            "sidebarOverlay"
+        );
 
 
-    open.addEventListener(
+    menu.addEventListener(
         "click",
         () => {
 
-            sidebar.classList.add("open");
+            sidebar.classList.add(
+                "open"
+            );
 
-            overlay.classList.add("show");
-
-        }
-    );
-
-
-    close.addEventListener(
-        "click",
-        () => {
-
-            sidebar.classList.remove("open");
-
-            overlay.classList.remove("show");
+            overlay.classList.add(
+                "show"
+            );
 
         }
     );
@@ -1009,16 +956,20 @@ function setupSidebar() {
         "click",
         () => {
 
-            sidebar.classList.remove("open");
+            sidebar.classList.remove(
+                "open"
+            );
 
-            overlay.classList.remove("show");
+            overlay.classList.remove(
+                "show"
+            );
 
         }
     );
 
 
     document
-        .querySelectorAll(".nav-item")
+        .querySelectorAll(".menu-item")
         .forEach(item => {
 
             item.addEventListener(

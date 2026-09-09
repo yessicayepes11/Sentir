@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentir · Perfil</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../shared/sentir-shared.css">
+    <link rel="stylesheet" href="Perfil.css">
+</head>
+<body data-page="perfil">
+
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="logo-area" data-logo-home="../inicio/Inicio.html">
+                <img src="../assets/logos.png" alt="Sentir Logo" class="main-logo-img">
+            </div>
+            <nav class="nav-menu">
+                <a href="../inicio/Inicio.html" class="nav-item" data-view="inicio"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
+                <a href="../estudiantes/Estudiantes.html" class="nav-item" data-view="estudiantes"><i class="fa-solid fa-graduation-cap"></i><span>Estudiantes</span></a>
+                <a href="../alertas/Alertas.html" class="nav-item" data-view="alertas"><i class="fa-solid fa-triangle-exclamation"></i><span>Alertas</span><span class="nav-badge alert-badge" id="navAlertBadge" style="display:none;">0</span></a>
+                <a href="../agenda/Agenda.html" class="nav-item" data-view="agenda"><i class="fa-solid fa-calendar-days"></i><span>Agenda</span></a>
+                <a href="../actividades/Actividades.html" class="nav-item" data-view="actividades"><i class="fa-solid fa-spa"></i><span>Control de Actividades</span></a>
+                <a href="../perfil/Perfil.html" class="nav-item" data-view="perfil"><i class="fa-solid fa-user"></i><span>Perfil</span></a>
+            </nav>
+            <div class="sidebar-footer"><p class="quote">"El bienestar emocional es el primer paso para el éxito académico."</p></div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="top-header">
+                <i class="fa-solid fa-bars menu-toggle" id="menuToggleBtn"></i>
+                <div class="header-profile">
+                    <div class="notification-bell" id="notifBell">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="badge" style="display:none;">0</span>
+                        <div class="notif-dropdown" id="notifDropdown"></div>
+                    </div>
+                    <div class="profile-info">
+                        <img src="" alt="Avatar" class="avatar-img" data-role="header-avatar">
+                        <div><h4 data-role="header-name">Cargando...</h4><p data-role="header-role">Psicóloga Escolar</p></div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-fade-in">
+
+                <div class="profile-hero">
+                    <div class="profile-hero-left">
+                        <div class="profile-hero-avatar-wrap">
+                            <img class="profile-hero-avatar" id="profileHeroAvatar" src="" alt="Foto de perfil">
+                            <button class="avatar-edit-btn" id="avatarEditBtn" title="Cambiar foto"><i class="fa-solid fa-camera"></i></button>
+                        </div>
+                        <div>
+                            <h1 id="profileHeroName">Cargando...</h1>
+                            <p id="profileHeroSubtitle">Psicóloga Escolar · Institución Educativa Sentir</p>
+                            <div class="profile-tags">
+                                <span id="tagLicencia"><i class="fa-solid fa-id-card"></i></span>
+                                <span id="tagExperiencia"><i class="fa-solid fa-briefcase"></i></span>
+                                <span><i class="fa-solid fa-circle-check"></i> Verificada</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn-primary-action" id="editProfileBtn"><i class="fa-solid fa-pen"></i> Editar Perfil</button>
+                </div>
+
+                <div class="kpi-grid profile-kpis">
+                    <div class="kpi-card"><i class="fa-solid fa-user-group kpi-icon"></i><h3 class="counter-number">328</h3><p>Estudiantes atendidos</p></div>
+                    <div class="kpi-card"><i class="fa-solid fa-calendar-check kpi-icon"></i><h3 class="counter-number">57</h3><p>Sesiones este mes</p></div>
+                    <div class="kpi-card"><i class="fa-solid fa-stopwatch kpi-icon"></i><h3 class="counter-number">12</h3><p>Min. resp. promedio</p></div>
+                    <div class="kpi-card"><i class="fa-solid fa-heart kpi-icon"></i><h3 class="counter-number">96</h3><p>% Satisfacción</p></div>
+                </div>
+
+                <div class="profile-columns">
+                    <div class="sidebar-box profile-box">
+                        <h3><i class="fa-solid fa-id-badge"></i> Información Profesional</h3>
+                        <ul class="profile-info-list">
+                            <li><span>Correo institucional</span><strong id="infoEmail"></strong></li>
+                            <li><span>Especialidad</span><strong id="infoEspecialidad"></strong></li>
+                            <li><span>Sedes a cargo</span><strong id="infoSedes"></strong></li>
+                            <li><span>Horario de atención</span><strong id="infoHorario"></strong></li>
+                            <li><span>Idiomas</span><strong id="infoIdiomas"></strong></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-box profile-box">
+                        <h3><i class="fa-solid fa-sliders"></i> Preferencias de Notificación</h3>
+                        <div class="toggle-row"><div><strong>Alertas de estudiantes</strong><p>Notificación inmediata ante alertas activadas</p></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+                        <div class="toggle-row"><div><strong>Resumen diario por correo</strong><p>Recibe un resumen del ecosistema emocional</p></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+                        <div class="toggle-row"><div><strong>Sugerencias de Sentir AI</strong><p>Recomendaciones proactivas de intervención</p></div><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+                        <div class="toggle-row"><div><strong>Recordatorios de agenda</strong><p>Avisos antes de cada cita programada</p></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+    <script src="../shared/sentir-shared.js"></script>
+    <script src="Perfil.js"></script>
+</body>
+</html>

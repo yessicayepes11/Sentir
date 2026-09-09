@@ -1,0 +1,46 @@
+.alerts-section { margin-bottom: 38px; }
+.risk-cases-section .section-title-area { margin-bottom: 20px; }
+.section-title-area { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 12px; }
+.section-title-area h3 { font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+
+.alerts-list { display: flex; flex-direction: column; gap: 14px; }
+
+.alert-card {
+    background: var(--white); border-radius: 20px; padding: 22px 24px; border: 1.5px solid #FCA5A5;
+    border-left: 6px solid var(--alerta-color); display: flex; justify-content: space-between; align-items: center;
+    gap: 20px; flex-wrap: wrap; transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 4px 16px rgba(220, 38, 38, 0.06);
+}
+.alert-card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(220, 38, 38, 0.1); }
+.alert-card.is-attended { border-left-color: var(--riesgo-medio); border-color: #FDE68A; box-shadow: none; opacity: 0.9; }
+.alert-card.is-resolved { border-left-color: var(--riesgo-estable); border-color: #BBF7D0; opacity: 0.7; }
+
+.alert-card-main { display: flex; align-items: center; gap: 16px; flex: 1; min-width: 260px; }
+.alert-pulse-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--alerta-color); flex-shrink: 0; animation: alertPulse 1.4s infinite; }
+@keyframes alertPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(220,38,38,0.5); } 50% { box-shadow: 0 0 0 7px rgba(220,38,38,0); } }
+.alert-card.is-attended .alert-pulse-dot, .alert-card.is-resolved .alert-pulse-dot { animation: none; background: var(--riesgo-medio); }
+.alert-card.is-resolved .alert-pulse-dot { background: var(--riesgo-estable); }
+
+.alert-card-info h4 { font-size: 15px; font-weight: 700; color: var(--dark-slate); }
+.alert-card-info p.alert-meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.alert-card-info p.alert-reason { font-size: 12.5px; color: #4B5563; margin-top: 6px; line-height: 1.5; max-width: 480px; }
+
+.alert-card-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.alert-status-tag { font-size: 10px; font-weight: 700; padding: 5px 12px; border-radius: 20px; background: #FEF2F2; color: var(--alerta-color); white-space: nowrap; }
+.alert-card.is-attended .alert-status-tag { background: #FFFBEB; color: var(--riesgo-medio); }
+.alert-card.is-resolved .alert-status-tag { background: #F0FDF4; color: var(--riesgo-estable); }
+
+.btn-attend-alert {
+    background: var(--alerta-color); color: var(--white); border: none; padding: 10px 18px; border-radius: 12px;
+    font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12px; cursor: pointer; transition: background 0.2s ease;
+    display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-attend-alert:hover { background: #B91C1C; }
+.btn-resolve-alert {
+    background: var(--bg-light); color: var(--dark-slate); border: 1px solid #E5E7EB; padding: 10px 16px; border-radius: 12px;
+    font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; cursor: pointer; transition: background 0.2s;
+}
+.btn-resolve-alert:hover { background: #EDF2F7; }
+
+.alerts-empty { text-align: center; padding: 30px; color: var(--text-muted); font-size: 13px; background: var(--white); border-radius: 20px; border: 1px dashed #E5E7EB; }
+
+.cases-container { display: flex; flex-direction: column; gap: 16px; }

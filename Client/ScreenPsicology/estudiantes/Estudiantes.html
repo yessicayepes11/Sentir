@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentir · Estudiantes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../shared/sentir-shared.css">
+    <link rel="stylesheet" href="Estudiantes.css">
+</head>
+<body data-page="estudiantes">
+
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="logo-area" data-logo-home="../inicio/Inicio.html">
+                <img src="../assets/logos.png" alt="Sentir Logo" class="main-logo-img">
+            </div>
+            <nav class="nav-menu">
+                <a href="../inicio/Inicio.html" class="nav-item" data-view="inicio"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
+                <a href="../estudiantes/Estudiantes.html" class="nav-item" data-view="estudiantes"><i class="fa-solid fa-graduation-cap"></i><span>Estudiantes</span></a>
+                <a href="../alertas/Alertas.html" class="nav-item" data-view="alertas"><i class="fa-solid fa-triangle-exclamation"></i><span>Alertas</span><span class="nav-badge alert-badge" id="navAlertBadge" style="display:none;">0</span></a>
+                <a href="../agenda/Agenda.html" class="nav-item" data-view="agenda"><i class="fa-solid fa-calendar-days"></i><span>Agenda</span></a>
+                <a href="../actividades/Actividades.html" class="nav-item" data-view="actividades"><i class="fa-solid fa-spa"></i><span>Control de Actividades</span></a>
+                <a href="../perfil/Perfil.html" class="nav-item" data-view="perfil"><i class="fa-solid fa-user"></i><span>Perfil</span></a>
+            </nav>
+            <div class="sidebar-footer"><p class="quote">"El bienestar emocional es el primer paso para el éxito académico."</p></div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="top-header">
+                <i class="fa-solid fa-bars menu-toggle" id="menuToggleBtn"></i>
+                <div class="header-profile">
+                    <div class="notification-bell" id="notifBell">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="badge" style="display:none;">0</span>
+                        <div class="notif-dropdown" id="notifDropdown"></div>
+                    </div>
+                    <div class="profile-info">
+                        <img src="" alt="Avatar" class="avatar-img" data-role="header-avatar">
+                        <div><h4 data-role="header-name">Cargando...</h4><p data-role="header-role">Psicóloga Escolar</p></div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-fade-in">
+
+                <div class="view-header">
+                    <div>
+                        <span class="view-eyebrow">GESTIÓN Y SEGUIMIENTO</span>
+                        <h1>Estudiantes</h1>
+                        <p class="subtitle-view">Explora, filtra y da seguimiento al bienestar emocional de cada estudiante de la institución.</p>
+                    </div>
+                    <button class="btn-primary-action" id="addStudentBtn"><i class="fa-solid fa-user-plus"></i> Nuevo Estudiante</button>
+                </div>
+
+                <div class="students-toolbar">
+                    <div class="header-search students-search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder="Buscar por nombre, grado o ID..." id="studentsSearch">
+                    </div>
+                    <div class="filter-chips" id="studentsChips">
+                        <button class="chip active" data-filter="all">Todos <span id="countAll">0</span></button>
+                        <button class="chip chip-high" data-filter="high">Riesgo Alto <span id="countHigh">0</span></button>
+                        <button class="chip chip-medium" data-filter="medium">Riesgo Medio <span id="countMedium">0</span></button>
+                        <button class="chip chip-stable" data-filter="stable">Estable <span id="countStable">0</span></button>
+                    </div>
+                </div>
+
+                <div class="students-grid" id="studentsGrid"></div>
+                <p class="empty-state-msg" id="studentsEmptyMsg">No encontramos estudiantes que coincidan con tu búsqueda.</p>
+
+            </div>
+        </main>
+
+        <div class="panel-overlay" id="panelOverlay" onclick="closePanel()"></div>
+        <div class="sliding-panel" id="detailPanel">
+            <button class="close-panel-btn" onclick="closePanel()"><i class="fa-solid fa-xmark"></i> Cerrar Panel</button>
+            <div class="panel-header">
+                <img src="" alt="Avatar Estudiante" class="panel-student-avatar" id="panelAvatar">
+                <h2 id="panelName">Expediente de Intervención</h2>
+                <p id="panelMeta">Análisis de Sentimiento Automatizado</p>
+                <span class="panel-sub-tag">Análisis de Sentimiento Automatizado</span>
+            </div>
+            <div class="panel-body">
+                <h3><i class="fa-solid fa-shield-heart"></i> Acciones Inmediatas</h3>
+                <div class="panel-actions">
+                    <button class="btn-action-trigger register-btn" id="registerInterventionBtn"><i class="fa-solid fa-notes-medical"></i> Registrar Intervención</button>
+                    <button class="btn-action-trigger alert-btn" id="panelContactBtn"><i class="fa-solid fa-phone"></i> Contactar Acudiente de Inmediato</button>
+                    <button class="btn-action-trigger secondary-btn" id="panelDeriveBtn"><i class="fa-solid fa-house-medical"></i> Derivar a Red de Apoyo Médica</button>
+                    <button class="btn-action-trigger history-btn" id="viewInterventionHistoryBtn"><i class="fa-solid fa-clock-rotate-left"></i> Historial de Intervenciones</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="../shared/sentir-shared.js"></script>
+    <script src="Estudiantes.js"></script>
+</body>
+</html>

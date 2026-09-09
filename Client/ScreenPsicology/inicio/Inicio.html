@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentir · Inicio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../shared/sentir-shared.css">
+    <link rel="stylesheet" href="Inicio.css">
+</head>
+<body data-page="inicio">
+
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="logo-area" data-logo-home="../inicio/Inicio.html">
+               
+                <img src="../assets/logos.png" alt="Sentir Logo" class="main-logo-img">
+            </div>
+            <nav class="nav-menu">
+                <a href="../inicio/Inicio.html" class="nav-item" data-view="inicio"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
+                <a href="../estudiantes/Estudiantes.html" class="nav-item" data-view="estudiantes"><i class="fa-solid fa-graduation-cap"></i><span>Estudiantes</span></a>
+                <a href="../alertas/Alertas.html" class="nav-item" data-view="alertas"><i class="fa-solid fa-triangle-exclamation"></i><span>Alertas</span><span class="nav-badge alert-badge" id="navAlertBadge" style="display:none;">0</span></a>
+                <a href="../agenda/Agenda.html" class="nav-item" data-view="agenda"><i class="fa-solid fa-calendar-days"></i><span>Agenda</span></a>
+                <a href="../actividades/Actividades.html" class="nav-item" data-view="actividades"><i class="fa-solid fa-spa"></i><span>Control de Actividades</span></a>
+                <a href="../perfil/Perfil.html" class="nav-item" data-view="perfil"><i class="fa-solid fa-user"></i><span>Perfil</span></a>
+            </nav>
+            <div class="sidebar-footer"><p class="quote">"El bienestar emocional es el primer paso para el éxito académico."</p></div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="top-header">
+                <div class="header-search">
+                    <i class="fa-solid fa-bars menu-toggle" id="menuToggleBtn"></i>
+                    <input type="text" placeholder="Buscar estudiante por nombre o ID..." id="dashboardSearch">
+                </div>
+                <div class="header-profile">
+                    <div class="notification-bell" id="notifBell">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="badge" style="display:none;">0</span>
+                        <div class="notif-dropdown" id="notifDropdown"></div>
+                    </div>
+                    <div class="profile-info">
+                        <img src="" alt="Avatar" class="avatar-img" data-role="header-avatar">
+                        <div>
+                            <h4 data-role="header-name">Cargando...</h4>
+                            <p data-role="header-role">Psicóloga Escolar</p>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-fade-in">
+
+                <div class="grid-layout">
+
+                    <section class="left-column">
+
+                        <div class="welcome-box">
+                            <div class="welcome-text">
+                                <h1 id="welcomeTitle">¡Hola de nuevo!</h1>
+                                <h2>Tu espacio de cuidado y monitoreo diario.</h2>
+                                <p class="subtitle">Aquí tienes el panorama del ecosistema emocional de tu institución para el día de hoy.</p>
+                            </div>
+                            <div class="welcome-character-container">
+                                <div class="welcome-character-glow"></div>
+                                
+                                <img src="../assets/psicologa.png" alt="Ilustración Bienvenida" class="welcome-character-img" onerror="this.style.display='none'">
+                            </div>
+                        </div>
+
+                        <div class="mood-status-card">
+                            <div class="mood-status-info">
+                                <div class="mood-status-text">
+                                    <span>ESTADO ANÍMICO GENERAL DE LA INSTITUCIÓN</span>
+                                    <h3>Predominantemente Estable</h3>
+                                </div>
+                                <div class="mood-emojis-indicator">
+                                    <span class="mood-emoji happy">😊 62%</span>
+                                    <span class="mood-emoji neutral">😐 24%</span>
+                                    <span class="mood-emoji sad">😔 14%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="kpi-grid" id="homeKpiGrid"></div>
+
+                        <div class="section-title-area">
+                            <h3>Casos Prioritarios Recientes</h3>
+                            <button class="btn-view-all" id="goToAlertsBtn">Ver alertas y casos completos <i class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+
+                        <div class="cases-container" id="homeCasesPreview"></div>
+                    </section>
+
+                    <section class="right-column">
+
+                        <div class="ai-recommendation-card">
+                            <div class="ai-header">
+                                <i class="fa-solid fa-brain" style="color: var(--morado-sentir);"></i>
+                                <h4>Sugerencia de la IA</h4>
+                                <span class="ai-tag">SENTIR AI</span>
+                            </div>
+                            <p>Hemos notado un incremento del 15% en reportes de estrés y ansiedad académica en el grado <strong>11°1</strong> debido a la proximidad de los exámenes de estado.</p>
+                            <p class="ai-tip">💡 Tip: Te sugerimos agendar un taller de manejo del tiempo y técnicas de respiración diafragmática con este grupo, o asignar una actividad de relajación desde Control de Actividades.</p>
+                            <button class="btn-secondary" id="createWorkshopBtn" style="margin-top: 10px;">Agendar Taller Grupal</button>
+                        </div>
+
+                        <div class="sidebar-box">
+                            <h3><i class="fa-solid fa-calendar-days"></i> Agenda de Hoy</h3>
+                            <ul class="agenda-list" id="homeAgendaList"></ul>
+                        </div>
+
+                        <div class="sidebar-box">
+                            <h3><i class="fa-solid fa-bolt"></i> Accesos Rápidos</h3>
+                            <div class="quick-actions-list">
+                                <button class="action-pill" id="qaExternalReferral"><i class="fa-solid fa-square-plus"></i><span>Registrar derivación externa</span></button>
+                                <button class="action-pill" id="qaExportPdf"><i class="fa-solid fa-file-export"></i><span>Exportar reporte clínico PDF</span></button>
+                                <button class="action-pill" id="qaNotifyCoord"><i class="fa-solid fa-envelope-open-text"></i><span>Notificar a Coordinación</span></button>
+                            </div>
+                        </div>
+
+                    </section>
+                </div>
+
+            </div>
+        </main>
+
+        <div class="panel-overlay" id="panelOverlay" onclick="closePanel()"></div>
+        <div class="sliding-panel" id="detailPanel">
+            <button class="close-panel-btn" onclick="closePanel()"><i class="fa-solid fa-xmark"></i> Cerrar Panel</button>
+            <div class="panel-header">
+                <img src="" alt="Avatar Estudiante" class="panel-student-avatar" id="panelAvatar">
+                <h2 id="panelName">Expediente de Intervención</h2>
+                <p id="panelMeta">Análisis de Sentimiento Automatizado</p>
+                <span class="panel-sub-tag">Análisis de Sentimiento Automatizado</span>
+            </div>
+            <div class="panel-body">
+                <h3><i class="fa-solid fa-shield-heart"></i> Acciones Inmediatas</h3>
+                <div class="panel-actions">
+                    <button class="btn-action-trigger register-btn" id="registerInterventionBtn"><i class="fa-solid fa-notes-medical"></i> Registrar Intervención</button>
+                    <button class="btn-action-trigger alert-btn" id="panelContactBtn"><i class="fa-solid fa-phone"></i> Contactar Acudiente de Inmediato</button>
+                    <button class="btn-action-trigger secondary-btn" id="panelDeriveBtn"><i class="fa-solid fa-house-medical"></i> Derivar a Red de Apoyo Médica</button>
+                    <button class="btn-action-trigger history-btn" id="viewInterventionHistoryBtn"><i class="fa-solid fa-clock-rotate-left"></i> Historial de Intervenciones</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="../shared/sentir-shared.js"></script>
+    <script src="Inicio.js"></script>
+</body>
+</html>

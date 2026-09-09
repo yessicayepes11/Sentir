@@ -1,0 +1,2 @@
+.students-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 24px; flex-wrap: wrap; }
+.students-search { width: 340px; }

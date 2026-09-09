@@ -748,66 +748,6 @@ clearHistoryBtn.addEventListener(
 );
 
 document.addEventListener("DOMContentLoaded", () => {
-    /* =========================================================
-       MENÚ HAMBURGUESA Y OVERLAY
-    ========================================================= */
-    const menuToggle = document.getElementById("menuToggle") || document.getElementById("mobileMenu");
-    const sidebar = document.getElementById("sidebar");
-    const sidebarOverlay = document.getElementById("sidebarOverlay");
-
-    if (menuToggle && sidebar) {
-        menuToggle.addEventListener("click", (e) => {
-            e.stopPropagation();
-            sidebar.classList.toggle("open");
-            sidebar.classList.toggle("show");
-            
-            if (sidebarOverlay) {
-                sidebarOverlay.classList.toggle("active");
-                sidebarOverlay.classList.toggle("show");
-            }
-        });
-    }
-
-    if (sidebarOverlay) {
-        sidebarOverlay.addEventListener("click", () => {
-            if (sidebar) sidebar.classList.remove("open", "show");
-            sidebarOverlay.classList.remove("active", "show");
-        });
-    }
-
-    /* =========================================================
-       MODAL DE CERRAR SESIÓN
-    ========================================================= */
-    const logoutSidebar = document.getElementById("logoutSidebar");
-    const logoutModal = document.getElementById("logoutModal");
-    const cancelLogout = document.getElementById("cancelLogout");
-    const confirmLogout = document.getElementById("confirmLogout");
-
-    function openLogoutModal() {
-        if (logoutModal) logoutModal.classList.add("show");
-        if (sidebar) sidebar.classList.remove("open", "show");
-        if (sidebarOverlay) sidebarOverlay.classList.remove("active", "show");
-    }
-
-    function closeLogoutModal() {
-        if (logoutModal) logoutModal.classList.remove("show");
-    }
-
-    if (logoutSidebar) logoutSidebar.addEventListener("click", openLogoutModal);
-    if (cancelLogout) cancelLogout.addEventListener("click", closeLogoutModal);
-
-    if (logoutModal) {
-        logoutModal.addEventListener("click", (event) => {
-            if (event.target === logoutModal) closeLogoutModal();
-        });
-    }
-
-    if (confirmLogout) {
-        confirmLogout.addEventListener("click", () => {
-            localStorage.removeItem("sentir_usuario");
-            window.location.href = "/Sentir/Client/index.html";
-        });
-    }
 
     /* =========================================================
        PERFIL DROPDOWN (PROTEGIDO)
@@ -831,125 +771,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-/* =========================================================
-   CERRAR SESIÓN
-========================================================= */
-
-const logoutButton =
-    document.getElementById(
-        "logoutButton"
-    );
-
-
-const logoutSidebar =
-    document.getElementById(
-        "logoutSidebar"
-    );
-
-
-const logoutModal =
-    document.getElementById(
-        "logoutModal"
-    );
-
-
-const cancelLogout =
-    document.getElementById(
-        "cancelLogout"
-    );
-
-
-const confirmLogout =
-    document.getElementById(
-        "confirmLogout"
-    );
-
-
-function openLogoutModal() {
-
-    logoutModal.classList.add(
-        "show"
-    );
-
-}
-
-
-function closeLogoutModal() {
-
-    logoutModal.classList.remove(
-        "show"
-    );
-
-}
-
-
-logoutButton.addEventListener(
-    "click",
-    openLogoutModal
-);
-
-
-logoutSidebar.addEventListener(
-    "click",
-    openLogoutModal
-);
-
-
-cancelLogout.addEventListener(
-    "click",
-    closeLogoutModal
-);
-
-
-logoutModal.addEventListener(
-    "click",
-    (event) => {
-
-        if (
-            event.target === logoutModal
-        ) {
-
-            closeLogoutModal();
-
-        }
-
-    }
-);
-
-
-/* CONFIRMAR CERRAR SESIÓN */
-
-confirmLogout.addEventListener(
-    "click",
-    () => {
-
-
-        /*
-        Aquí posteriormente puedes conectar
-        tu sistema real de autenticación.
-        */
-
-
-        localStorage.removeItem(
-            "sentir_usuario"
-        );
-
-
-        showToast(
-            "Sesión cerrada correctamente.",
-            "✓"
-        );
-
-
-        setTimeout(() => {
-
-            window.location.href =
-                "index.html";
-
-        }, 1200);
-
-    }
-);
 
 
 /* =========================================================
@@ -973,8 +794,106 @@ notificationBtn.addEventListener(
 
     }
 );
+//SIBERBAR JS
+document.addEventListener("DOMContentLoaded", () => {
+    const mobileMenu = document.getElementById("mobileMenu");
+    const sidebar = document.getElementById("sidebar");
+    const sidebarOverlay = document.getElementById("sidebarOverlay");
+    const menuItems = document.querySelectorAll(".menu-item");
 
+    // Función para abrir/cerrar el sidebar
+    function toggleSidebar() {
+        sidebar.classList.toggle("open");
+        sidebarOverlay.classList.toggle("active");
+    }
 
+    // Función para cerrar el sidebar
+    function closeSidebar() {
+        sidebar.classList.remove("open");
+        sidebarOverlay.classList.remove("active");
+    }
+
+    // Evento del botón de hamburguesa
+    if (mobileMenu) {
+        mobileMenu.addEventListener("click", toggleSidebar);
+    }
+
+    // Evento al hacer clic en el fondo oscuro
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener("click", closeSidebar);
+    }
+
+    // Cerrar sidebar al hacer clic en una opción (en dispositivos móviles)
+    menuItems.forEach(item => {
+        item.addEventListener("click", () => {
+            if (window.innerWidth <= 1024) {
+                closeSidebar();
+            }
+        });
+    });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    /* ================= MENU RESPONSIVE ================= */
+    const menuToggle = document.getElementById("menuToggle");
+    const sidebar = document.getElementById("sidebar");
+    const sidebarOverlay = document.getElementById("sidebarOverlay");
+
+    function openSidebar() {
+        if (sidebar) sidebar.classList.add("open");
+        if (sidebarOverlay) sidebarOverlay.classList.add("active");
+    }
+
+    function closeSidebar() {
+        if (sidebar) sidebar.classList.remove("open");
+        if (sidebarOverlay) sidebarOverlay.classList.remove("active");
+    }
+
+    if (menuToggle) menuToggle.addEventListener("click", openSidebar);
+    if (sidebarOverlay) sidebarOverlay.addEventListener("click", closeSidebar);
+
+    /* ================= CERRAR SESIÓN ================= */
+    const logoutButton = document.getElementById("logoutButton");
+    const logoutSidebar = document.getElementById("logoutSidebar");
+    const logoutModal = document.getElementById("logoutModal");
+    const cancelLogout = document.getElementById("cancelLogout");
+    const confirmLogout = document.getElementById("confirmLogout");
+
+    function openLogoutModal() {
+        if (logoutModal) logoutModal.classList.add("show");
+        closeSidebar(); // Cierra el menú en móviles si está abierto
+    }
+
+    function closeLogoutModal() {
+        if (logoutModal) logoutModal.classList.remove("show");
+    }
+
+    if (logoutButton) logoutButton.addEventListener("click", openLogoutModal);
+    if (logoutSidebar) logoutSidebar.addEventListener("click", openLogoutModal);
+    if (cancelLogout) cancelLogout.addEventListener("click", closeLogoutModal);
+
+    // Cerrar al hacer clic fuera de la tarjeta blanca
+    if (logoutModal) {
+        logoutModal.addEventListener("click", (e) => {
+            if (e.target === logoutModal) closeLogoutModal();
+        });
+    }
+
+    // Confirmar cierre de sesión
+    if (confirmLogout) {
+        confirmLogout.addEventListener("click", () => {
+            localStorage.removeItem("sentir_usuario");
+
+            if (typeof showToast === "function") {
+                showToast("Sesión cerrada correctamente.", "✓");
+            }
+
+            setTimeout(() => {
+                window.location.href = "/Sentir/Client/index.html";
+            }, 800);
+        });
+    }
+});
 /* =========================================================
    TOAST
 ========================================================= */

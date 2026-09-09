@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentir · Control de Actividades</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../shared/sentir-shared.css">
+    <link rel="stylesheet" href="Actividades.css">
+</head>
+<body data-page="actividades">
+
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="logo-area" data-logo-home="../inicio/Inicio.html">
+                <img src="../assets/logos.png" alt="Sentir Logo" class="main-logo-img">
+            </div>
+            <nav class="nav-menu">
+                <a href="../inicio/Inicio.html" class="nav-item" data-view="inicio"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
+                <a href="../estudiantes/Estudiantes.html" class="nav-item" data-view="estudiantes"><i class="fa-solid fa-graduation-cap"></i><span>Estudiantes</span></a>
+                <a href="../alertas/Alertas.html" class="nav-item" data-view="alertas"><i class="fa-solid fa-triangle-exclamation"></i><span>Alertas</span><span class="nav-badge alert-badge" id="navAlertBadge" style="display:none;">0</span></a>
+                <a href="../agenda/Agenda.html" class="nav-item" data-view="agenda"><i class="fa-solid fa-calendar-days"></i><span>Agenda</span></a>
+                <a href="../actividades/Actividades.html" class="nav-item" data-view="actividades"><i class="fa-solid fa-spa"></i><span>Control de Actividades</span></a>
+                <a href="../perfil/Perfil.html" class="nav-item" data-view="perfil"><i class="fa-solid fa-user"></i><span>Perfil</span></a>
+            </nav>
+            <div class="sidebar-footer"><p class="quote">"El bienestar emocional es el primer paso para el éxito académico."</p></div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="top-header">
+                <i class="fa-solid fa-bars menu-toggle" id="menuToggleBtn"></i>
+                <div class="header-profile">
+                    <div class="notification-bell" id="notifBell">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="badge" style="display:none;">0</span>
+                        <div class="notif-dropdown" id="notifDropdown"></div>
+                    </div>
+                    <div class="profile-info">
+                        <img src="" alt="Avatar" class="avatar-img" data-role="header-avatar">
+                        <div><h4 data-role="header-name">Cargando...</h4><p data-role="header-role">Psicóloga Escolar</p></div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-fade-in">
+
+                <div class="view-header">
+                    <div>
+                        <span class="view-eyebrow">BIENESTAR Y RELAJACIÓN</span>
+                        <h1>Control de Actividades</h1>
+                        <p class="subtitle-view">Crea y administra actividades de relajación para que los estudiantes las practiquen según sus necesidades.</p>
+                    </div>
+                    <button class="btn-primary-action" id="addActivityBtn"><i class="fa-solid fa-plus"></i> Nueva Actividad</button>
+                </div>
+
+                <div class="activities-toolbar">
+                    <div class="header-search activities-search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder="Buscar actividad por título o tipo..." id="activitiesSearch">
+                    </div>
+                    <div class="filter-chips" id="activitiesChips"></div>
+                </div>
+
+                <div class="activities-grid" id="activitiesGrid"></div>
+                <p class="empty-state-msg" id="activitiesEmptyMsg">No hay actividades que coincidan con tu búsqueda.</p>
+
+            </div>
+        </main>
+
+    </div>
+
+    <script src="../shared/sentir-shared.js"></script>
+    <script src="Actividades.js"></script>
+</body>
+</html>

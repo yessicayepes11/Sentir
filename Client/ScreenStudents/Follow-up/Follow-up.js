@@ -2,80 +2,104 @@
    SENTIR — SEGUIMIENTO
    ===================================================== */
 
+   document.addEventListener("DOMContentLoaded", () => {
+    const mobileMenu = document.getElementById("mobileMenu");
+    const sidebar = document.getElementById("sidebar");
+    const sidebarOverlay = document.getElementById("sidebarOverlay");
+    const menuItems = document.querySelectorAll(".menu-item");
 
-/* =====================================================
-   MENÚ HAMBURGUESA
-   ===================================================== */
-
-const sidebar =
-    document.getElementById("sidebar");
-
-const openMenu =
-    document.getElementById("openMenu");
-
-const closeMenu =
-    document.getElementById("closeMenu");
-
-const overlay =
-    document.getElementById("overlay");
-
-
-function openSidebar() {
-
-    sidebar.classList.add("open");
-
-    overlay.classList.add("active");
-
-    document.body.style.overflow = "hidden";
-
-}
-
-
-function closeSidebar() {
-
-    sidebar.classList.remove("open");
-
-    overlay.classList.remove("active");
-
-    document.body.style.overflow = "";
-
-}
-
-
-openMenu.addEventListener(
-    "click",
-    openSidebar
-);
-
-
-closeMenu.addEventListener(
-    "click",
-    closeSidebar
-);
-
-
-overlay.addEventListener(
-    "click",
-    closeSidebar
-);
-
-
-/* ESC para cerrar */
-
-document.addEventListener(
-    "keydown",
-    function(event) {
-
-        if (event.key === "Escape") {
-
-            closeSidebar();
-
-        }
-
+    // Función para abrir/cerrar el sidebar
+    function toggleSidebar() {
+        sidebar.classList.toggle("open");
+        sidebarOverlay.classList.toggle("active");
     }
-);
 
+    // Función para cerrar el sidebar
+    function closeSidebar() {
+        sidebar.classList.remove("open");
+        sidebarOverlay.classList.remove("active");
+    }
 
+    // Evento del botón de hamburguesa
+    if (mobileMenu) {
+        mobileMenu.addEventListener("click", toggleSidebar);
+    }
+
+    // Evento al hacer clic en el fondo oscuro
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener("click", closeSidebar);
+    }
+
+    // Cerrar sidebar al hacer clic en una opción (en dispositivos móviles)
+    menuItems.forEach(item => {
+        item.addEventListener("click", () => {
+            if (window.innerWidth <= 1024) {
+                closeSidebar();
+            }
+        });
+    });
+});
+document.addEventListener("DOMContentLoaded", () => {
+    /* ================= MENU RESPONSIVE ================= */
+    const menuToggle = document.getElementById("menuToggle");
+    const sidebar = document.getElementById("sidebar");
+    const sidebarOverlay = document.getElementById("sidebarOverlay");
+
+    function openSidebar() {
+        if (sidebar) sidebar.classList.add("open");
+        if (sidebarOverlay) sidebarOverlay.classList.add("active");
+    }
+
+    function closeSidebar() {
+        if (sidebar) sidebar.classList.remove("open");
+        if (sidebarOverlay) sidebarOverlay.classList.remove("active");
+    }
+
+    if (menuToggle) menuToggle.addEventListener("click", openSidebar);
+    if (sidebarOverlay) sidebarOverlay.addEventListener("click", closeSidebar);
+
+    /* ================= CERRAR SESIÓN ================= */
+    const logoutButton = document.getElementById("logoutButton");
+    const logoutSidebar = document.getElementById("logoutSidebar");
+    const logoutModal = document.getElementById("logoutModal");
+    const cancelLogout = document.getElementById("cancelLogout");
+    const confirmLogout = document.getElementById("confirmLogout");
+
+    function openLogoutModal() {
+        if (logoutModal) logoutModal.classList.add("show");
+        closeSidebar(); // Cierra el menú en móviles si está abierto
+    }
+
+    function closeLogoutModal() {
+        if (logoutModal) logoutModal.classList.remove("show");
+    }
+
+    if (logoutButton) logoutButton.addEventListener("click", openLogoutModal);
+    if (logoutSidebar) logoutSidebar.addEventListener("click", openLogoutModal);
+    if (cancelLogout) cancelLogout.addEventListener("click", closeLogoutModal);
+
+    // Cerrar al hacer clic fuera de la tarjeta blanca
+    if (logoutModal) {
+        logoutModal.addEventListener("click", (e) => {
+            if (e.target === logoutModal) closeLogoutModal();
+        });
+    }
+
+    // Confirmar cierre de sesión
+    if (confirmLogout) {
+        confirmLogout.addEventListener("click", () => {
+            localStorage.removeItem("sentir_usuario");
+
+            if (typeof showToast === "function") {
+                showToast("Sesión cerrada correctamente.", "✓");
+            }
+
+            setTimeout(() => {
+                window.location.href = "/Sentir/Client/index.html";
+            }, 800);
+        });
+    }
+});
 
 /* =====================================================
    TOAST

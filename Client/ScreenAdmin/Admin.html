@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Sentir | Administración de usuarios
+    </title>
+
+
+    <!-- POPPINS -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- ICONOS -->
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+
+    <!-- CSS -->
+
+    <link
+        rel="stylesheet"
+        href="Admin.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- ========================================= -->
+    <!-- SIDEBAR -->
+    <!-- ========================================= -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+
+        <!-- LOGO -->
+
+        <div class="brand">
+
+            <img
+                src="/Sentir/Shared/AdminResources/logo-sentir.png"
+                alt="Sentir"
+                class="official-logo"
+            >
+
+        </div>
+
+
+        <!-- NAVEGACIÓN -->
+
+        <nav class="nav-menu">
+
+            <button
+                class="nav-item"
+                id="inicioNav"
+            >
+
+                <i data-lucide="house"></i>
+
+                <span>
+                    Inicio
+                </span>
+
+            </button>
+
+
+            <button
+                class="nav-item active"
+                id="usuariosNav"
+            >
+
+                <i data-lucide="users"></i>
+
+                <span>
+                    Usuarios
+                </span>
+
+            </button>
+
+        </nav>
+
+
+        <!-- PARTE INFERIOR -->
+
+        <div class="sidebar-bottom">
+
+            <div class="community-message">
+
+                <i data-lucide="heart"></i>
+
+                <p>
+                    Un entorno más humano,
+                    <br>
+                    una comunidad más fuerte.
+                </p>
+
+            </div>
+
+
+            <!-- IMAGEN DE LOS DOS PERSONAJES -->
+
+            <div class="sidebar-characters">
+
+                <img
+                    src="/Sentir/Shared/AdminResources/personajes-sentir.png"
+                    alt="Personajes Sentir"
+                    class="characters-image"
+                >
+
+            </div>
+
+
+            <p class="copyright">
+
+                © 2026 Sentir
+
+                <br>
+
+                Todos los derechos reservados.
+
+            </p>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ========================================= -->
+    <!-- OVERLAY DEL MENÚ MÓVIL -->
+    <!-- ========================================= -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+
+    <!-- ========================================= -->
+    <!-- BOTÓN HAMBURGUESA -->
+    <!-- ========================================= -->
+
+    <button
+        class="mobile-menu-button"
+        id="mobileMenuButton"
+        aria-label="Abrir menú"
+    >
+
+        <i data-lucide="menu"></i>
+
+    </button>
+
+
+
+    <!-- ========================================= -->
+    <!-- CONTENIDO PRINCIPAL -->
+    <!-- ========================================= -->
+
+    <main class="main-content">
+
+
+        <!-- HEADER -->
+
+        <header class="top-header">
+
+
+            <div class="header-title">
+
+                <p class="hello">
+                    ¡Hola, Administradora!
+                </p>
+
+
+                <div class="title-row">
+
+                    <div class="title-icon">
+
+                        <i data-lucide="users"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h2>
+                            Administración de usuarios
+                        </h2>
+
+                        <p>
+                            Gestiona, crea, edita y elimina usuarios del sistema.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ACCIONES HEADER -->
+
+            <div class="header-actions">
+
+
+                <!-- BUSCADOR SUPERIOR -->
+
+                <div class="global-search">
+
+                    <i data-lucide="search"></i>
+
+                    <input
+                        type="text"
+                        id="globalSearch"
+                        placeholder="Buscar usuarios, correos o documentos..."
+                    >
+
+                </div>
+
+
+
+                <!-- NOTIFICACIONES -->
+
+                <button class="notification-button">
+
+                    <i data-lucide="bell"></i>
+
+                    <span>
+                        3
+                    </span>
+
+                </button>
+
+
+
+                <!-- ADMINISTRADORA SIN FOTO -->
+
+                <div class="admin-profile">
+
+                    <div class="admin-info">
+
+                        <strong>
+                            Admin
+                        </strong>
+
+                        <p>
+                            Administradora
+                        </p>
+
+                    </div>
+
+
+                    <i data-lucide="chevron-down"></i>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- FRASE -->
+
+        <div class="kind-message">
+
+            <i data-lucide="heart"></i>
+
+            Personas que se cuidan,
+            hacen un mundo más amable.
+
+        </div>
+
+
+
+        <!-- ========================================= -->
+        <!-- ESTADÍSTICAS -->
+        <!-- ========================================= -->
+
+        <section class="stats-grid">
+
+
+            <!-- TOTAL USUARIOS -->
+
+            <article class="stat-card">
+
+                <div class="stat-icon purple">
+
+                    <i data-lucide="users"></i>
+
+                </div>
+
+
+                <div>
+
+                    <p>
+                        Total usuarios
+                    </p>
+
+                    <h3 id="totalUsers">
+                        0
+                    </h3>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- ESTUDIANTES -->
+
+            <article class="stat-card">
+
+                <div class="stat-icon blue">
+
+                    <i data-lucide="graduation-cap"></i>
+
+                </div>
+
+
+                <div>
+
+                    <p>
+                        Estudiantes
+                    </p>
+
+                    <h3 id="studentCount">
+                        0
+                    </h3>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- DOCENTES -->
+
+            <article class="stat-card">
+
+                <div class="stat-icon lavender">
+
+                    <i data-lucide="presentation"></i>
+
+                </div>
+
+
+                <div>
+
+                    <p>
+                        Docentes
+                    </p>
+
+                    <h3 id="teacherCount">
+                        0
+                    </h3>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+
+        <!-- ========================================= -->
+        <!-- GESTIÓN DE USUARIOS -->
+        <!-- ========================================= -->
+
+        <section class="management-layout">
+
+
+            <!-- ========================================= -->
+            <!-- TABLA -->
+            <!-- ========================================= -->
+
+            <div class="users-card">
+
+
+                <div class="users-card-header">
+
+                    <div class="section-title">
+
+                        <i data-lucide="user-round"></i>
+
+                        <h3>
+                            Lista de usuarios
+                        </h3>
+
+                    </div>
+
+
+                    <button
+                        class="primary-button"
+                        id="openAddUser"
+                    >
+
+                        <i data-lucide="plus"></i>
+
+                        Agregar usuario
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- FILTROS -->
+
+                <div class="filters">
+
+
+                    <div class="filter-search">
+
+                        <i data-lucide="search"></i>
+
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Buscar por nombre, documento o correo..."
+                        >
+
+                    </div>
+
+
+
+                    <select id="roleFilter">
+
+                        <option value="">
+                            Todos los roles
+                        </option>
+
+                        <option value="Estudiante">
+                            Estudiante
+                        </option>
+
+                        <option value="Docente">
+                            Docente
+                        </option>
+
+                        <option value="UAI">
+                            UAI
+                        </option>
+
+                        <option value="Psicóloga">
+                            Psicóloga
+                        </option>
+
+                        <option value="Directivo">
+                            Directivo
+                        </option>
+
+                        <option value="Comité de convivencia">
+                            Comité de convivencia
+                        </option>
+
+                    </select>
+
+
+
+                    <select id="statusFilter">
+
+                        <option value="">
+                            Todos los estados
+                        </option>
+
+                        <option value="Activo">
+                            Activo
+                        </option>
+
+                        <option value="Inactivo">
+                            Inactivo
+                        </option>
+
+                        <option value="Pendiente">
+                            Pendiente
+                        </option>
+
+                    </select>
+
+
+
+                    <button
+                        class="filter-button"
+                        id="clearFilters"
+                    >
+
+                        <i data-lucide="list-filter"></i>
+
+                        Limpiar
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- TABLA -->
+
+                <div class="table-wrapper">
+
+                    <table>
+
+
+                        <thead>
+
+                        <tr>
+
+                            <th></th>
+
+                            <th>
+                                Nombre
+                            </th>
+
+                            <th>
+                                Documento
+                            </th>
+
+                            <th>
+                                Correo
+                            </th>
+
+                            <th>
+                                Rol
+                            </th>
+
+                            <th>
+                                Estado
+                            </th>
+
+                            <th>
+                                Último acceso
+                            </th>
+
+                            <th>
+                                Acciones
+                            </th>
+
+                        </tr>
+
+                        </thead>
+
+
+
+                        <tbody id="usersTableBody">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+
+                <!-- FOOTER TABLA -->
+
+                <div class="table-footer">
+
+                    <p id="tableCounter">
+                        Mostrando 0 usuarios
+                    </p>
+
+
+                    <div class="pagination">
+
+                        <button>
+
+                            <i data-lucide="chevron-left"></i>
+
+                        </button>
+
+
+                        <button class="active-page">
+                            1
+                        </button>
+
+
+                        <button>
+                            2
+                        </button>
+
+
+                        <button>
+                            3
+                        </button>
+
+
+                        <button>
+
+                            <i data-lucide="chevron-right"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ========================================= -->
+            <!-- USUARIO SELECCIONADO -->
+            <!-- ========================================= -->
+
+            <aside class="selected-user-card">
+
+
+                <div class="selected-header">
+
+                    <div>
+
+                        <i data-lucide="user-round"></i>
+
+                        <h3>
+                            Usuario seleccionado
+                        </h3>
+
+                    </div>
+
+
+                    <button>
+
+                        <i data-lucide="ellipsis"></i>
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- FOTO DEL USUARIO -->
+
+                <div class="selected-profile">
+
+                    <div
+                        class="large-avatar"
+                        id="detailAvatar"
+                    >
+
+                        <span class="avatar-fallback">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="online-dot"
+                        id="onlineDot"
+                    ></div>
+
+                </div>
+
+
+
+                <h2 id="detailName">
+
+                    Selecciona un usuario
+
+                </h2>
+
+
+
+                <span
+                    class="role-badge student"
+                    id="detailRole"
+                >
+
+                    Usuario
+
+                </span>
+
+
+
+                <!-- DATOS -->
+
+                <div class="user-details">
+
+
+                    <div>
+
+                        <i data-lucide="badge"></i>
+
+                        <span id="detailDocument">
+                            —
+                        </span>
+
+                    </div>
+
+
+
+                    <div>
+
+                        <i data-lucide="mail"></i>
+
+                        <span id="detailEmail">
+                            —
+                        </span>
+
+                    </div>
+
+
+
+                    <div>
+
+                        <i data-lucide="phone"></i>
+
+                        <span id="detailPhone">
+                            —
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- GRADO -->
+                    <!-- SOLO SE MUESTRA SI ES ESTUDIANTE -->
+
+                    <div
+                        id="detailGradeRow"
+                        class="detail-grade-row hidden"
+                    >
+
+                        <i data-lucide="graduation-cap"></i>
+
+                        <span id="detailGrade">
+                            —
+                        </span>
+
+                    </div>
+
+
+
+                    <div>
+
+                        <i data-lucide="calendar-days"></i>
+
+                        <span id="detailDate">
+                            —
+                        </span>
+
+                    </div>
+
+
+
+                    <div>
+
+                        <i data-lucide="clock-3"></i>
+
+                        <span id="detailAccess">
+                            —
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- MENSAJE -->
+
+                <div class="mental-message">
+
+                    <span class="quote">
+                        “
+                    </span>
+
+                    <p>
+                        Cuidar de mi salud mental
+                        también es parte de mi éxito.
+                    </p>
+
+                    <i data-lucide="heart"></i>
+
+                </div>
+
+
+
+                <!-- BOTONES -->
+
+                <div class="detail-actions">
+
+
+                    <button
+                        class="edit-user-button"
+                        id="editSelected"
+                    >
+
+                        <i data-lucide="pencil"></i>
+
+                        Editar usuario
+
+                    </button>
+
+
+
+                    <button
+                        class="delete-user-button"
+                        id="deleteSelected"
+                    >
+
+                        <i data-lucide="trash-2"></i>
+
+                        Eliminar usuario
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- TARJETA INFERIOR -->
+
+                <div class="wellbeing-card">
+
+                    <div class="bulb">
+
+                        <i data-lucide="lightbulb"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Un mejor bienestar juntos
+                        </strong>
+
+                        <p>
+                            Cada usuario en Sentir
+                            es parte de una comunidad
+                            que cree en la salud mental.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- MODAL REGISTRAR / EDITAR USUARIO -->
+<!-- ================================================= -->
+
+<div
+    class="modal-overlay"
+    id="userModal"
+>
+
+
+    <div class="modal">
+
+
+        <div class="modal-header">
+
+            <div>
+
+                <span class="modal-label">
+                    Sentir
+                </span>
+
+                <h2 id="modalTitle">
+                    Registrar usuario
+                </h2>
+
+                <p class="modal-subtitle">
+                    Completa la información del usuario.
+                </p>
+
+            </div>
+
+
+            <button
+                class="close-modal"
+                id="closeModal"
+                type="button"
+            >
+
+                <i data-lucide="x"></i>
+
+            </button>
+
+        </div>
+
+
+
+        <form id="userForm">
+
+
+            <input
+                type="hidden"
+                id="editingId"
+            >
+
+
+
+            <div class="form-grid">
+
+
+                <!-- ================================= -->
+                <!-- NOMBRE -->
+                <!-- ================================= -->
+
+                <div class="form-group">
+
+                    <label for="nameInput">
+                        Nombre
+                    </label>
+
+
+                    <div class="input-with-icon">
+
+                        <i data-lucide="user"></i>
+
+                        <input
+                            id="nameInput"
+                            type="text"
+                            placeholder="Nombre completo"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ================================= -->
+                <!-- DOCUMENTO -->
+                <!-- ================================= -->
+
+                <div class="form-group">
+
+                    <label for="documentInput">
+                        Documento
+                    </label>
+
+
+                    <div class="input-with-icon">
+
+                        <i data-lucide="badge"></i>
+
+                        <input
+                            id="documentInput"
+                            type="text"
+                            placeholder="Número de documento"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ================================= -->
+                <!-- CORREO -->
+                <!-- ================================= -->
+
+                <div class="form-group">
+
+                    <label for="emailInput">
+                        Correo
+                    </label>
+
+
+                    <div class="input-with-icon">
+
+                        <i data-lucide="mail"></i>
+
+                        <input
+                            id="emailInput"
+                            type="email"
+                            placeholder="usuario@correo.com"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ================================= -->
+                <!-- CELULAR -->
+                <!-- ================================= -->
+
+                <div class="form-group">
+
+                    <label for="phoneInput">
+                        Celular
+                    </label>
+
+
+                    <div class="input-with-icon">
+
+                        <i data-lucide="phone"></i>
+
+                        <input
+                            id="phoneInput"
+                            type="tel"
+                            placeholder="+57 300 000 0000"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ================================= -->
+                <!-- FOTO -->
+                <!-- ================================= -->
+
+                <div class="form-group full-width">
+
+                    <label for="photoInput">
+                        Foto
+                    </label>
+
+
+                    <div class="photo-upload">
+
+
+                        <div
+                            class="photo-preview"
+                            id="photoPreview"
+                        >
+
+                            <i data-lucide="image-plus"></i>
+
+                        </div>
+
+
+
+                        <div class="photo-upload-content">
+
+                            <strong>
+                                Foto de perfil
+                            </strong>
+
+
+                            <p>
+                                La fotografía se visualizará en el perfil
+                                del usuario y posteriormente podrá
+                                almacenarse desde la base de datos.
+                            </p>
+
+
+                            <label
+                                for="photoInput"
+                                class="upload-button"
+                            >
+
+                                <i data-lucide="upload"></i>
+
+                                Seleccionar foto
+
+                            </label>
+
+
+                            <input
+                                id="photoInput"
+                                type="file"
+                                accept="image/*"
+                                hidden
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ================================= -->
+                <!-- CONTRASEÑA -->
+                <!-- ================================= -->
+
+                <div class="form-group">
+
+                    <label for="passwordInput">
+                        Contraseña
+                    </label>
+
+
+                    <div class="input-with-icon">
+
+                        <i data-lucide="lock-keyhole"></i>
+
+                        <input
+                            id="passwordInput"
+                            type="password"
+                            placeholder="Contraseña"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ================================= -->
+                <!-- ROL -->
+                <!-- ================================= -->
+
+                <div class="form-group">
+
+                    <label for="roleInput">
+                        Rol
+                    </label>
+
+
+                    <div class="input-with-icon">
+
+                        <i data-lucide="shield-user"></i>
+
+
+                        <select
+                            id="roleInput"
+                            required
+                        >
+
+                            <option value="">
+                                Seleccionar rol
+                            </option>
+
+                            <option value="Estudiante">
+                                Estudiante
+                            </option>
+
+                            <option value="Docente">
+                                Docente
+                            </option>
+
+                            <option value="UAI">
+                                UAI
+                            </option>
+
+                            <option value="Psicóloga">
+                                Psicóloga
+                            </option>
+
+                            <option value="Directivo">
+                                Directivo
+                            </option>
+
+                            <option value="Comité de convivencia">
+                                Comité de convivencia
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ================================= -->
+                <!-- GRADO -->
+                <!-- SE ACTIVA SOLO PARA ESTUDIANTE -->
+                <!-- ================================= -->
+
+                <div
+                    class="form-group grade-field hidden"
+                    id="gradeField"
+                >
+
+                    <label for="gradeInput">
+                        Grado
+                    </label>
+
+
+                    <div class="input-with-icon">
+
+                        <i data-lucide="graduation-cap"></i>
+
+
+                        <select id="gradeInput">
+
+                            <option value="">
+                                Seleccionar grado
+                            </option>
+
+                            <option value="6°">
+                                6°
+                            </option>
+
+                            <option value="7°">
+                                7°
+                            </option>
+
+                            <option value="8°">
+                                8°
+                            </option>
+
+                            <option value="9°">
+                                9°
+                            </option>
+
+                            <option value="10°">
+                                10°
+                            </option>
+
+                            <option value="11°">
+                                11°
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ================================= -->
+                <!-- ESTADO -->
+                <!-- ================================= -->
+
+                <div class="form-group">
+
+                    <label for="statusInput">
+                        Estado
+                    </label>
+
+
+                    <div class="input-with-icon">
+
+                        <i data-lucide="circle-check"></i>
+
+
+                        <select
+                            id="statusInput"
+                            required
+                        >
+
+                            <option value="Activo">
+                                Activo
+                            </option>
+
+                            <option value="Inactivo">
+                                Inactivo
+                            </option>
+
+                            <option value="Pendiente">
+                                Pendiente
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- BOTONES -->
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="cancel-button"
+                    id="cancelModal"
+                >
+
+                    Cancelar
+
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="save-button"
+                >
+
+                    <i data-lucide="save"></i>
+
+                    Guardar usuario
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- MODAL ELIMINAR -->
+<!-- ================================================= -->
+
+<div
+    class="modal-overlay"
+    id="deleteModal"
+>
+
+
+    <div class="confirm-modal">
+
+
+        <div class="delete-icon">
+
+            <i data-lucide="trash-2"></i>
+
+        </div>
+
+
+        <h2>
+            ¿Eliminar usuario?
+        </h2>
+
+
+        <p>
+            Esta acción eliminará al usuario seleccionado.
+            ¿Deseas continuar?
+        </p>
+
+
+        <div class="confirm-actions">
+
+            <button
+                class="cancel-button"
+                id="cancelDelete"
+            >
+
+                Cancelar
+
+            </button>
+
+
+            <button
+                class="confirm-delete"
+                id="confirmDelete"
+            >
+
+                Sí, eliminar
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- TOAST -->
+<!-- ================================================= -->
+
+<div
+    class="toast"
+    id="toast"
+>
+
+    <i data-lucide="circle-check"></i>
+
+    <span id="toastText"></span>
+
+</div>
+
+
+
+<script src="Admin.js"></script>
+
+
+</body>
+
+</html>

@@ -15,7 +15,7 @@
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="seguimiento.css">
+    <link rel="stylesheet" href="/Sentir/Client/ScreenStudents/Follow-up/Follow-up.css">
 </head>
 
 
@@ -29,46 +29,57 @@
     <div class="bg-decoration bg-two"></div>
 
 
-    <!-- ================= SIDEBAR ================= -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- En el <head> de tus archivos HTML -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+<!-- ================= BOTÓN HAMBURGUESA (MÓVIL) ================= -->
+<button class="menu-toggle" id="mobileMenu" aria-label="Abrir menú">
+    <i class="fa-solid fa-bars"></i>
+</button>
 
+<!-- ================= OVERLAY MÓVIL ================= -->
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
+<!-- ================= SIDEBAR ================= -->
 <aside class="sidebar" id="sidebar">
+    <!-- Espacio / Contenedor para el Logo -->
     <div class="sidebar-logo">
         <div class="logo-symbol">
-            <a href=""><img src="/Logo-nombrelado (1).png" alt="" id="logoSentir"></a>
+            <a href="#">
+                <img src="/Logo-nombrelado (1).png" alt="Logo Sentir" id="logoSentir">
+            </a>
         </div>
     </div>
     
+    <!-- Menú de Navegación -->
     <nav class="menu">
-        <a href="#" class="menu-item active">
+        <a href="/Sentir/Client/ScreenStudents/Students.html" class="menu-item active">
             <i class="fa-solid fa-house"></i>
             <span>Inicio</span>
         </a>
-        <a href="#seguimiento" class="menu-item">
+        <a href="/Sentir/Client/ScreenStudents/Follow-up/Follow-up.html" class="menu-item">
             <i class="fa-solid fa-chart-line"></i>
             <span>Mi seguimiento</span>
         </a>
-        <a href="#recursos" class="menu-item">
+        <a href="/Sentir/Client/ScreenStudents/Resources/Resources.html" class="menu-item">
             <i class="fa-solid fa-leaf"></i>
             <span>Recursos</span>
         </a>
-        <a href="#diario" class="menu-item">
+        <a href="/Sentir/Client/ScreenStudents/EmotionalDiary/Daily.html" class="menu-item">
             <i class="fa-solid fa-book"></i>
             <span>Diario emocional</span>
         </a>
-        <a href="#actividades" class="menu-item">
+        <a href="/Sentir/Client/ScreenStudents/Badges/Badges.html" class="menu-item">
             <i class="fa-solid fa-star"></i>
-            <span>Actividades</span>
+            <span>Insignias</span>
         </a>
-        <a href="#ayuda" class="menu-item">
-            <i class="fa-solid fa-hands-helping"></i>
+        <a href="/Sentir/Client/ScreenStudents/Help/Help.html" class="menu-item">
+            <i class="fa-solid fa-handshake-angle"></i>
             <span>Pedir ayuda</span>
         </a>
     </nav>
 
+    <!-- Parte Inferior -->
     <div class="sidebar-bottom">
         <div class="privacy-box">
             <i class="fa-solid fa-shield-heart"></i>
@@ -77,25 +88,12 @@
                 <small>Tu información está protegida.</small>
             </div>
         </div>
-        <button class="logout">
+        <a href="/Sentir/Client/index.html" class="logout">
             <i class="fa-solid fa-right-from-bracket"></i>
-            <a href="/Sentir/Client/index.html">Cerrar sesión</a>
-        </button>
+            <span>Cerrar sesión</span>
+        </a>
     </div>
 </aside>
-
-
-
-    <!-- ==========================================
-         OVERLAY
-    =========================================== -->
-
-    <div
-        class="overlay"
-        id="overlay">
-    </div>
-
-
 
     <!-- ==========================================
          CONTENEDOR PRINCIPAL
@@ -852,7 +850,7 @@
 
 
 
-    <script src="seguimiento.js"></script>
+    <script src="/Sentir/Client/ScreenStudents/Follow-up/Follow-up.js"></script>
 
 </body>
 

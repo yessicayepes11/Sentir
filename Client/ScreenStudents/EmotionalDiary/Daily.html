@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Diario emocional | Sentir</title>
+
+    <!-- Tipografía principal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS principal -->
+    <link rel="stylesheet" href="/Sentir/Client/ScreenStudents/EmotionalDiary/Daily.css">
+     <!-- Iconos -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+   
+<!-- En el <head> de tus archivos HTML -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<!-- BOTÓN HAMBURGUESA Y OVERLAY (ÚNICO) -->
+<button type="button" class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+    <i class="fa-solid fa-bars"></i>
+</button>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- SIDEBAR (ÚNICO) -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <a href="#"><img src="/Logo-nombrelado (1).png" alt="Logo Sentir" id="logoSentir"></a>
+    </div>
+    
+    <nav class="menu">
+        <a href="#" class="menu-item active"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
+        <a href="#seguimiento" class="menu-item"><i class="fa-solid fa-chart-line"></i><span>Mi seguimiento</span></a>
+        <a href="#recursos" class="menu-item"><i class="fa-solid fa-leaf"></i><span>Recursos</span></a>
+        <a href="#diario" class="menu-item"><i class="fa-solid fa-book"></i><span>Diario emocional</span></a>
+        <a href="#actividades" class="menu-item"><i class="fa-solid fa-star"></i><span>Actividades</span></a>
+        <a href="#ayuda" class="menu-item"><i class="fa-solid fa-handshake-angle"></i><span>Pedir ayuda</span></a>
+    </nav>
+
+    <div class="sidebar-bottom">
+        <div class="privacy-box">
+            <i class="fa-solid fa-shield-heart"></i>
+            <div>
+                <strong>Tu bienestar importa</strong>
+                <small>Tu información está protegida.</small>
+            </div>
+        </div>
+        <button class="logout" id="logoutSidebar">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Cerrar sesión</span>
+        </button>
+    </div>
+</aside>
+
+<!-- MODAL DE CERRAR SESIÓN -->
+<div class="modal-overlay" id="logoutModal">
+    <div class="modal-card">
+        <div class="modal-icon">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </div>
+        <h3>¿Cerrar sesión?</h3>
+        <p>Tendrás que volver a iniciar sesión para acceder a tu información.</p>
+        <div class="modal-actions">
+            <button class="btn-cancel" id="cancelLogout">Cancelar</button>
+            <button class="btn-confirm" id="confirmLogout">Sí, cerrar sesión</button>
+        </div>
+    </div>
+</div>
+
+    <!-- =========================
+         CONTENIDO PRINCIPAL
+    ========================== -->
+
+    <main class="main-content">
+
+
+        <!-- =========================
+             HEADER
+        ========================== -->
+
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button class="menu-toggle" id="menuToggle">
+                    ☰
+                </button>
+
+                <div class="mobile-logo">
+                    <span class="mobile-heart">♥</span>
+                    sentir
+                </div>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+
+                <!-- NOTIFICACIONES -->
+
+                <button class="notification-btn" id="notificationBtn">
+
+                    <span class="bell">♧</span>
+
+                    <span class="notification-dot"></span>
+
+                </button>
+
+
+                <!-- PERFIL -->
+
+                <div class="profile-container">
+
+                    <button class="profile-button" id="profileButton">
+
+                        <div class="profile-avatar">
+                            A
+                        </div>
+
+                        <div class="profile-text">
+
+                            <strong>Ana</strong>
+
+                            <small>Estudiante</small>
+
+                        </div>
+
+                        <span class="profile-arrow">⌄</span>
+
+                    </button>
+
+
+                    <!-- MENU PERFIL -->
+
+                    <div class="profile-dropdown" id="profileDropdown">
+
+                        <a href="perfil.html">
+                            <span>◉</span>
+                            Ver mi perfil
+                        </a>
+
+                        <div class="dropdown-line"></div>
+
+                        <button id="logoutButton">
+                            <span>⇥</span>
+                            Cerrar sesión
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =========================
+             CONTENEDOR GENERAL
+        ========================== -->
+
+        <section class="page-container">
+
+
+            <!-- =========================
+                 HERO
+            ========================== -->
+
+            <section class="diary-hero">
+
+                <div class="hero-content">
+
+                    <div class="hero-badge">
+                        <span></span>
+                        Tu espacio seguro
+                    </div>
+
+                    <h1>
+                        Mi diario emocional
+                    </h1>
+
+                    <p>
+                        Un espacio privado para comprender lo que sientes,
+                        expresar tus pensamientos y conectar contigo.
+                    </p>
+
+                </div>
+
+
+                <div class="hero-decoration">
+
+                    <div class="hero-circle circle-one"></div>
+                    <div class="hero-circle circle-two"></div>
+                    <div class="hero-circle circle-three"></div>
+
+                    <div class="hero-icon">
+                        ♥
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 PROGRESO
+            ========================== -->
+
+            <section class="progress-card">
+
+                <div class="progress-step active-step">
+
+                    <div class="step-number">
+                        1
+                    </div>
+
+                    <div>
+                        <strong>Emoción</strong>
+                        <span>¿Cómo te sientes?</span>
+                    </div>
+
+                </div>
+
+
+                <div class="progress-line"></div>
+
+
+                <div class="progress-step">
+
+                    <div class="step-number">
+                        2
+                    </div>
+
+                    <div>
+                        <strong>Intensidad</strong>
+                        <span>¿Qué tan fuerte?</span>
+                    </div>
+
+                </div>
+
+
+                <div class="progress-line"></div>
+
+
+                <div class="progress-step">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <div>
+                        <strong>Escribe</strong>
+                        <span>Cuéntanos más</span>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 SELECCIÓN DE EMOCIÓN
+            ========================== -->
+
+            <section class="diary-section emotion-section-main">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                            PASO 1
+                        </span>
+
+                        <h2>
+                            ¿Cómo te sientes hoy?
+                        </h2>
+
+                        <p>
+                            Selecciona la emoción que mejor representa tu momento actual.
+                        </p>
+
+                    </div>
+
+                    <div class="selected-emotion-display" id="selectedEmotionDisplay">
+
+                        <span>♥</span>
+
+                        <div>
+                            <small>Emoción seleccionada</small>
+                            <strong id="selectedEmotionText">
+                                Aún no seleccionada
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ===================================================
+     SECCIÓN DE ESTADO DE ÁNIMO / EMOJIS ANIMADOS
+     =================================================== -->
+<section class="emotion-section">
+  <div class="emotions">
+
+    <!-- MUY BIEN (HAPPY) -->
+    <label class="emotion very-good">
+      <input name="feedback" value="5" type="radio" />
+      <div class="emoji happy">
+        <div>
+          <svg class="eye left"><use href="#eye"/></svg>
+          <svg class="eye right"><use href="#eye"/></svg>
+        </div>
+      </div>
+      <strong>Muy bien</strong>
+      <small>Me siento genial</small>
+    </label>
+
+    <!-- BIEN (GOOD) -->
+    <label class="emotion good">
+      <input checked name="feedback" value="4" type="radio" />
+      <div class="emoji good">
+        <div>
+          <svg class="eye left"><use href="#eye"/></svg>
+          <svg class="eye right"><use href="#eye"/></svg>
+          <svg class="mouth"><use href="#mouth"/></svg>
+        </div>
+      </div>
+      <strong>Bien</strong>
+      <small>Estoy tranquilo/a</small>
+    </label>
+
+    <!-- REGULAR (OK) -->
+    <label class="emotion regular">
+      <input name="feedback" value="3" type="radio" />
+      <div class="emoji ok">
+        <div></div>
+      </div>
+      <strong>Regular</strong>
+      <small>Estoy estable</small>
+    </label>
+
+    <!-- MAL (SAD) -->
+    <label class="emotion bad">
+      <input name="feedback" value="2" type="radio" />
+      <div class="emoji sad">
+        <div>
+          <svg class="eye left"><use href="#eye"/></svg>
+          <svg class="eye right"><use href="#eye"/></svg>
+          <svg class="mouth"><use href="#mouth"/></svg>
+        </div>
+      </div>
+      <strong>Mal</strong>
+      <small>No estoy muy bien</small>
+    </label>
+
+    <!-- MUY MAL (ANGRY) -->
+    <label class="emotion very-bad">
+      <input name="feedback" value="1" type="radio" />
+      <div class="emoji angry">
+        <div>
+          <svg class="eye left"><use href="#eye"/></svg>
+          <svg class="eye right"><use href="#eye"/></svg>
+          <svg class="mouth"><use href="#mouth"/></svg>
+        </div>
+      </div>
+      <strong>Muy mal</strong>
+      <small>Necesito apoyo</small>
+    </label>
+
+  </div>
+
+  <!-- DEFINICIÓN SVG DE OJOS Y BOCA -->
+  <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="eye" viewBox="0 0 7 4">
+      <path d="M1,1 C1.83333333,2.16666667 2.66666667,2.75 3.5,2.75 C4.33333333,2.75 5.16666667,2.16666667 6,1"></path>
+    </symbol>
+    <symbol id="mouth" viewBox="0 0 18 7">
+      <path d="M1,5.5 C3.66666667,2.5 6.33333333,1 9,1 C11.6666667,1 14.3333333,2.5 17,5.5"></path>
+    </symbol>
+  </svg>
+</section>
+                    
+
+
+            <!-- =========================
+                 INTENSIDAD
+            ========================== -->
+
+            <section class="diary-section intensity-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                            PASO 2
+                        </span>
+
+                        <h2>
+                            ¿Qué tan intensa es esta emoción?
+                        </h2>
+
+                        <p>
+                            Indica en una escala del 1 al 10 qué tan fuerte sientes esta emoción.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="intensity-container">
+
+
+                    <div class="intensity-header">
+
+                        <div>
+
+                            <span class="intensity-small">
+                                Intensidad emocional
+                            </span>
+
+                            <strong id="intensityStatus">
+                                Selecciona un nivel
+                            </strong>
+
+                        </div>
+
+
+                        <div class="intensity-number"
+                            id="intensityNumber">
+
+                            --
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="range-wrapper">
+
+                        <input
+                            type="range"
+                            id="intensityRange"
+                            min="1"
+                            max="10"
+                            value="5"
+                            disabled>
+
+                    </div>
+
+
+                    <div class="range-labels">
+
+                        <span>1 · Muy baja</span>
+
+                        <span>5 · Moderada</span>
+
+                        <span>10 · Muy intensa</span>
+
+                    </div>
+
+
+                    <div class="intensity-numbers">
+
+                        <button type="button" data-value="1">1</button>
+                        <button type="button" data-value="2">2</button>
+                        <button type="button" data-value="3">3</button>
+                        <button type="button" data-value="4">4</button>
+                        <button type="button" data-value="5">5</button>
+                        <button type="button" data-value="6">6</button>
+                        <button type="button" data-value="7">7</button>
+                        <button type="button" data-value="8">8</button>
+                        <button type="button" data-value="9">9</button>
+                        <button type="button" data-value="10">10</button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 DIARIO
+            ========================== -->
+
+            <section class="diary-section writing-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                            PASO 3
+                        </span>
+
+                        <h2>
+                            Cuéntame sobre tu día
+                        </h2>
+
+                        <p>
+                            Escribe lo que quieras. Este espacio es para ti.
+                        </p>
+
+                    </div>
+
+
+                    <div class="date-display"
+                        id="currentDate">
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     PREGUNTAS GUIADAS
+                ========================== -->
+
+                <div class="guided-questions">
+
+                    <div class="guided-header">
+
+                        <div>
+
+                            <span>✦</span>
+
+                            <div>
+
+                                <strong>
+                                    Preguntas para ayudarte a reflexionar
+                                </strong>
+
+                                <small>
+                                    Son completamente opcionales
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                        <button id="hideQuestionsBtn">
+                            Ocultar preguntas
+                        </button>
+
+                    </div>
+
+
+                    <div class="questions-grid"
+                        id="questionsGrid">
+
+
+                        <!-- PREGUNTA 1 -->
+
+                        <div class="question-card">
+
+                            <button class="remove-question"
+                                type="button"
+                                data-question="question1">
+
+                                ×
+
+                            </button>
+
+                            <span class="question-number">
+                                01
+                            </span>
+
+                            <h3>
+                                Algo que está pasando
+                            </h3>
+
+                            <p>
+                                ¿Qué situación, momento o experiencia está influyendo en cómo te sientes?
+                            </p>
+
+                            <textarea
+                                id="question1"
+                                placeholder="Puedes escribir aquí si lo deseas..."></textarea>
+
+                        </div>
+
+
+                        <!-- PREGUNTA 2 -->
+
+                        <div class="question-card">
+
+                            <button class="remove-question"
+                                type="button"
+                                data-question="question2">
+
+                                ×
+
+                            </button>
+
+                            <span class="question-number">
+                                02
+                            </span>
+
+                            <h3>
+                                Lo que pienso sobre eso
+                            </h3>
+
+                            <p>
+                                ¿Qué pensamientos aparecen cuando piensas en esa situación?
+                            </p>
+
+                            <textarea
+                                id="question2"
+                                placeholder="Escribe tus pensamientos si quieres..."></textarea>
+
+                        </div>
+
+
+                        <!-- PREGUNTA 3 -->
+
+                        <div class="question-card">
+
+                            <button class="remove-question"
+                                type="button"
+                                data-question="question3">
+
+                                ×
+
+                            </button>
+
+                            <span class="question-number">
+                                03
+                            </span>
+
+                            <h3>
+                                Lo que necesito
+                            </h3>
+
+                            <p>
+                                ¿Qué crees que necesitas en este momento para sentirte mejor?
+                            </p>
+
+                            <textarea
+                                id="question3"
+                                placeholder="Puedes identificar lo que necesitas..."></textarea>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     ESCRITURA PRINCIPAL
+                ========================== -->
+
+                <div class="diary-editor">
+
+                    <div class="editor-top">
+
+                        <div>
+
+                            <span class="editor-icon">
+                                ✎
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Mi reflexión de hoy
+                                </strong>
+
+                                <small>
+                                    Escribe libremente lo que quieras expresar
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <span class="word-counter"
+                            id="wordCounter">
+
+                            0 palabras
+
+                        </span>
+
+                    </div>
+
+
+                    <textarea
+                        id="diaryText"
+                        class="main-textarea"
+                        placeholder="Hoy quiero escribir sobre..."></textarea>
+
+
+                    <div class="editor-bottom">
+
+                        <div class="privacy-note">
+
+                            <span>♥</span>
+
+                            <small>
+                                Tu información emocional es privada y confidencial.
+                            </small>
+
+                        </div>
+
+
+                        <button class="save-button"
+                            id="saveDiaryBtn">
+
+                            <span>♥</span>
+                            Guardar en mi diario
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 HISTORIAL
+            ========================== -->
+
+            <section class="history-section">
+
+                <div class="history-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            MI HISTORIAL
+                        </span>
+
+                        <h2>
+                            Mis últimos registros
+                        </h2>
+
+                    </div>
+
+
+                    <button id="clearHistoryBtn"
+                        class="clear-history-btn">
+
+                        Limpiar historial
+
+                    </button>
+
+                </div>
+
+
+                <div class="history-grid"
+                    id="historyGrid">
+
+
+                    <div class="empty-history">
+
+                        <div class="empty-icon">
+                            ♡
+                        </div>
+
+                        <h3>
+                            Tu historia comienza aquí
+                        </h3>
+
+                        <p>
+                            Cuando guardes tu primer registro aparecerá en este espacio.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         MODAL CERRAR SESIÓN
+    ========================== -->
+
+    <div class="modal-overlay"
+        id="logoutModal">
+
+        <div class="logout-modal">
+
+            <div class="modal-icon">
+                ⇥
+            </div>
+
+            <h2>
+                ¿Cerrar sesión?
+            </h2>
+
+            <p>
+                Tendrás que volver a iniciar sesión para acceder a tu información.
+            </p>
+
+
+            <div class="modal-actions">
+
+                <button class="cancel-btn"
+                    id="cancelLogout">
+
+                    Cancelar
+
+                </button>
+
+
+                <button class="confirm-logout-btn"
+                    id="confirmLogout">
+
+                    Sí, cerrar sesión
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         TOAST
+    ========================== -->
+
+    <div class="toast"
+        id="toast">
+
+        <span id="toastIcon">✓</span>
+
+        <p id="toastMessage"></p>
+
+    </div>
+
+
+    <script src="/Sentir/Client/ScreenStudents/EmotionalDiary/Daily.js"></script>
+
+</body>
+
+</html>

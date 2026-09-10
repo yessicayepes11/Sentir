@@ -17,8 +17,8 @@
 
         <aside class="sidebar">
             <div class="logo-area" data-logo-home="../inicio/Inicio.html">
-               
-                <img src="../assets/logos.png" alt="Sentir Logo" class="main-logo-img">
+                
+                <img src="../assets/logos.png.png" alt="Sentir Logo" class="main-logo-img">
             </div>
             <nav class="nav-menu">
                 <a href="../inicio/Inicio.html" class="nav-item" data-view="inicio"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
@@ -68,7 +68,6 @@
                             </div>
                             <div class="welcome-character-container">
                                 <div class="welcome-character-glow"></div>
-                                
                                 <img src="../assets/psicologa.png" alt="Ilustración Bienvenida" class="welcome-character-img" onerror="this.style.display='none'">
                             </div>
                         </div>
@@ -79,10 +78,10 @@
                                     <span>ESTADO ANÍMICO GENERAL DE LA INSTITUCIÓN</span>
                                     <h3>Predominantemente Estable</h3>
                                 </div>
-                                <div class="mood-emojis-indicator">
-                                    <span class="mood-emoji happy">😊 62%</span>
-                                    <span class="mood-emoji neutral">😐 24%</span>
-                                    <span class="mood-emoji sad">😔 14%</span>
+                                <div class="mood-emojis-indicator" id="moodEmojisIndicator">
+                                    <span class="mood-emoji happy" data-mood="happy" data-value="62" data-label="Ánimo Positivo">😊 <strong class="mood-percent">0%</strong></span>
+                                    <span class="mood-emoji neutral" data-mood="neutral" data-value="24" data-label="Ánimo Neutral">😐 <strong class="mood-percent">0%</strong></span>
+                                    <span class="mood-emoji sad" data-mood="sad" data-value="14" data-label="Ánimo Bajo">😔 <strong class="mood-percent">0%</strong></span>
                                 </div>
                             </div>
                         </div>

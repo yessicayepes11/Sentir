@@ -8,12 +8,12 @@
    -------------------------------------------------------------------------- */
 // ✅ Ya con la foto real de la psicóloga (Sentir/assets/psicologa-avatar.png)
 const SENTIR_DEFAULT_PROFILE = {
-    name: 'Mariana Restrepo',
+    name: 'Jannette Cardeño',
     role: 'Psicóloga Escolar',
     licencia: 'Lic. Psicología N.° 45210',
     experiencia: '8 años de experiencia',
     avatar: '../assets/psicologa-avatar.png',
-    email: 'mariana.restrepo@sentir.edu.co',
+    email: 'jannette.cardeno@sentir.edu.co',
     especialidad: 'Psicología Educativa y Clínica Infanto-Juvenil',
     sedes: 'Sede Principal · Sede Norte',
     horario: 'Lunes a Viernes · 7:00am – 3:00pm',
@@ -85,11 +85,19 @@ const DEFAULT_INTERVENTIONS = {
 
 const DEFAULT_GUARDIANS = {
     'Mateo Silva': [
-        { nombre: 'Marcela Silva', parentesco: 'Madre', telefono: '+57 300 123 4567', principal: true },
-        { nombre: 'Andrés Silva', parentesco: 'Padre', telefono: '+57 301 987 6543', principal: false }
+        { nombre: 'Marcela Silva', parentesco: 'Madre', telefono: '+57 300 123 4567', correo: 'marcela.silva@gmail.com', principal: true },
+        { nombre: 'Andrés Silva', parentesco: 'Padre (alternativo)', telefono: '+57 301 987 6543', correo: 'andres.silva@gmail.com', principal: false }
     ],
-    'Camila Pérez': [{ nombre: 'Diana Pérez', parentesco: 'Madre', telefono: '+57 312 456 7890', principal: true }],
-    'Daniel Ortiz': [{ nombre: 'Familia Ortiz', parentesco: 'Acudiente principal', telefono: '+57 300 555 1122', principal: true }]
+    'Camila Pérez': [
+        { nombre: 'Diana Pérez', parentesco: 'Madre', telefono: '+57 312 456 7890', correo: 'diana.perez@gmail.com', principal: true }
+    ],
+    'Alejandro Toro Restrepo': [
+        { nombre: 'Luz Toro', parentesco: 'Madre', telefono: '+57 315 222 3344', correo: 'luz.toro@gmail.com', principal: true },
+        { nombre: 'Colegio · Coordinación', parentesco: 'Contacto institucional (alternativo)', telefono: '+57 4 444 5566', correo: 'coordinacion@sentir.edu.co', principal: false }
+    ],
+    'Daniel Ortiz': [
+        { nombre: 'Familia Ortiz', parentesco: 'Acudiente principal', telefono: '+57 300 555 1122', correo: 'familia.ortiz@gmail.com', principal: true }
+    ]
 };
 
 function todayISO() { return new Date().toISOString().split('T')[0]; }
@@ -103,10 +111,10 @@ const DEFAULT_AGENDA = [
 ];
 
 const DEFAULT_ACTIVITIES = [
-    { id: 'act1', titulo: 'Respiración 4-7-8', categoria: 'Respiración', duracion: '5 min', nivel: 'Todos', descripcion: 'Técnica de respiración para reducir la ansiedad en momentos de crisis: inhalar 4s, sostener 7s, exhalar 8s.' },
-    { id: 'act2', titulo: 'Meditación guiada', categoria: 'Mindfulness', duracion: '10 min', nivel: 'Riesgo medio', descripcion: 'Meditación de atención plena para manejar el estrés académico antes de evaluaciones.' },
-    { id: 'act3', titulo: 'Diario emocional', categoria: 'Escritura terapéutica', duracion: '15 min', nivel: 'Todos', descripcion: 'Espacio de escritura libre para identificar y procesar las emociones del día.' },
-    { id: 'act4', titulo: 'Caminata consciente', categoria: 'Movimiento', duracion: '20 min', nivel: 'Riesgo alto', descripcion: 'Actividad física suave y guiada para liberar tensión y mejorar el estado de ánimo.' }
+    { id: 'act1', titulo: 'Respiración 4-7-8', tipo: 'Respiración', fecha: addDaysISO(-10), nivel: 'Todos', descripcion: 'Técnica de respiración para reducir la ansiedad en momentos de crisis: inhalar 4s, sostener 7s, exhalar 8s.' },
+    { id: 'act2', titulo: 'Meditación guiada', tipo: 'Mindfulness', fecha: addDaysISO(-7), nivel: 'Riesgo medio', descripcion: 'Meditación de atención plena para manejar el estrés académico antes de evaluaciones.' },
+    { id: 'act3', titulo: 'Diario emocional', tipo: 'Escritura terapéutica', fecha: addDaysISO(-5), nivel: 'Todos', descripcion: 'Espacio de escritura libre para identificar y procesar las emociones del día.' },
+    { id: 'act4', titulo: 'Caminata consciente', tipo: 'Movimiento', fecha: addDaysISO(-2), nivel: 'Riesgo alto', descripcion: 'Actividad física suave y guiada para liberar tensión y mejorar el estado de ánimo.' }
 ];
 
 function getStudents() { return SentirStore.get('students', DEFAULT_STUDENTS); }
@@ -133,7 +141,7 @@ function addInterventionRecord(name, record) {
 }
 function getGuardianContacts(name) {
     const all = getGuardians();
-    return all[name] || [{ nombre: 'Acudiente registrado', parentesco: 'Contacto principal', telefono: '+57 300 000 0000', principal: true }];
+    return all[name] || [{ nombre: 'Acudiente registrado', parentesco: 'Contacto principal', telefono: '+57 300 000 0000', correo: 'acudiente@correo.com', principal: true }];
 }
 
 /* --------------------------------------------------------------------------
@@ -309,10 +317,14 @@ function openShiftHistoryModal() {
         { hora: '09:30', estudiante: 'Carlos Mendoza', tipo: 'Sesión Individual', estado: 'done' },
         { hora: '11:00', estudiante: 'Sofía Gómez', tipo: 'Seguimiento de Caso', estado: 'done' },
         { hora: '13:15', estudiante: 'Valentina Ríos', tipo: 'Consulta Breve', estado: 'done' },
-        { hora: '14:30', estudiante: 'Mateo Silva (Acudientes)', tipo: 'Reunión de Acudientes', estado: 'progress' }
+        { hora: '14:30', estudiante: 'Mateo Silva', tipo: 'Reunión de Acudientes', estado: 'progress' }
     ];
+
+    const done = turnos.filter(t => t.estado === 'done').length;
+    const students = getStudents().map(s => s.name);
+
     const listHTML = turnos.map(t => `
-        <div class="shift-entry ${t.estado}">
+        <div class="shift-entry ${t.estado} ${students.includes(t.estudiante) ? 'clickable' : ''}" data-student="${t.estudiante}">
             <div class="shift-time">${t.hora}</div>
             <div class="shift-entry-info"><strong>${t.estudiante}</strong><p>${t.tipo}</p></div>
             <span class="shift-status ${t.estado}">${t.estado === 'done' ? '<i class="fa-solid fa-circle-check"></i> Atendida' : '<i class="fa-solid fa-clock"></i> En curso'}</span>
@@ -324,10 +336,29 @@ function openShiftHistoryModal() {
             <div class="sentir-modal-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
             <div><h3>Historial de Turnos de Hoy</h3><p>Sesiones atendidas y en curso en la jornada actual</p></div>
         </div>
-        <div class="sentir-modal-body"><div class="shift-list">${listHTML}</div></div>
+        <div class="sentir-modal-body">
+            <div class="shift-summary">
+                <div class="shift-summary-bar"><div class="shift-summary-fill" style="width:${(done / turnos.length) * 100}%;"></div></div>
+                <span>${done} de ${turnos.length} sesiones atendidas hoy</span>
+            </div>
+            <div class="shift-list">${listHTML}</div>
+        </div>
         <div class="sentir-modal-actions"><button class="modal-btn-cancel" id="closeShiftModal">Cerrar</button></div>
     `);
     overlay.querySelector('#closeShiftModal').addEventListener('click', () => closeSentirModal(overlay));
+
+    overlay.querySelectorAll('.shift-entry.clickable').forEach(entry => {
+        entry.addEventListener('click', () => {
+            const studentName = entry.dataset.student;
+            closeSentirModal(overlay);
+            goToStudentExpediente(studentName);
+        });
+    });
+}
+
+// Navega al módulo Estudiantes y abre automáticamente el expediente del estudiante indicado
+function goToStudentExpediente(studentName) {
+    window.location.href = resolveModulePath('estudiantes.html') + '?open=' + encodeURIComponent(studentName);
 }
 
 function initMobileSidebar() {
@@ -465,19 +496,25 @@ function openContactGuardianModal(studentName) {
     const listHTML = contacts.map(c => `
         <div class="contact-entry ${c.principal ? 'is-principal' : ''}">
             <div class="contact-entry-info">
-                <strong>${c.nombre}${c.principal ? '<span class="contact-principal-tag">CONFIANZA</span>' : ''}</strong>
+                <strong>${c.nombre}${c.principal ? '<span class="contact-principal-tag">CONFIANZA</span>' : '<span class="contact-alt-tag">ALTERNATIVO</span>'}</strong>
                 <span>${c.parentesco}</span>
+                ${c.correo ? `<span class="contact-email"><i class="fa-solid fa-envelope"></i> ${c.correo}</span>` : ''}
             </div>
             <a href="tel:${c.telefono.replace(/\s+/g, '')}" class="contact-call-btn"><i class="fa-solid fa-phone"></i> ${c.telefono}</a>
         </div>
     `).join('');
+
+    const hasAlternate = contacts.some(c => !c.principal);
 
     const overlay = openSentirModal(`
         <div class="sentir-modal-header">
             <div class="sentir-modal-icon" style="background:#FEF2F2; color:var(--riesgo-alto);"><i class="fa-solid fa-phone"></i></div>
             <div><h3>Contactar Acudiente</h3><p>${studentName} · Números disponibles para contacto inmediato</p></div>
         </div>
-        <div class="sentir-modal-body"><div class="contact-list">${listHTML}</div></div>
+        <div class="sentir-modal-body">
+            <div class="contact-list" id="contactListBody">${listHTML}</div>
+            ${!hasAlternate ? `<button class="btn-secondary" id="addAltContactBtn" style="width:100%;"><i class="fa-solid fa-user-plus"></i> Agregar contacto alternativo (opcional)</button>` : ''}
+        </div>
         <div class="sentir-modal-actions">
             <button class="modal-btn-cancel" id="closeContactModal">Cerrar</button>
             <button class="modal-btn-confirm" id="confirmContactLogged"><i class="fa-solid fa-check"></i> Registrar como Contactado</button>
@@ -485,6 +522,43 @@ function openContactGuardianModal(studentName) {
     `);
 
     overlay.querySelector('#closeContactModal').addEventListener('click', () => closeSentirModal(overlay));
+
+    const addAltBtn = overlay.querySelector('#addAltContactBtn');
+    if (addAltBtn) {
+        addAltBtn.addEventListener('click', () => {
+            const formHTML = `
+                <div class="contact-entry" id="newAltContactForm" style="flex-direction:column; align-items:stretch; gap:10px;">
+                    <div class="modal-field"><label>NOMBRE DEL CONTACTO ALTERNATIVO</label><input type="text" id="altName" placeholder="Ej. Tío, vecino de confianza..."></div>
+                    <div class="modal-field-row">
+                        <div class="modal-field"><label>PARENTESCO</label><input type="text" id="altRelation" placeholder="Ej. Tío"></div>
+                        <div class="modal-field"><label>TELÉFONO</label><input type="text" id="altPhone" placeholder="+57 300 000 0000"></div>
+                    </div>
+                    <div class="modal-field"><label>CORREO (OPCIONAL)</label><input type="email" id="altEmail" placeholder="correo@ejemplo.com"></div>
+                    <button class="modal-btn-confirm" id="saveAltContact" style="align-self:flex-end;"><i class="fa-solid fa-check"></i> Guardar Contacto</button>
+                </div>`;
+            addAltBtn.insertAdjacentHTML('beforebegin', formHTML);
+            addAltBtn.remove();
+
+            overlay.querySelector('#saveAltContact').addEventListener('click', () => {
+                const nombre = overlay.querySelector('#altName').value.trim();
+                const telefono = overlay.querySelector('#altPhone').value.trim();
+                if (!nombre || !telefono) {
+                    showToast({ title: 'Faltan datos', message: 'Escribe al menos el nombre y el teléfono del contacto.', icon: 'fa-circle-exclamation', type: 'info' });
+                    return;
+                }
+                const all = getGuardians();
+                if (!all[studentName]) all[studentName] = getGuardianContacts(studentName);
+                all[studentName].push({
+                    nombre, parentesco: (overlay.querySelector('#altRelation').value.trim() || 'Contacto alternativo') + ' (alternativo)',
+                    telefono, correo: overlay.querySelector('#altEmail').value.trim(), principal: false
+                });
+                SentirStore.set('guardians', all);
+                closeSentirModal(overlay);
+                showToast({ title: 'Contacto alternativo agregado', message: `${nombre} ya queda disponible para ${studentName}.`, icon: 'fa-user-plus', type: 'success' });
+            });
+        });
+    }
+
     overlay.querySelector('#confirmContactLogged').addEventListener('click', () => {
         addInterventionRecord(studentName, {
             fecha: new Date().toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' }),

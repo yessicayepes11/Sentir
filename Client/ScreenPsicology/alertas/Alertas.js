@@ -13,8 +13,12 @@ function renderAlerts() {
 
     if (!alerts.length) {
         list.innerHTML = `<div class="alerts-empty"><i class="fa-solid fa-circle-check" style="font-size:20px; color:var(--riesgo-estable); display:block; margin-bottom:8px;"></i>No hay alertas activas en este momento.</div>`;
+        document.getElementById('alertsCountBadge').innerText = '0';
         return;
     }
+
+    const activas = alerts.filter(a => a.estado !== 'Resuelta').length;
+    document.getElementById('alertsCountBadge').innerText = activas;
 
     // Ordenar: Nuevas primero, luego En atención, luego Resueltas
     const order = { 'Nueva': 0, 'En atención': 1, 'Resuelta': 2 };
@@ -65,7 +69,7 @@ function updateAlertStatus(id, estado) {
     if (alert) alert.estado = estado;
     saveAlerts(alerts);
     renderAlerts();
-    initSidebarActiveState(); // refresca el de alertas nuevas
+    initSidebarActiveState(); // refresca el badge de alertas nuevas
 }
 
 let currentRiskFilter = 'all';
@@ -74,6 +78,8 @@ function renderRiskCases() {
     const students = getStudents().filter(s => s.risk === 'high' || s.risk === 'medium');
     const container = document.getElementById('riskCasesList');
     const filtered = currentRiskFilter === 'all' ? students : students.filter(s => s.risk === currentRiskFilter);
+
+    document.getElementById('riskCountBadge').innerText = filtered.length;
 
     if (!filtered.length) {
         container.innerHTML = `<p class="alerts-empty">No hay casos que coincidan con este filtro.</p>`;

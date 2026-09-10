@@ -6,8 +6,98 @@ document.addEventListener('DOMContentLoaded', () => {
     renderAgendaWidget();
     initQuickActions();
     initCreateGroupWorkshop();
+    initHeaderSearch();
+    initMoodStats();
     document.getElementById('goToAlertsBtn').addEventListener('click', () => window.location.href = '../alertas/Alertas.html');
 });
+
+function initMoodStats() {
+    const pills = document.querySelectorAll('.mood-emoji');
+
+    // Animación de conteo al cargar la página (efecto "wow" estadístico)
+    pills.forEach(pill => {
+        const target = parseInt(pill.dataset.value, 10);
+        const percentEl = pill.querySelector('.mood-percent');
+        let start = 0;
+        const steps = 24;
+        const inc = target / steps;
+        const interval = setInterval(() => {
+            start += inc;
+            if (start >= target) { percentEl.innerText = target + '%'; clearInterval(interval); }
+            else percentEl.innerText = Math.floor(start) + '%';
+        }, 600 / steps);
+    });
+
+    pills.forEach(pill => {
+        pill.addEventListener('click', () => openMoodStatsModal(pill.dataset.mood));
+    });
+}
+
+const MOOD_INSIGHTS = {
+    happy: '😊 El 62% de los estudiantes reporta un ánimo positivo esta semana. Los grados 7° y 8° muestran el mayor bienestar general.',
+    neutral: '😐 El 24% reporta un ánimo neutral. Suele asociarse a cargas académicas puntuales; vale la pena reforzar espacios de pausa activa.',
+    sad: '😔 El 14% reporta ánimo bajo. Es el grupo más pequeño, pero el de mayor prioridad: revisa los casos activos en Alertas.'
+};
+
+function openMoodStatsModal(highlightMood) {
+    const data = [
+        { key: 'happy', emoji: '😊', label: 'Ánimo Positivo', value: 62 },
+        { key: 'neutral', emoji: '😐', label: 'Ánimo Neutral', value: 24 },
+        { key: 'sad', emoji: '😔', label: 'Ánimo Bajo', value: 14 }
+    ];
+
+    const rowsHTML = data.map(d => `
+        <div class="mood-chart-row ${d.key === highlightMood ? 'is-active' : ''}">
+            <span class="mood-chart-emoji">${d.emoji}</span>
+            <div class="mood-chart-track"><div class="mood-chart-fill ${d.key}" data-target="${d.value}"></div></div>
+            <span class="mood-chart-value">${d.value}%</span>
+        </div>
+    `).join('');
+
+    const overlay = openSentirModal(`
+        <div class="sentir-modal-header">
+            <div class="sentir-modal-icon"><i class="fa-solid fa-chart-simple"></i></div>
+            <div><h3>Estado Anímico Institucional</h3><p>Distribución general reportada esta semana</p></div>
+        </div>
+        <div class="sentir-modal-body">
+            <div class="mood-chart">${rowsHTML}</div>
+            <div class="mood-insight">${MOOD_INSIGHTS[highlightMood]}</div>
+        </div>
+        <div class="sentir-modal-actions">
+            <button class="modal-btn-cancel" id="closeMoodModal">Cerrar</button>
+            <button class="modal-btn-confirm" id="goMoodAlerts"><i class="fa-solid fa-arrow-right"></i> Ver Alertas y Casos</button>
+        </div>
+    `);
+
+    // Animar las barras tras montar el modal
+    requestAnimationFrame(() => {
+        overlay.querySelectorAll('.mood-chart-fill').forEach(fill => {
+            setTimeout(() => { fill.style.width = fill.dataset.target + '%'; }, 80);
+        });
+    });
+
+    overlay.querySelector('#closeMoodModal').addEventListener('click', () => closeSentirModal(overlay));
+    overlay.querySelector('#goMoodAlerts').addEventListener('click', () => window.location.href = '../alertas/Alertas.html');
+}
+
+function initHeaderSearch() {
+    const input = document.getElementById('dashboardSearch');
+    if (!input) return;
+
+    input.addEventListener('input', () => {
+        const query = input.value.toLowerCase().trim();
+        document.querySelectorAll('#homeCasesPreview .student-case-card').forEach(card => {
+            const name = card.dataset.name.toLowerCase();
+            card.style.display = (query === '' || name.includes(query)) ? 'block' : 'none';
+        });
+    });
+
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && input.value.trim() !== '') {
+            window.location.href = '../estudiantes/Estudiantes.html?q=' + encodeURIComponent(input.value.trim());
+        }
+    });
+}
 
 function renderWelcome() {
     const profile = getPsychProfile();

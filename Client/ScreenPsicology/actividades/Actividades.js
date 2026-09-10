@@ -8,6 +8,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const ACTIVITY_TYPES = ['Respiración', 'Mindfulness', 'Movimiento', 'Escritura terapéutica', 'Arte terapia', 'Música', 'Otro'];
 const ACTIVITY_ICONS = { 'Respiración': 'fa-wind', 'Mindfulness': 'fa-brain', 'Movimiento': 'fa-person-walking', 'Escritura terapéutica': 'fa-pen-nib', 'Arte terapia': 'fa-palette', 'Música': 'fa-music', 'Otro': 'fa-spa' };
+const ACTIVITY_COLORS = {
+    'Respiración': 'linear-gradient(135deg, #65B8FF, #0284C7)',
+    'Mindfulness': 'linear-gradient(135deg, #B8A8FF, #6C4DF6)',
+    'Movimiento': 'linear-gradient(135deg, #34D399, #059669)',
+    'Escritura terapéutica': 'linear-gradient(135deg, #FBBF24, #D97706)',
+    'Arte terapia': 'linear-gradient(135deg, #F472B6, #DB2777)',
+    'Música': 'linear-gradient(135deg, #A78BFA, #7C3AED)',
+    'Otro': 'linear-gradient(135deg, #94A3B8, #475569)'
+};
 
 let currentTypeFilter = 'all';
 
@@ -30,6 +39,8 @@ function renderActivities() {
     const query = document.getElementById('activitiesSearch').value.toLowerCase().trim();
     let activities = getActivities();
 
+    renderActivitiesSummary(activities);
+
     if (currentTypeFilter !== 'all') activities = activities.filter(a => a.tipo === currentTypeFilter);
     if (query) activities = activities.filter(a => a.titulo.toLowerCase().includes(query) || a.tipo.toLowerCase().includes(query));
 
@@ -46,7 +57,7 @@ function renderActivities() {
     grid.innerHTML = activities.map(a => `
         <div class="activity-card" data-id="${a.id}">
             <div class="activity-card-top">
-                <div class="activity-icon"><i class="fa-solid ${ACTIVITY_ICONS[a.tipo] || 'fa-spa'}"></i></div>
+                <div class="activity-icon" style="background:${ACTIVITY_COLORS[a.tipo] || ACTIVITY_COLORS['Otro']}"><i class="fa-solid ${ACTIVITY_ICONS[a.tipo] || 'fa-spa'}"></i></div>
                 <span class="activity-type-tag">${a.tipo}</span>
             </div>
             <h4>${a.titulo}</h4>
@@ -70,6 +81,18 @@ function renderActivities() {
         card.querySelector('[data-action="edit"]').addEventListener('click', () => openActivityModal(id));
         card.querySelector('[data-action="delete"]').addEventListener('click', () => deleteActivity(id));
     });
+}
+
+function renderActivitiesSummary(activities) {
+    const byType = {};
+    activities.forEach(a => { byType[a.tipo] = (byType[a.tipo] || 0) + 1; });
+    const topTypes = Object.entries(byType).sort((a, b) => b[1] - a[1]).slice(0, 3)
+        .map(([tipo, count]) => `${tipo} (${count})`).join(' · ');
+
+    document.getElementById('activitiesSummary').innerHTML = `
+        <strong>${activities.length}</strong> actividad${activities.length !== 1 ? 'es' : ''} en el catálogo
+        ${topTypes ? `<span class="dot-sep"></span> ${topTypes}` : ''}
+    `;
 }
 
 function formatSpanishDate(fechaISO) {
@@ -120,8 +143,14 @@ function openActivityModal(id) {
             <div class="modal-field"><label>NIVEL RECOMENDADO (OPCIONAL)</label><select id="actNivel">${levelOptions}</select></div>
             <div class="modal-field">
                 <label>ARCHIVO (OPCIONAL — imagen, audio, video o PDF de apoyo)</label>
-                <input type="file" id="actArchivo" accept="image/*,audio/*,video/*,.pdf">
-                ${existing && existing.archivoNombre ? `<span style="font-size:11px; color:var(--text-muted);">Archivo actual: ${existing.archivoNombre}</span>` : ''}
+                <div class="file-upload-box" id="fileUploadBox">
+                    <input type="file" id="actArchivo" accept="image/*,audio/*,video/*,.pdf" class="file-upload-input">
+                    <label for="actArchivo" class="file-upload-label">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <span class="file-upload-text" id="fileUploadText">${existing && existing.archivoNombre ? existing.archivoNombre : 'Ningún archivo seleccionado'}</span>
+                        <span class="file-upload-btn">Elegir archivo</span>
+                    </label>
+                </div>
             </div>
             <p class="modal-error" id="actError"><i class="fa-solid fa-circle-exclamation"></i> Escribe al menos el título y la descripción.</p>
         </div>
@@ -132,6 +161,22 @@ function openActivityModal(id) {
     `);
 
     overlay.querySelector('#actCancel').addEventListener('click', () => closeSentirModal(overlay));
+
+    const fileInput = overlay.querySelector('#actArchivo');
+    const fileBox = overlay.querySelector('#fileUploadBox');
+    const fileText = overlay.querySelector('#fileUploadText');
+    if (existing && existing.archivoNombre) fileBox.classList.add('has-file');
+
+    fileInput.addEventListener('change', () => {
+        if (fileInput.files[0]) {
+            fileText.innerText = fileInput.files[0].name;
+            fileBox.classList.add('has-file');
+        } else {
+            fileText.innerText = 'Ningún archivo seleccionado';
+            fileBox.classList.remove('has-file');
+        }
+    });
+
     overlay.querySelector('#actConfirm').addEventListener('click', () => {
         const titulo = overlay.querySelector('#actTitulo').value.trim();
         const descripcion = overlay.querySelector('#actDescripcion').value.trim();

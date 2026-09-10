@@ -24,8 +24,10 @@
 .mood-status-text span { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px; }
 .mood-status-text h3 { font-size: 18px; color: var(--morado-profundo); font-weight: 700; margin-top: 2px; }
 .mood-emojis-indicator { display: flex; gap: 12px; }
-.mood-emoji { font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 30px; cursor: pointer; transition: transform 0.2s ease; }
-.mood-emoji:hover { transform: translateY(-2px) scale(1.05); }
+.mood-emoji { font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 30px; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; position: relative; }
+.mood-emoji:hover { transform: translateY(-3px) scale(1.06); box-shadow: 0 8px 16px rgba(30, 27, 75, 0.08); }
+.mood-emoji:active { transform: translateY(-1px) scale(1.02); }
+.mood-percent { font-variant-numeric: tabular-nums; }
 .mood-emoji.happy { background-color: rgba(101, 184, 255, 0.15); color: #0284C7; }
 .mood-emoji.neutral { background-color: rgba(245, 158, 11, 0.1); color: var(--riesgo-medio); }
 .mood-emoji.sad { background-color: rgba(239, 68, 68, 0.1); color: var(--riesgo-alto); }

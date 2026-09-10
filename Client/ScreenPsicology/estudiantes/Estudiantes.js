@@ -3,7 +3,22 @@ document.addEventListener('DOMContentLoaded', () => {
     renderStudents();
     initFiltersAndSearch();
     initNewStudentModal();
+    applyUrlParams();
 });
+
+function applyUrlParams() {
+    const params = new URLSearchParams(window.location.search);
+    const query = params.get('q');
+    const openStudent = params.get('open');
+
+    if (query) {
+        document.getElementById('studentsSearch').value = query;
+        applyFilters();
+    }
+    if (openStudent) {
+        setTimeout(() => openStudentPanel(openStudent), 250);
+    }
+}
 
 const RISK_CONFIG = {
     high: { label: 'RIESGO ALTO', badgeClass: 'high', moodClass: 'sad', color: 'EF4444' },
@@ -39,9 +54,32 @@ function renderStudents() {
 
 function updateChipCounts(students) {
     document.getElementById('countAll').innerText = students.length.toLocaleString('es-CO');
-    document.getElementById('countHigh').innerText = students.filter(s => s.risk === 'high').length;
-    document.getElementById('countMedium').innerText = students.filter(s => s.risk === 'medium').length;
-    document.getElementById('countStable').innerText = students.filter(s => s.risk === 'stable').length.toLocaleString('es-CO');
+    const high = students.filter(s => s.risk === 'high').length;
+    const medium = students.filter(s => s.risk === 'medium').length;
+    const stable = students.filter(s => s.risk === 'stable').length;
+    document.getElementById('countHigh').innerText = high;
+    document.getElementById('countMedium').innerText = medium;
+    document.getElementById('countStable').innerText = stable.toLocaleString('es-CO');
+
+    renderOverviewBar(students.length, high, medium, stable);
+}
+
+function renderOverviewBar(total, high, medium, stable) {
+    const bar = document.getElementById('studentsOverviewBar');
+    const legend = document.getElementById('studentsOverviewLegend');
+    if (!total) return;
+
+    const pct = (n) => (n / total) * 100;
+    bar.innerHTML = `
+        <span class="seg-high" style="width:${pct(high)}%"></span>
+        <span class="seg-medium" style="width:${pct(medium)}%"></span>
+        <span class="seg-stable" style="width:${pct(stable)}%"></span>
+    `;
+    legend.innerHTML = `
+        <span class="overview-legend-item"><span class="overview-legend-dot high"></span> Riesgo Alto · ${high} (${pct(high).toFixed(0)}%)</span>
+        <span class="overview-legend-item"><span class="overview-legend-dot medium"></span> Riesgo Medio · ${medium} (${pct(medium).toFixed(0)}%)</span>
+        <span class="overview-legend-item"><span class="overview-legend-dot stable"></span> Estable · ${stable} (${pct(stable).toFixed(0)}%)</span>
+    `;
 }
 
 function applyFilters() {

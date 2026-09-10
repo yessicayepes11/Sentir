@@ -1,4 +1,9 @@
 .alerts-section { margin-bottom: 38px; }
+.section-count-badge { font-size: 11px; font-weight: 700; background: var(--bg-light); color: var(--text-muted); padding: 3px 10px; border-radius: 20px; margin-left: 4px; }
+.section-count-badge.urgent { background: rgba(220, 38, 38, 0.1); color: var(--alerta-color); }
+
+.risk-cases-section { background: var(--white); border: 1px solid #E5E7EB; border-radius: 24px; padding: 26px; }
+.risk-cases-section .cases-container { margin-top: 4px; }
 .risk-cases-section .section-title-area { margin-bottom: 20px; }
 .section-title-area { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 12px; }
 .section-title-area h3 { font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; }

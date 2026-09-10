@@ -5,9 +5,32 @@ document.addEventListener('DOMContentLoaded', () => {
     initAddAppointment();
 });
 
+function renderAgendaSummary() {
+    const all = getAgenda();
+    const today = todayISO();
+    const todayCount = all.filter(a => a.fecha === today).length;
+    const upcomingCount = all.filter(a => a.fecha > today).length;
+
+    document.getElementById('agendaSummary').innerHTML = `
+        <div class="agenda-summary-card today">
+            <div class="agenda-summary-icon"><i class="fa-solid fa-calendar-day"></i></div>
+            <div class="agenda-summary-text"><strong>${todayCount}</strong><span>CITAS HOY</span></div>
+        </div>
+        <div class="agenda-summary-card upcoming">
+            <div class="agenda-summary-icon"><i class="fa-solid fa-calendar-week"></i></div>
+            <div class="agenda-summary-text"><strong>${upcomingCount}</strong><span>PRÓXIMAS</span></div>
+        </div>
+        <div class="agenda-summary-card">
+            <div class="agenda-summary-icon"><i class="fa-solid fa-calendar-check"></i></div>
+            <div class="agenda-summary-text"><strong>${all.length}</strong><span>TOTAL AGENDADAS</span></div>
+        </div>
+    `;
+}
+
 let agendaFilter = 'all';
 
 function renderAgenda() {
+    renderAgendaSummary();
     const query = document.getElementById('agendaSearch').value.toLowerCase().trim();
     let items = getAgenda().slice().sort((a, b) => (a.fecha + a.hora).localeCompare(b.fecha + b.hora));
 

@@ -6,41 +6,41 @@
    MENÚ RESPONSIVE
    ===================================================== */
 
-const mobileMenu = document.getElementById("mobileMenu");
-const menuToggle = document.getElementById("menuToggle");
-const sidebar = document.getElementById("sidebar");
-const sidebarOverlay = document.getElementById("sidebarOverlay");
+document.addEventListener("DOMContentLoaded", () => {
+    const mobileMenu = document.getElementById("mobileMenu");
+    const sidebar = document.getElementById("sidebar");
+    const sidebarOverlay = document.getElementById("sidebarOverlay");
+    const menuItems = document.querySelectorAll(".menu-item");
 
-
-function toggleSidebar() {
-    sidebar.classList.toggle("open");
-    if (sidebarOverlay) {
+    // Función para abrir/cerrar el sidebar
+    function toggleSidebar() {
+        sidebar.classList.toggle("open");
         sidebarOverlay.classList.toggle("active");
     }
-}
 
-if (mobileMenu) {
-    mobileMenu.addEventListener("click", toggleSidebar);
-}
-
-if (menuToggle) {
-    menuToggle.addEventListener("click", toggleSidebar);
-}
-
-if (sidebarOverlay) {
-    sidebarOverlay.addEventListener("click", () => {
+    // Función para cerrar el sidebar
+    function closeSidebar() {
         sidebar.classList.remove("open");
         sidebarOverlay.classList.remove("active");
-    });
-}
+    }
 
-/* Cerrar sidebar al seleccionar opción en móvil */
-document.querySelectorAll(".menu-item").forEach(item => {
-    item.addEventListener("click", () => {
-        if (window.innerWidth <= 850) {
-            sidebar.classList.remove("open");
-            if (sidebarOverlay) sidebarOverlay.classList.remove("active");
-        }
+    // Evento del botón de hamburguesa
+    if (mobileMenu) {
+        mobileMenu.addEventListener("click", toggleSidebar);
+    }
+
+    // Evento al hacer clic en el fondo oscuro
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener("click", closeSidebar);
+    }
+
+    // Cerrar sidebar al hacer clic en una opción (en dispositivos móviles)
+    menuItems.forEach(item => {
+        item.addEventListener("click", () => {
+            if (window.innerWidth <= 1024) {
+                closeSidebar();
+            }
+        });
     });
 });
 

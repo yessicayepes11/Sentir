@@ -1,755 +1,1128 @@
-/* =====================================================
-   SENTIR — SISTEMA DE INSIGNIAS
-   ===================================================== */
 
 
-/*
-    =====================================================
-    DATOS DE LAS INSIGNIAS
-    =====================================================
-
-    progress = progreso actual del usuario
-
-    goal = cantidad necesaria para desbloquear
-
-    La insignia se desbloquea automáticamente cuando:
-
-        progress >= goal
-*/
-
+/* =========================================================
+   DATOS DE LAS 20 INSIGNIAS
+========================================================= */
 
 const badges = [
 
     {
         id: 1,
-
-        name: "Primer paso",
-
-        icon: "🌱",
-
+        title: "Primer Latido",
         description:
-            "Reconoce tu primer momento dedicado a tu bienestar.",
+            "Registraste por primera vez cómo te sientes. Todo comienza con conocerte un poquito mejor.",
 
-        reason:
-            "Se obtiene al completar tu primera actividad de bienestar en Sentir.",
+        category: "Primeros pasos",
 
-        progress: 1,
+        icon: "💜",
 
+        /*
+            IMAGEN CONFIGURADA:
+            Cuando tengas el PNG, colócalo en esta ruta.
+        */
+        image: "assets/insignias/primer-latido.png",
+
+        current: 1,
         goal: 1,
+        unit: "registro",
 
-        color: "purple"
+        status: "unlocked",
 
+        message:
+            "¡Tu primer paso ya forma parte de tu historia en SENTIR!",
+
+        special: false
     },
 
 
     {
         id: 2,
-
-        name: "Respira",
-
-        icon: "🌬️",
+        title: "Explorador de Emociones",
 
         description:
-            "Un reconocimiento por dedicar tiempo a respirar y relajarte.",
+            "Has identificado diferentes emociones dentro de SENTIR.",
 
-        reason:
-            "Se obtiene al completar 3 ejercicios de respiración.",
+        category: "Autoconocimiento",
 
-        progress: 2,
+        icon: "🧭",
 
-        goal: 3,
+        image: null,
 
-        color: "blue"
+        current: 3,
+        goal: 5,
+        unit: "emociones",
 
+        status: "progress",
+
+        message:
+            "Te faltan 2 emociones diferentes por explorar.",
+
+        special: false
     },
 
 
     {
         id: 3,
-
-        name: "Me conozco",
-
-        icon: "💜",
+        title: "Detective Emocional",
 
         description:
-            "Reconoce el hábito de registrar cómo te sientes.",
+            "Estás aprendiendo a reconocer qué situaciones influyen en cómo te sientes.",
 
-        reason:
-            "Se obtiene al registrar 5 entradas en tu diario emocional.",
+        category: "Autoconocimiento",
 
-        progress: 4,
+        icon: "🔎",
 
-        goal: 5,
+        image: null,
 
-        color: "purple"
+        current: 4,
+        goal: 7,
+        unit: "registros",
 
+        status: "progress",
+
+        message:
+            "Cada pista te ayuda a comprender mejor tus emociones.",
+
+        special: false
     },
 
 
     {
         id: 4,
-
-        name: "Momento de calma",
-
-        icon: "☁️",
+        title: "Racha Amable",
 
         description:
-            "Un reconocimiento por crear espacios de tranquilidad.",
+            "Has dedicado varios días a registrar cómo estás. No importa hacerlo perfecto, importa volver.",
 
-        reason:
-            "Se obtiene al completar 5 actividades de relajación.",
+        category: "Constancia",
 
-        progress: 2,
+        icon: "🔥",
 
-        goal: 5,
+        image: null,
 
-        color: "blue"
+        current: 4,
+        goal: 7,
+        unit: "días",
 
+        status: "progress",
+
+        message:
+            "Te faltan 3 días. Si interrumpes tu racha, puedes retomarla.",
+
+        special: false
     },
 
 
     {
         id: 5,
-
-        name: "Constancia",
-
-        icon: "✦",
+        title: "Una Semana Conmigo",
 
         description:
-            "Reconoce tu constancia en el cuidado de tu bienestar.",
+            "Durante una semana hiciste espacio para observar tu bienestar.",
 
-        reason:
-            "Se obtiene al completar 10 actividades de bienestar.",
+        category: "Constancia",
 
-        progress: 6,
+        icon: "📅",
 
-        goal: 10,
+        image: null,
 
-        color: "purple"
+        current: 5,
+        goal: 7,
+        unit: "registros",
 
+        status: "progress",
+
+        message:
+            "Solo faltan 2 registros para completar esta insignia.",
+
+        special: false
     },
 
 
     {
         id: 6,
-
-        name: "Conectando conmigo",
-
-        icon: "♡",
+        title: "Semilla de Constancia",
 
         description:
-            "Reconoce el hábito de observar y expresar tus emociones.",
+            "Cada pequeño registro ayuda a construir tu historial emocional.",
 
-        reason:
-            "Se obtiene al registrar 10 estados emocionales.",
+        category: "Constancia",
 
-        progress: 3,
+        icon: "🌱",
 
+        image: null,
+
+        current: 7,
         goal: 10,
+        unit: "registros",
 
-        color: "silver"
+        status: "progress",
 
+        message:
+            "Tu semilla está creciendo. Te faltan 3 registros.",
+
+        special: false
     },
 
 
     {
         id: 7,
-
-        name: "Pausa consciente",
-
-        icon: "🧘",
+        title: "Jardín Interior",
 
         description:
-            "Reconoce que decidiste regalarte un momento para ti.",
+            "Tu constancia está haciendo crecer tu espacio personal de bienestar.",
 
-        reason:
-            "Se obtiene al completar 7 sesiones de relajación.",
+        category: "Constancia",
 
-        progress: 7,
+        icon: "🌷",
 
-        goal: 7,
+        image: "assets/insignias/jardin-interior.png",
 
-        color: "blue"
+        current: 18,
+        goal: 30,
+        unit: "registros",
 
+        status: "progress",
+
+        message:
+            "Cada nuevo registro hace crecer un poco más tu jardín.",
+
+        special: true
     },
 
 
     {
         id: 8,
-
-        name: "Cuidarme también importa",
-
-        icon: "⭐",
+        title: "Modo Zen",
 
         description:
-            "Un reconocimiento por mantener hábitos de bienestar.",
+            "Probaste varias herramientas de relajación o autocuidado.",
 
-        reason:
-            "Se obtiene al completar 15 actividades de bienestar.",
+        category: "Bienestar",
 
-        progress: 5,
+        icon: "🧘",
 
-        goal: 15,
+        image: "assets/insignias/modo-zen.png",
 
-        color: "purple"
+        current: 5,
+        goal: 5,
+        unit: "actividades",
 
+        status: "unlocked",
+
+        message:
+            "¡Desbloqueada! Ya conoces diferentes formas de regalarte una pausa.",
+
+        special: false
+    },
+
+
+    {
+        id: 9,
+        title: "Respira Conmigo",
+
+        description:
+            "Completaste ejercicios de respiración consciente.",
+
+        category: "Bienestar",
+
+        icon: "🌬️",
+
+        image: null,
+
+        current: 3,
+        goal: 5,
+        unit: "ejercicios",
+
+        status: "progress",
+
+        message:
+            "Te faltan 2 ejercicios de respiración.",
+
+        special: false
+    },
+
+
+    {
+        id: 10,
+        title: "Kit de Calma",
+
+        description:
+            "Descubriste diferentes recursos que puedes usar cuando necesites un momento para ti.",
+
+        category: "Bienestar",
+
+        icon: "🎒",
+
+        image: null,
+
+        current: 4,
+        goal: 6,
+        unit: "herramientas",
+
+        status: "progress",
+
+        message:
+            "Tu kit casi está completo. Descubre 2 herramientas más.",
+
+        special: false
+    },
+
+
+    {
+        id: 11,
+        title: "Mente Curiosa",
+
+        description:
+            "Has explorado contenidos para aprender sobre emociones y bienestar.",
+
+        category: "Aprendizaje",
+
+        icon: "🧠",
+
+        image: null,
+
+        current: 5,
+        goal: 5,
+        unit: "contenidos",
+
+        status: "unlocked",
+
+        message:
+            "¡Lo lograste! Tu curiosidad también cuida de ti.",
+
+        special: false
+    },
+
+
+    {
+        id: 12,
+        title: "Aprendiz Emocional",
+
+        description:
+            "Continúas aprendiendo a identificar, expresar y gestionar tus emociones.",
+
+        category: "Aprendizaje",
+
+        icon: "📚",
+
+        image: null,
+
+        current: 7,
+        goal: 10,
+        unit: "contenidos",
+
+        status: "progress",
+
+        message:
+            "Te faltan 3 contenidos por explorar.",
+
+        special: false
+    },
+
+
+    {
+        id: 13,
+        title: "Brújula Interior",
+
+        description:
+            "Has utilizado tu historial para observar cómo han cambiado tus emociones.",
+
+        category: "Progreso",
+
+        icon: "🧭",
+
+        image: "assets/insignias/brujula-interior.png",
+
+        current: 3,
+        goal: 5,
+        unit: "consultas",
+
+        status: "progress",
+
+        message:
+            "Te faltan 2 revisiones de tu historial.",
+
+        special: true
+    },
+
+
+    {
+        id: 14,
+        title: "Conociéndome Mejor",
+
+        description:
+            "Has revisado tus estadísticas y avances personales varias veces.",
+
+        category: "Progreso",
+
+        icon: "🪞",
+
+        image: null,
+
+        current: 2,
+        goal: 4,
+        unit: "revisiones",
+
+        status: "progress",
+
+        message:
+            "Ya vas a mitad de camino.",
+
+        special: false
+    },
+
+
+    {
+        id: 15,
+        title: "Pequeños Pasos",
+
+        description:
+            "Has mantenido hábitos de bienestar en diferentes momentos. Cada paso también cuenta.",
+
+        category: "Bienestar",
+
+        icon: "👣",
+
+        image: null,
+
+        current: 6,
+        goal: 10,
+        unit: "acciones",
+
+        status: "progress",
+
+        message:
+            "Cuatro pequeños pasos más y será tuya.",
+
+        special: false
+    },
+
+
+    {
+        id: 16,
+        title: "Coleccionista de Bienestar",
+
+        description:
+            "Has probado diferentes actividades y recursos disponibles en SENTIR.",
+
+        category: "Exploración",
+
+        icon: "🎒",
+
+        image: null,
+
+        current: 6,
+        goal: 8,
+        unit: "recursos",
+
+        status: "progress",
+
+        message:
+            "Solo te faltan 2 recursos diferentes.",
+
+        special: false
+    },
+
+
+    {
+        id: 17,
+        title: "Cometa de Progreso",
+
+        description:
+            "Tu participación constante muestra cuánto has avanzado dentro de SENTIR.",
+
+        category: "Progreso",
+
+        icon: "☄️",
+
+        image: null,
+
+        current: 20,
+        goal: 30,
+        unit: "acciones",
+
+        status: "progress",
+
+        message:
+            "Tu cometa sigue avanzando. Faltan 10 acciones.",
+
+        special: false
+    },
+
+
+    {
+        id: 18,
+        title: "Corazón Curioso",
+
+        description:
+            "Te has permitido explorar nuevas formas de comprender lo que sientes.",
+
+        category: "Exploración",
+
+        icon: "💗",
+
+        image: null,
+
+        current: 8,
+        goal: 12,
+        unit: "actividades",
+
+        status: "progress",
+
+        message:
+            "Te faltan 4 experiencias por descubrir.",
+
+        special: false
+    },
+
+
+    {
+        id: 19,
+        title: "Constelación SENTIR",
+
+        description:
+            "Has participado en distintas áreas: registro, aprendizaje, historial y autocuidado.",
+
+        category: "Especial",
+
+        icon: "🌌",
+
+        image: "assets/insignias/constelacion-sentir.png",
+
+        current: 3,
+        goal: 4,
+        unit: "áreas",
+
+        status: "progress",
+
+        message:
+            "Una estrella más y completarás tu constelación.",
+
+        special: true
+    },
+
+
+    {
+        id: 20,
+        title: "Estrella SENTIR",
+
+        description:
+            "Has construido una participación constante y diversa dentro de SENTIR.",
+
+        category: "Especial",
+
+        icon: "🌟",
+
+        image: "assets/insignias/estrella-sentir.png",
+
+        current: 42,
+        goal: 50,
+        unit: "acciones",
+
+        status: "locked",
+
+        message:
+            "Esta insignia especial se revelará cuando alcances 50 acciones de bienestar.",
+
+        special: true
     }
 
 ];
 
 
 
-/* =====================================================
-   ELEMENTOS HTML
-   ===================================================== */
+/* =========================================================
+   ELEMENTOS
+========================================================= */
 
-const unlockedContainer =
-    document.getElementById("unlockedBadges");
+const badgesGrid =
+    document.getElementById("badgesGrid");
 
-const almostContainer =
-    document.getElementById("almostBadges");
+const filterButtons =
+    document.querySelectorAll(".filter-button");
 
-const lockedContainer =
-    document.getElementById("lockedBadges");
+const visibleBadgesText =
+    document.getElementById("visibleBadgesText");
 
-
-const unlockedNumber =
-    document.getElementById("unlockedNumber");
-
-const lockedNumber =
-    document.getElementById("lockedNumber");
-
-const globalProgress =
-    document.getElementById("globalProgress");
-
-const unlockedCounter =
-    document.getElementById("unlockedCounter");
+const emptyState =
+    document.getElementById("emptyState");
 
 
 
-/* =====================================================
-   MODAL
-   ===================================================== */
+/* =========================================================
+   FUNCIONES AUXILIARES
+========================================================= */
 
-const modal =
-    document.getElementById("badgeModal");
-
-const closeModal =
-    document.getElementById("closeModal");
-
-const modalIcon =
-    document.getElementById("modalIcon");
-
-const modalTitle =
-    document.getElementById("modalTitle");
-
-const modalDescription =
-    document.getElementById("modalDescription");
-
-const modalReason =
-    document.getElementById("modalReason");
-
-const modalProgressFill =
-    document.getElementById("modalProgressFill");
-
-const modalProgressText =
-    document.getElementById("modalProgressText");
-
-const modalStatus =
-    document.getElementById("modalStatus");
-
-const modalButton =
-    document.getElementById("modalButton");
-
-
-
-/* =====================================================
-   DETERMINAR ESTADO
-   ===================================================== */
-
-function getBadgeStatus(badge) {
-
-    /*
-        COMPLETAMENTE DESBLOQUEADA
-    */
-
-    if (badge.progress >= badge.goal) {
-
-        return "unlocked";
-
-    }
-
-
-    /*
-        CASI DESBLOQUEADA
-
-        Consideramos "casi" cuando tiene
-        60% o más del progreso.
-    */
+function getProgressPercentage(badge) {
 
     const percentage =
-        (badge.progress / badge.goal) * 100;
+        (badge.current / badge.goal) * 100;
 
-
-    if (percentage >= 60) {
-
-        return "almost";
-
-    }
-
-
-    /*
-        TODAVÍA BLOQUEADA
-    */
-
-    return "locked";
+    return Math.min(
+        Math.round(percentage),
+        100
+    );
 
 }
 
 
 
-/* =====================================================
-   CREAR TARJETA
-   ===================================================== */
-
-function createBadgeCard(badge) {
-
-    const status =
-        getBadgeStatus(badge);
-
-
-    const percentage =
-        Math.min(
-            100,
-            Math.round(
-                (badge.progress / badge.goal) * 100
-            )
-        );
-
-
-    const card =
-        document.createElement("article");
-
-
-    card.className =
-        `badge-card ${badge.color}`;
-
-
-    /*
-        Si está bloqueada
-    */
-
-    if (status === "locked") {
-
-        card.classList.add("locked");
-
-    }
-
-
-    /*
-        ESTADO
-    */
-
-    let statusHTML = "";
+function getStatusText(status) {
 
     if (status === "unlocked") {
+        return "Desbloqueada";
+    }
 
-        statusHTML =
-            `<span class="badge-status status-unlocked">
-                DESBLOQUEADA
-            </span>`;
+    if (status === "progress") {
+        return "En progreso";
+    }
+
+    return "Bloqueada";
+}
+
+
+
+function getFooterMessage(badge) {
+
+    if (badge.status === "unlocked") {
+
+        return "✨ ¡Insignia desbloqueada!";
 
     }
 
-    else if (status === "almost") {
+    if (badge.status === "locked") {
 
-        statusHTML =
-            `<span class="badge-status status-almost">
-                ¡CASI!
-            </span>`;
+        return "🔒 Continúa avanzando para descubrirla.";
 
     }
 
-    else {
+    const remaining =
+        Math.max(
+            badge.goal - badge.current,
+            0
+        );
 
-        statusHTML =
-            `<span class="badge-status status-locked">
-                BLOQUEADA
-            </span>`;
+    return `Te faltan ${remaining} ${badge.unit}.`;
 
-    }
+}
 
+
+
+/* =========================================================
+   CREAR VISUAL DE INSIGNIA
+========================================================= */
+
+function createBadgeVisual(badge) {
 
     /*
-        CANDADO
+        Si la insignia tiene imagen configurada,
+        intentamos cargarla.
+
+        Si no existe todavía,
+        automáticamente se muestra el emoji.
     */
 
-    let lockHTML = "";
+    if (badge.image) {
 
-    if (status === "locked") {
+        return `
+            <div class="badge-visual">
 
-        lockHTML =
-            `<span class="lock">
-                🔒
-            </span>`;
+                <img
+                    class="badge-image"
+                    src="${badge.image}"
+                    alt="${badge.title}"
 
-    }
+                    onerror="
+                        this.style.display='none';
+                        this.nextElementSibling.style.display='block';
+                    "
+                >
 
-
-    /*
-        TARJETA
-    */
-
-    card.innerHTML = `
-
-        ${statusHTML}
-
-        <div class="badge-icon">
-            ${badge.icon}
-        </div>
-
-        ${lockHTML}
-
-        <h3>
-            ${badge.name}
-        </h3>
-
-        <p>
-            ${badge.description}
-        </p>
-
-        <div class="badge-progress">
-
-            <div class="progress-info">
-
-                <span>
-                    ${badge.progress} / ${badge.goal}
-                </span>
-
-                <span>
-                    ${percentage}%
+                <span
+                    class="badge-emoji"
+                    style="display:none;"
+                >
+                    ${badge.icon}
                 </span>
 
             </div>
+        `;
 
-            <div class="progress-bar">
+    }
 
-                <div
-                    class="progress-fill"
-                    style="width:${percentage}%">
+    return `
+        <div class="badge-visual">
+
+            <span class="badge-emoji">
+                ${badge.icon}
+            </span>
+
+        </div>
+    `;
+
+}
+
+
+
+/* =========================================================
+   CREAR TARJETA
+========================================================= */
+
+function createBadgeCard(badge) {
+
+    const percentage =
+        getProgressPercentage(badge);
+
+    const specialClass =
+        badge.special
+            ? "special"
+            : "";
+
+    return `
+        <article
+            class="
+                badge-card
+                ${badge.status}
+                ${specialClass}
+            "
+            data-id="${badge.id}"
+            tabindex="0"
+        >
+
+            <span class="badge-category">
+                ${badge.category}
+            </span>
+
+
+            ${createBadgeVisual(badge)}
+
+
+            <h3>
+                ${badge.title}
+            </h3>
+
+
+            <p class="badge-description">
+                ${badge.description}
+            </p>
+
+
+            <div class="badge-progress-area">
+
+                <div class="badge-progress-labels">
+
+                    <span>
+                        ${getStatusText(badge.status)}
+                    </span>
+
+                    <strong>
+                        ${badge.current}/${badge.goal}
+                    </strong>
+
+                </div>
+
+
+                <div class="badge-progress-track">
+
+                    <div
+                        class="badge-progress-fill"
+                        style="width:${percentage}%"
+                    ></div>
+
+                </div>
+
+
+                <div class="badge-footer-message">
+                    ${getFooterMessage(badge)}
                 </div>
 
             </div>
 
-        </div>
-
+        </article>
     `;
-
-
-    /*
-        AL HACER CLICK
-        SE ABRE LA INFORMACIÓN
-    */
-
-    card.addEventListener(
-        "click",
-        () => openModal(badge)
-    );
-
-
-    return card;
 
 }
 
 
 
-/* =====================================================
+/* =========================================================
    RENDERIZAR INSIGNIAS
-   ===================================================== */
+========================================================= */
 
-function renderBadges() {
+function renderBadges(filter = "all") {
 
-    /*
-        Limpiamos los contenedores
-    */
-
-    unlockedContainer.innerHTML = "";
-
-    almostContainer.innerHTML = "";
-
-    lockedContainer.innerHTML = "";
+    let filteredBadges = badges;
 
 
-    /*
-        Clasificamos las insignias
-    */
+    if (filter !== "all") {
 
-    const unlocked = [];
-
-    const almost = [];
-
-    const locked = [];
-
-
-    badges.forEach(
-        badge => {
-
-            const status =
-                getBadgeStatus(badge);
-
-
-            if (status === "unlocked") {
-
-                unlocked.push(badge);
-
-            }
-
-            else if (status === "almost") {
-
-                almost.push(badge);
-
-            }
-
-            else {
-
-                locked.push(badge);
-
-            }
-
-        }
-    );
-
-
-    /*
-        Agregamos tarjetas
-    */
-
-    unlocked.forEach(
-        badge => {
-
-            unlockedContainer.appendChild(
-                createBadgeCard(badge)
+        filteredBadges =
+            badges.filter(
+                badge =>
+                    badge.status === filter
             );
 
-        }
-    );
+    }
 
 
-    almost.forEach(
-        badge => {
-
-            almostContainer.appendChild(
-                createBadgeCard(badge)
-            );
-
-        }
-    );
+    badgesGrid.innerHTML =
+        filteredBadges
+            .map(createBadgeCard)
+            .join("");
 
 
-    locked.forEach(
-        badge => {
+    visibleBadgesText.textContent =
+        `Mostrando ${filteredBadges.length} ${
+            filteredBadges.length === 1
+                ? "insignia"
+                : "insignias"
+        }`;
 
-            lockedContainer.appendChild(
-                createBadgeCard(badge)
-            );
 
-        }
-    );
+    if (filteredBadges.length === 0) {
+
+        emptyState.classList.remove(
+            "hidden"
+        );
+
+    } else {
+
+        emptyState.classList.add(
+            "hidden"
+        );
+
+    }
+
+
+    attachBadgeEvents();
+
+}
+
+
+
+/* =========================================================
+   ESTADÍSTICAS SUPERIORES
+========================================================= */
+
+function updateGeneralStats() {
+
+    const unlocked =
+        badges.filter(
+            badge =>
+                badge.status === "unlocked"
+        ).length;
+
+
+    const progress =
+        badges.filter(
+            badge =>
+                badge.status === "progress"
+        ).length;
+
+
+    const total =
+        badges.length;
 
 
     /*
-        Si no hay insignias desbloqueadas
+        Progreso general basado en la suma
+        de todos los avances.
     */
 
-    if (unlocked.length === 0) {
+    const currentTotal =
+        badges.reduce(
+            (sum, badge) =>
+                sum +
+                Math.min(
+                    badge.current,
+                    badge.goal
+                ),
 
-        unlockedContainer.innerHTML = `
-            <p class="empty-message">
-                Aún no tienes insignias desbloqueadas.
-            </p>
+            0
+        );
+
+
+    const goalsTotal =
+        badges.reduce(
+            (sum, badge) =>
+                sum + badge.goal,
+
+            0
+        );
+
+
+    const overall =
+        Math.round(
+            (currentTotal / goalsTotal) *
+            100
+        );
+
+
+    document.getElementById(
+        "heroUnlocked"
+    ).textContent = unlocked;
+
+
+    document.getElementById(
+        "heroProgress"
+    ).textContent = progress;
+
+
+    document.getElementById(
+        "collectionUnlocked"
+    ).textContent = unlocked;
+
+
+    document.getElementById(
+        "overallPercentage"
+    ).textContent =
+        `${overall}%`;
+
+
+    document.getElementById(
+        "collectionText"
+    ).textContent =
+        `Has desbloqueado ${unlocked} de ${total} insignias. Cada experiencia suma a tu recorrido.`;
+
+
+    /*
+        Pequeño retraso para que
+        se vea la animación.
+    */
+
+    setTimeout(() => {
+
+        document.getElementById(
+            "overallProgressFill"
+        ).style.width =
+            `${overall}%`;
+
+    }, 250);
+
+}
+
+
+
+/* =========================================================
+   FILTROS
+========================================================= */
+
+filterButtons.forEach(button => {
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            filterButtons.forEach(
+                item =>
+                    item.classList.remove(
+                        "active"
+                    )
+            );
+
+
+            button.classList.add(
+                "active"
+            );
+
+
+            const filter =
+                button.dataset.filter;
+
+
+            renderBadges(filter);
+
+        }
+    );
+
+});
+
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+const modalOverlay =
+    document.getElementById(
+        "badgeModalOverlay"
+    );
+
+const modalClose =
+    document.getElementById(
+        "modalClose"
+    );
+
+
+
+function openBadgeModal(badge) {
+
+    const percentage =
+        getProgressPercentage(badge);
+
+
+    const modalBadgeImage =
+        document.getElementById(
+            "modalBadgeImage"
+        );
+
+
+    /*
+        Visual
+    */
+
+    if (badge.image) {
+
+        modalBadgeImage.innerHTML = `
+            <img
+                src="${badge.image}"
+                alt="${badge.title}"
+
+                onerror="
+                    this.style.display='none';
+                    this.nextElementSibling.style.display='block';
+                "
+            >
+
+            <span style="display:none;">
+                ${badge.icon}
+            </span>
+        `;
+
+    } else {
+
+        modalBadgeImage.innerHTML =
+            `<span>${badge.icon}</span>`;
+
+    }
+
+
+    /*
+        Datos
+    */
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
+        badge.title;
+
+
+    document.getElementById(
+        "modalDescription"
+    ).textContent =
+        badge.description;
+
+
+    document.getElementById(
+        "modalStatus"
+    ).textContent =
+        getStatusText(
+            badge.status
+        ).toUpperCase();
+
+
+    document.getElementById(
+        "modalProgressText"
+    ).textContent =
+        `${badge.current} / ${badge.goal} ${badge.unit}`;
+
+
+    document.getElementById(
+        "modalMessage"
+    ).textContent =
+        badge.message;
+
+
+    const button =
+        document.getElementById(
+            "modalMainButton"
+        );
+
+
+    if (badge.status === "unlocked") {
+
+        button.innerHTML = `
+            Ver mis logros
+            <i class="fa-solid fa-arrow-right"></i>
+        `;
+
+    } else {
+
+        button.innerHTML = `
+            Seguir avanzando
+            <i class="fa-solid fa-arrow-right"></i>
         `;
 
     }
 
 
     /*
-        Actualizamos resumen
+        Mostrar modal
     */
 
-    unlockedNumber.textContent =
-        unlocked.length;
+    modalOverlay.classList.add(
+        "show"
+    );
 
-    lockedNumber.textContent =
-        almost.length + locked.length;
-
-    unlockedCounter.textContent =
-        `${unlocked.length} desbloqueadas`;
+    document.body.classList.add(
+        "no-scroll"
+    );
 
 
     /*
-        Progreso global
+        Animar progreso
     */
 
-    const totalProgress =
-        badges.reduce(
-            (total, badge) => {
-
-                return total +
-                    Math.min(
-                        badge.progress /
-                        badge.goal,
-                        1
-                    );
-
-            },
-            0
+    const progressBar =
+        document.getElementById(
+            "modalProgressFill"
         );
 
 
-    const averageProgress =
-        Math.round(
-            (totalProgress /
-                badges.length) * 100
-        );
+    progressBar.style.width =
+        "0%";
 
 
-    globalProgress.textContent =
-        `${averageProgress}%`;
+    setTimeout(() => {
+
+        progressBar.style.width =
+            `${percentage}%`;
+
+    }, 170);
 
 }
 
 
-
-/* =====================================================
-   MODAL
-   ===================================================== */
-
-function openModal(badge) {
-
-    const status =
-        getBadgeStatus(badge);
-
-
-    const percentage =
-        Math.min(
-            100,
-            Math.round(
-                (badge.progress /
-                    badge.goal) * 100
-            )
-        );
-
-
-    /*
-        INFORMACIÓN
-    */
-
-    modalIcon.textContent =
-        badge.icon;
-
-    modalTitle.textContent =
-        badge.name;
-
-    modalDescription.textContent =
-        badge.description;
-
-    modalReason.textContent =
-        badge.reason;
-
-
-    modalProgressFill.style.width =
-        `${percentage}%`;
-
-
-    modalProgressText.textContent =
-        `${badge.progress} / ${badge.goal} (${percentage}%)`;
-
-
-    /*
-        ESTADO
-    */
-
-    if (status === "unlocked") {
-
-        modalStatus.textContent =
-            "✦ INSIGNIA DESBLOQUEADA";
-
-        modalButton.textContent =
-            "¡Genial!";
-
-    }
-
-    else if (status === "almost") {
-
-        modalStatus.textContent =
-            "◈ ESTÁS MUY CERCA";
-
-        modalButton.textContent =
-            "Seguir avanzando";
-
-    }
-
-    else {
-
-        modalStatus.textContent =
-            "🔒 POR DESBLOQUEAR";
-
-        modalButton.textContent =
-            "Entendido";
-
-    }
-
-
-    /*
-        MOSTRAR MODAL
-    */
-
-    modal.classList.add("show");
-
-    document.body.style.overflow =
-        "hidden";
-
-}
-
-
-
-/* =====================================================
-   CERRAR MODAL
-   ===================================================== */
 
 function closeBadgeModal() {
 
-    modal.classList.remove("show");
+    modalOverlay.classList.remove(
+        "show"
+    );
 
-    document.body.style.overflow =
-        "";
+    document.body.classList.remove(
+        "no-scroll"
+    );
 
 }
 
 
-closeModal.addEventListener(
+
+modalClose.addEventListener(
     "click",
     closeBadgeModal
 );
 
 
-modalButton.addEventListener(
+
+modalOverlay.addEventListener(
     "click",
-    closeBadgeModal
-);
-
-
-/*
-    Cerrar haciendo click
-    fuera del modal.
-*/
-
-modal.addEventListener(
-    "click",
-    (event) => {
+    event => {
 
         if (
-            event.target === modal
+            event.target ===
+            modalOverlay
         ) {
 
             closeBadgeModal();
@@ -760,13 +1133,177 @@ modal.addEventListener(
 );
 
 
-/*
-    Cerrar con ESC
-*/
+
+/* =========================================================
+   EVENTOS DE LAS TARJETAS
+========================================================= */
+
+function attachBadgeEvents() {
+
+    const cards =
+        document.querySelectorAll(
+            ".badge-card"
+        );
+
+
+    cards.forEach(card => {
+
+        const badgeId =
+            Number(
+                card.dataset.id
+            );
+
+
+        const badge =
+            badges.find(
+                item =>
+                    item.id === badgeId
+            );
+
+
+        card.addEventListener(
+            "click",
+            () => {
+
+                openBadgeModal(
+                    badge
+                );
+
+            }
+        );
+
+
+        /*
+            Accesibilidad:
+            abrir con Enter o espacio.
+        */
+
+        card.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key === "Enter" ||
+                    event.key === " "
+                ) {
+
+                    event.preventDefault();
+
+                    openBadgeModal(
+                        badge
+                    );
+
+                }
+
+            }
+        );
+
+    });
+
+}
+
+
+
+/* =========================================================
+   PERFIL DESPLEGABLE
+========================================================= */
+
+const profileButton =
+    document.getElementById(
+        "profileButton"
+    );
+
+const profileContainer =
+    document.querySelector(
+        ".profile-container"
+    );
+
+
+profileButton.addEventListener(
+    "click",
+    event => {
+
+        event.stopPropagation();
+
+        profileContainer
+            .classList
+            .toggle("open");
+
+    }
+);
+
+
+
+document.addEventListener(
+    "click",
+    event => {
+
+        if (
+            !profileContainer.contains(
+                event.target
+            )
+        ) {
+
+            profileContainer
+                .classList
+                .remove("open");
+
+        }
+
+    }
+);
+
+
+
+/* =========================================================
+   SIDEBAR RESPONSIVE
+========================================================= */
+document.addEventListener("DOMContentLoaded", () => {
+    const mobileMenu = document.getElementById("mobileMenu");
+    const sidebar = document.getElementById("sidebar");
+    const sidebarOverlay = document.getElementById("sidebarOverlay");
+    const menuItems = document.querySelectorAll(".menu-item");
+
+    // Función para abrir/cerrar el sidebar
+    function toggleSidebar() {
+        sidebar.classList.toggle("open");
+        sidebarOverlay.classList.toggle("active");
+    }
+
+    // Función para cerrar el sidebar
+    function closeSidebar() {
+        sidebar.classList.remove("open");
+        sidebarOverlay.classList.remove("active");
+    }
+
+    // Evento del botón de hamburguesa
+    if (mobileMenu) {
+        mobileMenu.addEventListener("click", toggleSidebar);
+    }
+
+    // Evento al hacer clic en el fondo oscuro
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener("click", closeSidebar);
+    }
+
+    // Cerrar sidebar al hacer clic en una opción (en dispositivos móviles)
+    menuItems.forEach(item => {
+        item.addEventListener("click", () => {
+            if (window.innerWidth <= 1024) {
+                closeSidebar();
+            }
+        });
+    });
+});
+
+
+/* =========================================================
+   TECLA ESC
+========================================================= */
 
 document.addEventListener(
     "keydown",
-    (event) => {
+    event => {
 
         if (
             event.key === "Escape"
@@ -774,6 +1311,12 @@ document.addEventListener(
 
             closeBadgeModal();
 
+            closeSidebar();
+
+            profileContainer
+                .classList
+                .remove("open");
+
         }
 
     }
@@ -781,29 +1324,30 @@ document.addEventListener(
 
 
 
-/* =====================================================
-   MENÚ
-   ===================================================== */
+/* =========================================================
+   BOTÓN PRINCIPAL MODAL
+========================================================= */
 
-const menuButton =
-    document.getElementById("menuButton");
-
-
-menuButton.addEventListener(
+document.getElementById(
+    "modalMainButton"
+).addEventListener(
     "click",
-    () => {
-
-        menuButton.classList.toggle(
-            "active"
-        );
-
-    }
+    closeBadgeModal
 );
 
 
 
-/* =====================================================
-   INICIALIZAR
-   ===================================================== */
+/* =========================================================
+   INICIO
+========================================================= */
 
-renderBadges();
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        renderBadges("all");
+
+        updateGeneralStats();
+
+    }
+);

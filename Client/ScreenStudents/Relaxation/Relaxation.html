@@ -1,65 +1,110 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Relajación | Sentir</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <!-- Google Font -->
+    <meta
+        name="theme-color"
+        content="#6C4DF6"
+    >
+
+    <title>Relajación | SENTIR</title>
+
+    <!-- Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="/Sentir/Client/ScreenStudents/Relaxation/Relaxation.css">
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/Sentir/Client/ScreenStudents/Relaxation/Relaxation.css"
+    >
+
+    <script
+        src="/Sentir/Client/ScreenStudents/Relaxation/Relaxation.js"
+        defer
+    ></script>
 </head>
+
 
 <body>
 
-    <!-- FONDO DECORATIVO -->
-    <div class="background-decoration decoration-one"></div>
-    <div class="background-decoration decoration-two"></div>
- <!-- ================= SIDEBAR ================= -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+   <!-- En el <head> de tus archivos HTML -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+<!-- ================= BOTÓN HAMBURGUESA (MÓVIL) ================= -->
+<button class="menu-toggle" id="mobileMenu" aria-label="Abrir menú">
+    <i class="fa-solid fa-bars"></i>
+</button>
+
+<!-- ================= OVERLAY MÓVIL ================= -->
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
+<!-- ================= SIDEBAR ================= -->
 <aside class="sidebar" id="sidebar">
+    <!-- Espacio / Contenedor para el Logo -->
     <div class="sidebar-logo">
         <div class="logo-symbol">
-            <a href=""><img src="/Logo-nombrelado (1).png" alt="" id="logoSentir"></a>
+            <a href="#">
+                <img src="/Sentir/Shared/LoginResources/logos.png.png" alt="Logo Sentir" id="logoSentir">
+            </a>
         </div>
     </div>
     
+    <!-- Menú de Navegación -->
     <nav class="menu">
-        <a href="#" class="menu-item active">
+        <a href="/Sentir/Client/ScreenStudents/Students.html" class="menu-item active">
             <i class="fa-solid fa-house"></i>
             <span>Inicio</span>
         </a>
-        <a href="#seguimiento" class="menu-item">
+        <a href="/Sentir/Client/ScreenStudents/Follow-up/Follow-up.html" class="menu-item">
             <i class="fa-solid fa-chart-line"></i>
             <span>Mi seguimiento</span>
         </a>
-        <a href="#recursos" class="menu-item">
+        <a href="/Sentir/Client/ScreenStudents/Relaxation/Relaxation.html" class="menu-item">
             <i class="fa-solid fa-leaf"></i>
             <span>Recursos</span>
         </a>
-        <a href="#diario" class="menu-item">
+        <a href="/Sentir/Client/ScreenStudents/EmotionalDiary/Daily.html" class="menu-item">
             <i class="fa-solid fa-book"></i>
             <span>Diario emocional</span>
         </a>
-        <a href="#actividades" class="menu-item">
+        <a href="/Sentir/Client/ScreenStudents/Badges/Badges.html" class="menu-item">
             <i class="fa-solid fa-star"></i>
-            <span>Actividades</span>
+            <span>Insignias</span>
         </a>
-        <a href="#ayuda" class="menu-item">
-            <i class="fa-solid fa-hands-helping"></i>
+        <a href="/Sentir/Client/ScreenStudents/AskForHelp/AskForHelp.html" class="menu-item">
+            <i class="fa-solid fa-handshake-angle"></i>
             <span>Pedir ayuda</span>
         </a>
     </nav>
 
+    <!-- Parte Inferior -->
     <div class="sidebar-bottom">
         <div class="privacy-box">
             <i class="fa-solid fa-shield-heart"></i>
@@ -68,334 +113,689 @@
                 <small>Tu información está protegida.</small>
             </div>
         </div>
-        <button class="logout">
+        <a href="/Sentir/Client/index.html" class="logout">
             <i class="fa-solid fa-right-from-bracket"></i>
-            <a href="/Sentir/Client/index.html">Cerrar sesión</a>
-        </button>
+            <span>Cerrar sesión</span>
+        </a>
     </div>
 </aside>
 
 
 
-    <!-- ==========================================
-         OVERLAY
-    =========================================== -->
-
-    <div
-        class="overlay"
-        id="overlay">
-    </div>
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+    <main class="main-content">
 
 
-
-    <!-- CONTENEDOR GENERAL -->
-    <div class="app">
-
-        <!-- ================= HEADER ================= -->
+        <!-- =================================================
+             TOPBAR
+        ================================================== -->
         <header class="topbar">
 
-            <button class="menu-button" id="menuButton" aria-label="Abrir menú">
-                ☰
-            </button>
+            <div class="topbar-left">
 
-            <div class="brand">
-                <!-- AQUÍ PUEDES COLOCAR EL LOGO -->
-                <img class="Logo" src="/Sentir/Shared/StudentResources/Logo-nombrelado.png" alt="Logo de Sentir">
+                <button
+                    class="hamburger-button"
+                    id="hamburgerButton"
+                    type="button"
+                    aria-label="Abrir menú"
+                    aria-expanded="false"
+                >
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+
+                <a href="#" class="mini-brand">
+                    ♥ sentir
+                </a>
+
             </div>
 
-            <button class="notification-button" aria-label="Notificaciones">
-                ♡
-            </button>
+
+            <div class="topbar-actions">
+
+                <button
+                    class="notification-button"
+                    type="button"
+                    aria-label="Notificaciones"
+                >
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="notification-dot"></span>
+                </button>
+
+
+                <div class="profile-container">
+
+                    <button
+                        class="profile-button"
+                        id="profileButton"
+                        type="button"
+                    >
+
+                        <div class="profile-avatar">
+                            A
+                        </div>
+
+
+                        <div class="profile-copy">
+                            <strong>Ana</strong>
+                            <span>Estudiante</span>
+                        </div>
+
+
+                        <i class="fa-solid fa-chevron-down profile-chevron"></i>
+
+                    </button>
+
+
+                    <div class="profile-dropdown">
+
+                        <a href="#">
+                            <i class="fa-regular fa-eye"></i>
+                            Ver mi perfil
+                        </a>
+
+
+                        <div class="profile-divider"></div>
+
+
+                        <button type="button">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            Cerrar sesión
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
 
         </header>
 
 
-        <!-- ================= CONTENIDO ================= -->
-        <main class="main-content">
 
-            <!-- HERO -->
-            <section class="hero">
+        <!-- =================================================
+             RESPIRACIÓN INMEDIATA
+        ================================================== -->
+        <section class="breathing-hero">
 
-                <div class="hero-text">
+            <div class="breathing-copy">
 
-                    <span class="section-tag">
-                        🌿 Bienestar emocional
+                <div class="hero-pill">
+
+                    <span class="hero-pill-dot"></span>
+
+                    Pausa de un momento
+
+                </div>
+
+
+                <h1>
+                    Respira conmigo
+                </h1>
+
+
+                <p>
+                    Sigue el ritmo de la esfera. No necesitas hacerlo
+                    perfecto; simplemente acompaña el movimiento
+                    a tu propio ritmo.
+                </p>
+
+
+                <div class="breathing-instruction">
+
+                    <div class="instruction-icon">
+                        <i class="fa-solid fa-wind"></i>
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Ahora
+                        </span>
+
+                        <strong id="breathingPhaseText">
+                            Inhala
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        class="phase-countdown"
+                        id="phaseCountdown"
+                    >
+                        4
+                    </div>
+
+                </div>
+
+
+                <div class="breathing-actions">
+
+                    <button
+                        class="breathing-control primary"
+                        id="pauseBreathingButton"
+                        type="button"
+                    >
+
+                        <i class="fa-solid fa-pause"></i>
+
+                        <span>
+                            Pausar
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="breathing-control"
+                        id="restartBreathingButton"
+                        type="button"
+                    >
+
+                        <i class="fa-solid fa-rotate-left"></i>
+
+                        Reiniciar
+
+                    </button>
+
+                </div>
+
+
+                <div class="cycle-indicator">
+
+                    <span class="cycle-dot"></span>
+
+                    <span>
+                        Ciclos completados:
+                        <strong id="cycleCount">0</strong>
                     </span>
 
-                    <h1>
-                        Un momento para
-                        <span>respirar</span>
-                    </h1>
+                </div>
 
-                    <p>
-                        Tómate unos minutos para relajarte,
-                        respirar y conectar contigo.
-                    </p>
+            </div>
+
+
+
+            <!-- =================================================
+                 ESFERA DE RESPIRACIÓN
+            ================================================== -->
+            <div class="breathing-visual">
+
+                <div class="ambient-circle circle-a"></div>
+                <div class="ambient-circle circle-b"></div>
+                <div class="ambient-circle circle-c"></div>
+
+
+                <div
+                    class="breathing-orb"
+                    id="breathingOrb"
+                >
+
+                    <div class="orb-shine"></div>
+
+                    <div class="orb-content">
+
+                        <i class="fa-solid fa-heart"></i>
+
+                        <strong id="orbPhaseText">
+                            Inhala
+                        </strong>
+
+                    </div>
 
                 </div>
 
-                <!-- ESPACIO PARA PERSONAJE -->
-                <div class="hero-image">
-                    <!--
-                    AQUÍ PUEDES COLOCAR EL PERSONAJE DE SENTIR
 
-                    <img src="images/personaje-relajacion.png"
-                         alt="Personaje de Sentir">
-                    -->
-                </div>
+                <span class="floating-particle particle-one">
+                    ✦
+                </span>
 
-            </section>
+                <span class="floating-particle particle-two">
+                    ✧
+                </span>
 
+                <span class="floating-particle particle-three">
+                    ✦
+                </span>
 
-            <!-- ================= PANEL PRINCIPAL ================= -->
-            <section class="relax-layout">
+            </div>
 
-                <!-- EJERCICIO -->
-                <article class="breathing-card">
+        </section>
 
-                    <div class="card-header">
 
-                        <div>
-                            <span class="small-title">
-                                EJERCICIO ACTUAL
-                            </span>
 
-                            <h2>
-                                Respiración consciente
-                            </h2>
-                        </div>
+        <!-- =================================================
+             INFORMACIÓN DEL CICLO
+        ================================================== -->
+        <section class="breathing-pattern-card">
 
-                        <span class="status-badge" id="exerciseStatus">
-                            Listo
-                        </span>
+            <div class="pattern-item active">
 
-                    </div>
-
-
-                    <!-- CÍRCULO DE RESPIRACIÓN -->
-                    <div class="breathing-area">
-
-                        <div class="breathing-circle" id="breathingCircle">
-
-                            <div class="circle-content">
-
-                                <span id="breathingText">
-                                    Prepárate
-                                </span>
-
-                                <strong id="breathingTimer">
-                                    00
-                                </strong>
-
-                                <small>
-                                    segundos
-                                </small>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- INSTRUCCIÓN -->
-                    <div class="instruction">
-
-                        <span id="instructionIcon">
-                            🫁
-                        </span>
-
-                        <div>
-                            <strong id="instructionTitle">
-                                Comienza cuando estés listo/a
-                            </strong>
-
-                            <p id="instructionText">
-                                Sigue el ritmo del círculo y concéntrate
-                                en tu respiración.
-                            </p>
-                        </div>
-
-                    </div>
-
-
-                    <!-- CONTROLES -->
-                    <div class="controls">
-
-                        <button
-                            class="primary-button"
-                            id="startBreathing">
-                            Comenzar
-                        </button>
-
-                        <button
-                            class="secondary-button"
-                            id="resetBreathing">
-                            Reiniciar
-                        </button>
-
-                    </div>
-
-                </article>
-
-
-                <!-- PANEL DERECHO -->
-                <aside class="side-panel">
-
-                    <!-- PROGRESO -->
-                    <div class="progress-card">
-
-                        <div class="progress-top">
-
-                            <div>
-                                <span class="small-title">
-                                    TU PROGRESO
-                                </span>
-
-                                <h3>
-                                    Sesión de hoy
-                                </h3>
-                            </div>
-
-                            <span id="progressPercent">
-                                0%
-                            </span>
-
-                        </div>
-
-                        <div class="progress-bar">
-                            <div
-                                class="progress-fill"
-                                id="progressFill">
-                            </div>
-                        </div>
-
-                        <p>
-                            Completa una sesión para avanzar
-                            en tu bienestar.
-                        </p>
-
-                    </div>
-
-
-                    <!-- RECURSOS -->
-                    <div class="resources-card">
-
-                        <div class="resources-header">
-                            <span class="small-title">
-                                EXPLORA
-                            </span>
-
-                            <h3>
-                                Herramientas para ti
-                            </h3>
-                        </div>
-
-
-                        <button
-                            class="resource-item active"
-                            data-resource="respiracion">
-
-                            <div class="resource-icon purple">
-                                🫁
-                            </div>
-
-                            <div>
-                                <strong>
-                                    Respiración
-                                </strong>
-
-                                <span>
-                                    Ejercicios para encontrar calma
-                                </span>
-                            </div>
-
-                            <b>›</b>
-
-                        </button>
-
-
-                        <button
-                            class="resource-item"
-                            data-resource="meditacion">
-
-                            <div class="resource-icon blue">
-                                🧘
-                            </div>
-
-                            <div>
-                                <strong>
-                                    Meditación
-                                </strong>
-
-                                <span>
-                                    Un espacio para conectar contigo
-                                </span>
-                            </div>
-
-                            <b>›</b>
-
-                        </button>
-
-
-                        <button
-                            class="resource-item"
-                            data-resource="consejos">
-
-                            <div class="resource-icon silver">
-                                ✦
-                            </div>
-
-                            <div>
-                                <strong>
-                                    Consejos
-                                </strong>
-
-                                <span>
-                                    Estrategias para tu bienestar
-                                </span>
-                            </div>
-
-                            <b>›</b>
-
-                        </button>
-
-                    </div>
-
-                </aside>
-
-            </section>
-
-
-            <!-- ================= MENSAJE INFERIOR ================= -->
-            <section class="bottom-message">
-
-                <div class="message-icon">
-                    ♡
-                </div>
+                <span class="pattern-number">
+                    4s
+                </span>
 
                 <div>
-                    <strong>
-                        Recuerda cuidar de ti
-                    </strong>
-
-                    <p>
-                        No tienes que resolver todo de una vez.
-                        Date un momento para respirar.
-                    </p>
+                    <strong>Inhala</strong>
+                    <span>La esfera crece</span>
                 </div>
 
-            </section>
-
-        </main>
+            </div>
 
 
+            <div class="pattern-line"></div>
+
+
+            <div class="pattern-item">
+
+                <span class="pattern-number">
+                    4s
+                </span>
+
+                <div>
+                    <strong>Sostén</strong>
+                    <span>Mantén suavemente</span>
+                </div>
+
+            </div>
+
+
+            <div class="pattern-line"></div>
+
+
+            <div class="pattern-item">
+
+                <span class="pattern-number">
+                    6s
+                </span>
+
+                <div>
+                    <strong>Exhala</strong>
+                    <span>La esfera se hace pequeña</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             AVISO DE APOYO
+        ================================================== -->
+        <section class="support-note">
+
+            <div class="support-note-icon">
+                <i class="fa-solid fa-shield-heart"></i>
+            </div>
+
+
+            <div>
+
+                <strong>
+                    La respiración es solo una herramienta de apoyo.
+                </strong>
+
+                <p>
+                    Si estás atravesando una situación en la que
+                    necesitas acompañamiento, puedes utilizar
+                    la opción <b>Pedir ayuda</b> de SENTIR.
+                </p>
+
+            </div>
+
+
+            <a href="#" class="support-link">
+                Pedir ayuda
+
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+
+        </section>
+
+
+
+        <!-- =================================================
+             BIBLIOTECA
+        ================================================== -->
+        <section class="activities-section">
+
+            <div class="activities-header">
+
+                <div>
+
+                    <span class="section-eyebrow">
+                        RECURSOS DE RELAJACIÓN
+                    </span>
+
+
+                    <h2>
+                        Elige lo que necesitas ahora
+                    </h2>
+
+
+                    <p>
+                        Encuentra ejercicios guiados de respiración,
+                        actividades preparadas por psicología,
+                        meditación y movimiento consciente.
+                    </p>
+
+                </div>
+
+
+                <div class="activities-count">
+
+                    <i class="fa-solid fa-heart"></i>
+
+                    <div>
+                        <strong id="visibleActivitiesCount">0</strong>
+                        <span>recursos disponibles</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 FILTROS
+            ================================================== -->
+            <div class="activity-tabs">
+
+                <button
+                    type="button"
+                    class="activity-tab active"
+                    data-category="breathing"
+                >
+                    <i class="fa-solid fa-wind"></i>
+                    Respiración
+                </button>
+
+
+                <button
+                    type="button"
+                    class="activity-tab"
+                    data-category="psychologist"
+                >
+                    <i class="fa-solid fa-user-doctor"></i>
+                    Actividades de la psicóloga
+                </button>
+
+
+                <button
+                    type="button"
+                    class="activity-tab"
+                    data-category="meditation"
+                >
+                    <i class="fa-solid fa-spa"></i>
+                    Meditación
+                </button>
+
+
+                <button
+                    type="button"
+                    class="activity-tab"
+                    data-category="yoga"
+                >
+                    <i class="fa-solid fa-person"></i>
+                    Yoga
+                </button>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 GRID DINÁMICO
+            ================================================== -->
+            <div
+                class="activities-grid"
+                id="activitiesGrid"
+            ></div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             CIERRE
+        ================================================== -->
+        <section class="relaxation-closing">
+
+            <div class="closing-icon">
+                <i class="fa-solid fa-heart"></i>
+            </div>
+
+
+            <div>
+
+                <span>
+                    A TU RITMO
+                </span>
+
+                <h3>
+                    Regalarte unos minutos también cuenta.
+                </h3>
+
+                <p>
+                    Puedes volver a estos recursos siempre que
+                    necesites una pausa.
+                </p>
+
+            </div>
+
+
+            <span class="closing-star">
+                ✦
+            </span>
+
+        </section>
+
+
+        <footer class="page-footer">
+            SENTIR · Tu espacio para expresarte,
+            conocerte y cuidarte.
+        </footer>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         MODAL REPRODUCTOR DE VIDEO
+    ====================================================== -->
+    <div
+        class="video-modal-overlay"
+        id="videoModal"
+    >
+
+        <div class="video-modal">
+
+            <div class="video-modal-header">
+
+                <div>
+
+                    <span id="videoCategoryLabel">
+                        RESPIRACIÓN
+                    </span>
+
+                    <h2 id="videoModalTitle">
+                        Actividad
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="video-close-button"
+                    id="closeVideoButton"
+                    aria-label="Cerrar video"
+                >
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+
+
+
+            <div
+                class="video-player-shell"
+                id="videoPlayerShell"
+            >
+
+                <div id="youtubePlayer"></div>
+
+            </div>
+
+
+
+            <!-- CONTROLES PROPIOS -->
+            <div class="video-controls">
+
+                <button
+                    type="button"
+                    class="video-control"
+                    id="rewindButton"
+                    title="Retroceder 10 segundos"
+                >
+                    <i class="fa-solid fa-rotate-left"></i>
+
+                    <span>
+                        10s
+                    </span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="video-control main-control"
+                    id="playPauseButton"
+                    title="Reproducir o pausar"
+                >
+                    <i class="fa-solid fa-play"></i>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="video-control"
+                    id="forwardButton"
+                    title="Adelantar 10 segundos"
+                >
+                    <i class="fa-solid fa-rotate-right"></i>
+
+                    <span>
+                        10s
+                    </span>
+                </button>
+
+
+                <div class="control-spacer"></div>
+
+
+                <button
+                    type="button"
+                    class="video-control"
+                    id="muteButton"
+                    title="Silenciar"
+                >
+                    <i class="fa-solid fa-volume-high"></i>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="video-control"
+                    id="fullscreenButton"
+                    title="Pantalla completa"
+                >
+                    <i class="fa-solid fa-expand"></i>
+                </button>
+
+            </div>
+
+
+            <div class="video-modal-footer">
+
+                <i class="fa-solid fa-circle-info"></i>
+
+                <p id="videoModalDescription">
+                    Sigue la actividad a tu propio ritmo.
+                </p>
+
+            </div>
+
+        </div>
 
     </div>
 
 
-    <!-- JAVASCRIPT -->
-    <script src="/Sentir/Client/ScreenStudents/Relaxation/Relaxation.js"></script>
+
+    <!-- =====================================================
+         MODAL ACTIVIDAD PSICÓLOGA
+    ====================================================== -->
+    <div
+        class="activity-modal-overlay"
+        id="psychologistModal"
+    >
+
+        <article class="psychologist-modal">
+
+            <button
+                type="button"
+                class="video-close-button psychologist-close"
+                id="closePsychologistModal"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+
+            <div class="psychologist-modal-icon">
+
+                <i class="fa-solid fa-user-doctor"></i>
+
+            </div>
+
+
+            <span class="section-eyebrow">
+                ACTIVIDAD PREPARADA POR PSICOLOGÍA
+            </span>
+
+
+            <h2 id="psychologistModalTitle">
+                Actividad
+            </h2>
+
+
+            <p id="psychologistModalDescription">
+                Aquí se mostrará la actividad desarrollada
+                por la psicóloga.
+            </p>
+
+
+            <div
+                class="psychologist-steps"
+                id="psychologistSteps"
+            ></div>
+
+
+            <button
+                class="psychologist-finish-button"
+                id="finishPsychologistActivity"
+                type="button"
+            >
+                Finalizar actividad
+            </button>
+
+        </article>
+
+    </div>
 
 </body>
 </html>

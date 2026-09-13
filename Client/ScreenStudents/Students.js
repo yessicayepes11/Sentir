@@ -7,41 +7,43 @@
 /* =====================================================
    MENÚ RESPONSIVE
    ===================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+    const mobileMenu = document.getElementById("mobileMenu");
+    const sidebar = document.getElementById("sidebar");
+    const sidebarOverlay = document.getElementById("sidebarOverlay");
+    const menuItems = document.querySelectorAll(".menu-item");
 
-const mobileMenu = document.getElementById("mobileMenu");
-const sidebar = document.getElementById("sidebar");
-
-if (mobileMenu) {
-
-    mobileMenu.addEventListener("click", () => {
-
+    // Función para abrir/cerrar el sidebar
+    function toggleSidebar() {
         sidebar.classList.toggle("open");
+        sidebarOverlay.classList.toggle("active");
+    }
 
+    // Función para cerrar el sidebar
+    function closeSidebar() {
+        sidebar.classList.remove("open");
+        sidebarOverlay.classList.remove("active");
+    }
+
+    // Evento del botón de hamburguesa
+    if (mobileMenu) {
+        mobileMenu.addEventListener("click", toggleSidebar);
+    }
+
+    // Evento al hacer clic en el fondo oscuro
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener("click", closeSidebar);
+    }
+
+    // Cerrar sidebar al hacer clic en una opción (en dispositivos móviles)
+    menuItems.forEach(item => {
+        item.addEventListener("click", () => {
+            if (window.innerWidth <= 1024) {
+                closeSidebar();
+            }
+        });
     });
-
-}
-
-
-/* =====================================================
-   CERRAR SIDEBAR AL SELECCIONAR UNA OPCIÓN
-   ===================================================== */
-
-const menuItems = document.querySelectorAll(".menu-item");
-
-menuItems.forEach(item => {
-
-    item.addEventListener("click", () => {
-
-        if (window.innerWidth <= 850) {
-
-            sidebar.classList.remove("open");
-
-        }
-
-    });
-
 });
-
 
 /* =====================================================
    ESTADO EMOCIONAL

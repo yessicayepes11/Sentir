@@ -1,471 +1,1913 @@
-/* =====================================================
-   SENTIR - RELAJACIÓN
-   ===================================================== */
+/* =========================================================
+   SENTIR
+   RELAJACIÓN
+========================================================= */
 
 
-/* =====================================================
-   ELEMENTOS
-   ===================================================== */
+/* =========================================================
+   SIDEBAR RESPONSIVE
+========================================================= */
 
-const breathingCircle =
-    document.getElementById("breathingCircle");
+document.addEventListener("DOMContentLoaded", () => {
+    const mobileMenu = document.getElementById("mobileMenu");
+    const sidebar = document.getElementById("sidebar");
+    const sidebarOverlay = document.getElementById("sidebarOverlay");
+    const menuItems = document.querySelectorAll(".menu-item");
 
-const breathingText =
-    document.getElementById("breathingText");
+    // Función para abrir/cerrar el sidebar
+    function toggleSidebar() {
+        sidebar.classList.toggle("open");
+        sidebarOverlay.classList.toggle("active");
+    }
 
-const breathingTimer =
-    document.getElementById("breathingTimer");
+    // Función para cerrar el sidebar
+    function closeSidebar() {
+        sidebar.classList.remove("open");
+        sidebarOverlay.classList.remove("active");
+    }
 
-const instructionTitle =
-    document.getElementById("instructionTitle");
+    // Evento del botón de hamburguesa
+    if (mobileMenu) {
+        mobileMenu.addEventListener("click", toggleSidebar);
+    }
 
-const instructionText =
-    document.getElementById("instructionText");
+    // Evento al hacer clic en el fondo oscuro
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener("click", closeSidebar);
+    }
 
-const instructionIcon =
-    document.getElementById("instructionIcon");
+    // Cerrar sidebar al hacer clic en una opción (en dispositivos móviles)
+    menuItems.forEach(item => {
+        item.addEventListener("click", () => {
+            if (window.innerWidth <= 1024) {
+                closeSidebar();
+            }
+        });
+    });
+});
 
-const startButton =
-    document.getElementById("startBreathing");
+/* =========================================================
+   PERFIL
+========================================================= */
 
-const resetButton =
-    document.getElementById("resetBreathing");
+const profileContainer =
+    document.querySelector(
+        ".profile-container"
+    );
 
-const status =
-    document.getElementById("exerciseStatus");
-
-const progressFill =
-    document.getElementById("progressFill");
-
-const progressPercent =
-    document.getElementById("progressPercent");
-
-const resourceButtons =
-    document.querySelectorAll(".resource-item");
+const profileButton =
+    document.getElementById(
+        "profileButton"
+    );
 
 
-/* =====================================================
-   CONFIGURACIÓN
-   ===================================================== */
+profileButton.addEventListener(
+    "click",
+    event => {
+
+        event.stopPropagation();
+
+        profileContainer
+            .classList
+            .toggle("open");
+
+    }
+);
+
+
+document.addEventListener(
+    "click",
+    event => {
+
+        if (
+            !profileContainer.contains(
+                event.target
+            )
+        ) {
+
+            profileContainer
+                .classList
+                .remove("open");
+
+        }
+
+    }
+);
+
+
+
+/* =========================================================
+   =========================================================
+   RESPIRACIÓN GUIADA
+   =========================================================
+   ========================================================= */
+
 
 /*
-    Cada ciclo tiene:
+    Ciclo total:
 
-    INHALAR → 4 segundos
-    MANTENER → 4 segundos
-    EXHALAR → 6 segundos
+    Inhala: 4 segundos
+    Sostén: 4 segundos
+    Exhala: 6 segundos
 
-    Total = 14 segundos.
+    Total = 14 segundos
 */
 
-const phases = [
+const BREATHING_PHASES = [
 
     {
         name: "Inhala",
-        seconds: 4,
-        instruction:
-            "Respira lentamente por la nariz.",
-        icon: "🌬️",
-        scale: true
+        start: 0,
+        end: 4
     },
 
     {
-        name: "Mantén",
-        seconds: 4,
-        instruction:
-            "Mantén el aire suavemente.",
-        icon: "✨",
-        scale: true
+        name: "Sostén",
+        start: 4,
+        end: 8
     },
 
     {
         name: "Exhala",
-        seconds: 6,
-        instruction:
-            "Suelta el aire lentamente.",
-        icon: "🍃",
-        scale: false
+        start: 8,
+        end: 14
     }
 
 ];
 
-const totalCycles = 3;
 
-let currentPhase = 0;
-let currentSecond = 0;
-let currentCycle = 0;
-
-let timerInterval = null;
-
-let running = false;
+const CYCLE_DURATION =
+    14;
 
 
-/* =====================================================
-   ACTUALIZAR FASE
-   ===================================================== */
-
-function updatePhase() {
-
-    const phase = phases[currentPhase];
-
-    currentSecond = phase.seconds;
-
-    breathingText.textContent =
-        phase.name;
-
-    breathingTimer.textContent =
-        currentSecond;
-
-    instructionTitle.textContent =
-        phase.name;
-
-    instructionText.textContent =
-        phase.instruction;
-
-    instructionIcon.textContent =
-        phase.icon;
-
-    /*
-        La escala del círculo cambia según
-        la fase de respiración.
-    */
-
-    if (phase.scale) {
-
-        breathingCircle.classList.add("active");
-
-    } else {
-
-        breathingCircle.classList.remove("active");
-
-    }
-
-}
+const breathingOrb =
+    document.getElementById(
+        "breathingOrb"
+    );
 
 
-/* =====================================================
-   ACTUALIZAR PROGRESO
-   ===================================================== */
-
-function updateProgress() {
-
-    const completedPhases =
-        (currentCycle * phases.length) + currentPhase;
-
-    const totalPhases =
-        totalCycles * phases.length;
-
-    const percentage =
-        Math.round(
-            (completedPhases / totalPhases) * 100
-        );
-
-    progressFill.style.width =
-        `${percentage}%`;
-
-    progressPercent.textContent =
-        `${percentage}%`;
-}
+const breathingPhaseText =
+    document.getElementById(
+        "breathingPhaseText"
+    );
 
 
-/* =====================================================
-   FINALIZAR SESIÓN
-   ===================================================== */
+const orbPhaseText =
+    document.getElementById(
+        "orbPhaseText"
+    );
 
-function finishSession() {
 
-    clearInterval(timerInterval);
+const phaseCountdown =
+    document.getElementById(
+        "phaseCountdown"
+    );
 
-    timerInterval = null;
 
-    running = false;
+const cycleCount =
+    document.getElementById(
+        "cycleCount"
+    );
 
-    breathingCircle.classList.remove("active");
 
-    breathingText.textContent =
-        "¡Listo!";
+const pauseBreathingButton =
+    document.getElementById(
+        "pauseBreathingButton"
+    );
 
-    breathingTimer.textContent =
-        "✓";
 
-    instructionIcon.textContent =
-        "💜";
+const restartBreathingButton =
+    document.getElementById(
+        "restartBreathingButton"
+    );
 
-    instructionTitle.textContent =
-        "Terminaste tu sesión";
 
-    instructionText.textContent =
-        "Muy bien. Date un momento para reconocer cómo te sientes.";
+let breathingPaused =
+    false;
 
-    status.textContent =
-        "Completado";
 
-    progressFill.style.width =
-        "100%";
+let breathingStartTime =
+    performance.now();
 
-    progressPercent.textContent =
-        "100%";
 
-    startButton.textContent =
-        "Comenzar de nuevo";
+let pauseStartedAt =
+    0;
+
+
+let totalPausedTime =
+    0;
+
+
+let breathingAnimationFrame =
+    null;
+
+
+
+function getCurrentPhase(
+    secondsInCycle
+) {
+
+    return BREATHING_PHASES.find(
+        phase =>
+            secondsInCycle >= phase.start &&
+            secondsInCycle < phase.end
+    ) || BREATHING_PHASES[0];
 
 }
 
 
-/* =====================================================
-   SIGUIENTE FASE
-   ===================================================== */
 
-function nextPhase() {
+function updateBreathingClock(
+    timestamp
+) {
 
-    currentPhase++;
+    if (
+        breathingPaused
+    ) {
 
-    if (currentPhase >= phases.length) {
-
-        currentPhase = 0;
-
-        currentCycle++;
-
-        if (currentCycle >= totalCycles) {
-
-            finishSession();
-
-            return;
-        }
-    }
-
-    updatePhase();
-
-    updateProgress();
-}
-
-
-/* =====================================================
-   TEMPORIZADOR
-   ===================================================== */
-
-function startTimer() {
-
-    if (running) {
-        return;
-    }
-
-    running = true;
-
-    status.textContent =
-        "En progreso";
-
-    startButton.textContent =
-        "En progreso...";
-
-    updatePhase();
-
-    updateProgress();
-
-    timerInterval = setInterval(() => {
-
-        currentSecond--;
-
-        breathingTimer.textContent =
-            currentSecond;
-
-        if (currentSecond <= 0) {
-
-            nextPhase();
-
-        }
-
-    }, 1000);
-
-}
-
-
-/* =====================================================
-   BOTÓN COMENZAR
-   ===================================================== */
-
-startButton.addEventListener(
-    "click",
-    () => {
-
-        if (!running) {
-
-            /*
-                Si la sesión terminó,
-                comenzamos nuevamente.
-            */
-
-            if (currentCycle >= totalCycles) {
-
-                resetExercise();
-
-            }
-
-            startTimer();
-
-        }
-
-    }
-);
-
-
-/* =====================================================
-   REINICIAR
-   ===================================================== */
-
-function resetExercise() {
-
-    clearInterval(timerInterval);
-
-    timerInterval = null;
-
-    running = false;
-
-    currentPhase = 0;
-
-    currentSecond = 0;
-
-    currentCycle = 0;
-
-    breathingCircle.classList.remove("active");
-
-    breathingText.textContent =
-        "Prepárate";
-
-    breathingTimer.textContent =
-        "00";
-
-    instructionIcon.textContent =
-        "🫁";
-
-    instructionTitle.textContent =
-        "Comienza cuando estés listo/a";
-
-    instructionText.textContent =
-        "Sigue el ritmo del círculo y concéntrate en tu respiración.";
-
-    status.textContent =
-        "Listo";
-
-    startButton.textContent =
-        "Comenzar";
-
-    progressFill.style.width =
-        "0%";
-
-    progressPercent.textContent =
-        "0%";
-
-}
-
-resetButton.addEventListener(
-    "click",
-    resetExercise
-);
-
-
-/* =====================================================
-   RECURSOS
-   ===================================================== */
-
-resourceButtons.forEach(button => {
-
-    button.addEventListener(
-        "click",
-        () => {
-
-            resourceButtons.forEach(
-                item => item.classList.remove("active")
+        breathingAnimationFrame =
+            requestAnimationFrame(
+                updateBreathingClock
             );
 
-            button.classList.add("active");
+        return;
 
-            const resource =
-                button.dataset.resource;
+    }
 
-            changeResource(resource);
+
+    const totalElapsedMilliseconds =
+        timestamp
+        - breathingStartTime
+        - totalPausedTime;
+
+
+    const totalElapsedSeconds =
+        totalElapsedMilliseconds /
+        1000;
+
+
+    const completedCycles =
+        Math.floor(
+            totalElapsedSeconds /
+            CYCLE_DURATION
+        );
+
+
+    const secondsInCycle =
+        totalElapsedSeconds %
+        CYCLE_DURATION;
+
+
+    const phase =
+        getCurrentPhase(
+            secondsInCycle
+        );
+
+
+    const secondsRemaining =
+        Math.max(
+            1,
+            Math.ceil(
+                phase.end -
+                secondsInCycle
+            )
+        );
+
+
+    breathingPhaseText.textContent =
+        phase.name;
+
+
+    orbPhaseText.textContent =
+        phase.name;
+
+
+    phaseCountdown.textContent =
+        secondsRemaining;
+
+
+    cycleCount.textContent =
+        completedCycles;
+
+
+    updateActivePattern(
+        phase.name
+    );
+
+
+    breathingAnimationFrame =
+        requestAnimationFrame(
+            updateBreathingClock
+        );
+
+}
+
+
+
+function updateActivePattern(
+    phaseName
+) {
+
+    const patternItems =
+        document.querySelectorAll(
+            ".pattern-item"
+        );
+
+
+    patternItems.forEach(
+        item => {
+
+            const title =
+                item.querySelector(
+                    "strong"
+                )
+                .textContent;
+
+
+            item.classList.toggle(
+                "active",
+                title === phaseName
+            );
 
         }
     );
 
-});
+}
 
 
-/* =====================================================
-   CAMBIAR RECURSO
-   ===================================================== */
 
-function changeResource(resource) {
+/* =========================================================
+   PAUSAR
+========================================================= */
 
-    if (resource === "respiracion") {
+pauseBreathingButton.addEventListener(
+    "click",
+    () => {
 
-        instructionIcon.textContent =
-            "🫁";
+        if (
+            !breathingPaused
+        ) {
 
-        instructionTitle.textContent =
-            "Respiración consciente";
+            breathingPaused =
+                true;
 
-        instructionText.textContent =
-            "Utiliza el ejercicio para concentrarte en tu respiración.";
+
+            pauseStartedAt =
+                performance.now();
+
+
+            breathingOrb.classList.add(
+                "paused"
+            );
+
+
+            pauseBreathingButton.innerHTML =
+                `
+                    <i class="fa-solid fa-play"></i>
+                    <span>Continuar</span>
+                `;
+
+        } else {
+
+            breathingPaused =
+                false;
+
+
+            totalPausedTime +=
+                performance.now()
+                - pauseStartedAt;
+
+
+            breathingOrb.classList.remove(
+                "paused"
+            );
+
+
+            pauseBreathingButton.innerHTML =
+                `
+                    <i class="fa-solid fa-pause"></i>
+                    <span>Pausar</span>
+                `;
+
+        }
+
+    }
+);
+
+
+
+/* =========================================================
+   REINICIAR
+========================================================= */
+
+restartBreathingButton.addEventListener(
+    "click",
+    () => {
+
+        breathingPaused =
+            false;
+
+
+        breathingStartTime =
+            performance.now();
+
+
+        totalPausedTime =
+            0;
+
+
+        breathingOrb.classList.remove(
+            "paused"
+        );
+
+
+        /*
+            Reiniciamos visualmente
+            la animación CSS.
+        */
+
+        breathingOrb.style.animation =
+            "none";
+
+
+        void breathingOrb.offsetWidth;
+
+
+        breathingOrb.style.animation =
+            "";
+
+
+        breathingPhaseText.textContent =
+            "Inhala";
+
+
+        orbPhaseText.textContent =
+            "Inhala";
+
+
+        phaseCountdown.textContent =
+            "4";
+
+
+        cycleCount.textContent =
+            "0";
+
+
+        pauseBreathingButton.innerHTML =
+            `
+                <i class="fa-solid fa-pause"></i>
+                <span>Pausar</span>
+            `;
+
+    }
+);
+
+
+
+breathingAnimationFrame =
+    requestAnimationFrame(
+        updateBreathingClock
+    );
+
+
+
+/* =========================================================
+   =========================================================
+   BIBLIOTECA DE ACTIVIDADES
+   =========================================================
+   ========================================================= */
+
+
+/*
+    Los videos se controlan mediante
+    su ID de YouTube.
+
+    Si luego quieren cambiar un video,
+    solo reemplazan videoId.
+*/
+
+const relaxationActivities = [
+
+    /* =====================================================
+       RESPIRACIÓN
+    ====================================================== */
+
+    {
+        id: "breathing-headspace",
+
+        category: "breathing",
+
+        categoryName:
+            "Respiración",
+
+        title:
+            "Mini pausa para respirar",
+
+        description:
+            "Una práctica breve para detenerte unos instantes y acompañar conscientemente tu respiración.",
+
+        duration:
+            "Breve",
+
+        provider:
+            "Headspace",
+
+        type:
+            "video",
+
+        videoId:
+            "cEqZthCaMpo"
+    },
+
+
+    {
+        id: "breathing-five",
+
+        category:
+            "breathing",
+
+        categoryName:
+            "Respiración",
+
+        title:
+            "Respiración guiada de 5 minutos",
+
+        description:
+            "Una práctica guiada para acompañar la respiración de forma tranquila durante algunos minutos.",
+
+        duration:
+            "5 min",
+
+        provider:
+            "YouTube",
+
+        type:
+            "video",
+
+        videoId:
+            "EMzifxkMAp8"
+    },
+
+
+
+    /* =====================================================
+       ACTIVIDADES PSICÓLOGA
+    ====================================================== */
+
+    {
+        id:
+            "psychologist-one",
+
+        category:
+            "psychologist",
+
+        categoryName:
+            "Psicóloga",
+
+        title:
+            "Actividad de la psicóloga 01",
+
+        description:
+            "Espacio preparado para integrar una actividad creada específicamente por la psicóloga de la institución.",
+
+        duration:
+            "Personalizada",
+
+        provider:
+            "Psicología SENTIR",
+
+        type:
+            "psychologist",
+
+        /*
+            REEMPLAZAR POR LA ACTIVIDAD REAL.
+        */
+        steps: [
+
+            "Aquí puedes escribir la primera indicación de la actividad.",
+
+            "Aquí puede ir el segundo paso preparado por la psicóloga.",
+
+            "Aquí puedes añadir una reflexión o instrucción final."
+
+        ]
+    },
+
+
+    {
+        id:
+            "psychologist-two",
+
+        category:
+            "psychologist",
+
+        categoryName:
+            "Psicóloga",
+
+        title:
+            "Actividad de la psicóloga 02",
+
+        description:
+            "Segundo espacio configurable para una actividad institucional de relajación o acompañamiento.",
+
+        duration:
+            "Personalizada",
+
+        provider:
+            "Psicología SENTIR",
+
+        type:
+            "psychologist",
+
+        steps: [
+
+            "Reemplaza este texto por las instrucciones reales.",
+
+            "Puedes agregar tantos pasos como necesite la actividad.",
+
+            "También pueden convertirse estos pasos en contenido obtenido desde la base de datos."
+
+        ]
+    },
+
+
+
+    /* =====================================================
+       MEDITACIÓN
+    ====================================================== */
+
+    {
+        id:
+            "meditation-stress",
+
+        category:
+            "meditation",
+
+        categoryName:
+            "Meditación",
+
+        title:
+            "Meditación guiada de 10 minutos",
+
+        description:
+            "Una meditación guiada para hacer una pausa, observar los pensamientos y regresar al momento presente.",
+
+        duration:
+            "10 min",
+
+        provider:
+            "Headspace",
+
+        type:
+            "video",
+
+        videoId:
+            "sG7DBA-mgFY"
+    },
+
+
+    {
+        id:
+            "meditation-focus",
+
+        category:
+            "meditation",
+
+        categoryName:
+            "Meditación",
+
+        title:
+            "Meditación para volver al presente",
+
+        description:
+            "Práctica guiada centrada en reconocer cuándo la mente se distrae y volver suavemente al presente.",
+
+        duration:
+            "10 min",
+
+        provider:
+            "Headspace",
+
+        type:
+            "video",
+
+        videoId:
+            "6TH2hY1s-Oc"
+    },
+
+
+
+    /* =====================================================
+       YOGA
+    ====================================================== */
+
+    {
+        id:
+            "yoga-stress",
+
+        category:
+            "yoga",
+
+        categoryName:
+            "Yoga",
+
+        title:
+            "Yoga breve para liberar tensión",
+
+        description:
+            "Una sesión corta de movimiento consciente. Realízala únicamente si te resulta cómoda físicamente.",
+
+        duration:
+            "10 min",
+
+        provider:
+            "Yoga With Adriene",
+
+        type:
+            "video",
+
+        videoId:
+            "x18YTw4xaKk"
+    },
+
+
+    {
+        id:
+            "yoga-focus",
+
+        category:
+            "yoga",
+
+        categoryName:
+            "Yoga",
+
+        title:
+            "Yoga para reenfocarte",
+
+        description:
+            "Una práctica breve que combina movimiento y respiración para hacer una pausa consciente.",
+
+        duration:
+            "10 min",
+
+        provider:
+            "Yoga With Adriene",
+
+        type:
+            "video",
+
+        videoId:
+            "Nnd5Slo02us"
+    }
+
+];
+
+
+
+/* =========================================================
+   RENDER ACTIVIDADES
+========================================================= */
+
+const activitiesGrid =
+    document.getElementById(
+        "activitiesGrid"
+    );
+
+
+const visibleActivitiesCount =
+    document.getElementById(
+        "visibleActivitiesCount"
+    );
+
+
+const activityTabs =
+    document.querySelectorAll(
+        ".activity-tab"
+    );
+
+
+
+function createVideoActivityCard(
+    activity
+) {
+
+    const thumbnail =
+        `https://img.youtube.com/vi/${activity.videoId}/hqdefault.jpg`;
+
+
+    return `
+
+        <article
+            class="activity-card"
+        >
+
+            <div class="activity-thumbnail">
+
+                <img
+                    src="${thumbnail}"
+                    alt="${activity.title}"
+                    loading="lazy"
+                >
+
+                <div class="thumbnail-overlay"></div>
+
+
+                <div class="activity-play">
+
+                    <i class="fa-solid fa-play"></i>
+
+                </div>
+
+
+                <span class="activity-duration">
+                    ${activity.duration}
+                </span>
+
+            </div>
+
+
+            <div class="activity-content">
+
+                <span class="activity-category">
+                    ${activity.categoryName}
+                </span>
+
+
+                <h3>
+                    ${activity.title}
+                </h3>
+
+
+                <p>
+                    ${activity.description}
+                </p>
+
+
+                <div class="activity-card-footer">
+
+                    <div class="activity-provider">
+
+                        <i class="fa-brands fa-youtube"></i>
+
+                        ${activity.provider}
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="open-activity-button"
+                        data-video-id="${activity.id}"
+                    >
+
+                        Reproducir
+
+                        <i class="fa-solid fa-play"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    `;
+
+}
+
+
+
+function createPsychologistCard(
+    activity
+) {
+
+    return `
+
+        <article class="activity-card">
+
+            <div class="activity-thumbnail psychologist-thumbnail">
+
+                <div class="psychologist-illustration">
+
+                    <i class="fa-solid fa-user-doctor"></i>
+
+                </div>
+
+
+                <span class="activity-duration">
+                    ${activity.duration}
+                </span>
+
+            </div>
+
+
+            <div class="activity-content">
+
+                <span class="activity-category">
+                    ${activity.categoryName}
+                </span>
+
+
+                <h3>
+                    ${activity.title}
+                </h3>
+
+
+                <p>
+                    ${activity.description}
+                </p>
+
+
+                <div class="activity-card-footer">
+
+                    <div class="activity-provider">
+
+                        <i class="fa-solid fa-heart"></i>
+
+                        ${activity.provider}
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="open-activity-button"
+                        data-psychologist-id="${activity.id}"
+                    >
+
+                        Ver actividad
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    `;
+
+}
+
+
+
+function renderActivities(
+    category
+) {
+
+    const filtered =
+        relaxationActivities.filter(
+            activity =>
+                activity.category === category
+        );
+
+
+    visibleActivitiesCount.textContent =
+        filtered.length;
+
+
+    activitiesGrid.innerHTML =
+        filtered
+            .map(
+                activity => {
+
+                    if (
+                        activity.type ===
+                        "psychologist"
+                    ) {
+
+                        return createPsychologistCard(
+                            activity
+                        );
+
+                    }
+
+
+                    return createVideoActivityCard(
+                        activity
+                    );
+
+                }
+            )
+            .join("");
+
+
+    attachActivityEvents();
+
+}
+
+
+
+/* =========================================================
+   TABS
+========================================================= */
+
+activityTabs.forEach(
+    tab => {
+
+        tab.addEventListener(
+            "click",
+            () => {
+
+                activityTabs.forEach(
+                    item =>
+                        item.classList.remove(
+                            "active"
+                        )
+                );
+
+
+                tab.classList.add(
+                    "active"
+                );
+
+
+                renderActivities(
+                    tab.dataset.category
+                );
+
+            }
+        );
+
+    }
+);
+
+
+
+/* =========================================================
+   =========================================================
+   YOUTUBE PLAYER API
+   =========================================================
+   ========================================================= */
+
+let youtubeApiReady =
+    false;
+
+
+let youtubePlayer =
+    null;
+
+
+let currentVideoActivity =
+    null;
+
+
+const videoModal =
+    document.getElementById(
+        "videoModal"
+    );
+
+
+const videoModalTitle =
+    document.getElementById(
+        "videoModalTitle"
+    );
+
+
+const videoCategoryLabel =
+    document.getElementById(
+        "videoCategoryLabel"
+    );
+
+
+const videoModalDescription =
+    document.getElementById(
+        "videoModalDescription"
+    );
+
+
+/* =========================================================
+   CARGAR API
+========================================================= */
+
+function loadYouTubeApi() {
+
+    if (
+        document.getElementById(
+            "youtubeIframeApi"
+        )
+    ) {
+
+        return;
 
     }
 
-    if (resource === "meditacion") {
 
-        instructionIcon.textContent =
-            "🧘";
+    const script =
+        document.createElement(
+            "script"
+        );
 
-        instructionTitle.textContent =
-            "Espacio de meditación";
 
-        instructionText.textContent =
-            "Busca una posición cómoda y dedica unos minutos a estar presente.";
+    script.id =
+        "youtubeIframeApi";
+
+
+    script.src =
+        "https://www.youtube.com/iframe_api";
+
+
+    document.body.appendChild(
+        script
+    );
+
+}
+
+
+
+window.onYouTubeIframeAPIReady =
+    function () {
+
+        youtubeApiReady =
+            true;
+
+    };
+
+
+loadYouTubeApi();
+
+
+
+/* =========================================================
+   ABRIR VIDEO
+========================================================= */
+
+function openVideo(
+    activity
+) {
+
+    currentVideoActivity =
+        activity;
+
+
+    videoModalTitle.textContent =
+        activity.title;
+
+
+    videoCategoryLabel.textContent =
+        activity
+            .categoryName
+            .toUpperCase();
+
+
+    videoModalDescription.textContent =
+        activity.description;
+
+
+    videoModal.classList.add(
+        "show"
+    );
+
+
+    document.body.classList.add(
+        "no-scroll"
+    );
+
+
+    /*
+        Si la API todavía no cargó,
+        esperamos brevemente.
+    */
+
+    if (
+        !youtubeApiReady
+    ) {
+
+        const waitForApi =
+            setInterval(
+                () => {
+
+                    if (
+                        youtubeApiReady
+                    ) {
+
+                        clearInterval(
+                            waitForApi
+                        );
+
+
+                        createYoutubePlayer(
+                            activity.videoId
+                        );
+
+                    }
+
+                },
+                100
+            );
+
+
+        return;
 
     }
 
-    if (resource === "consejos") {
 
-        instructionIcon.textContent =
-            "✦";
+    createYoutubePlayer(
+        activity.videoId
+    );
 
-        instructionTitle.textContent =
-            "Consejo para tu bienestar";
+}
 
-        instructionText.textContent =
-            "Regálate pequeños momentos durante el día para descansar y respirar.";
+
+
+function createYoutubePlayer(
+    videoId
+) {
+
+    if (
+        youtubePlayer
+    ) {
+
+        youtubePlayer.destroy();
+
+        youtubePlayer =
+            null;
+
+
+        document.getElementById(
+            "youtubePlayer"
+        ).innerHTML =
+            "";
+
+    }
+
+
+    youtubePlayer =
+        new YT.Player(
+            "youtubePlayer",
+            {
+
+                videoId:
+                    videoId,
+
+
+                playerVars: {
+
+                    autoplay:
+                        1,
+
+                    controls:
+                        1,
+
+                    rel:
+                        0,
+
+                    playsinline:
+                        1,
+
+                    enablejsapi:
+                        1
+
+                },
+
+
+                events: {
+
+                    onStateChange:
+                        updatePlayButtonState
+
+                }
+
+            }
+        );
+
+}
+
+
+
+/* =========================================================
+   CLOSE VIDEO
+========================================================= */
+
+const closeVideoButton =
+    document.getElementById(
+        "closeVideoButton"
+    );
+
+
+
+function closeVideo() {
+
+    if (
+        youtubePlayer
+    ) {
+
+        youtubePlayer.stopVideo();
+
+        youtubePlayer.destroy();
+
+        youtubePlayer =
+            null;
+
+    }
+
+
+    const playerContainer =
+        document.getElementById(
+            "youtubePlayer"
+        );
+
+
+    playerContainer.innerHTML =
+        "";
+
+
+    videoModal.classList.remove(
+        "show"
+    );
+
+
+    document.body.classList.remove(
+        "no-scroll"
+    );
+
+
+    currentVideoActivity =
+        null;
+
+}
+
+
+
+closeVideoButton.addEventListener(
+    "click",
+    closeVideo
+);
+
+
+
+videoModal.addEventListener(
+    "click",
+    event => {
+
+        if (
+            event.target ===
+            videoModal
+        ) {
+
+            closeVideo();
+
+        }
+
+    }
+);
+
+
+
+/* =========================================================
+   CONTROLES DEL VIDEO
+========================================================= */
+
+const rewindButton =
+    document.getElementById(
+        "rewindButton"
+    );
+
+
+const playPauseButton =
+    document.getElementById(
+        "playPauseButton"
+    );
+
+
+const forwardButton =
+    document.getElementById(
+        "forwardButton"
+    );
+
+
+const muteButton =
+    document.getElementById(
+        "muteButton"
+    );
+
+
+const fullscreenButton =
+    document.getElementById(
+        "fullscreenButton"
+    );
+
+
+const videoPlayerShell =
+    document.getElementById(
+        "videoPlayerShell"
+    );
+
+
+
+/* RETROCEDER 10s */
+
+rewindButton.addEventListener(
+    "click",
+    () => {
+
+        if (
+            !youtubePlayer ||
+            !youtubePlayer.getCurrentTime
+        ) {
+
+            return;
+
+        }
+
+
+        const current =
+            youtubePlayer
+                .getCurrentTime();
+
+
+        youtubePlayer.seekTo(
+            Math.max(
+                0,
+                current - 10
+            ),
+            true
+        );
+
+    }
+);
+
+
+
+/* ADELANTAR 10s */
+
+forwardButton.addEventListener(
+    "click",
+    () => {
+
+        if (
+            !youtubePlayer ||
+            !youtubePlayer.getCurrentTime
+        ) {
+
+            return;
+
+        }
+
+
+        const current =
+            youtubePlayer
+                .getCurrentTime();
+
+
+        const duration =
+            youtubePlayer
+                .getDuration();
+
+
+        youtubePlayer.seekTo(
+            Math.min(
+                duration,
+                current + 10
+            ),
+            true
+        );
+
+    }
+);
+
+
+
+/* PLAY / PAUSE */
+
+playPauseButton.addEventListener(
+    "click",
+    () => {
+
+        if (
+            !youtubePlayer ||
+            !youtubePlayer.getPlayerState
+        ) {
+
+            return;
+
+        }
+
+
+        const state =
+            youtubePlayer
+                .getPlayerState();
+
+
+        if (
+            state ===
+            YT.PlayerState.PLAYING
+        ) {
+
+            youtubePlayer.pauseVideo();
+
+        } else {
+
+            youtubePlayer.playVideo();
+
+        }
+
+    }
+);
+
+
+
+function updatePlayButtonState(
+    event
+) {
+
+    if (
+        event.data ===
+        YT.PlayerState.PLAYING
+    ) {
+
+        playPauseButton.innerHTML =
+            `
+                <i class="fa-solid fa-pause"></i>
+            `;
+
+    } else {
+
+        playPauseButton.innerHTML =
+            `
+                <i class="fa-solid fa-play"></i>
+            `;
 
     }
 
 }
 
 
-/* =====================================================
-   MENÚ
-   ===================================================== */
 
-const menuButton =
-    document.getElementById("menuButton");
+/* =========================================================
+   MUTE
+========================================================= */
 
-menuButton.addEventListener(
+muteButton.addEventListener(
     "click",
     () => {
 
-        /*
-            Aquí posteriormente podemos conectar
-            el menú lateral de la aplicación Sentir.
+        if (
+            !youtubePlayer
+        ) {
 
-            Por ahora se utiliza como interacción
-            visual para no romper la estructura.
-        */
+            return;
 
-        menuButton.classList.toggle("active");
+        }
+
+
+        if (
+            youtubePlayer.isMuted()
+        ) {
+
+            youtubePlayer.unMute();
+
+
+            muteButton.innerHTML =
+                `
+                    <i class="fa-solid fa-volume-high"></i>
+                `;
+
+        } else {
+
+            youtubePlayer.mute();
+
+
+            muteButton.innerHTML =
+                `
+                    <i class="fa-solid fa-volume-xmark"></i>
+                `;
+
+        }
 
     }
 );
 
 
-/* =====================================================
-   INICIO
-   ===================================================== */
 
-updateProgress();
+/* =========================================================
+   FULLSCREEN
+========================================================= */
+
+fullscreenButton.addEventListener(
+    "click",
+    async () => {
+
+        try {
+
+            if (
+                document.fullscreenElement
+            ) {
+
+                await document.exitFullscreen();
+
+            } else {
+
+                await videoPlayerShell
+                    .requestFullscreen();
+
+            }
+
+        } catch (
+            error
+        ) {
+
+            console.warn(
+                "No fue posible activar pantalla completa.",
+                error
+            );
+
+        }
+
+    }
+);
+
+
+
+/* =========================================================
+   ACTIVIDADES PSICÓLOGA
+========================================================= */
+
+const psychologistModal =
+    document.getElementById(
+        "psychologistModal"
+    );
+
+
+const psychologistModalTitle =
+    document.getElementById(
+        "psychologistModalTitle"
+    );
+
+
+const psychologistModalDescription =
+    document.getElementById(
+        "psychologistModalDescription"
+    );
+
+
+const psychologistSteps =
+    document.getElementById(
+        "psychologistSteps"
+    );
+
+
+const closePsychologistModal =
+    document.getElementById(
+        "closePsychologistModal"
+    );
+
+
+const finishPsychologistActivity =
+    document.getElementById(
+        "finishPsychologistActivity"
+    );
+
+
+
+function openPsychologistActivity(
+    activity
+) {
+
+    psychologistModalTitle.textContent =
+        activity.title;
+
+
+    psychologistModalDescription.textContent =
+        activity.description;
+
+
+    psychologistSteps.innerHTML =
+        activity.steps
+            .map(
+                (
+                    step,
+                    index
+                ) => {
+
+                    return `
+
+                        <div class="psychologist-step">
+
+                            <span>
+                                ${index + 1}
+                            </span>
+
+                            <p>
+                                ${step}
+                            </p>
+
+                        </div>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+
+    psychologistModal.classList.add(
+        "show"
+    );
+
+
+    document.body.classList.add(
+        "no-scroll"
+    );
+
+}
+
+
+
+function closePsychologistActivity() {
+
+    psychologistModal.classList.remove(
+        "show"
+    );
+
+
+    document.body.classList.remove(
+        "no-scroll"
+    );
+
+}
+
+
+
+closePsychologistModal.addEventListener(
+    "click",
+    closePsychologistActivity
+);
+
+
+finishPsychologistActivity.addEventListener(
+    "click",
+    closePsychologistActivity
+);
+
+
+psychologistModal.addEventListener(
+    "click",
+    event => {
+
+        if (
+            event.target ===
+            psychologistModal
+        ) {
+
+            closePsychologistActivity();
+
+        }
+
+    }
+);
+
+
+
+/* =========================================================
+   EVENTOS DINÁMICOS
+========================================================= */
+
+function attachActivityEvents() {
+
+    document
+        .querySelectorAll(
+            "[data-video-id]"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const activity =
+                            relaxationActivities.find(
+                                item =>
+                                    item.id ===
+                                    button.dataset.videoId
+                            );
+
+
+                        if (
+                            activity
+                        ) {
+
+                            openVideo(
+                                activity
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+    document
+        .querySelectorAll(
+            "[data-psychologist-id]"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const activity =
+                            relaxationActivities.find(
+                                item =>
+                                    item.id ===
+                                    button.dataset.psychologistId
+                            );
+
+
+                        if (
+                            activity
+                        ) {
+
+                            openPsychologistActivity(
+                                activity
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key !==
+            "Escape"
+        ) {
+
+            return;
+
+        }
+
+
+        closeSidebar();
+
+
+        profileContainer
+            .classList
+            .remove(
+                "open"
+            );
+
+
+        if (
+            videoModal.classList.contains(
+                "show"
+            )
+        ) {
+
+            closeVideo();
+
+        }
+
+
+        if (
+            psychologistModal.classList.contains(
+                "show"
+            )
+        ) {
+
+            closePsychologistActivity();
+
+        }
+
+    }
+);
+
+
+
+/* =========================================================
+   INICIALIZAR
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        renderActivities(
+            "breathing"
+        );
+
+    }
+);

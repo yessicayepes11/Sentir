@@ -1,800 +1,88 @@
 /* =========================================================
-   DIARIO EMOCIONAL - SENTIR
+   SENTIR
+   DIARIO EMOCIONAL
 ========================================================= */
 
 
 /* =========================================================
-   VARIABLES GENERALES
+   ESTADO DEL FORMULARIO
 ========================================================= */
-
-const emotions = document.querySelectorAll(".emotion");
-
-const intensityRange =
-    document.getElementById("intensityRange");
-
-const intensityButtons =
-    document.querySelectorAll(".intensity-numbers button");
-
-const intensityNumber =
-    document.getElementById("intensityNumber");
-
-const intensityStatus =
-    document.getElementById("intensityStatus");
-
-const selectedEmotionText =
-    document.getElementById("selectedEmotionText");
-
-const diaryText =
-    document.getElementById("diaryText");
-
-const saveDiaryBtn =
-    document.getElementById("saveDiaryBtn");
-
-const historyGrid =
-    document.getElementById("historyGrid");
-
-const wordCounter =
-    document.getElementById("wordCounter");
-
 
 let selectedEmotion = null;
 
-let selectedIntensity = null;
+let intensityWasSelected = false;
 
 
-/* =========================================================
-   FECHA ACTUAL
-========================================================= */
+/*
+    Los emojis tienen valores del 1 al 5
+    exactamente de acuerdo con los módulos
+    proporcionados:
 
-function showCurrentDate() {
+    1 = Angry
+    2 = Sad
+    3 = OK
+    4 = Good
+    5 = Happy
+*/
 
-    const currentDate =
-        document.getElementById("currentDate");
+const emotionNames = {
 
-    const date = new Date();
+    1: "Muy mal",
+    2: "Mal",
+    3: "Normal",
+    4: "Feliz",
+    5: "Muy feliz"
 
-    const options = {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-    };
+};
 
-    currentDate.textContent =
-        date.toLocaleDateString(
-            "es-CO",
-            options
-        );
-
-}
-
-
-showCurrentDate();
 
 
 /* =========================================================
-   SELECCIÓN DE EMOCIONES
+   IMPORTANTE:
+   QUITAR LA SELECCIÓN INICIAL
 ========================================================= */
 
-emotions.forEach(emotion => {
+/*
+    El componente GOOD entregado originalmente
+    incluye checked="".
 
-    emotion.addEventListener("click", () => {
+    No modificamos el componente visual.
 
-        emotions.forEach(item => {
+    Sin embargo, para cumplir la regla funcional
+    de SENTIR, el estudiante debe seleccionar
+    conscientemente una emoción antes de guardar.
 
-            item.classList.remove("selected");
+    Por eso se limpia cualquier radio al iniciar.
+*/
 
-        });
-
-
-        emotion.classList.add("selected");
-
-
-        
-    const emotionTitle = emotion.querySelector("h3") || emotion.querySelector("h2") || emotion.querySelector("strong");
-    selectedEmotion = emotionTitle ? emotionTitle.textContent.trim() : "";
-
-
-        selectedEmotionText.textContent =
-            selectedEmotion;
-
-
-        /* ACTIVAR SLIDER */
-
-        intensityRange.disabled = false;
-
-
-        /* SELECCIONAR RADIO INTERNO */
-
-        const radio =
-            emotion.querySelector(
-                'input[type="radio"]'
-            );
-
-
-        if (radio) {
-
-            radio.checked = true;
-
-        }
-
-
-        /* GUARDAR EMOCIÓN TEMPORAL */
-
-        localStorage.setItem(
-            "sentir_emocion_actual",
-            selectedEmotion
-        );
-
-
-        showToast(
-            `Emoción seleccionada: ${selectedEmotion}`,
-            "♥"
-        );
-
-    });
-
-});
-
-
-/* =========================================================
-   RECUPERAR EMOCIÓN DE ESTUDIANTE.HTML
-========================================================= */
-
-function loadPreviousEmotion() {
-
-    const savedEmotion =
-        localStorage.getItem(
-            "sentir_emocion_actual"
-        );
-
-
-    if (!savedEmotion) return;
-
-
-    emotions.forEach(emotion => {
-
-        if (
-            emotion.dataset.emotion === savedEmotion
-        ) {
-
-            emotion.classList.add("selected");
-
-            selectedEmotion =
-                savedEmotion;
-
-            selectedEmotionText.textContent =
-                savedEmotion;
-
-            intensityRange.disabled = false;
-
-            const radio =
-                emotion.querySelector(
-                    'input[type="radio"]'
-                );
-
-            if (radio) {
-
-                radio.checked = true;
-
-            }
-
-        }
-
-    });
-
-}
-
-
-loadPreviousEmotion();
-
-
-/* =========================================================
-   INTENSIDAD
-========================================================= */
-
-function updateIntensity(value) {
-
-    selectedIntensity = Number(value);
-
-
-    intensityRange.value =
-        selectedIntensity;
-
-
-    intensityNumber.textContent =
-        selectedIntensity;
-
-
-    intensityButtons.forEach(button => {
-
-        button.classList.remove(
-            "active-intensity"
-        );
-
-
-        if (
-            Number(button.dataset.value) ===
-            selectedIntensity
-        ) {
-
-            button.classList.add(
-                "active-intensity"
-            );
-
-        }
-
-    });
-
-
-    /* TEXTO SEGÚN INTENSIDAD */
-
-    if (selectedIntensity <= 3) {
-
-        intensityStatus.textContent =
-            "Intensidad baja";
-
-    }
-
-    else if (selectedIntensity <= 6) {
-
-        intensityStatus.textContent =
-            "Intensidad moderada";
-
-    }
-
-    else if (selectedIntensity <= 8) {
-
-        intensityStatus.textContent =
-            "Intensidad alta";
-
-    }
-
-    else {
-
-        intensityStatus.textContent =
-            "Intensidad muy alta";
-
-    }
-
-}
-
-
-/* RANGE */
-
-intensityRange.addEventListener(
-    "input",
+document.addEventListener(
+    "DOMContentLoaded",
     () => {
 
-        updateIntensity(
-            intensityRange.value
-        );
-
-    }
-);
-
-
-/* BOTONES 1 - 10 */
-
-intensityButtons.forEach(button => {
-
-    button.addEventListener(
-        "click",
-        () => {
-
-            if (!selectedEmotion) {
-
-                showToast(
-                    "Primero selecciona una emoción.",
-                    "!"
-                );
-
-                return;
-
-            }
-
-
-            updateIntensity(
-                button.dataset.value
-            );
-
-        }
-    );
-
-});
-
-
-/* =========================================================
-   CONTADOR DE PALABRAS
-========================================================= */
-
-diaryText.addEventListener(
-    "input",
-    () => {
-
-        const text =
-            diaryText.value.trim();
-
-
-        const words =
-            text
-                ? text.split(/\s+/).length
-                : 0;
-
-
-        wordCounter.textContent =
-            `${words} palabras`;
-
-    }
-);
-
-
-/* =========================================================
-   ELIMINAR PREGUNTAS INDIVIDUALES
-========================================================= */
-
-const removeQuestionButtons =
-    document.querySelectorAll(
-        ".remove-question"
-    );
-
-
-removeQuestionButtons.forEach(button => {
-
-    button.addEventListener(
-        "click",
-        () => {
-
-            const questionCard =
-                button.closest(
-                    ".question-card"
-                );
-
-
-            questionCard.style.opacity = "0";
-
-
-            setTimeout(() => {
-
-                questionCard.style.display =
-                    "none";
-
-            }, 250);
-
-        }
-    );
-
-});
-
-
-/* =========================================================
-   OCULTAR TODAS LAS PREGUNTAS
-========================================================= */
-
-const hideQuestionsBtn =
-    document.getElementById(
-        "hideQuestionsBtn"
-    );
-
-
-const questionsGrid =
-    document.getElementById(
-        "questionsGrid"
-    );
-
-
-hideQuestionsBtn.addEventListener(
-    "click",
-    () => {
-
-        if (
-            questionsGrid.style.display === "none"
-        ) {
-
-            questionsGrid.style.display =
-                "grid";
-
-            hideQuestionsBtn.textContent =
-                "Ocultar preguntas";
-
-        }
-
-        else {
-
-            questionsGrid.style.display =
-                "none";
-
-            hideQuestionsBtn.textContent =
-                "Mostrar preguntas";
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   GUARDAR DIARIO
-========================================================= */
-
-saveDiaryBtn.addEventListener(
-    "click",
-    () => {
-
-
-        /* VALIDACIÓN EMOCIÓN */
-
-        if (!selectedEmotion) {
-
-            showToast(
-                "Debes seleccionar cómo te sientes antes de guardar.",
-                "!"
-            );
-
-            return;
-
-        }
-
-
-        /* VALIDACIÓN INTENSIDAD */
-
-        if (!selectedIntensity) {
-
-            showToast(
-                "Debes indicar la intensidad de tu emoción.",
-                "!"
-            );
-
-            return;
-
-        }
-
-
-        /* TEXTO PRINCIPAL */
-
-        const mainText =
-            diaryText.value.trim();
-
-
-        /*
-        El texto NO es obligatorio según tus instrucciones.
-        Lo importante es emoción + intensidad.
-        */
-
-
-        const question1 =
-            document
-                .getElementById("question1")
-                ?.value
-                .trim() || "";
-
-
-        const question2 =
-            document
-                .getElementById("question2")
-                ?.value
-                .trim() || "";
-
-
-        const question3 =
-            document
-                .getElementById("question3")
-                ?.value
-                .trim() || "";
-
-
-        /* CREAR REGISTRO */
-
-        const entry = {
-
-            id: Date.now(),
-
-            emotion:
-                selectedEmotion,
-
-            intensity:
-                selectedIntensity,
-
-            diary:
-                mainText,
-
-            situation:
-                question1,
-
-            thoughts:
-                question2,
-
-            needs:
-                question3,
-
-            date:
-                new Date().toLocaleString(
-                    "es-CO"
-                )
-
-        };
-
-
-        /* OBTENER HISTORIAL */
-
-        const history =
-            JSON.parse(
-                localStorage.getItem(
-                    "sentir_diario_historial"
-                )
-            ) || [];
-
-
-        /* AGREGAR NUEVO REGISTRO */
-
-        history.unshift(entry);
-
-
-        /* GUARDAR */
-
-        localStorage.setItem(
-            "sentir_diario_historial",
-            JSON.stringify(history)
-        );
-
-
-        showToast(
-            "Tu registro fue guardado correctamente.",
-            "✓"
-        );
-
-
-        /* LIMPIAR CAMPOS */
-
-        diaryText.value = "";
-
-
-        if (
-            document.getElementById("question1")
-        ) {
-
-            document.getElementById(
-                "question1"
-            ).value = "";
-
-        }
-
-
-        if (
-            document.getElementById("question2")
-        ) {
-
-            document.getElementById(
-                "question2"
-            ).value = "";
-
-        }
-
-
-        if (
-            document.getElementById("question3")
-        ) {
-
-            document.getElementById(
-                "question3"
-            ).value = "";
-
-        }
-
-
-        wordCounter.textContent =
-            "0 palabras";
-
-
-        renderHistory();
-
-    }
-);
-
-
-/* =========================================================
-   MOSTRAR HISTORIAL
-========================================================= */
-
-function renderHistory() {
-
-    const history =
-        JSON.parse(
-            localStorage.getItem(
-                "sentir_diario_historial"
+        document
+            .querySelectorAll(
+                'input[name="feedback"]'
             )
-        ) || [];
+            .forEach(input => {
 
+                input.checked = false;
 
-    historyGrid.innerHTML = "";
-
-
-    /* HISTORIAL VACÍO */
-
-    if (history.length === 0) {
-
-        historyGrid.innerHTML = `
-
-            <div class="empty-history">
-
-                <div class="empty-icon">
-                    ♡
-                </div>
-
-                <h3>
-                    Tu historia comienza aquí
-                </h3>
-
-                <p>
-                    Cuando guardes tu primer registro aparecerá en este espacio.
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    /* CREAR TARJETAS */
-
-    history.forEach(entry => {
-
-        const card =
-            document.createElement("article");
-
-
-        card.className =
-            "history-card";
-
-
-        let description =
-            entry.diary;
-
-
-        if (!description) {
-
-            description =
-                "Registro emocional guardado.";
-
-        }
-
-
-        if (description.length > 150) {
-
-            description =
-                description.substring(
-                    0,
-                    150
-                ) + "...";
-
-        }
-
-
-        card.innerHTML = `
-
-            <div class="history-card-top">
-
-                <span class="history-emotion">
-                    ${entry.emotion}
-                </span>
-
-                <span class="history-intensity">
-                    Intensidad ${entry.intensity}/10
-                </span>
-
-            </div>
-
-            <p>
-                ${description}
-            </p>
-
-            <span class="history-date">
-                ${entry.date}
-            </span>
-
-        `;
-
-
-        historyGrid.appendChild(card);
-
-    });
-
-}
-
-
-renderHistory();
-
-
-/* =========================================================
-   LIMPIAR HISTORIAL
-========================================================= */
-
-const clearHistoryBtn =
-    document.getElementById(
-        "clearHistoryBtn"
-    );
-
-
-clearHistoryBtn.addEventListener(
-    "click",
-    () => {
-
-        const confirmation =
-            confirm(
-                "¿Estás seguro de que deseas eliminar todo tu historial emocional?"
-            );
-
-
-        if (!confirmation) return;
-
-
-        localStorage.removeItem(
-            "sentir_diario_historial"
-        );
+            });
 
 
         renderHistory();
 
-
-        showToast(
-            "El historial fue eliminado.",
-            "✓"
-        );
+        updateRangeAppearance();
 
     }
 );
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    /* =========================================================
-       PERFIL DROPDOWN (PROTEGIDO)
-    ========================================================= */
-    const profileButton = document.getElementById("profileButton");
-    const profileDropdown = document.getElementById("profileDropdown");
-
-    if (profileButton && profileDropdown) {
-        profileButton.addEventListener("click", (event) => {
-            event.stopPropagation();
-            profileDropdown.classList.toggle("show");
-        });
-
-        document.addEventListener("click", () => {
-            profileDropdown.classList.remove("show");
-        });
-
-        profileDropdown.addEventListener("click", (event) => {
-            event.stopPropagation();
-        });
-    }
-});
 
 
 
 /* =========================================================
-   NOTIFICACIONES
+   SIDEBAR
 ========================================================= */
 
-const notificationBtn =
-    document.getElementById(
-        "notificationBtn"
-    );
-
-
-notificationBtn.addEventListener(
-    "click",
-    () => {
-
-        showToast(
-            "No tienes nuevas notificaciones.",
-            "♥"
-        );
-
-    }
-);
-//SIBERBAR JS
 document.addEventListener("DOMContentLoaded", () => {
     const mobileMenu = document.getElementById("mobileMenu");
     const sidebar = document.getElementById("sidebar");
@@ -833,119 +121,1297 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-    /* ================= MENU RESPONSIVE ================= */
-    const menuToggle = document.getElementById("menuToggle");
-    const sidebar = document.getElementById("sidebar");
-    const sidebarOverlay = document.getElementById("sidebarOverlay");
 
-    function openSidebar() {
-        if (sidebar) sidebar.classList.add("open");
-        if (sidebarOverlay) sidebarOverlay.classList.add("active");
-    }
-
-    function closeSidebar() {
-        if (sidebar) sidebar.classList.remove("open");
-        if (sidebarOverlay) sidebarOverlay.classList.remove("active");
-    }
-
-    if (menuToggle) menuToggle.addEventListener("click", openSidebar);
-    if (sidebarOverlay) sidebarOverlay.addEventListener("click", closeSidebar);
-
-    /* ================= CERRAR SESIÓN ================= */
-    const logoutButton = document.getElementById("logoutButton");
-    const logoutSidebar = document.getElementById("logoutSidebar");
-    const logoutModal = document.getElementById("logoutModal");
-    const cancelLogout = document.getElementById("cancelLogout");
-    const confirmLogout = document.getElementById("confirmLogout");
-
-    function openLogoutModal() {
-        if (logoutModal) logoutModal.classList.add("show");
-        closeSidebar(); // Cierra el menú en móviles si está abierto
-    }
-
-    function closeLogoutModal() {
-        if (logoutModal) logoutModal.classList.remove("show");
-    }
-
-    if (logoutButton) logoutButton.addEventListener("click", openLogoutModal);
-    if (logoutSidebar) logoutSidebar.addEventListener("click", openLogoutModal);
-    if (cancelLogout) cancelLogout.addEventListener("click", closeLogoutModal);
-
-    // Cerrar al hacer clic fuera de la tarjeta blanca
-    if (logoutModal) {
-        logoutModal.addEventListener("click", (e) => {
-            if (e.target === logoutModal) closeLogoutModal();
-        });
-    }
-
-    // Confirmar cierre de sesión
-    if (confirmLogout) {
-        confirmLogout.addEventListener("click", () => {
-            localStorage.removeItem("sentir_usuario");
-
-            if (typeof showToast === "function") {
-                showToast("Sesión cerrada correctamente.", "✓");
-            }
-
-            setTimeout(() => {
-                window.location.href = "/Sentir/Client/index.html";
-            }, 800);
-        });
-    }
-});
 /* =========================================================
-   TOAST
+   PERFIL
 ========================================================= */
 
-const toast =
-    document.getElementById(
-        "toast"
+const profileContainer =
+    document.querySelector(
+        ".profile-container"
     );
 
 
-const toastMessage =
+const profileButton =
     document.getElementById(
-        "toastMessage"
+        "profileButton"
     );
 
 
-const toastIcon =
-    document.getElementById(
-        "toastIcon"
-    );
+
+profileButton.addEventListener(
+    "click",
+    event => {
+
+        event.stopPropagation();
 
 
-let toastTimeout;
+        const isOpen =
+            profileContainer
+                .classList
+                .toggle(
+                    "open"
+                );
 
 
-function showToast(
-    message,
-    icon = "✓"
-) {
+        profileButton.setAttribute(
+            "aria-expanded",
+            isOpen
+                ? "true"
+                : "false"
+        );
 
-    toastMessage.textContent =
-        message;
-
-
-    toastIcon.textContent =
-        icon;
+    }
+);
 
 
-    toast.classList.add("show");
+
+document.addEventListener(
+    "click",
+    event => {
+
+        if (
+            !profileContainer.contains(
+                event.target
+            )
+        ) {
+
+            profileContainer
+                .classList
+                .remove(
+                    "open"
+                );
 
 
-    clearTimeout(toastTimeout);
-
-
-    toastTimeout =
-        setTimeout(() => {
-
-            toast.classList.remove(
-                "show"
+            profileButton.setAttribute(
+                "aria-expanded",
+                "false"
             );
 
-        }, 3500);
+        }
+
+    }
+);
+
+
+
+/* =========================================================
+   SELECCIÓN DE EMOCIÓN
+========================================================= */
+
+const emotionCards =
+    document.querySelectorAll(
+        ".emotion-card"
+    );
+
+
+const selectedEmotionText =
+    document.getElementById(
+        "selectedEmotionText"
+    );
+
+
+
+emotionCards.forEach(card => {
+
+    card.addEventListener(
+        "click",
+        () => {
+
+            const value =
+                Number(
+                    card.dataset
+                        .emotionValue
+                );
+
+
+            const name =
+                card.dataset
+                    .emotionName;
+
+
+            selectedEmotion =
+                value;
+
+
+            /*
+                Quitar selección visual
+                anterior.
+            */
+
+            emotionCards.forEach(
+                item => {
+
+                    item.classList.remove(
+                        "selected"
+                    );
+
+                }
+            );
+
+
+            /*
+                Desmarcar todos los
+                radios originales.
+            */
+
+            document
+                .querySelectorAll(
+                    'input[name="feedback"]'
+                )
+                .forEach(
+                    input => {
+
+                        input.checked =
+                            false;
+
+                    }
+                );
+
+
+            /*
+                Marcar tarjeta seleccionada.
+            */
+
+            card.classList.add(
+                "selected"
+            );
+
+
+            /*
+                Activar el radio original
+                del emoji para conservar
+                sus animaciones.
+            */
+
+            const radio =
+                card.querySelector(
+                    'input[name="feedback"]'
+                );
+
+
+            if (radio) {
+
+                radio.checked =
+                    true;
+
+
+                radio.dispatchEvent(
+                    new Event(
+                        "change",
+                        {
+                            bubbles: true
+                        }
+                    )
+                );
+
+            }
+
+
+            selectedEmotionText.textContent =
+                name;
+
+
+            hideValidation();
+
+        }
+    );
+
+});
+
+
+
+/* =========================================================
+   INTENSIDAD
+========================================================= */
+
+const intensityRange =
+    document.getElementById(
+        "intensityRange"
+    );
+
+
+const intensityValue =
+    document.getElementById(
+        "intensityValue"
+    );
+
+
+const intensityDescription =
+    document.getElementById(
+        "intensityDescription"
+    );
+
+
+const rangeTooltip =
+    document.getElementById(
+        "rangeTooltip"
+    );
+
+
+
+function getIntensityDescription(
+    value
+) {
+
+    const number =
+        Number(value);
+
+
+    if (number <= 2) {
+        return "Muy suave";
+    }
+
+
+    if (number <= 4) {
+        return "Suave";
+    }
+
+
+    if (number <= 6) {
+        return "Moderada";
+    }
+
+
+    if (number <= 8) {
+        return "Fuerte";
+    }
+
+
+    return "Muy intensa";
 
 }
 
+
+
+function updateRangeAppearance() {
+
+    const min =
+        Number(
+            intensityRange.min
+        );
+
+
+    const max =
+        Number(
+            intensityRange.max
+        );
+
+
+    const value =
+        Number(
+            intensityRange.value
+        );
+
+
+    const percentage =
+        (
+            (value - min) /
+            (max - min)
+        ) * 100;
+
+
+    intensityRange.style.background =
+        `
+            linear-gradient(
+                90deg,
+                #6C4DF6 ${percentage}%,
+                #E7E3F6 ${percentage}%
+            )
+        `;
+
+
+    rangeTooltip.style.left =
+        `${percentage}%`;
+
+
+    rangeTooltip.textContent =
+        value;
+
+}
+
+
+
+intensityRange.addEventListener(
+    "input",
+    () => {
+
+        intensityWasSelected =
+            true;
+
+
+        const value =
+            intensityRange.value;
+
+
+        intensityValue.textContent =
+            value;
+
+
+        intensityDescription.textContent =
+            getIntensityDescription(
+                value
+            );
+
+
+        rangeTooltip.classList.add(
+            "visible"
+        );
+
+
+        updateRangeAppearance();
+
+        hideValidation();
+
+    }
+);
+
+
+
+intensityRange.addEventListener(
+    "change",
+    () => {
+
+        setTimeout(
+            () => {
+
+                rangeTooltip.classList.remove(
+                    "visible"
+                );
+
+            },
+            900
+        );
+
+    }
+);
+
+
+
+/* =========================================================
+   PREGUNTAS GUÍA
+========================================================= */
+
+const removePromptButtons =
+    document.querySelectorAll(
+        ".remove-prompt"
+    );
+
+
+
+removePromptButtons.forEach(
+    button => {
+
+        button.addEventListener(
+            "click",
+            event => {
+
+                const prompt =
+                    event.currentTarget
+                        .closest(
+                            ".prompt-chip"
+                        );
+
+
+                prompt.classList.add(
+                    "removing"
+                );
+
+
+                setTimeout(
+                    () => {
+
+                        prompt.remove();
+
+                    },
+                    240
+                );
+
+            }
+        );
+
+    }
+);
+
+
+
+/* =========================================================
+   TEXTAREA
+========================================================= */
+
+const diaryText =
+    document.getElementById(
+        "diaryText"
+    );
+
+
+const characterCount =
+    document.getElementById(
+        "characterCount"
+    );
+
+
+const clearTextButton =
+    document.getElementById(
+        "clearTextButton"
+    );
+
+
+
+diaryText.addEventListener(
+    "input",
+    () => {
+
+        characterCount.textContent =
+            diaryText.value.length;
+
+
+        hideValidation();
+
+    }
+);
+
+
+
+clearTextButton.addEventListener(
+    "click",
+    () => {
+
+        diaryText.value =
+            "";
+
+
+        characterCount.textContent =
+            "0";
+
+
+        diaryText.focus();
+
+    }
+);
+
+
+
+/* =========================================================
+   VALIDACIÓN
+========================================================= */
+
+const validationMessage =
+    document.getElementById(
+        "validationMessage"
+    );
+
+
+const validationText =
+    document.getElementById(
+        "validationText"
+    );
+
+
+
+function showValidation(
+    message
+) {
+
+    validationText.textContent =
+        message;
+
+
+    validationMessage.classList.remove(
+        "show"
+    );
+
+
+    /*
+        Forzar reflow para repetir
+        animación de error.
+    */
+
+    void validationMessage.offsetWidth;
+
+
+    validationMessage.classList.add(
+        "show"
+    );
+
+
+    validationMessage.scrollIntoView(
+        {
+            behavior: "smooth",
+            block: "center"
+        }
+    );
+
+}
+
+
+
+function hideValidation() {
+
+    validationMessage.classList.remove(
+        "show"
+    );
+
+}
+
+
+
+/* =========================================================
+   HISTORIAL LOCAL
+========================================================= */
+
+const STORAGE_KEY =
+    "sentir_diario_emocional";
+
+
+function getHistory() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem(
+                STORAGE_KEY
+            )
+        ) || [];
+
+    } catch {
+
+        return [];
+
+    }
+
+}
+
+
+
+function saveHistory(
+    history
+) {
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(
+            history
+        )
+    );
+
+}
+
+
+
+/* =========================================================
+   GUARDAR REGISTRO
+========================================================= */
+
+const saveEntryButton =
+    document.getElementById(
+        "saveEntryButton"
+    );
+
+
+
+saveEntryButton.addEventListener(
+    "click",
+    () => {
+
+        const text =
+            diaryText
+                .value
+                .trim();
+
+
+        /*
+            REGLA 1:
+            Debe seleccionar emoción.
+        */
+
+        if (
+            selectedEmotion ===
+            null
+        ) {
+
+            showValidation(
+                "Primero selecciona la emoción que mejor representa cómo te sientes."
+            );
+
+            return;
+
+        }
+
+
+        /*
+            REGLA 2:
+            Debe seleccionar conscientemente
+            una intensidad.
+        */
+
+        if (
+            !intensityWasSelected
+        ) {
+
+            showValidation(
+                "Selecciona la intensidad de tu emoción moviendo la barra del 1 al 10."
+            );
+
+            return;
+
+        }
+
+
+        /*
+            REGLA 3:
+            Debe existir una descripción
+            para poder guardarla en historial.
+        */
+
+        if (
+            text.length === 0
+        ) {
+
+            showValidation(
+                "Escribe una pequeña descripción de tu día antes de guardarla en el historial."
+            );
+
+            diaryText.focus();
+
+            return;
+
+        }
+
+
+        const now =
+            new Date();
+
+
+        const entry = {
+
+            id:
+                Date.now(),
+
+            emotion:
+                selectedEmotion,
+
+            emotionName:
+                emotionNames[
+                    selectedEmotion
+                ],
+
+            intensity:
+                Number(
+                    intensityRange.value
+                ),
+
+            description:
+                text,
+
+            date:
+                now.toISOString()
+
+        };
+
+
+        const history =
+            getHistory();
+
+
+        history.unshift(
+            entry
+        );
+
+
+        saveHistory(
+            history
+        );
+
+
+        renderHistory();
+
+
+        /*
+            Limpiar formulario.
+        */
+
+        resetDiaryForm();
+
+
+        /*
+            Mostrar modal.
+        */
+
+        openModal(
+            "successModal"
+        );
+
+    }
+);
+
+
+
+/* =========================================================
+   RESET DEL FORMULARIO
+========================================================= */
+
+function resetDiaryForm() {
+
+    selectedEmotion =
+        null;
+
+
+    intensityWasSelected =
+        false;
+
+
+    emotionCards.forEach(
+        card => {
+
+            card.classList.remove(
+                "selected"
+            );
+
+        }
+    );
+
+
+    document
+        .querySelectorAll(
+            'input[name="feedback"]'
+        )
+        .forEach(
+            input => {
+
+                input.checked =
+                    false;
+
+            }
+        );
+
+
+    selectedEmotionText.textContent =
+        "Aún no seleccionada";
+
+
+    intensityRange.value =
+        5;
+
+
+    intensityValue.textContent =
+        "—";
+
+
+    intensityDescription.textContent =
+        "Aún sin seleccionar";
+
+
+    rangeTooltip.textContent =
+        "5";
+
+
+    rangeTooltip.classList.remove(
+        "visible"
+    );
+
+
+    diaryText.value =
+        "";
+
+
+    characterCount.textContent =
+        "0";
+
+
+    updateRangeAppearance();
+
+
+    hideValidation();
+
+}
+
+
+
+/* =========================================================
+   ESCAPAR HTML
+========================================================= */
+
+function escapeHTML(
+    text
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        text;
+
+
+    return div.innerHTML;
+
+}
+
+
+
+/* =========================================================
+   FORMATEAR FECHA
+========================================================= */
+
+function formatDate(
+    isoDate
+) {
+
+    const date =
+        new Date(
+            isoDate
+        );
+
+
+    return date.toLocaleDateString(
+        "es-CO",
+        {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+
+/* =========================================================
+   RENDERIZAR HISTORIAL
+========================================================= */
+
+const historyList =
+    document.getElementById(
+        "historyList"
+    );
+
+
+const emptyHistory =
+    document.getElementById(
+        "emptyHistory"
+    );
+
+
+const historyCount =
+    document.getElementById(
+        "historyCount"
+    );
+
+
+
+function renderHistory() {
+
+    const history =
+        getHistory();
+
+
+    historyCount.textContent =
+        history.length;
+
+
+    if (
+        history.length === 0
+    ) {
+
+        historyList.innerHTML =
+            "";
+
+
+        emptyHistory.classList.remove(
+            "hidden"
+        );
+
+
+        return;
+
+    }
+
+
+    emptyHistory.classList.add(
+        "hidden"
+    );
+
+
+    historyList.innerHTML =
+        history
+            .map(
+                entry => {
+
+                    return `
+
+                        <article
+                            class="history-entry"
+                            data-entry-id="${entry.id}"
+                        >
+
+                            <div class="history-entry-header">
+
+                                <div class="history-emotion">
+
+                                    <div class="history-emotion-number">
+                                        ${entry.emotion}
+                                    </div>
+
+
+                                    <div>
+
+                                        <strong>
+                                            ${escapeHTML(entry.emotionName)}
+                                        </strong>
+
+                                        <span>
+                                            Registro emocional
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <time class="history-date">
+                                    ${formatDate(entry.date)}
+                                </time>
+
+                            </div>
+
+
+                            <p class="history-entry-text">
+                                ${escapeHTML(entry.description)}
+                            </p>
+
+
+                            <div class="history-entry-footer">
+
+                                <span class="intensity-chip">
+
+                                    <i class="fa-solid fa-wave-square"></i>
+
+                                    Intensidad ${entry.intensity}/10
+
+                                </span>
+
+
+                                <button
+                                    type="button"
+                                    class="delete-entry-button"
+                                    data-delete-entry="${entry.id}"
+                                    aria-label="Eliminar registro"
+                                >
+
+                                    <i class="fa-regular fa-trash-can"></i>
+
+                                </button>
+
+                            </div>
+
+                        </article>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+
+    /*
+        Eventos eliminar.
+    */
+
+    document
+        .querySelectorAll(
+            "[data-delete-entry]"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        deleteEntry(
+                            Number(
+                                button.dataset
+                                    .deleteEntry
+                            )
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+
+/* =========================================================
+   ELIMINAR ENTRADA
+========================================================= */
+
+function deleteEntry(
+    id
+) {
+
+    const history =
+        getHistory();
+
+
+    const newHistory =
+        history.filter(
+            item =>
+                item.id !== id
+        );
+
+
+    saveHistory(
+        newHistory
+    );
+
+
+    renderHistory();
+
+}
+
+
+
+/* =========================================================
+   MODALES
+========================================================= */
+
+function openModal(
+    id
+) {
+
+    const modal =
+        document.getElementById(
+            id
+        );
+
+
+    modal.classList.add(
+        "show"
+    );
+
+
+    document.body.classList.add(
+        "no-scroll"
+    );
+
+}
+
+
+
+function closeModal(
+    id
+) {
+
+    const modal =
+        document.getElementById(
+            id
+        );
+
+
+    modal.classList.remove(
+        "show"
+    );
+
+
+    /*
+        Solo quitar no-scroll si
+        sidebar tampoco está abierto.
+    */
+
+    if (
+        !sidebar.classList.contains(
+            "open"
+        )
+    ) {
+
+        document.body.classList.remove(
+            "no-scroll"
+        );
+
+    }
+
+}
+
+
+
+document
+    .querySelectorAll(
+        "[data-close-modal]"
+    )
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    closeModal(
+                        button.dataset
+                            .closeModal
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+
+document
+    .querySelectorAll(
+        ".modal-overlay"
+    )
+    .forEach(
+        overlay => {
+
+            overlay.addEventListener(
+                "click",
+                event => {
+
+                    if (
+                        event.target ===
+                        overlay
+                    ) {
+
+                        closeModal(
+                            overlay.id
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+
+/* =========================================================
+   CERRAR SESIÓN
+========================================================= */
+
+document
+    .querySelectorAll(
+        ".logout-trigger"
+    )
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    profileContainer
+                        .classList
+                        .remove(
+                            "open"
+                        );
+
+
+                    openModal(
+                        "logoutModal"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+
+const confirmLogoutButton =
+    document.getElementById(
+        "confirmLogoutButton"
+    );
+
+
+
+confirmLogoutButton.addEventListener(
+    "click",
+    () => {
+
+        /*
+            AQUÍ CONECTAS TU CIERRE
+            DE SESIÓN REAL.
+
+            Ejemplo posteriormente:
+
+            window.location.href =
+                "login.html";
+
+            o:
+
+            fetch("/logout", {
+                method: "POST"
+            });
+        */
+
+
+        closeModal(
+            "logoutModal"
+        );
+
+
+        alert(
+            "Sesión cerrada correctamente."
+        );
+
+    }
+);
+
+
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key !==
+            "Escape"
+        ) {
+
+            return;
+
+        }
+
+
+        closeSidebar();
+
+
+        profileContainer
+            .classList
+            .remove(
+                "open"
+            );
+
+
+        document
+            .querySelectorAll(
+                ".modal-overlay.show"
+            )
+            .forEach(
+                modal => {
+
+                    closeModal(
+                        modal.id
+                    );
+
+                }
+            );
+
+    }
+);

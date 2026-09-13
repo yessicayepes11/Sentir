@@ -3,32 +3,71 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Seguimiento | Sentir</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <!-- Poppins -->
+    <meta
+        name="theme-color"
+        content="#6C4DF6"
+    >
+
+    <title>Mi seguimiento | SENTIR</title>
+
+    <!-- TIPOGRAFÍA OFICIAL -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
 
-    <link rel="stylesheet" href="/Sentir/Client/ScreenStudents/Follow-up/Follow-up.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- FONT AWESOME -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <!-- CHART.JS -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/chart.js"
+        defer
+    ></script>
+
+    <link
+        rel="stylesheet"
+        href="/Sentir/Client/ScreenStudents/Follow-up/Follow-up.css"
+    >
+
+    <script
+        src="/Sentir/Client/ScreenStudents/Follow-up/Follow-up.js"
+        defer
+    ></script>
 </head>
 
 
 <body>
 
-    <!-- ==========================================
-         FONDO DECORATIVO
-    =========================================== -->
+    <!-- =====================================================
+         OVERLAY RESPONSIVE
+    ====================================================== -->
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
 
-    <div class="bg-decoration bg-one"></div>
-    <div class="bg-decoration bg-two"></div>
 
-
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
     <!-- En el <head> de tus archivos HTML -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
@@ -46,7 +85,7 @@
     <div class="sidebar-logo">
         <div class="logo-symbol">
             <a href="#">
-                <img src="/Logo-nombrelado (1).png" alt="Logo Sentir" id="logoSentir">
+                <img src="/Sentir/Shared/LoginResources/logos.png.png" alt="Logo Sentir" id="logoSentir">
             </a>
         </div>
     </div>
@@ -61,7 +100,7 @@
             <i class="fa-solid fa-chart-line"></i>
             <span>Mi seguimiento</span>
         </a>
-        <a href="/Sentir/Client/ScreenStudents/Resources/Resources.html" class="menu-item">
+        <a href="/Sentir/Client/ScreenStudents/Relaxation/Relaxation.html" class="menu-item">
             <i class="fa-solid fa-leaf"></i>
             <span>Recursos</span>
         </a>
@@ -73,7 +112,7 @@
             <i class="fa-solid fa-star"></i>
             <span>Insignias</span>
         </a>
-        <a href="/Sentir/Client/ScreenStudents/Help/Help.html" class="menu-item">
+        <a href="/Sentir/Client/ScreenStudents/AskForHelp/AskForHelp.html" class="menu-item">
             <i class="fa-solid fa-handshake-angle"></i>
             <span>Pedir ayuda</span>
         </a>
@@ -95,68 +134,103 @@
     </div>
 </aside>
 
-    <!-- ==========================================
-         CONTENEDOR PRINCIPAL
-    =========================================== -->
-
-    <div class="page">
 
 
-        <!-- ======================================
-             HEADER
-        ======================================= -->
+    <!-- =====================================================
+         CONTENIDO
+    ====================================================== -->
+    <main class="main-content">
 
+
+        <!-- =================================================
+             TOPBAR
+        ================================================== -->
         <header class="topbar">
 
-            <button
-                class="hamburger"
-                id="openMenu"
-                aria-label="Abrir menú">
+            <div class="topbar-left">
 
-                <span></span>
-                <span></span>
-                <span></span>
+                <button
+                    type="button"
+                    class="hamburger-button"
+                    id="hamburgerButton"
+                    aria-label="Abrir menú"
+                    aria-expanded="false"
+                >
+                    <i class="fa-solid fa-bars"></i>
+                </button>
 
-            </button>
 
-
-            <div class="top-brand">
-
-                <!-- TU LOGO -->
-                <img
-                    src="images/logo-sentir.png"
-                    alt="Sentir">
-
-                <span>
-                    sentir
-                </span>
+                <a
+                    href="#"
+                    class="mini-brand"
+                >
+                    ♥ sentir
+                </a>
 
             </div>
 
 
-            <div class="top-actions">
+            <div class="topbar-actions">
 
-                <button class="notification">
-                    ♡
-                    <span></span>
+                <button
+                    type="button"
+                    class="notification-button"
+                    aria-label="Notificaciones"
+                >
+
+                    <i class="fa-regular fa-bell"></i>
+
+                    <span class="notification-dot"></span>
+
                 </button>
 
 
-                <div class="user-profile">
+                <div class="profile-container">
 
-                    <div class="user-avatar">
-                        M
-                    </div>
+                    <button
+                        type="button"
+                        class="profile-button"
+                        id="profileButton"
+                    >
 
-                    <div class="user-name">
+                        <div class="profile-avatar">
+                            A
+                        </div>
 
-                        <strong>
-                            Mi espacio
-                        </strong>
 
-                        <small>
-                            Estudiante
-                        </small>
+                        <div class="profile-copy">
+
+                            <strong>
+                                Ana
+                            </strong>
+
+                            <span>
+                                Estudiante
+                            </span>
+
+                        </div>
+
+
+                        <i class="fa-solid fa-chevron-down profile-chevron"></i>
+
+                    </button>
+
+
+                    <div class="profile-dropdown">
+
+                        <a href="#">
+                            <i class="fa-regular fa-eye"></i>
+                            Ver mi perfil
+                        </a>
+
+
+                        <div class="profile-divider"></div>
+
+
+                        <button type="button">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            Cerrar sesión
+                        </button>
 
                     </div>
 
@@ -168,690 +242,1439 @@
 
 
 
-        <!-- ======================================
-             CONTENIDO
-        ======================================= -->
+        <!-- =================================================
+             HERO
+        ================================================== -->
+        <section class="tracking-hero">
 
-        <main class="content">
+            <div class="tracking-hero-content">
+
+                <div class="hero-pill">
+
+                    <span class="hero-pill-dot"></span>
+
+                    Tu progreso emocional
+
+                </div>
 
 
-            <!-- ==================================
-                 HERO
-            =================================== -->
+                <h1>
+                    Mi seguimiento
+                </h1>
 
-            <section class="hero">
 
-                <div class="hero-text">
+                <p>
+                    Observa cómo han cambiado tus emociones,
+                    identifica patrones y conoce mejor tu proceso
+                    a través de tus registros.
+                </p>
 
-                    <span class="tag">
-                        ✦ CONOCE TU PROCESO
+
+                <div class="hero-note">
+
+                    <i class="fa-solid fa-sparkles"></i>
+
+                    <span>
+                        Cada emoción tiene algo que contarte.
+                        Lo importante es aprender a reconocerla.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="tracking-hero-visual">
+
+                <div class="hero-orbit orbit-one"></div>
+                <div class="hero-orbit orbit-two"></div>
+
+                <span class="hero-star hero-star-one">
+                    ✦
+                </span>
+
+                <span class="hero-star hero-star-two">
+                    ✧
+                </span>
+
+
+                <div class="hero-chart-card">
+
+                    <i class="fa-solid fa-chart-simple"></i>
+
+                    <div class="hero-bars">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             TARJETAS RESUMEN
+        ================================================== -->
+        <section class="summary-grid">
+
+
+            <!-- EMOCIÓN MÁS REGISTRADA -->
+            <article class="summary-card summary-card-featured">
+
+                <div class="summary-card-top">
+
+                    <span class="summary-tag light">
+                        ESTE MES
                     </span>
 
 
-                    <h1>
-                        Tu
-                        <span>seguimiento</span>
-                        emocional
-                    </h1>
+                    <i class="fa-solid fa-heart"></i>
+
+                </div>
+
+
+                <span class="summary-label-light">
+                    Tu emoción más registrada
+                </span>
+
+
+                <div class="featured-emotion">
+
+                    <!-- GOOD ORIGINAL -->
+                    <div class="emoji-motion emoji-motion-large">
+
+                        <form class="emoji-form">
+
+                            <label class="emoji good">
+
+                                <input
+                                    name="feedback"
+                                    value="4"
+                                    type="radio"
+                                />
+
+                                <div>
+
+                                    <svg class="eye left">
+                                        <use href="#eye"></use>
+                                    </svg>
+
+                                    <svg class="eye right">
+                                        <use href="#eye"></use>
+                                    </svg>
+
+                                    <svg class="mouth">
+                                        <use href="#mouth"></use>
+                                    </svg>
+
+                                </div>
+
+                            </label>
+
+                        </form>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong id="mainEmotion">
+                            Feliz
+                        </strong>
+
+                        <span id="mainEmotionCount">
+                            10 registros
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="featured-message">
+
+                    Has registrado varios momentos positivos
+                    durante este mes.
+
+                </div>
+
+            </article>
+
+
+
+            <!-- REGISTROS -->
+            <article class="summary-card">
+
+                <div class="summary-card-top">
+
+                    <div class="summary-icon">
+                        <i class="fa-solid fa-book"></i>
+                    </div>
+
+
+                    <span class="trend-badge">
+
+                        <i class="fa-solid fa-arrow-trend-up"></i>
+
+                        +4
+
+                    </span>
+
+                </div>
+
+
+                <span class="summary-label">
+                    Registros del estudiante
+                </span>
+
+
+                <div class="summary-number">
+
+                    <strong id="totalRegisters">
+                        24
+                    </strong>
+
+                    <span>
+                        registros
+                    </span>
+
+                </div>
+
+
+                <p>
+                    Emociones registradas durante
+                    septiembre.
+                </p>
+
+
+                <div class="small-progress">
+
+                    <span style="width:80%;"></span>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- CONSTANCIA -->
+            <article class="summary-card">
+
+                <div class="summary-card-top">
+
+                    <div class="summary-icon blue">
+                        <i class="fa-solid fa-fire-flame-curved"></i>
+                    </div>
+
+
+                    <span class="summary-tag">
+                        CONSTANCIA
+                    </span>
+
+                </div>
+
+
+                <span class="summary-label">
+                    Tu constancia
+                </span>
+
+
+                <div class="streak-content">
+
+                    <strong id="streakDays">
+                        7
+                    </strong>
+
+
+                    <div>
+
+                        <span class="streak-title">
+                            días seguidos
+                        </span>
+
+                        <span class="streak-description">
+                            registrando cómo te sientes
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="streak-week">
+
+                    <div>
+                        <small>L</small>
+                        <span>✓</span>
+                    </div>
+
+                    <div>
+                        <small>M</small>
+                        <span>✓</span>
+                    </div>
+
+                    <div>
+                        <small>M</small>
+                        <span>✓</span>
+                    </div>
+
+                    <div>
+                        <small>J</small>
+                        <span>✓</span>
+                    </div>
+
+                    <div>
+                        <small>V</small>
+                        <span>✓</span>
+                    </div>
+
+                    <div>
+                        <small>S</small>
+                        <span>✓</span>
+                    </div>
+
+                    <div>
+                        <small>D</small>
+                        <span>✓</span>
+                    </div>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+
+        <!-- =================================================
+             GRÁFICO MENSUAL
+        ================================================== -->
+        <section class="dashboard-card monthly-section">
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-eyebrow">
+                        SEGUIMIENTO MENSUAL
+                    </span>
+
+
+                    <h2>
+                        ¿Cómo te has sentido este mes?
+                    </h2>
 
 
                     <p>
-                        Observa cómo te has sentido durante estos días
-                        y conoce mejor tus emociones. Este espacio es
-                        solo para ti.
+                        Una visualización de tus registros
+                        emocionales durante el mes seleccionado.
                     </p>
 
                 </div>
 
 
-                <!-- ESPACIO PARA PERSONAJE -->
+                <div class="month-control">
 
-                <div class="hero-character">
-
-                    <!--
-
-                    AQUÍ PUEDES COLOCAR TU PERSONAJE:
-
-                    <img
-                        src="images/personaje-seguimiento.png"
-                        alt="Personaje Sentir">
-
-                    -->
-
-                </div>
-
-            </section>
+                    <label for="monthSelector">
+                        Mes
+                    </label>
 
 
+                    <div class="select-wrapper">
 
-            <!-- ==================================
-                 RESUMEN
-            =================================== -->
-
-            <section class="summary-grid">
+                        <i class="fa-regular fa-calendar"></i>
 
 
-                <article class="summary-card purple">
+                        <select id="monthSelector">
 
-                    <div class="summary-icon">
-                        ♡
-                    </div>
+                            <option value="enero">Enero</option>
+                            <option value="febrero">Febrero</option>
+                            <option value="marzo">Marzo</option>
+                            <option value="abril">Abril</option>
+                            <option value="mayo">Mayo</option>
+                            <option value="junio">Junio</option>
+                            <option value="julio">Julio</option>
+                            <option value="agosto">Agosto</option>
 
-                    <div>
-
-                        <span>
-                            EMOCIÓN MÁS REGISTRADA
-                        </span>
-
-                        <strong id="mainEmotion">
-                            Tranquilo
-                        </strong>
-
-                        <small>
-                            Durante este periodo
-                        </small>
-
-                    </div>
-
-                </article>
-
-
-
-                <article class="summary-card">
-
-                    <div class="summary-icon blue">
-                        ◈
-                    </div>
-
-                    <div>
-
-                        <span>
-                            REGISTROS
-                        </span>
-
-                        <strong id="recordCount">
-                            12
-                        </strong>
-
-                        <small>
-                            estados registrados
-                        </small>
-
-                    </div>
-
-                </article>
-
-
-
-                <article class="summary-card">
-
-                    <div class="summary-icon silver">
-                        ✦
-                    </div>
-
-                    <div>
-
-                        <span>
-                            CONSTANCIA
-                        </span>
-
-                        <strong>
-                            80%
-                        </strong>
-
-                        <small>
-                            esta semana
-                        </small>
-
-                    </div>
-
-                </article>
-
-            </section>
-
-
-
-            <!-- ==================================
-                 PANEL PRINCIPAL
-            =================================== -->
-
-            <section class="tracking-layout">
-
-
-                <!-- GRÁFICA -->
-
-                <article class="panel chart-panel">
-
-                    <div class="panel-header">
-
-                        <div>
-
-                            <span class="mini-label">
-                                ÚLTIMOS DÍAS
-                            </span>
-
-                            <h2>
-                                ¿Cómo me he sentido?
-                            </h2>
-
-                        </div>
-
-
-                        <select id="periodSelect">
-
-                            <option value="week">
-                                Esta semana
+                            <option
+                                value="septiembre"
+                                selected
+                            >
+                                Septiembre
                             </option>
 
-                            <option value="month">
-                                Este mes
-                            </option>
+                            <option value="octubre">Octubre</option>
+                            <option value="noviembre">Noviembre</option>
+                            <option value="diciembre">Diciembre</option>
 
                         </select>
 
                     </div>
 
+                </div>
 
-                    <div class="chart">
-
-                        <div class="chart-y">
-
-                            <span>Muy bien</span>
-                            <span>Bien</span>
-                            <span>Neutral</span>
-                            <span>Difícil</span>
-
-                        </div>
+            </div>
 
 
-                        <div class="chart-area">
 
-                            <div class="chart-lines">
-
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-
-                            </div>
+            <!-- =================================================
+                 LEYENDA CON EMOJIS REALES
+            ================================================== -->
+            <div class="emotion-legend">
 
 
-                            <div class="chart-bars">
+                <!-- ANGRY -->
+                <div class="emotion-legend-item">
 
-                                <div
-                                    class="bar-wrapper"
-                                    data-day="Lun">
+                    <div class="emoji-motion emoji-motion-mini">
 
-                                    <div
-                                        class="bar"
-                                        style="height:55%">
-                                    </div>
+                        <form class="emoji-form">
 
-                                    <span>
-                                        Lun
-                                    </span>
+                            <label class="emoji angry">
 
-                                </div>
+                                <input
+                                    name="feedback"
+                                    value="1"
+                                    type="radio"
+                                />
 
+                                <div>
 
-                                <div
-                                    class="bar-wrapper"
-                                    data-day="Mar">
+                                    <svg class="eye left">
+                                        <use href="#eye"></use>
+                                    </svg>
 
-                                    <div
-                                        class="bar"
-                                        style="height:72%">
-                                    </div>
+                                    <svg class="eye right">
+                                        <use href="#eye"></use>
+                                    </svg>
 
-                                    <span>
-                                        Mar
-                                    </span>
+                                    <svg class="mouth">
+                                        <use href="#mouth"></use>
+                                    </svg>
 
                                 </div>
 
+                            </label>
 
-                                <div
-                                    class="bar-wrapper"
-                                    data-day="Mié">
+                        </form>
 
-                                    <div
-                                        class="bar"
-                                        style="height:45%">
-                                    </div>
+                    </div>
 
-                                    <span>
-                                        Mié
-                                    </span>
+                    <span>Muy mal</span>
+
+                </div>
+
+
+
+                <!-- SAD -->
+                <div class="emotion-legend-item">
+
+                    <div class="emoji-motion emoji-motion-mini">
+
+                        <form class="emoji-form">
+
+                            <label class="emoji sad">
+
+                                <input
+                                    name="feedback"
+                                    value="2"
+                                    type="radio"
+                                />
+
+                                <div>
+
+                                    <svg class="eye left">
+                                        <use href="#eye"></use>
+                                    </svg>
+
+                                    <svg class="eye right">
+                                        <use href="#eye"></use>
+                                    </svg>
+
+                                    <svg class="mouth">
+                                        <use href="#mouth"></use>
+                                    </svg>
 
                                 </div>
 
+                            </label>
 
-                                <div
-                                    class="bar-wrapper"
-                                    data-day="Jue">
+                        </form>
 
-                                    <div
-                                        class="bar"
-                                        style="height:78%">
-                                    </div>
+                    </div>
 
-                                    <span>
-                                        Jue
-                                    </span>
+                    <span>Mal</span>
+
+                </div>
+
+
+
+                <!-- OK -->
+                <div class="emotion-legend-item">
+
+                    <div class="emoji-motion emoji-motion-mini">
+
+                        <form class="emoji-form">
+
+                            <label class="emoji ok">
+
+                                <input
+                                    name="feedback"
+                                    value="3"
+                                    type="radio"
+                                />
+
+                                <div></div>
+
+                            </label>
+
+                        </form>
+
+                    </div>
+
+                    <span>Normal</span>
+
+                </div>
+
+
+
+                <!-- GOOD -->
+                <div class="emotion-legend-item">
+
+                    <div class="emoji-motion emoji-motion-mini">
+
+                        <form class="emoji-form">
+
+                            <label class="emoji good">
+
+                                <input
+                                    name="feedback"
+                                    value="4"
+                                    type="radio"
+                                />
+
+                                <div>
+
+                                    <svg class="eye left">
+                                        <use href="#eye"></use>
+                                    </svg>
+
+                                    <svg class="eye right">
+                                        <use href="#eye"></use>
+                                    </svg>
+
+                                    <svg class="mouth">
+                                        <use href="#mouth"></use>
+                                    </svg>
 
                                 </div>
 
+                            </label>
 
-                                <div
-                                    class="bar-wrapper"
-                                    data-day="Vie">
+                        </form>
 
-                                    <div
-                                        class="bar"
-                                        style="height:62%">
-                                    </div>
+                    </div>
 
-                                    <span>
-                                        Vie
-                                    </span>
+                    <span>Feliz</span>
+
+                </div>
+
+
+
+                <!-- HAPPY -->
+                <div class="emotion-legend-item">
+
+                    <div class="emoji-motion emoji-motion-mini">
+
+                        <form class="emoji-form">
+
+                            <label class="emoji happy">
+
+                                <input
+                                    name="feedback"
+                                    value="5"
+                                    type="radio"
+                                />
+
+                                <div>
+
+                                    <svg class="eye left">
+                                        <use href="#eye"></use>
+                                    </svg>
+
+                                    <svg class="eye right">
+                                        <use href="#eye"></use>
+                                    </svg>
 
                                 </div>
 
+                            </label>
 
-                                <div
-                                    class="bar-wrapper"
-                                    data-day="Sáb">
-
-                                    <div
-                                        class="bar"
-                                        style="height:84%">
-                                    </div>
-
-                                    <span>
-                                        Sáb
-                                    </span>
-
-                                </div>
-
-
-                                <div
-                                    class="bar-wrapper"
-                                    data-day="Dom">
-
-                                    <div
-                                        class="bar"
-                                        style="height:70%">
-                                    </div>
-
-                                    <span>
-                                        Dom
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                        </div>
+                        </form>
 
                     </div>
 
-                    <div
-                        class="chart-message"
-                        id="chartMessage">
+                    <span>Muy feliz</span>
 
-                        Tu registro muestra variaciones en tus
-                        emociones. Recuerda que todas son válidas.
+                </div>
 
-                    </div>
+            </div>
 
-                </article>
 
 
+            <div class="monthly-chart-wrapper">
 
-                <!-- EMOCIONES -->
+                <canvas id="monthlyEmotionChart"></canvas>
 
-                <article class="panel emotions-panel">
+            </div>
 
-                    <div class="panel-header">
 
-                        <div>
+            <div class="chart-insight">
 
-                            <span class="mini-label">
-                                REGISTROS
-                            </span>
-
-                            <h2>
-                                Mis emociones
-                            </h2>
-
-                        </div>
-
-                        <button
-                            class="view-button"
-                            id="viewAll">
-
-                            Ver todo
-
-                        </button>
-
-                    </div>
-
-
-                    <div class="emotion-list">
-
-
-                        <div class="emotion-row">
-
-                            <div class="emotion-circle purple-circle">
-                                😊
-                            </div>
-
-                            <div class="emotion-info">
-
-                                <strong>
-                                    Feliz
-                                </strong>
-
-                                <span>
-                                    Registrado hoy
-                                </span>
-
-                            </div>
-
-                            <div class="emotion-level">
-                                32%
-                            </div>
-
-                        </div>
-
-
-
-                        <div class="emotion-row">
-
-                            <div class="emotion-circle blue-circle">
-                                😌
-                            </div>
-
-                            <div class="emotion-info">
-
-                                <strong>
-                                    Tranquilo
-                                </strong>
-
-                                <span>
-                                    Registrado ayer
-                                </span>
-
-                            </div>
-
-                            <div class="emotion-level">
-                                27%
-                            </div>
-
-                        </div>
-
-
-
-                        <div class="emotion-row">
-
-                            <div class="emotion-circle silver-circle">
-                                😐
-                            </div>
-
-                            <div class="emotion-info">
-
-                                <strong>
-                                    Neutral
-                                </strong>
-
-                                <span>
-                                    Hace 3 días
-                                </span>
-
-                            </div>
-
-                            <div class="emotion-level">
-                                18%
-                            </div>
-
-                        </div>
-
-
-
-                        <div class="emotion-row">
-
-                            <div class="emotion-circle purple-circle">
-                                😟
-                            </div>
-
-                            <div class="emotion-info">
-
-                                <strong>
-                                    Preocupado
-                                </strong>
-
-                                <span>
-                                    Hace 4 días
-                                </span>
-
-                            </div>
-
-                            <div class="emotion-level">
-                                12%
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-            </section>
-
-
-
-            <!-- ==================================
-                 PARTE INFERIOR
-            =================================== -->
-
-            <section class="bottom-grid">
-
-
-                <!-- ACTIVIDAD -->
-
-                <article class="panel activity-panel">
-
-                    <div class="panel-header">
-
-                        <div>
-
-                            <span class="mini-label">
-                                TU PROCESO
-                            </span>
-
-                            <h2>
-                                Esta semana
-                            </h2>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="activity-progress">
-
-                        <div class="progress-circle">
-
-                            <span>
-                                80%
-                            </span>
-
-                        </div>
-
-
-                        <div class="activity-text">
-
-                            <strong>
-                                ¡Has sido constante!
-                            </strong>
-
-                            <p>
-                                Has registrado tus emociones
-                                durante 5 de los últimos 7 días.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="days">
-
-                        <span class="completed">
-                            L
-                        </span>
-
-                        <span class="completed">
-                            M
-                        </span>
-
-                        <span class="completed">
-                            M
-                        </span>
-
-                        <span class="completed">
-                            J
-                        </span>
-
-                        <span class="completed">
-                            V
-                        </span>
-
-                        <span>
-                            S
-                        </span>
-
-                        <span>
-                            D
-                        </span>
-
-                    </div>
-
-                </article>
-
-
-
-                <!-- RECOMENDACIÓN -->
-
-                <article class="panel recommendation-panel">
-
-                    <div class="recommendation-icon">
-                        🌱
-                    </div>
-
-
-                    <div>
-
-                        <span class="mini-label">
-                            PARA TI
-                        </span>
-
-                        <h2>
-                            Un pequeño consejo
-                        </h2>
-
-                        <p id="recommendationText">
-
-                            Si hoy sientes que tienes muchas cosas
-                            en la cabeza, intenta hacer una pausa
-                            y respirar durante unos minutos.
-
-                        </p>
-
-
-                        <button
-                            class="primary-button"
-                            id="relaxButton">
-
-                            Ir a relajación
-                            <span>→</span>
-
-                        </button>
-
-                    </div>
-
-                </article>
-
-            </section>
-
-
-
-            <!-- ==================================
-                 CTA DIARIO
-            =================================== -->
-
-            <section class="daily-card">
-
-                <div class="daily-icon">
-                    ♡
+                <div class="insight-icon">
+                    <i class="fa-solid fa-lightbulb"></i>
                 </div>
 
 
                 <div>
 
-                    <span>
-                        ¿AÚN NO REGISTRAS HOY?
-                    </span>
+                    <strong>
+                        Una mirada a tu mes
+                    </strong>
 
-                    <h2>
-                        Tómate un momento para preguntarte:
-                        ¿cómo me siento?
-                    </h2>
+                    <p id="monthlyInsight">
+                        Esta información representa únicamente
+                        tus propios registros emocionales.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PARTE INFERIOR
+        ================================================== -->
+        <section class="secondary-grid">
+
+
+            <!-- =================================================
+                 DISTRIBUCIÓN EMOCIONAL
+            ================================================== -->
+            <article class="dashboard-card emotion-distribution">
+
+                <div class="section-header compact">
+
+                    <div>
+
+                        <span class="section-eyebrow">
+                            TUS EMOCIONES
+                        </span>
+
+
+                        <h2>
+                            ¿Qué tanto has registrado cada emoción?
+                        </h2>
+
+                    </div>
+
+
+                    <div class="section-icon">
+                        <i class="fa-regular fa-face-smile"></i>
+                    </div>
 
                 </div>
 
 
-                <button
-                    class="daily-button"
-                    id="diaryButton">
 
-                    Abrir diario
-
-                    <span>
-                        →
-                    </span>
-
-                </button>
-
-            </section>
+                <div class="emotion-list">
 
 
-        </main>
+                    <!-- =============================================
+                         MUY MAL
+                    ============================================== -->
+                    <div class="emotion-row">
 
-    </div>
+                        <div class="emoji-motion">
+
+                            <form class="emoji-form">
+
+                                <label class="emoji angry">
+
+                                    <input
+                                        name="feedback"
+                                        value="1"
+                                        type="radio"
+                                    />
+
+                                    <div>
+
+                                        <svg class="eye left">
+                                            <use href="#eye"></use>
+                                        </svg>
+
+                                        <svg class="eye right">
+                                            <use href="#eye"></use>
+                                        </svg>
+
+                                        <svg class="mouth">
+                                            <use href="#mouth"></use>
+                                        </svg>
+
+                                    </div>
+
+                                </label>
+
+                            </form>
+
+                        </div>
+
+
+                        <div class="emotion-information">
+
+                            <div class="emotion-top">
+
+                                <strong>
+                                    Muy mal
+                                </strong>
+
+                                <span>
+                                    1 registro · 4%
+                                </span>
+
+                            </div>
+
+
+                            <div class="emotion-progress">
+
+                                <span
+                                    class="emotion-bar very-bad"
+                                    style="width:4%;"
+                                ></span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
 
 
 
-    <!-- ==========================================
-         TOOLTIP / DETALLE EMOCIÓN
-    =========================================== -->
+                    <!-- =============================================
+                         MAL
+                    ============================================== -->
+                    <div class="emotion-row">
 
-    <div
-        class="toast"
-        id="toast">
+                        <div class="emoji-motion animation-delay-1">
 
-        <span>♡</span>
+                            <form class="emoji-form">
 
-        <p id="toastText">
-            Información actualizada.
-        </p>
+                                <label class="emoji sad">
 
-    </div>
+                                    <input
+                                        name="feedback"
+                                        value="2"
+                                        type="radio"
+                                    />
+
+                                    <div>
+
+                                        <svg class="eye left">
+                                            <use href="#eye"></use>
+                                        </svg>
+
+                                        <svg class="eye right">
+                                            <use href="#eye"></use>
+                                        </svg>
+
+                                        <svg class="mouth">
+                                            <use href="#mouth"></use>
+                                        </svg>
+
+                                    </div>
+
+                                </label>
+
+                            </form>
+
+                        </div>
+
+
+                        <div class="emotion-information">
+
+                            <div class="emotion-top">
+
+                                <strong>
+                                    Mal
+                                </strong>
+
+                                <span>
+                                    2 registros · 8%
+                                </span>
+
+                            </div>
+
+
+                            <div class="emotion-progress">
+
+                                <span
+                                    class="emotion-bar bad"
+                                    style="width:8%;"
+                                ></span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
 
 
 
-    <script src="/Sentir/Client/ScreenStudents/Follow-up/Follow-up.js"></script>
+                    <!-- =============================================
+                         NORMAL
+                    ============================================== -->
+                    <div class="emotion-row">
+
+                        <div class="emoji-motion animation-delay-2">
+
+                            <form class="emoji-form">
+
+                                <label class="emoji ok">
+
+                                    <input
+                                        name="feedback"
+                                        value="3"
+                                        type="radio"
+                                    />
+
+                                    <div></div>
+
+                                </label>
+
+                            </form>
+
+                        </div>
+
+
+                        <div class="emotion-information">
+
+                            <div class="emotion-top">
+
+                                <strong>
+                                    Normal
+                                </strong>
+
+                                <span>
+                                    5 registros · 21%
+                                </span>
+
+                            </div>
+
+
+                            <div class="emotion-progress">
+
+                                <span
+                                    class="emotion-bar normal"
+                                    style="width:21%;"
+                                ></span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =============================================
+                         FELIZ
+                    ============================================== -->
+                    <div class="emotion-row emotion-row-dominant">
+
+                        <div class="emoji-motion animation-delay-3">
+
+                            <form class="emoji-form">
+
+                                <label class="emoji good">
+
+                                    <input
+                                        name="feedback"
+                                        value="4"
+                                        type="radio"
+                                    />
+
+                                    <div>
+
+                                        <svg class="eye left">
+                                            <use href="#eye"></use>
+                                        </svg>
+
+                                        <svg class="eye right">
+                                            <use href="#eye"></use>
+                                        </svg>
+
+                                        <svg class="mouth">
+                                            <use href="#mouth"></use>
+                                        </svg>
+
+                                    </div>
+
+                                </label>
+
+                            </form>
+
+                        </div>
+
+
+                        <div class="emotion-information">
+
+                            <div class="emotion-top">
+
+                                <strong>
+                                    Feliz
+
+                                    <small>
+                                        Más frecuente
+                                    </small>
+                                </strong>
+
+
+                                <span>
+                                    10 registros · 42%
+                                </span>
+
+                            </div>
+
+
+                            <div class="emotion-progress">
+
+                                <span
+                                    class="emotion-bar happy-level"
+                                    style="width:42%;"
+                                ></span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =============================================
+                         MUY FELIZ
+                    ============================================== -->
+                    <div class="emotion-row">
+
+                        <div class="emoji-motion animation-delay-4">
+
+                            <form class="emoji-form">
+
+                                <label class="emoji happy">
+
+                                    <input
+                                        name="feedback"
+                                        value="5"
+                                        type="radio"
+                                    />
+
+                                    <div>
+
+                                        <svg class="eye left">
+                                            <use href="#eye"></use>
+                                        </svg>
+
+                                        <svg class="eye right">
+                                            <use href="#eye"></use>
+                                        </svg>
+
+                                    </div>
+
+                                </label>
+
+                            </form>
+
+                        </div>
+
+
+                        <div class="emotion-information">
+
+                            <div class="emotion-top">
+
+                                <strong>
+                                    Muy feliz
+                                </strong>
+
+                                <span>
+                                    6 registros · 25%
+                                </span>
+
+                            </div>
+
+
+                            <div class="emotion-progress">
+
+                                <span
+                                    class="emotion-bar very-happy"
+                                    style="width:25%;"
+                                ></span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- =================================================
+                 SEMANA
+            ================================================== -->
+            <article class="dashboard-card weekly-card">
+
+                <div class="section-header compact">
+
+                    <div>
+
+                        <span class="section-eyebrow">
+                            ESTA SEMANA
+                        </span>
+
+
+                        <h2>
+                            Tu proceso semanal
+                        </h2>
+
+                    </div>
+
+
+                    <div class="section-icon blue">
+                        <i class="fa-solid fa-wave-square"></i>
+                    </div>
+
+                </div>
+
+
+                <p class="weekly-description">
+                    Una pequeña vista de cómo se han movido
+                    tus registros durante los últimos siete días.
+                </p>
+
+
+                <div class="weekly-chart-wrapper">
+
+                    <canvas id="weeklyChart"></canvas>
+
+                </div>
+
+
+
+                <!-- =============================================
+                     EMOJIS DE LA SEMANA
+                ============================================== -->
+                <div class="weekly-emotions">
+
+
+                    <!-- LUNES NORMAL -->
+                    <div class="weekly-day">
+
+                        <div class="emoji-motion emoji-motion-week">
+
+                            <form class="emoji-form">
+
+                                <label class="emoji ok">
+
+                                    <input
+                                        name="feedback"
+                                        value="3"
+                                        type="radio"
+                                    />
+
+                                    <div></div>
+
+                                </label>
+
+                            </form>
+
+                        </div>
+
+                        <small>L</small>
+
+                    </div>
+
+
+
+                    <!-- MARTES FELIZ -->
+                    <div class="weekly-day">
+
+                        <div class="emoji-motion emoji-motion-week animation-delay-1">
+
+                            <form class="emoji-form">
+
+                                <label class="emoji good">
+
+                                    <input
+                                        name="feedback"
+                                        value="4"
+                                        type="radio"
+                                    />
+
+                                    <div>
+
+                                        <svg class="eye left">
+                                            <use href="#eye"></use>
+                                        </svg>
+
+                                        <svg class="eye right">
+                                            <use href="#eye"></use>
+                                        </svg>
+
+                                        <svg class="mouth">
+                                            <use href="#mouth"></use>
+                                        </svg>
+
+                                    </div>
+
+                                </label>
+
+                            </form>
+
+                        </div>
+
+                        <small>M</small>
+
+                    </div>
+
+
+
+                    <!-- MIÉRCOLES MAL -->
+                    <div class="weekly-day">
+
+                        <div class="emoji-motion emoji-motion-week animation-delay-2">
+
+                            <form class="emoji-form">
+
+                                <label class="emoji sad">
+
+                                    <input
+                                        name="feedback"
+                                        value="2"
+                                        type="radio"
+                                    />
+
+                                    <div>
+
+                                        <svg class="eye left">
+                                            <use href="#eye"></use>
+                                        </svg>
+
+                                        <svg class="eye right">
+                                            <use href="#eye"></use>
+                                        </svg>
+
+                                        <svg class="mouth">
+                                            <use href="#mouth"></use>
+                                        </svg>
+
+                                    </div>
+
+                                </label>
+
+                            </form>
+
+                        </div>
+
+                        <small>M</small>
+
+                    </div>
+
+
+
+                    <!-- JUEVES FELIZ -->
+                    <div class="weekly-day">
+
+                        <div class="emoji-motion emoji-motion-week animation-delay-3">
+
+                            <form class="emoji-form">
+
+                                <label class="emoji good">
+
+                                    <input
+                                        name="feedback"
+                                        value="4"
+                                        type="radio"
+                                    />
+
+                                    <div>
+
+                                        <svg class="eye left">
+                                            <use href="#eye"></use>
+                                        </svg>
+
+                                        <svg class="eye right">
+                                            <use href="#eye"></use>
+                                        </svg>
+
+                                        <svg class="mouth">
+                                            <use href="#mouth"></use>
+                                        </svg>
+
+                                    </div>
+
+                                </label>
+
+                            </form>
+
+                        </div>
+
+                        <small>J</small>
+
+                    </div>
+
+
+
+                    <!-- VIERNES MUY FELIZ -->
+                    <div class="weekly-day">
+
+                        <div class="emoji-motion emoji-motion-week animation-delay-4">
+
+                            <form class="emoji-form">
+
+                                <label class="emoji happy">
+
+                                    <input
+                                        name="feedback"
+                                        value="5"
+                                        type="radio"
+                                    />
+
+                                    <div>
+
+                                        <svg class="eye left">
+                                            <use href="#eye"></use>
+                                        </svg>
+
+                                        <svg class="eye right">
+                                            <use href="#eye"></use>
+                                        </svg>
+
+                                    </div>
+
+                                </label>
+
+                            </form>
+
+                        </div>
+
+                        <small>V</small>
+
+                    </div>
+
+
+
+                    <!-- SÁBADO FELIZ -->
+                    <div class="weekly-day">
+
+                        <div class="emoji-motion emoji-motion-week">
+
+                            <form class="emoji-form">
+
+                                <label class="emoji good">
+
+                                    <input
+                                        name="feedback"
+                                        value="4"
+                                        type="radio"
+                                    />
+
+                                    <div>
+
+                                        <svg class="eye left">
+                                            <use href="#eye"></use>
+                                        </svg>
+
+                                        <svg class="eye right">
+                                            <use href="#eye"></use>
+                                        </svg>
+
+                                        <svg class="mouth">
+                                            <use href="#mouth"></use>
+                                        </svg>
+
+                                    </div>
+
+                                </label>
+
+                            </form>
+
+                        </div>
+
+                        <small>S</small>
+
+                    </div>
+
+
+
+                    <!-- DOMINGO MUY FELIZ -->
+                    <div class="weekly-day active">
+
+                        <div class="emoji-motion emoji-motion-week animation-delay-2">
+
+                            <form class="emoji-form">
+
+                                <label class="emoji happy">
+
+                                    <input
+                                        name="feedback"
+                                        value="5"
+                                        type="radio"
+                                    />
+
+                                    <div>
+
+                                        <svg class="eye left">
+                                            <use href="#eye"></use>
+                                        </svg>
+
+                                        <svg class="eye right">
+                                            <use href="#eye"></use>
+                                        </svg>
+
+                                    </div>
+
+                                </label>
+
+                            </form>
+
+                        </div>
+
+                        <small>D</small>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="weekly-message">
+
+                    <div class="weekly-message-icon">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Cada semana puede ser diferente
+                        </strong>
+
+                        <p>
+                            No necesitas sentirte feliz todos los días.
+                            Lo importante es reconocer cómo estás.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+
+        <!-- =================================================
+             CIERRE
+        ================================================== -->
+        <section class="closing-card">
+
+            <div class="closing-icon">
+                <i class="fa-solid fa-heart"></i>
+            </div>
+
+
+            <div>
+
+                <span>
+                    TU PROCESO ES PERSONAL
+                </span>
+
+                <h3>
+                    Conocerte también es una forma de cuidarte.
+                </h3>
+
+                <p>
+                    Tus registros te ayudan a reconocer tu evolución,
+                    no a juzgar cómo deberías sentirte.
+                </p>
+
+            </div>
+
+
+            <span class="closing-star">
+                ✦
+            </span>
+
+        </section>
+
+
+        <footer class="page-footer">
+
+            SENTIR · Tu espacio para expresarte,
+            conocerte y cuidarte.
+
+        </footer>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         SVG ORIGINAL COMPARTIDO POR LOS EMOJIS
+    ====================================================== -->
+    <svg
+        style="display:none;"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+
+        <symbol
+            id="eye"
+            viewBox="0 0 7 4"
+        >
+
+            <path
+                d="M1,1 C1.83333333,2.16666667 2.66666667,2.75 3.5,2.75 C4.33333333,2.75 5.16666667,2.16666667 6,1"
+            ></path>
+
+        </symbol>
+
+
+        <symbol
+            id="mouth"
+            viewBox="0 0 18 7"
+        >
+
+            <path
+                d="M1,5.5 C3.66666667,2.5 6.33333333,1 9,1 C11.6666667,1 14.3333333,2.5 17,5.5"
+            ></path>
+
+        </symbol>
+
+    </svg>
 
 </body>
-
 </html>

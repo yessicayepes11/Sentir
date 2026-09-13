@@ -25,19 +25,29 @@
 
     <!-- ================= SIDEBAR ================= -->
 
-   <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+ <!-- En el <head> de tus archivos HTML -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- ================= BOTÓN HAMBURGUESA (MÓVIL) ================= -->
+<button class="menu-toggle" id="mobileMenu" aria-label="Abrir menú">
     <i class="fa-solid fa-bars"></i>
 </button>
 
+<!-- ================= OVERLAY MÓVIL ================= -->
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
+<!-- ================= SIDEBAR ================= -->
 <aside class="sidebar" id="sidebar">
+    <!-- Espacio / Contenedor para el Logo -->
     <div class="sidebar-logo">
         <div class="logo-symbol">
-            <a href=""><img src="/Sentir/Shared/LoginResources/logos.png.png" alt="Logo Sentir" id="logoSentir"></a>
+            <a href="#">
+                <img src="/Sentir/Shared/LoginResources/logos.png.png" alt="Logo Sentir" id="logoSentir">
+            </a>
         </div>
     </div>
     
+    <!-- Menú de Navegación -->
     <nav class="menu">
         <a href="/Sentir/Client/ScreenStudents/Students.html" class="menu-item active">
             <i class="fa-solid fa-house"></i>
@@ -59,12 +69,13 @@
             <i class="fa-solid fa-star"></i>
             <span>Insignias</span>
         </a>
-        <a href="/Sentir/Client/ScreenStudents/Help/Help.html" class="menu-item">
-            <i class="fa-solid fa-hands-helping"></i>
+        <a href="/Sentir/Client/ScreenStudents/AskForHelp/AskForHelp.html" class="menu-item">
+            <i class="fa-solid fa-handshake-angle"></i>
             <span>Pedir ayuda</span>
         </a>
     </nav>
 
+    <!-- Parte Inferior -->
     <div class="sidebar-bottom">
         <div class="privacy-box">
             <i class="fa-solid fa-shield-heart"></i>
@@ -73,12 +84,13 @@
                 <small>Tu información está protegida.</small>
             </div>
         </div>
-        <button class="logout">
+        <a href="/Sentir/Client/index.html" class="logout">
             <i class="fa-solid fa-right-from-bracket"></i>
-            <a href="/Sentir/Client/index.html">Cerrar sesión</a>
-        </button>
+            <span>Cerrar sesión</span>
+        </a>
     </div>
 </aside>
+
 
 
     <!-- ================= CONTENIDO ================= -->

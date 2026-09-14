@@ -10,10 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>
-        Sentir | Administración de usuarios
-    </title>
-
+    <title>Sentir | Inicio administrador</title>
 
     <!-- POPPINS -->
 
@@ -25,7 +22,7 @@
     <link
         rel="preconnect"
         href="https://fonts.gstatic.com"
-        crossorigin
+        crossorigin="anonymous"
     >
 
     <link
@@ -33,11 +30,19 @@
         rel="stylesheet"
     >
 
+    <!-- LUCIDE -->
 
-    <!-- ICONOS -->
+    <script
+        src="https://unpkg.com/lucide@latest"
+        defer
+    ></script>
 
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- CHART.JS -->
 
+    <script
+        src="https://cdn.jsdelivr.net/npm/chart.js"
+        defer
+    ></script>
 
     <!-- CSS -->
 
@@ -55,36 +60,33 @@
 <div class="app">
 
 
-    <!-- ========================================= -->
+    <!-- ================================================= -->
     <!-- SIDEBAR -->
-    <!-- ========================================= -->
+    <!-- ================================================= -->
 
     <aside
         class="sidebar"
         id="sidebar"
     >
 
-
-        <!-- LOGO -->
-
         <div class="brand">
 
             <img
                 src="/Sentir/Shared/AdminResources/logo-sentir.png"
-                alt="Sentir"
+                alt="Logo Sentir"
                 class="official-logo"
             >
 
         </div>
 
 
-        <!-- NAVEGACIÓN -->
-
         <nav class="nav-menu">
 
+
             <button
-                class="nav-item"
+                class="nav-item active"
                 id="inicioNav"
+                type="button"
             >
 
                 <i data-lucide="house"></i>
@@ -97,8 +99,9 @@
 
 
             <button
-                class="nav-item active"
+                class="nav-item"
                 id="usuariosNav"
+                type="button"
             >
 
                 <i data-lucide="users"></i>
@@ -109,12 +112,12 @@
 
             </button>
 
+
         </nav>
 
 
-        <!-- PARTE INFERIOR -->
-
         <div class="sidebar-bottom">
+
 
             <div class="community-message">
 
@@ -129,12 +132,10 @@
             </div>
 
 
-            <!-- IMAGEN DE LOS DOS PERSONAJES -->
-
             <div class="sidebar-characters">
 
                 <img
-                    src="/Sentir/Shared/AdminResources/personajes-sentir.png"
+                    src="/Sentir/Shared/AdminResources/MuñEsquina.png"
                     alt="Personajes Sentir"
                     class="characters-image"
                 >
@@ -145,22 +146,22 @@
             <p class="copyright">
 
                 © 2026 Sentir
-
                 <br>
-
                 Todos los derechos reservados.
 
             </p>
 
+
         </div>
+
 
     </aside>
 
 
 
-    <!-- ========================================= -->
-    <!-- OVERLAY DEL MENÚ MÓVIL -->
-    <!-- ========================================= -->
+    <!-- ================================================= -->
+    <!-- OVERLAY -->
+    <!-- ================================================= -->
 
     <div
         class="sidebar-overlay"
@@ -169,74 +170,60 @@
 
 
 
-    <!-- ========================================= -->
+    <!-- ================================================= -->
     <!-- BOTÓN HAMBURGUESA -->
-    <!-- ========================================= -->
+    <!-- ================================================= -->
 
     <button
         class="mobile-menu-button"
         id="mobileMenuButton"
+        type="button"
         aria-label="Abrir menú"
     >
 
-        <i data-lucide="menu"></i>
+        <span id="menuIcon">
+            ☰
+        </span>
 
     </button>
 
 
 
-    <!-- ========================================= -->
+    <!-- ================================================= -->
     <!-- CONTENIDO PRINCIPAL -->
-    <!-- ========================================= -->
+    <!-- ================================================= -->
 
     <main class="main-content">
 
 
+        <!-- ================================================= -->
         <!-- HEADER -->
+        <!-- ================================================= -->
 
         <header class="top-header">
 
 
-            <div class="header-title">
+            <div class="welcome-title">
 
                 <p class="hello">
-                    ¡Hola, Administradora!
+                    Panel administrativo
                 </p>
 
+                <h1>
+                    ¡Hola, Administradora!
+                </h1>
 
-                <div class="title-row">
-
-                    <div class="title-icon">
-
-                        <i data-lucide="users"></i>
-
-                    </div>
-
-
-                    <div>
-
-                        <h2>
-                            Administración de usuarios
-                        </h2>
-
-                        <p>
-                            Gestiona, crea, edita y elimina usuarios del sistema.
-                        </p>
-
-                    </div>
-
-                </div>
+                <p class="welcome-copy">
+                    Gestiona tu comunidad y mantén organizada
+                    toda la información de Sentir.
+                </p>
 
             </div>
 
 
 
-            <!-- ACCIONES HEADER -->
-
             <div class="header-actions">
 
-
-                <!-- BUSCADOR SUPERIOR -->
 
                 <div class="global-search">
 
@@ -245,16 +232,16 @@
                     <input
                         type="text"
                         id="globalSearch"
-                        placeholder="Buscar usuarios, correos o documentos..."
+                        placeholder="Buscar usuarios..."
                     >
 
                 </div>
 
 
-
-                <!-- NOTIFICACIONES -->
-
-                <button class="notification-button">
+                <button
+                    class="notification-button"
+                    type="button"
+                >
 
                     <i data-lucide="bell"></i>
 
@@ -264,9 +251,6 @@
 
                 </button>
 
-
-
-                <!-- ADMINISTRADORA SIN FOTO -->
 
                 <div class="admin-profile">
 
@@ -282,44 +266,202 @@
 
                     </div>
 
-
                     <i data-lucide="chevron-down"></i>
 
                 </div>
 
+
             </div>
+
 
         </header>
 
 
 
-        <!-- FRASE -->
+        <!-- ================================================= -->
+        <!-- HERO -->
+        <!-- ================================================= -->
 
-        <div class="kind-message">
-
-            <i data-lucide="heart"></i>
-
-            Personas que se cuidan,
-            hacen un mundo más amable.
-
-        </div>
+        <section class="hero-section">
 
 
+            <div class="hero-copy">
 
-        <!-- ========================================= -->
-        <!-- ESTADÍSTICAS -->
-        <!-- ========================================= -->
+                <span class="hero-label">
+
+                    <i data-lucide="sparkles"></i>
+
+                    Bienvenida a Sentir
+
+                </span>
+
+
+                <h2>
+
+                    Una comunidad organizada
+                    <span>también cuida.</span>
+
+                </h2>
+
+
+                <p>
+
+                    Desde aquí puedes administrar usuarios,
+                    revisar la actividad del sistema y mantener
+                    todo preparado para el acompañamiento de la comunidad.
+
+                </p>
+
+
+                <div class="hero-actions">
+
+                    <button
+                        class="primary-button"
+                        id="heroAddUser"
+                        type="button"
+                    >
+
+                        <i data-lucide="user-round-plus"></i>
+
+                        Registrar usuario
+
+                    </button>
+
+
+                    <button
+                        class="secondary-button"
+                        id="heroViewUsers"
+                        type="button"
+                    >
+
+                        <i data-lucide="users"></i>
+
+                        Ver usuarios
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="hero-visual">
+
+
+                <div class="hero-glow hero-glow-one"></div>
+
+                <div class="hero-glow hero-glow-two"></div>
+
+
+                <img
+                    src="/Sentir/Shared/AdminResources/PersonajesAdmin.png"
+                    alt="Comunidad Sentir"
+                    class="hero-characters"
+                >
+
+
+                <div class="floating-card floating-card-one">
+
+                    <div class="floating-icon">
+
+                        <i data-lucide="heart"></i>
+
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Bienestar
+                        </strong>
+
+                        <span>
+                            Siempre presente
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="floating-card floating-card-two">
+
+                    <div class="floating-icon blue-floating">
+
+                        <i data-lucide="shield-check"></i>
+
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Organización
+                        </strong>
+
+                        <span>
+                            Comunidad segura
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ================================================= -->
+        <!-- RESUMEN -->
+        <!-- ================================================= -->
 
         <section class="stats-grid">
 
-
-            <!-- TOTAL USUARIOS -->
 
             <article class="stat-card">
 
                 <div class="stat-icon purple">
 
-                    <i data-lucide="users"></i>
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
+                        <path
+                            d="M16 21V19C16 17.9 15.1 17 14 17H6C4.9 17 4 17.9 4 19V21"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                        <circle
+                            cx="10"
+                            cy="7"
+                            r="4"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        />
+
+                        <path
+                            d="M22 21V19C22 18.1 21.4 17.3 20.5 17.1"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M16.5 3.1C17.4 3.3 18 4.1 18 5C18 5.9 17.4 6.7 16.5 6.9"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                    </svg>
 
                 </div>
 
@@ -331,8 +473,12 @@
                     </p>
 
                     <h3 id="totalUsers">
-                        0
+                        128
                     </h3>
+
+                    <span>
+                        Comunidad activa
+                    </span>
 
                 </div>
 
@@ -340,13 +486,31 @@
 
 
 
-            <!-- ESTUDIANTES -->
-
             <article class="stat-card">
 
                 <div class="stat-icon blue">
 
-                    <i data-lucide="graduation-cap"></i>
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
+                        <path
+                            d="M2 10L12 5L22 10L12 15L2 10Z"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linejoin="round"
+                        />
+
+                        <path
+                            d="M6 12V16C6 18 9 20 12 20C15 20 18 18 18 16V12"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                    </svg>
 
                 </div>
 
@@ -357,9 +521,13 @@
                         Estudiantes
                     </p>
 
-                    <h3 id="studentCount">
-                        0
+                    <h3 id="studentsCount">
+                        86
                     </h3>
+
+                    <span>
+                        Usuarios principales
+                    </span>
 
                 </div>
 
@@ -367,13 +535,41 @@
 
 
 
-            <!-- DOCENTES -->
-
             <article class="stat-card">
 
                 <div class="stat-icon lavender">
 
-                    <i data-lucide="presentation"></i>
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
+                        <rect
+                            x="3"
+                            y="4"
+                            width="18"
+                            height="12"
+                            rx="2"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        />
+
+                        <path
+                            d="M8 20L12 16L16 20"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M8 9H16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                    </svg>
 
                 </div>
 
@@ -384,53 +580,405 @@
                         Docentes
                     </p>
 
-                    <h3 id="teacherCount">
-                        0
+                    <h3 id="teachersCount">
+                        18
                     </h3>
+
+                    <span>
+                        Acompañamiento escolar
+                    </span>
 
                 </div>
 
             </article>
 
+
+
+            <article class="stat-card">
+
+                <div class="stat-icon support">
+
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
+                        <path
+                            d="M20.8 4.6C18.8 2.6 15.5 2.6 13.5 4.6L12 6.1L10.5 4.6C8.5 2.6 5.2 2.6 3.2 4.6C1.1 6.7 1.1 10 3.2 12.1L12 20.9L20.8 12.1C22.9 10 22.9 6.7 20.8 4.6Z"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linejoin="round"
+                        />
+
+                    </svg>
+
+                </div>
+
+
+                <div>
+
+                    <p>
+                        Equipo de apoyo
+                    </p>
+
+                    <h3 id="supportCount">
+                        14
+                    </h3>
+
+                    <span>
+                        UAI y psicología
+                    </span>
+
+                </div>
+
+            </article>
+
+
         </section>
 
 
 
-        <!-- ========================================= -->
-        <!-- GESTIÓN DE USUARIOS -->
-        <!-- ========================================= -->
+        <!-- ================================================= -->
+        <!-- CONTENIDO MEDIO -->
+        <!-- ================================================= -->
 
-        <section class="management-layout">
-
-
-            <!-- ========================================= -->
-            <!-- TABLA -->
-            <!-- ========================================= -->
-
-            <div class="users-card">
+        <section class="dashboard-grid">
 
 
-                <div class="users-card-header">
+            <!-- DISTRIBUCIÓN -->
 
-                    <div class="section-title">
+            <article class="dashboard-card roles-card">
 
-                        <i data-lucide="user-round"></i>
+
+                <div class="card-header">
+
+                    <div>
+
+                        <span>
+                            Vista general
+                        </span>
 
                         <h3>
-                            Lista de usuarios
+                            Usuarios por rol
+                        </h3>
+
+                    </div>
+
+
+                    <div class="small-badge">
+
+                        <i data-lucide="pie-chart"></i>
+
+                        Distribución
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="roles-content">
+
+
+                    <div class="chart-wrapper">
+
+                        <canvas id="rolesChart"></canvas>
+
+
+                        <div class="chart-center">
+
+                            <strong>
+                                128
+                            </strong>
+
+                            <span>
+                                usuarios
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="roles-list">
+
+
+                        <div class="role-row">
+
+                            <span class="role-dot students-dot"></span>
+
+                            <p>
+                                Estudiantes
+                            </p>
+
+                            <strong>
+                                86
+                            </strong>
+
+                        </div>
+
+
+                        <div class="role-row">
+
+                            <span class="role-dot teachers-dot"></span>
+
+                            <p>
+                                Docentes
+                            </p>
+
+                            <strong>
+                                18
+                            </strong>
+
+                        </div>
+
+
+                        <div class="role-row">
+
+                            <span class="role-dot uai-dot"></span>
+
+                            <p>
+                                UAI
+                            </p>
+
+                            <strong>
+                                6
+                            </strong>
+
+                        </div>
+
+
+                        <div class="role-row">
+
+                            <span class="role-dot psychologist-dot"></span>
+
+                            <p>
+                                Psicóloga
+                            </p>
+
+                            <strong>
+                                5
+                            </strong>
+
+                        </div>
+
+
+                        <div class="role-row">
+
+                            <span class="role-dot directors-dot"></span>
+
+                            <p>
+                                Directivos
+                            </p>
+
+                            <strong>
+                                7
+                            </strong>
+
+                        </div>
+
+
+                        <div class="role-row">
+
+                            <span class="role-dot committee-dot"></span>
+
+                            <p>
+                                Comité
+                            </p>
+
+                            <strong>
+                                6
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </article>
+
+
+
+            <!-- ACCIONES RÁPIDAS -->
+
+            <article class="dashboard-card quick-card">
+
+
+                <div class="card-header">
+
+                    <div>
+
+                        <span>
+                            Accesos directos
+                        </span>
+
+                        <h3>
+                            Acciones rápidas
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="quick-actions">
+
+
+                    <button
+                        class="quick-action purple-action"
+                        id="quickRegister"
+                        type="button"
+                    >
+
+                        <div class="quick-icon">
+
+                            <i data-lucide="user-round-plus"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Registrar usuario
+                            </strong>
+
+                            <span>
+                                Añade una nueva persona a Sentir.
+                            </span>
+
+                        </div>
+
+
+                        <i
+                            class="quick-arrow"
+                            data-lucide="arrow-right"
+                        ></i>
+
+                    </button>
+
+
+
+                    <button
+                        class="quick-action blue-action"
+                        id="quickUsers"
+                        type="button"
+                    >
+
+                        <div class="quick-icon">
+
+                            <i data-lucide="users"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Gestionar usuarios
+                            </strong>
+
+                            <span>
+                                Consulta, edita o elimina registros.
+                            </span>
+
+                        </div>
+
+
+                        <i
+                            class="quick-arrow"
+                            data-lucide="arrow-right"
+                        ></i>
+
+                    </button>
+
+
+
+                    <button
+                        class="quick-action lavender-action"
+                        id="quickReport"
+                        type="button"
+                    >
+
+                        <div class="quick-icon">
+
+                            <i data-lucide="file-chart-column"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Resumen del sistema
+                            </strong>
+
+                            <span>
+                                Revisa información general.
+                            </span>
+
+                        </div>
+
+
+                        <i
+                            class="quick-arrow"
+                            data-lucide="arrow-right"
+                        ></i>
+
+                    </button>
+
+
+                </div>
+
+
+            </article>
+
+
+        </section>
+
+
+
+        <!-- ================================================= -->
+        <!-- PARTE INFERIOR -->
+        <!-- ================================================= -->
+
+        <section class="bottom-grid">
+
+
+            <!-- ACTIVIDAD -->
+
+            <article class="dashboard-card activity-card">
+
+
+                <div class="card-header">
+
+                    <div>
+
+                        <span>
+                            Últimos movimientos
+                        </span>
+
+                        <h3>
+                            Actividad reciente
                         </h3>
 
                     </div>
 
 
                     <button
-                        class="primary-button"
-                        id="openAddUser"
+                        class="soft-button"
+                        id="viewActivity"
+                        type="button"
                     >
 
-                        <i data-lucide="plus"></i>
-
-                        Agregar usuario
+                        Ver todo
 
                     </button>
 
@@ -438,977 +986,120 @@
 
 
 
-                <!-- FILTROS -->
+                <div
+                    class="activity-list"
+                    id="activityList"
+                ></div>
 
-                <div class="filters">
 
-
-                    <div class="filter-search">
-
-                        <i data-lucide="search"></i>
-
-                        <input
-                            type="text"
-                            id="searchInput"
-                            placeholder="Buscar por nombre, documento o correo..."
-                        >
-
-                    </div>
+            </article>
 
 
 
-                    <select id="roleFilter">
+            <!-- MENSAJE -->
 
-                        <option value="">
-                            Todos los roles
-                        </option>
-
-                        <option value="Estudiante">
-                            Estudiante
-                        </option>
-
-                        <option value="Docente">
-                            Docente
-                        </option>
-
-                        <option value="UAI">
-                            UAI
-                        </option>
-
-                        <option value="Psicóloga">
-                            Psicóloga
-                        </option>
-
-                        <option value="Directivo">
-                            Directivo
-                        </option>
-
-                        <option value="Comité de convivencia">
-                            Comité de convivencia
-                        </option>
-
-                    </select>
+            <article class="wellbeing-main-card">
 
 
+                <div class="wellbeing-decoration decoration-a"></div>
 
-                    <select id="statusFilter">
-
-                        <option value="">
-                            Todos los estados
-                        </option>
-
-                        <option value="Activo">
-                            Activo
-                        </option>
-
-                        <option value="Inactivo">
-                            Inactivo
-                        </option>
-
-                        <option value="Pendiente">
-                            Pendiente
-                        </option>
-
-                    </select>
+                <div class="wellbeing-decoration decoration-b"></div>
 
 
+                <div class="wellbeing-main-icon">
 
-                    <button
-                        class="filter-button"
-                        id="clearFilters"
-                    >
-
-                        <i data-lucide="list-filter"></i>
-
-                        Limpiar
-
-                    </button>
+                    <i data-lucide="heart-handshake"></i>
 
                 </div>
 
 
-
-                <!-- TABLA -->
-
-                <div class="table-wrapper">
-
-                    <table>
+                <span>
+                    Comunidad Sentir
+                </span>
 
 
-                        <thead>
-
-                        <tr>
-
-                            <th></th>
-
-                            <th>
-                                Nombre
-                            </th>
-
-                            <th>
-                                Documento
-                            </th>
-
-                            <th>
-                                Correo
-                            </th>
-
-                            <th>
-                                Rol
-                            </th>
-
-                            <th>
-                                Estado
-                            </th>
-
-                            <th>
-                                Último acceso
-                            </th>
-
-                            <th>
-                                Acciones
-                            </th>
-
-                        </tr>
-
-                        </thead>
+                <h3>
+                    Administrar también
+                    es cuidar.
+                </h3>
 
 
+                <p>
 
-                        <tbody id="usersTableBody">
+                    Cada registro organizado ayuda
+                    a que el acompañamiento llegue
+                    a la persona correcta.
 
-                        </tbody>
+                </p>
 
-                    </table>
+
+                <div class="wellbeing-tags">
+
+                    <span>
+                        Cercana
+                    </span>
+
+                    <span>
+                        Segura
+                    </span>
+
+                    <span>
+                        Preventiva
+                    </span>
 
                 </div>
 
 
-
-                <!-- FOOTER TABLA -->
-
-                <div class="table-footer">
-
-                    <p id="tableCounter">
-                        Mostrando 0 usuarios
-                    </p>
+            </article>
 
 
-                    <div class="pagination">
-
-                        <button>
-
-                            <i data-lucide="chevron-left"></i>
-
-                        </button>
+        </section>
 
 
-                        <button class="active-page">
-                            1
-                        </button>
+
+        <!-- ================================================= -->
+        <!-- FOOTER INTERNO -->
+        <!-- ================================================= -->
+
+        <section class="bottom-message">
 
 
-                        <button>
-                            2
-                        </button>
+            <div class="bottom-message-icon">
 
-
-                        <button>
-                            3
-                        </button>
-
-
-                        <button>
-
-                            <i data-lucide="chevron-right"></i>
-
-                        </button>
-
-                    </div>
-
-                </div>
+                <i data-lucide="sparkles"></i>
 
             </div>
 
 
+            <p>
 
-            <!-- ========================================= -->
-            <!-- USUARIO SELECCIONADO -->
-            <!-- ========================================= -->
+                El bienestar de una comunidad
+                también comienza con una buena organización.
 
-            <aside class="selected-user-card">
+            </p>
 
 
-                <div class="selected-header">
+            <strong>
+                Sentir
+            </strong>
 
-                    <div>
-
-                        <i data-lucide="user-round"></i>
-
-                        <h3>
-                            Usuario seleccionado
-                        </h3>
-
-                    </div>
-
-
-                    <button>
-
-                        <i data-lucide="ellipsis"></i>
-
-                    </button>
-
-                </div>
-
-
-
-                <!-- FOTO DEL USUARIO -->
-
-                <div class="selected-profile">
-
-                    <div
-                        class="large-avatar"
-                        id="detailAvatar"
-                    >
-
-                        <span class="avatar-fallback">
-                            —
-                        </span>
-
-                    </div>
-
-
-                    <div
-                        class="online-dot"
-                        id="onlineDot"
-                    ></div>
-
-                </div>
-
-
-
-                <h2 id="detailName">
-
-                    Selecciona un usuario
-
-                </h2>
-
-
-
-                <span
-                    class="role-badge student"
-                    id="detailRole"
-                >
-
-                    Usuario
-
-                </span>
-
-
-
-                <!-- DATOS -->
-
-                <div class="user-details">
-
-
-                    <div>
-
-                        <i data-lucide="badge"></i>
-
-                        <span id="detailDocument">
-                            —
-                        </span>
-
-                    </div>
-
-
-
-                    <div>
-
-                        <i data-lucide="mail"></i>
-
-                        <span id="detailEmail">
-                            —
-                        </span>
-
-                    </div>
-
-
-
-                    <div>
-
-                        <i data-lucide="phone"></i>
-
-                        <span id="detailPhone">
-                            —
-                        </span>
-
-                    </div>
-
-
-
-                    <!-- GRADO -->
-                    <!-- SOLO SE MUESTRA SI ES ESTUDIANTE -->
-
-                    <div
-                        id="detailGradeRow"
-                        class="detail-grade-row hidden"
-                    >
-
-                        <i data-lucide="graduation-cap"></i>
-
-                        <span id="detailGrade">
-                            —
-                        </span>
-
-                    </div>
-
-
-
-                    <div>
-
-                        <i data-lucide="calendar-days"></i>
-
-                        <span id="detailDate">
-                            —
-                        </span>
-
-                    </div>
-
-
-
-                    <div>
-
-                        <i data-lucide="clock-3"></i>
-
-                        <span id="detailAccess">
-                            —
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- MENSAJE -->
-
-                <div class="mental-message">
-
-                    <span class="quote">
-                        “
-                    </span>
-
-                    <p>
-                        Cuidar de mi salud mental
-                        también es parte de mi éxito.
-                    </p>
-
-                    <i data-lucide="heart"></i>
-
-                </div>
-
-
-
-                <!-- BOTONES -->
-
-                <div class="detail-actions">
-
-
-                    <button
-                        class="edit-user-button"
-                        id="editSelected"
-                    >
-
-                        <i data-lucide="pencil"></i>
-
-                        Editar usuario
-
-                    </button>
-
-
-
-                    <button
-                        class="delete-user-button"
-                        id="deleteSelected"
-                    >
-
-                        <i data-lucide="trash-2"></i>
-
-                        Eliminar usuario
-
-                    </button>
-
-                </div>
-
-
-
-                <!-- TARJETA INFERIOR -->
-
-                <div class="wellbeing-card">
-
-                    <div class="bulb">
-
-                        <i data-lucide="lightbulb"></i>
-
-                    </div>
-
-
-                    <div>
-
-                        <strong>
-                            Un mejor bienestar juntos
-                        </strong>
-
-                        <p>
-                            Cada usuario en Sentir
-                            es parte de una comunidad
-                            que cree en la salud mental.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </aside>
 
         </section>
+
 
     </main>
 
-</div>
-
-
-
-<!-- ================================================= -->
-<!-- MODAL REGISTRAR / EDITAR USUARIO -->
-<!-- ================================================= -->
-
-<div
-    class="modal-overlay"
-    id="userModal"
->
-
-
-    <div class="modal">
-
-
-        <div class="modal-header">
-
-            <div>
-
-                <span class="modal-label">
-                    Sentir
-                </span>
-
-                <h2 id="modalTitle">
-                    Registrar usuario
-                </h2>
-
-                <p class="modal-subtitle">
-                    Completa la información del usuario.
-                </p>
-
-            </div>
-
-
-            <button
-                class="close-modal"
-                id="closeModal"
-                type="button"
-            >
-
-                <i data-lucide="x"></i>
-
-            </button>
-
-        </div>
-
-
-
-        <form id="userForm">
-
-
-            <input
-                type="hidden"
-                id="editingId"
-            >
-
-
-
-            <div class="form-grid">
-
-
-                <!-- ================================= -->
-                <!-- NOMBRE -->
-                <!-- ================================= -->
-
-                <div class="form-group">
-
-                    <label for="nameInput">
-                        Nombre
-                    </label>
-
-
-                    <div class="input-with-icon">
-
-                        <i data-lucide="user"></i>
-
-                        <input
-                            id="nameInput"
-                            type="text"
-                            placeholder="Nombre completo"
-                            required
-                        >
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- ================================= -->
-                <!-- DOCUMENTO -->
-                <!-- ================================= -->
-
-                <div class="form-group">
-
-                    <label for="documentInput">
-                        Documento
-                    </label>
-
-
-                    <div class="input-with-icon">
-
-                        <i data-lucide="badge"></i>
-
-                        <input
-                            id="documentInput"
-                            type="text"
-                            placeholder="Número de documento"
-                            required
-                        >
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- ================================= -->
-                <!-- CORREO -->
-                <!-- ================================= -->
-
-                <div class="form-group">
-
-                    <label for="emailInput">
-                        Correo
-                    </label>
-
-
-                    <div class="input-with-icon">
-
-                        <i data-lucide="mail"></i>
-
-                        <input
-                            id="emailInput"
-                            type="email"
-                            placeholder="usuario@correo.com"
-                            required
-                        >
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- ================================= -->
-                <!-- CELULAR -->
-                <!-- ================================= -->
-
-                <div class="form-group">
-
-                    <label for="phoneInput">
-                        Celular
-                    </label>
-
-
-                    <div class="input-with-icon">
-
-                        <i data-lucide="phone"></i>
-
-                        <input
-                            id="phoneInput"
-                            type="tel"
-                            placeholder="+57 300 000 0000"
-                            required
-                        >
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- ================================= -->
-                <!-- FOTO -->
-                <!-- ================================= -->
-
-                <div class="form-group full-width">
-
-                    <label for="photoInput">
-                        Foto
-                    </label>
-
-
-                    <div class="photo-upload">
-
-
-                        <div
-                            class="photo-preview"
-                            id="photoPreview"
-                        >
-
-                            <i data-lucide="image-plus"></i>
-
-                        </div>
-
-
-
-                        <div class="photo-upload-content">
-
-                            <strong>
-                                Foto de perfil
-                            </strong>
-
-
-                            <p>
-                                La fotografía se visualizará en el perfil
-                                del usuario y posteriormente podrá
-                                almacenarse desde la base de datos.
-                            </p>
-
-
-                            <label
-                                for="photoInput"
-                                class="upload-button"
-                            >
-
-                                <i data-lucide="upload"></i>
-
-                                Seleccionar foto
-
-                            </label>
-
-
-                            <input
-                                id="photoInput"
-                                type="file"
-                                accept="image/*"
-                                hidden
-                            >
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- ================================= -->
-                <!-- CONTRASEÑA -->
-                <!-- ================================= -->
-
-                <div class="form-group">
-
-                    <label for="passwordInput">
-                        Contraseña
-                    </label>
-
-
-                    <div class="input-with-icon">
-
-                        <i data-lucide="lock-keyhole"></i>
-
-                        <input
-                            id="passwordInput"
-                            type="password"
-                            placeholder="Contraseña"
-                            required
-                        >
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- ================================= -->
-                <!-- ROL -->
-                <!-- ================================= -->
-
-                <div class="form-group">
-
-                    <label for="roleInput">
-                        Rol
-                    </label>
-
-
-                    <div class="input-with-icon">
-
-                        <i data-lucide="shield-user"></i>
-
-
-                        <select
-                            id="roleInput"
-                            required
-                        >
-
-                            <option value="">
-                                Seleccionar rol
-                            </option>
-
-                            <option value="Estudiante">
-                                Estudiante
-                            </option>
-
-                            <option value="Docente">
-                                Docente
-                            </option>
-
-                            <option value="UAI">
-                                UAI
-                            </option>
-
-                            <option value="Psicóloga">
-                                Psicóloga
-                            </option>
-
-                            <option value="Directivo">
-                                Directivo
-                            </option>
-
-                            <option value="Comité de convivencia">
-                                Comité de convivencia
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- ================================= -->
-                <!-- GRADO -->
-                <!-- SE ACTIVA SOLO PARA ESTUDIANTE -->
-                <!-- ================================= -->
-
-                <div
-                    class="form-group grade-field hidden"
-                    id="gradeField"
-                >
-
-                    <label for="gradeInput">
-                        Grado
-                    </label>
-
-
-                    <div class="input-with-icon">
-
-                        <i data-lucide="graduation-cap"></i>
-
-
-                        <select id="gradeInput">
-
-                            <option value="">
-                                Seleccionar grado
-                            </option>
-
-                            <option value="6°">
-                                6°
-                            </option>
-
-                            <option value="7°">
-                                7°
-                            </option>
-
-                            <option value="8°">
-                                8°
-                            </option>
-
-                            <option value="9°">
-                                9°
-                            </option>
-
-                            <option value="10°">
-                                10°
-                            </option>
-
-                            <option value="11°">
-                                11°
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- ================================= -->
-                <!-- ESTADO -->
-                <!-- ================================= -->
-
-                <div class="form-group">
-
-                    <label for="statusInput">
-                        Estado
-                    </label>
-
-
-                    <div class="input-with-icon">
-
-                        <i data-lucide="circle-check"></i>
-
-
-                        <select
-                            id="statusInput"
-                            required
-                        >
-
-                            <option value="Activo">
-                                Activo
-                            </option>
-
-                            <option value="Inactivo">
-                                Inactivo
-                            </option>
-
-                            <option value="Pendiente">
-                                Pendiente
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- BOTONES -->
-
-            <div class="modal-actions">
-
-                <button
-                    type="button"
-                    class="cancel-button"
-                    id="cancelModal"
-                >
-
-                    Cancelar
-
-                </button>
-
-
-                <button
-                    type="submit"
-                    class="save-button"
-                >
-
-                    <i data-lucide="save"></i>
-
-                    Guardar usuario
-
-                </button>
-
-            </div>
-
-        </form>
-
-    </div>
 
 </div>
 
 
 
-<!-- ================================================= -->
-<!-- MODAL ELIMINAR -->
-<!-- ================================================= -->
-
-<div
-    class="modal-overlay"
-    id="deleteModal"
->
-
-
-    <div class="confirm-modal">
-
-
-        <div class="delete-icon">
-
-            <i data-lucide="trash-2"></i>
-
-        </div>
-
-
-        <h2>
-            ¿Eliminar usuario?
-        </h2>
-
-
-        <p>
-            Esta acción eliminará al usuario seleccionado.
-            ¿Deseas continuar?
-        </p>
-
-
-        <div class="confirm-actions">
-
-            <button
-                class="cancel-button"
-                id="cancelDelete"
-            >
-
-                Cancelar
-
-            </button>
-
-
-            <button
-                class="confirm-delete"
-                id="confirmDelete"
-            >
-
-                Sí, eliminar
-
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-
-<!-- ================================================= -->
 <!-- TOAST -->
-<!-- ================================================= -->
 
 <div
     class="toast"
     id="toast"
 >
-
-    <i data-lucide="circle-check"></i>
 
     <span id="toastText"></span>
 

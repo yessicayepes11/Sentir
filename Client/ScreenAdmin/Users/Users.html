@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Sentir | Usuarios</title>
+
+
+    <!-- POPPINS -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin="anonymous"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- LUCIDE -->
+
+    <script
+        src="https://unpkg.com/lucide@latest"
+        defer
+    ></script>
+
+
+    <!-- CSS -->
+
+    <link
+        rel="stylesheet"
+        href="Users.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- ================================================= -->
+    <!-- SIDEBAR -->
+    <!-- ================================================= -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+
+        <!-- LOGO -->
+
+        <div class="brand">
+
+            <img
+                src="/Sentir/Shared/AdminResources/logo-sentir.png"
+                alt="Logo Sentir"
+                class="official-logo"
+            >
+
+        </div>
+
+
+        <!-- NAVEGACIÓN -->
+
+        <nav class="nav-menu">
+
+
+            <button
+                class="nav-item"
+                id="inicioNav"
+                type="button"
+            >
+
+                <i data-lucide="house"></i>
+
+                <span>
+                    Inicio
+                </span>
+
+            </button>
+
+
+            <button
+                class="nav-item active"
+                id="usuariosNav"
+                type="button"
+            >
+
+                <i data-lucide="users"></i>
+
+                <span>
+                    Usuarios
+                </span>
+
+            </button>
+
+
+        </nav>
+
+
+        <!-- PARTE INFERIOR -->
+
+        <div class="sidebar-bottom">
+
+
+            <div class="community-message">
+
+                <i data-lucide="heart"></i>
+
+                <p>
+                    Un entorno más humano,
+                    <br>
+                    una comunidad más fuerte.
+                </p>
+
+            </div>
+
+
+            <div class="sidebar-characters">
+
+                <img
+                    src="/Sentir/Shared/AdminResources/MuñEsquina.png"
+                    alt="Personajes Sentir"
+                    class="characters-image"
+                >
+
+            </div>
+
+
+            <p class="copyright">
+
+                © 2026 Sentir
+                <br>
+                Todos los derechos reservados.
+
+            </p>
+
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- ================================================= -->
+    <!-- OVERLAY -->
+    <!-- ================================================= -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+
+    <!-- ================================================= -->
+    <!-- HAMBURGUESA -->
+    <!-- ================================================= -->
+
+    <button
+        class="mobile-menu-button"
+        id="mobileMenuButton"
+        type="button"
+        aria-label="Abrir menú"
+    >
+
+        <span id="menuIcon">
+            ☰
+        </span>
+
+    </button>
+
+
+
+    <!-- ================================================= -->
+    <!-- CONTENIDO -->
+    <!-- ================================================= -->
+
+    <main class="main-content">
+
+
+        <!-- ================================================= -->
+        <!-- HEADER -->
+        <!-- ================================================= -->
+
+        <header class="top-header">
+
+
+            <div class="header-title">
+
+                <p class="hello">
+                    ¡Hola, Administradora!
+                </p>
+
+
+                <div class="title-row">
+
+
+                    <div class="title-icon">
+
+                        <i data-lucide="users"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h1>
+                            Administración de usuarios
+                        </h1>
+
+                        <p>
+                            Gestiona, registra, edita y elimina
+                            los usuarios de Sentir.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+            <div class="header-actions">
+
+
+                <div class="global-search">
+
+                    <i data-lucide="search"></i>
+
+                    <input
+                        type="text"
+                        id="globalSearch"
+                        placeholder="Buscar usuarios..."
+                    >
+
+                </div>
+
+
+                <button
+                    class="notification-button"
+                    type="button"
+                >
+
+                    <i data-lucide="bell"></i>
+
+                    <span>
+                        3
+                    </span>
+
+                </button>
+
+
+                <div class="admin-profile">
+
+                    <div class="admin-info">
+
+                        <strong>
+                            Admin
+                        </strong>
+
+                        <p>
+                            Administradora
+                        </p>
+
+                    </div>
+
+
+                    <i data-lucide="chevron-down"></i>
+
+                </div>
+
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- FRASE -->
+
+        <div class="kind-message">
+
+            <i data-lucide="heart"></i>
+
+            Personas que se cuidan hacen un mundo más amable.
+
+        </div>
+
+
+
+        <!-- ================================================= -->
+        <!-- ESTADÍSTICAS -->
+        <!-- ================================================= -->
+
+        <section class="stats-grid">
+
+
+            <!-- TOTAL USUARIOS -->
+
+            <article class="stat-card">
+
+                <div class="stat-icon purple">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+
+                        <path
+                            d="M16 21V19C16 17.9 15.1 17 14 17H6C4.9 17 4 17.9 4 19V21"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+
+                        <circle
+                            cx="10"
+                            cy="7"
+                            r="4"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        />
+
+                        <path
+                            d="M22 21V19C22 18.1 21.4 17.3 20.5 17.1"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M16.5 3.1C17.4 3.3 18 4.1 18 5C18 5.9 17.4 6.7 16.5 6.9"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                    </svg>
+
+                </div>
+
+
+                <div>
+
+                    <p>
+                        Total usuarios
+                    </p>
+
+                    <h2 id="totalUsers">
+                        0
+                    </h2>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- ESTUDIANTES -->
+
+            <article class="stat-card">
+
+                <div class="stat-icon blue">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+
+                        <path
+                            d="M2 10L12 5L22 10L12 15L2 10Z"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linejoin="round"
+                        />
+
+                        <path
+                            d="M6 12V16C6 18 9 20 12 20C15 20 18 18 18 16V12"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M22 10V16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                    </svg>
+
+                </div>
+
+
+                <div>
+
+                    <p>
+                        Estudiantes
+                    </p>
+
+                    <h2 id="studentCount">
+                        0
+                    </h2>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- DOCENTES -->
+
+            <article class="stat-card">
+
+                <div class="stat-icon lavender">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+
+                        <rect
+                            x="3"
+                            y="4"
+                            width="18"
+                            height="12"
+                            rx="2"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        />
+
+                        <path
+                            d="M8 20L12 16L16 20"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+
+                        <path
+                            d="M8 9H16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M8 12H13"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                    </svg>
+
+                </div>
+
+
+                <div>
+
+                    <p>
+                        Docentes
+                    </p>
+
+                    <h2 id="teacherCount">
+                        0
+                    </h2>
+
+                </div>
+
+            </article>
+
+
+        </section>
+
+
+
+        <!-- ================================================= -->
+        <!-- GESTIÓN -->
+        <!-- ================================================= -->
+
+        <section class="management-layout">
+
+
+            <!-- ================================================= -->
+            <!-- LISTA -->
+            <!-- ================================================= -->
+
+            <div class="users-card">
+
+
+                <div class="users-card-header">
+
+
+                    <div class="section-title">
+
+                        <i data-lucide="user-round"></i>
+
+                        <h2>
+                            Lista de usuarios
+                        </h2>
+
+                    </div>
+
+
+                    <button
+                        class="primary-button"
+                        id="openAddUser"
+                        type="button"
+                    >
+
+                        <i data-lucide="plus"></i>
+
+                        Agregar usuario
+
+                    </button>
+
+
+                </div>
+
+
+
+                <!-- FILTROS -->
+
+                <div class="filters">
+
+
+                    <div class="filter-search">
+
+                        <i data-lucide="search"></i>
+
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Buscar por nombre, documento o correo..."
+                        >
+
+                    </div>
+
+
+
+                    <select id="roleFilter">
+
+                        <option value="">
+                            Todos los roles
+                        </option>
+
+                        <option value="Estudiante">
+                            Estudiante
+                        </option>
+
+                        <option value="Docente">
+                            Docente
+                        </option>
+
+                        <option value="UAI">
+                            UAI
+                        </option>
+
+                        <option value="Psicóloga">
+                            Psicóloga
+                        </option>
+
+                        <option value="Directivo">
+                            Directivo
+                        </option>
+
+                        <option value="Comité de convivencia">
+                            Comité de convivencia
+                        </option>
+
+                    </select>
+
+
+
+                    <select id="statusFilter">
+
+                        <option value="">
+                            Todos los estados
+                        </option>
+
+                        <option value="Activo">
+                            Activo
+                        </option>
+
+                        <option value="Inactivo">
+                            Inactivo
+                        </option>
+
+                        <option value="Pendiente">
+                            Pendiente
+                        </option>
+
+                    </select>
+
+
+
+                    <button
+                        class="filter-button"
+                        id="clearFilters"
+                        type="button"
+                    >
+
+                        <i data-lucide="list-filter"></i>
+
+                        Limpiar
+
+                    </button>
+
+
+                </div>
+
+
+
+                <!-- TABLA -->
+
+                <div class="table-wrapper">
+
+                    <table>
+
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Usuario
+                                </th>
+
+                                <th>
+                                    Documento
+                                </th>
+
+                                <th>
+                                    Correo
+                                </th>
+
+                                <th>
+                                    Rol
+                                </th>
+
+                                <th>
+                                    Estado
+                                </th>
+
+                                <th>
+                                    Acciones
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="usersTableBody">
+                        </tbody>
+
+
+                    </table>
+
+                </div>
+
+
+                <div class="table-footer">
+
+                    <span id="tableCounter">
+                        Mostrando 0 usuarios
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ================================================= -->
+            <!-- DETALLE -->
+            <!-- ================================================= -->
+
+            <aside class="selected-user-card">
+
+
+                <div class="selected-header">
+
+                    <div>
+
+                        <i data-lucide="user-round"></i>
+
+                        <h3>
+                            Usuario seleccionado
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="selected-profile">
+
+                    <div
+                        class="large-avatar"
+                        id="detailAvatar"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+
+
+                <h2 id="detailName">
+                    Selecciona un usuario
+                </h2>
+
+
+
+                <span
+                    class="role-badge student"
+                    id="detailRole"
+                >
+                    Usuario
+                </span>
+
+
+
+                <div class="user-details">
+
+
+                    <div>
+
+                        <i data-lucide="badge"></i>
+
+                        <span id="detailDocument">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <i data-lucide="mail"></i>
+
+                        <span id="detailEmail">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <i data-lucide="phone"></i>
+
+                        <span id="detailPhone">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="detailGradeRow"
+                        class="hidden"
+                    >
+
+                        <i data-lucide="graduation-cap"></i>
+
+                        <span id="detailGrade">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="detailDirectorRow"
+                        class="hidden"
+                    >
+
+                        <i data-lucide="users-round"></i>
+
+                        <span id="detailDirector">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="detailDirectorGroupRow"
+                        class="hidden"
+                    >
+
+                        <i data-lucide="school"></i>
+
+                        <span id="detailDirectorGroup">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <i data-lucide="calendar-days"></i>
+
+                        <span id="detailDate">
+                            —
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="detail-actions">
+
+
+                    <button
+                        class="edit-user-button"
+                        id="editSelected"
+                        type="button"
+                    >
+
+                        <i data-lucide="pencil"></i>
+
+                        Editar
+
+                    </button>
+
+
+                    <button
+                        class="delete-user-button"
+                        id="deleteSelected"
+                        type="button"
+                    >
+
+                        <i data-lucide="trash-2"></i>
+
+                        Eliminar
+
+                    </button>
+
+
+                </div>
+
+
+
+                <div class="wellbeing-card">
+
+                    <i data-lucide="heart"></i>
+
+                    <div>
+
+                        <strong>
+                            Un mejor bienestar juntos
+                        </strong>
+
+                        <p>
+                            Cada usuario forma parte de la comunidad Sentir.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </aside>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- MODAL REGISTRAR / EDITAR -->
+<!-- ================================================= -->
+
+<div
+    class="modal-overlay"
+    id="userModal"
+>
+
+
+    <div class="modal">
+
+
+        <!-- HEADER MODAL -->
+
+        <div class="modal-header">
+
+
+            <div class="modal-title-group">
+
+
+                <div class="modal-icon">
+
+                    <i data-lucide="user-round-plus"></i>
+
+                </div>
+
+
+                <div>
+
+                    <span class="modal-label">
+                        Comunidad Sentir
+                    </span>
+
+                    <h2 id="modalTitle">
+                        Registrar usuario
+                    </h2>
+
+                    <p>
+                        Agrega los datos del nuevo usuario para integrarlo a la plataforma.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <button
+                class="close-modal"
+                id="closeModal"
+                type="button"
+            >
+
+                <i data-lucide="x"></i>
+
+            </button>
+
+
+        </div>
+
+
+
+        <form id="userForm">
+
+
+            <input
+                type="hidden"
+                id="editingId"
+            >
+
+
+
+            <!-- INFORMACIÓN PERSONAL -->
+
+            <div class="form-section-heading">
+
+
+                <div class="heading-icon purple-heading">
+
+                    <i data-lucide="user"></i>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Información personal
+                    </strong>
+
+                    <p>
+                        Datos principales del usuario.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="form-grid">
+
+
+                <!-- NOMBRE -->
+
+                <div class="form-group">
+
+                    <label for="nameInput">
+                        Nombre
+                    </label>
+
+                    <div class="modern-input">
+
+                        <i data-lucide="user-round"></i>
+
+                        <input
+                            id="nameInput"
+                            type="text"
+                            placeholder="Nombre completo"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- DOCUMENTO -->
+
+                <div class="form-group">
+
+                    <label for="documentInput">
+                        Documento
+                    </label>
+
+                    <div class="modern-input">
+
+                        <i data-lucide="badge"></i>
+
+                        <input
+                            id="documentInput"
+                            type="text"
+                            placeholder="Número de documento"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- CORREO -->
+
+                <div class="form-group">
+
+                    <label for="emailInput">
+                        Correo
+                    </label>
+
+                    <div class="modern-input">
+
+                        <i data-lucide="mail"></i>
+
+                        <input
+                            id="emailInput"
+                            type="email"
+                            placeholder="usuario@correo.com"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- CELULAR -->
+
+                <div class="form-group">
+
+                    <label for="phoneInput">
+                        Celular
+                    </label>
+
+                    <div class="modern-input">
+
+                        <i data-lucide="phone"></i>
+
+                        <input
+                            id="phoneInput"
+                            type="tel"
+                            placeholder="+57 300 000 0000"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- FOTO -->
+
+            <div class="photo-block">
+
+
+                <div class="form-section-heading">
+
+                    <div class="heading-icon blue-heading">
+
+                        <i data-lucide="camera"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Foto de perfil
+                        </strong>
+
+                        <p>
+                            Puedes agregar una imagen para identificar al usuario.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="photo-upload">
+
+
+                    <div
+                        class="photo-preview"
+                        id="photoPreview"
+                    >
+
+                        <i data-lucide="camera"></i>
+
+                    </div>
+
+
+                    <div class="photo-upload-content">
+
+                        <strong>
+                            Agrega una foto
+                        </strong>
+
+                        <p>
+                            Recomendado JPG o PNG.
+                        </p>
+
+
+                        <label
+                            for="photoInput"
+                            class="upload-button"
+                        >
+
+                            <i data-lucide="upload-cloud"></i>
+
+                            Elegir foto
+
+                        </label>
+
+
+                        <input
+                            id="photoInput"
+                            type="file"
+                            accept="image/*"
+                            hidden
+                        >
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ACCESO -->
+
+            <div class="form-section-heading second-section">
+
+
+                <div class="heading-icon lavender-heading">
+
+                    <i data-lucide="shield-check"></i>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Acceso y rol
+                    </strong>
+
+                    <p>
+                        Define cómo ingresará y qué función tendrá en Sentir.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="form-grid">
+
+
+                <!-- CONTRASEÑA -->
+
+                <div class="form-group">
+
+                    <label for="passwordInput">
+                        Contraseña
+                    </label>
+
+                    <div class="modern-input">
+
+                        <i data-lucide="lock-keyhole"></i>
+
+                        <input
+                            id="passwordInput"
+                            type="password"
+                            placeholder="Crear contraseña"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ROL -->
+
+                <div class="form-group">
+
+                    <label for="roleInput">
+                        Rol
+                    </label>
+
+                    <div class="modern-input">
+
+                        <i data-lucide="shield-user"></i>
+
+                        <select
+                            id="roleInput"
+                            required
+                        >
+
+                            <option value="">
+                                Seleccionar rol
+                            </option>
+
+                            <option value="Estudiante">
+                                Estudiante
+                            </option>
+
+                            <option value="Docente">
+                                Docente
+                            </option>
+
+                            <option value="UAI">
+                                UAI
+                            </option>
+
+                            <option value="Psicóloga">
+                                Psicóloga
+                            </option>
+
+                            <option value="Directivo">
+                                Directivo
+                            </option>
+
+                            <option value="Comité de convivencia">
+                                Comité de convivencia
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- GRADO -->
+
+                <div
+                    class="form-group conditional-field hidden"
+                    id="gradeField"
+                >
+
+                    <label for="gradeInput">
+                        Grado
+                    </label>
+
+                    <div class="modern-input">
+
+                        <i data-lucide="graduation-cap"></i>
+
+                        <select id="gradeInput">
+
+                            <option value="">
+                                Seleccionar grado
+                            </option>
+
+                            <option value="6°">6°</option>
+
+                            <option value="7°">7°</option>
+
+                            <option value="8°">8°</option>
+
+                            <option value="9°">9°</option>
+
+                            <option value="10°">10°</option>
+
+                            <option value="11°">11°</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- DIRECTOR -->
+
+                <div
+                    class="form-group conditional-field hidden"
+                    id="groupDirectorField"
+                >
+
+                    <label for="groupDirectorInput">
+                        ¿Es director de grupo?
+                    </label>
+
+                    <div class="modern-input">
+
+                        <i data-lucide="users-round"></i>
+
+                        <select id="groupDirectorInput">
+
+                            <option value="">
+                                Seleccionar respuesta
+                            </option>
+
+                            <option value="No">
+                                No
+                            </option>
+
+                            <option value="Sí">
+                                Sí
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- GRUPO -->
+
+                <div
+                    class="form-group conditional-field hidden"
+                    id="directorGroupField"
+                >
+
+                    <label for="directorGroupInput">
+                        ¿De qué grupo es director?
+                    </label>
+
+                    <div class="modern-input">
+
+                        <i data-lucide="school"></i>
+
+                        <input
+                            id="directorGroupInput"
+                            type="text"
+                            placeholder="Ej. 8°2"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ESTADO -->
+
+                <div class="form-group">
+
+                    <label for="statusInput">
+                        Estado
+                    </label>
+
+                    <div class="modern-input">
+
+                        <i data-lucide="circle-check-big"></i>
+
+                        <select
+                            id="statusInput"
+                            required
+                        >
+
+                            <option value="Activo">
+                                Activo
+                            </option>
+
+                            <option value="Inactivo">
+                                Inactivo
+                            </option>
+
+                            <option value="Pendiente">
+                                Pendiente
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- MENSAJE -->
+
+            <div class="form-note">
+
+                <i data-lucide="heart"></i>
+
+                <p>
+                    Cada usuario registrado forma parte de una comunidad
+                    que promueve el bienestar y el acompañamiento.
+                </p>
+
+            </div>
+
+
+
+            <!-- BOTONES -->
+
+            <div class="modal-actions">
+
+                <button
+                    class="cancel-button"
+                    id="cancelModal"
+                    type="button"
+                >
+                    Cancelar
+                </button>
+
+
+                <button
+                    class="save-button"
+                    type="submit"
+                >
+
+                    <i data-lucide="user-round-check"></i>
+
+                    Guardar usuario
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- MODAL ELIMINAR -->
+<!-- ================================================= -->
+
+<div
+    class="modal-overlay"
+    id="deleteModal"
+>
+
+
+    <div class="confirm-modal">
+
+
+        <div class="delete-icon">
+
+            <i data-lucide="trash-2"></i>
+
+        </div>
+
+
+        <h2>
+            ¿Eliminar usuario?
+        </h2>
+
+        <p>
+            Esta acción no se puede deshacer.
+        </p>
+
+
+        <div class="confirm-actions">
+
+            <button
+                class="cancel-button"
+                id="cancelDelete"
+                type="button"
+            >
+                Cancelar
+            </button>
+
+
+            <button
+                class="confirm-delete"
+                id="confirmDelete"
+                type="button"
+            >
+                Sí, eliminar
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- TOAST -->
+
+<div
+    class="toast"
+    id="toast"
+>
+
+    <span id="toastText"></span>
+
+</div>
+
+
+
+<!-- JAVASCRIPT -->
+
+<script src="Users.js"></script>
+
+
+</body>
+
+</html>

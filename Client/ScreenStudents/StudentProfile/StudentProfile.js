@@ -106,125 +106,43 @@ let currentProfile =
    SIDEBAR
 ========================================================= */
 
-const sidebar =
-    document.getElementById(
-        "sidebar"
-    );
+document.addEventListener("DOMContentLoaded", () => {
+    const mobileMenu = document.getElementById("mobileMenu");
+    const sidebar = document.getElementById("sidebar");
+    const sidebarOverlay = document.getElementById("sidebarOverlay");
+    const menuItems = document.querySelectorAll(".menu-item");
 
-
-const sidebarOverlay =
-    document.getElementById(
-        "sidebarOverlay"
-    );
-
-
-const hamburgerButton =
-    document.getElementById(
-        "hamburgerButton"
-    );
-
-
-
-function openSidebar() {
-
-    sidebar.classList.add(
-        "open"
-    );
-
-
-    sidebarOverlay.classList.add(
-        "show"
-    );
-
-
-    document.body.classList.add(
-        "no-scroll"
-    );
-
-
-    hamburgerButton.setAttribute(
-        "aria-expanded",
-        "true"
-    );
-
-}
-
-
-
-function closeSidebar() {
-
-    sidebar.classList.remove(
-        "open"
-    );
-
-
-    sidebarOverlay.classList.remove(
-        "show"
-    );
-
-
-    document.body.classList.remove(
-        "no-scroll"
-    );
-
-
-    hamburgerButton.setAttribute(
-        "aria-expanded",
-        "false"
-    );
-
-}
-
-
-
-hamburgerButton.addEventListener(
-    "click",
-    () => {
-
-        if (
-            sidebar.classList.contains(
-                "open"
-            )
-        ) {
-
-            closeSidebar();
-
-        } else {
-
-            openSidebar();
-
-        }
-
+    // Función para abrir/cerrar el sidebar
+    function toggleSidebar() {
+        sidebar.classList.toggle("open");
+        sidebarOverlay.classList.toggle("active");
     }
-);
 
-
-
-sidebarOverlay.addEventListener(
-    "click",
-    closeSidebar
-);
-
-
-
-window.addEventListener(
-    "resize",
-    () => {
-
-        if (
-            window.innerWidth >
-            1100
-        ) {
-
-            closeSidebar();
-
-        }
-
+    // Función para cerrar el sidebar
+    function closeSidebar() {
+        sidebar.classList.remove("open");
+        sidebarOverlay.classList.remove("active");
     }
-);
 
+    // Evento del botón de hamburguesa
+    if (mobileMenu) {
+        mobileMenu.addEventListener("click", toggleSidebar);
+    }
 
+    // Evento al hacer clic en el fondo oscuro
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener("click", closeSidebar);
+    }
 
+    // Cerrar sidebar al hacer clic en una opción (en dispositivos móviles)
+    menuItems.forEach(item => {
+        item.addEventListener("click", () => {
+            if (window.innerWidth <= 1024) {
+                closeSidebar();
+            }
+        });
+    });
+});
 /* =========================================================
    TOP PROFILE DROPDOWN
 ========================================================= */

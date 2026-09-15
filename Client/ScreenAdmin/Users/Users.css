@@ -215,6 +215,9 @@ button {
     transition: .2s;
 }
 
+.sin-subrayado {
+    text-decoration: none;
+}
 
 .nav-item svg {
 

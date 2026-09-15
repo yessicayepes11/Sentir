@@ -187,6 +187,9 @@ button {
         .2s ease;
 }
 
+.sin-subrayado {
+    text-decoration: none;
+}
 
 .nav-item svg {
 

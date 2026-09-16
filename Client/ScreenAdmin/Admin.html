@@ -12,8 +12,6 @@
 
     <title>Sentir | Inicio administrador</title>
 
-    <!-- POPPINS -->
-
     <link
         rel="preconnect"
         href="https://fonts.googleapis.com"
@@ -30,21 +28,15 @@
         rel="stylesheet"
     >
 
-    <!-- LUCIDE -->
-
     <script
         src="https://unpkg.com/lucide@latest"
         defer
     ></script>
 
-    <!-- CHART.JS -->
-
     <script
         src="https://cdn.jsdelivr.net/npm/chart.js"
         defer
     ></script>
-
-    <!-- CSS -->
 
     <link
         rel="stylesheet"
@@ -56,13 +48,10 @@
 
 <body>
 
-
 <div class="app">
 
 
-    <!-- ================================================= -->
     <!-- SIDEBAR -->
-    <!-- ================================================= -->
 
     <aside
         class="sidebar"
@@ -72,7 +61,7 @@
         <div class="brand">
 
             <img
-                src="/Sentir/Shared/AdminResources/logo-sentir.png"
+                src="/Sentir/Shared/AdminResources/logo-nombrelado.png"
                 alt="Logo Sentir"
                 class="official-logo"
             >
@@ -81,7 +70,6 @@
 
 
         <nav class="nav-menu">
-
 
             <button
                 class="nav-item active"
@@ -106,20 +94,14 @@
 
                 <i data-lucide="users"></i>
 
-            <a href="/Sentir/Client/ScreenAdmin/Users/Users.html" class="sin-subrayado">
-                <span>
-                    Usuarios
-                </span>
-            </a>
+                <span><a href="/Sentir/Client/ScreenAdmin/Users/Users.html" class="sin-subrayado">Usuarios</a></span>
 
             </button>
-
 
         </nav>
 
 
         <div class="sidebar-bottom">
-
 
             <div class="community-message">
 
@@ -146,35 +128,21 @@
 
 
             <p class="copyright">
-
                 © 2026 Sentir
                 <br>
                 Todos los derechos reservados.
-
             </p>
-
 
         </div>
 
-
     </aside>
 
-
-
-    <!-- ================================================= -->
-    <!-- OVERLAY -->
-    <!-- ================================================= -->
 
     <div
         class="sidebar-overlay"
         id="sidebarOverlay"
     ></div>
 
-
-
-    <!-- ================================================= -->
-    <!-- BOTÓN HAMBURGUESA -->
-    <!-- ================================================= -->
 
     <button
         class="mobile-menu-button"
@@ -190,20 +158,14 @@
     </button>
 
 
-
-    <!-- ================================================= -->
-    <!-- CONTENIDO PRINCIPAL -->
-    <!-- ================================================= -->
+    <!-- MAIN -->
 
     <main class="main-content">
 
 
-        <!-- ================================================= -->
         <!-- HEADER -->
-        <!-- ================================================= -->
 
         <header class="top-header">
-
 
             <div class="welcome-title">
 
@@ -211,9 +173,11 @@
                     Panel administrativo
                 </p>
 
+
                 <h1>
                     ¡Hola, Administradora!
                 </h1>
+
 
                 <p class="welcome-copy">
                     Gestiona tu comunidad y mantén organizada
@@ -223,9 +187,7 @@
             </div>
 
 
-
             <div class="header-actions">
-
 
                 <div class="global-search">
 
@@ -272,20 +234,14 @@
 
                 </div>
 
-
             </div>
-
 
         </header>
 
 
-
-        <!-- ================================================= -->
         <!-- HERO -->
-        <!-- ================================================= -->
 
         <section class="hero-section">
-
 
             <div class="hero-copy">
 
@@ -299,58 +255,21 @@
 
 
                 <h2>
-
                     Una comunidad organizada
                     <span>también cuida.</span>
-
                 </h2>
 
 
                 <p>
-
                     Desde aquí puedes administrar usuarios,
                     revisar la actividad del sistema y mantener
                     todo preparado para el acompañamiento de la comunidad.
-
                 </p>
-
-
-                <div class="hero-actions">
-
-                    <button
-                        class="primary-button"
-                        id="heroAddUser"
-                        type="button"
-                    >
-
-                        <i data-lucide="user-round-plus"></i>
-
-                        Registrar usuario
-
-                    </button>
-
-
-                    <button
-                        class="secondary-button"
-                        id="heroViewUsers"
-                        type="button"
-                    >
-
-                        <i data-lucide="users"></i>
-
-                        Ver usuarios
-
-                    </button>
-
-                </div>
-
 
             </div>
 
 
-
             <div class="hero-visual">
-
 
                 <div class="hero-glow hero-glow-one"></div>
 
@@ -368,9 +287,23 @@
 
                     <div class="floating-icon">
 
-                        <i data-lucide="heart"></i>
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                        >
+
+                            <path
+                                d="M20.8 4.6C18.8 2.6 15.5 2.6 13.5 4.6L12 6.1L10.5 4.6C8.5 2.6 5.2 2.6 3.2 4.6C1.1 6.7 1.1 10 3.2 12.1L12 20.9L20.8 12.1C22.9 10 22.9 6.7 20.8 4.6Z"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+                        </svg>
 
                     </div>
+
 
                     <div>
 
@@ -391,9 +324,31 @@
 
                     <div class="floating-icon blue-floating">
 
-                        <i data-lucide="shield-check"></i>
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                        >
+
+                            <path
+                                d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+                            <path
+                                d="M9 12L11 14L15 10"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+                        </svg>
 
                     </div>
+
 
                     <div>
 
@@ -409,17 +364,12 @@
 
                 </div>
 
-
             </div>
-
 
         </section>
 
 
-
-        <!-- ================================================= -->
-        <!-- RESUMEN -->
-        <!-- ================================================= -->
+        <!-- ESTADÍSTICAS -->
 
         <section class="stats-grid">
 
@@ -427,7 +377,6 @@
             <article class="stat-card">
 
                 <div class="stat-icon purple">
-
 
                     <svg
                         viewBox="0 0 24 24"
@@ -451,13 +400,6 @@
 
                         <path
                             d="M22 21V19C22 18.1 21.4 17.3 20.5 17.1"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                        />
-
-                        <path
-                            d="M16.5 3.1C17.4 3.3 18 4.1 18 5C18 5.9 17.4 6.7 16.5 6.9"
                             stroke="currentColor"
                             stroke-width="2"
                             stroke-linecap="round"
@@ -487,11 +429,9 @@
             </article>
 
 
-
             <article class="stat-card">
 
                 <div class="stat-icon blue">
-
 
                     <svg
                         viewBox="0 0 24 24"
@@ -536,11 +476,9 @@
             </article>
 
 
-
             <article class="stat-card">
 
                 <div class="stat-icon lavender">
-
 
                     <svg
                         viewBox="0 0 24 24"
@@ -562,6 +500,7 @@
                             stroke="currentColor"
                             stroke-width="2"
                             stroke-linecap="round"
+                            stroke-linejoin="round"
                         />
 
                         <path
@@ -595,11 +534,9 @@
             </article>
 
 
-
             <article class="stat-card">
 
                 <div class="stat-icon support">
-
 
                     <svg
                         viewBox="0 0 24 24"
@@ -636,22 +573,17 @@
 
             </article>
 
-
         </section>
 
 
-
-        <!-- ================================================= -->
-        <!-- CONTENIDO MEDIO -->
-        <!-- ================================================= -->
+        <!-- DASHBOARD PRINCIPAL -->
 
         <section class="dashboard-grid">
 
 
-            <!-- DISTRIBUCIÓN -->
+            <!-- GRÁFICA -->
 
             <article class="dashboard-card roles-card">
-
 
                 <div class="card-header">
 
@@ -668,20 +600,10 @@
                     </div>
 
 
-                    <div class="small-badge">
-
-                        <i data-lucide="pie-chart"></i>
-
-                        Distribución
-
-                    </div>
-
                 </div>
 
 
-
                 <div class="roles-content">
-
 
                     <div class="chart-wrapper">
 
@@ -703,114 +625,59 @@
                     </div>
 
 
-
                     <div class="roles-list">
 
-
                         <div class="role-row">
-
                             <span class="role-dot students-dot"></span>
-
-                            <p>
-                                Estudiantes
-                            </p>
-
-                            <strong>
-                                86
-                            </strong>
-
+                            <p>Estudiantes</p>
+                            <strong>86</strong>
                         </div>
 
 
                         <div class="role-row">
-
                             <span class="role-dot teachers-dot"></span>
-
-                            <p>
-                                Docentes
-                            </p>
-
-                            <strong>
-                                18
-                            </strong>
-
+                            <p>Docentes</p>
+                            <strong>18</strong>
                         </div>
 
 
                         <div class="role-row">
-
                             <span class="role-dot uai-dot"></span>
-
-                            <p>
-                                UAI
-                            </p>
-
-                            <strong>
-                                6
-                            </strong>
-
+                            <p>UAI</p>
+                            <strong>6</strong>
                         </div>
 
 
                         <div class="role-row">
-
                             <span class="role-dot psychologist-dot"></span>
-
-                            <p>
-                                Psicóloga
-                            </p>
-
-                            <strong>
-                                5
-                            </strong>
-
+                            <p>Psicóloga</p>
+                            <strong>5</strong>
                         </div>
 
 
                         <div class="role-row">
-
                             <span class="role-dot directors-dot"></span>
-
-                            <p>
-                                Directivos
-                            </p>
-
-                            <strong>
-                                7
-                            </strong>
-
+                            <p>Directivos</p>
+                            <strong>7</strong>
                         </div>
 
 
                         <div class="role-row">
-
                             <span class="role-dot committee-dot"></span>
-
-                            <p>
-                                Comité
-                            </p>
-
-                            <strong>
-                                6
-                            </strong>
-
+                            <p>Comité</p>
+                            <strong>6</strong>
                         </div>
-
 
                     </div>
 
-
                 </div>
 
-
             </article>
-
 
 
             <!-- ACCIONES RÁPIDAS -->
 
             <article class="dashboard-card quick-card">
-
 
                 <div class="card-header">
 
@@ -829,33 +696,58 @@
                 </div>
 
 
-
                 <div class="quick-actions">
 
 
                     <button
                         class="quick-action purple-action"
-                        id="quickRegister"
+                        id="quickExport"
                         type="button"
                     >
 
                         <div class="quick-icon">
 
-                            <i data-lucide="user-round-plus"></i>
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                            >
+
+                                <path
+                                    d="M12 3V15"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                />
+
+                                <path
+                                    d="M7 10L12 15L17 10"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+
+                                <path
+                                    d="M5 21H19"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                />
+
+                            </svg>
 
                         </div>
 
 
                         <div>
+                            <span><a href="/Sentir/Client/ScreenAdmin/Export/Export.html" class="sin-subrayado">
+                                    Exportar usuarios
+                                </strong>
 
-                            <strong>
-                                Registrar usuario
-                            </strong>
-
-                            <span>
-                                Añade una nueva persona a Sentir.
-                            </span>
-
+                                <span>
+                                    Descarga la información de los usuarios.
+                                </span>
+                            </span></a>
                         </div>
 
 
@@ -865,32 +757,63 @@
                         ></i>
 
                     </button>
-
 
 
                     <button
                         class="quick-action blue-action"
-                        id="quickUsers"
+                        id="quickDuplicates"
                         type="button"
                     >
 
                         <div class="quick-icon">
 
-                            <i data-lucide="users"></i>
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                            >
+
+                                <rect
+                                    x="4"
+                                    y="4"
+                                    width="10"
+                                    height="10"
+                                    rx="2"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                />
+
+                                <rect
+                                    x="10"
+                                    y="10"
+                                    width="10"
+                                    height="10"
+                                    rx="2"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                />
+
+                                <path
+                                    d="M17 17L21 21"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                />
+
+                            </svg>
 
                         </div>
 
 
                         <div>
+                            <span><a href="/Sentir/Client/ScreenAdmin/Duplicates/Duplicates.html" class="sin-subrayado">
+                                <strong>
+                                    Buscar duplicados
+                                </strong>
 
-                            <strong>
-                                Gestionar usuarios
-                            </strong>
-
-                            <span>
-                                Consulta, edita o elimina registros.
-                            </span>
-
+                                <span>
+                                    Detecta documentos o correos repetidos.
+                                </span>
+                            </span></a>
                         </div>
 
 
@@ -900,64 +823,19 @@
                         ></i>
 
                     </button>
-
-
-
-                    <button
-                        class="quick-action lavender-action"
-                        id="quickReport"
-                        type="button"
-                    >
-
-                        <div class="quick-icon">
-
-                            <i data-lucide="file-chart-column"></i>
-
-                        </div>
-
-
-                        <div>
-
-                            <strong>
-                                Resumen del sistema
-                            </strong>
-
-                            <span>
-                                Revisa información general.
-                            </span>
-
-                        </div>
-
-
-                        <i
-                            class="quick-arrow"
-                            data-lucide="arrow-right"
-                        ></i>
-
-                    </button>
-
 
                 </div>
 
-
             </article>
-
 
         </section>
 
 
-
-        <!-- ================================================= -->
         <!-- PARTE INFERIOR -->
-        <!-- ================================================= -->
 
         <section class="bottom-grid">
 
-
-            <!-- ACTIVIDAD -->
-
             <article class="dashboard-card activity-card">
-
 
                 <div class="card-header">
 
@@ -973,19 +851,7 @@
 
                     </div>
 
-
-                    <button
-                        class="soft-button"
-                        id="viewActivity"
-                        type="button"
-                    >
-
-                        Ver todo
-
-                    </button>
-
                 </div>
-
 
 
                 <div
@@ -993,15 +859,10 @@
                     id="activityList"
                 ></div>
 
-
             </article>
 
 
-
-            <!-- MENSAJE -->
-
             <article class="wellbeing-main-card">
-
 
                 <div class="wellbeing-decoration decoration-a"></div>
 
@@ -1027,11 +888,9 @@
 
 
                 <p>
-
                     Cada registro organizado ayuda
                     a que el acompañamiento llegue
                     a la persona correcta.
-
                 </p>
 
 
@@ -1051,20 +910,14 @@
 
                 </div>
 
-
             </article>
-
 
         </section>
 
 
-
-        <!-- ================================================= -->
-        <!-- FOOTER INTERNO -->
-        <!-- ================================================= -->
+        <!-- MENSAJE FINAL -->
 
         <section class="bottom-message">
-
 
             <div class="bottom-message-icon">
 
@@ -1074,10 +927,8 @@
 
 
             <p>
-
-                El bienestar de una comunidad
-                también comienza con una buena organización.
-
+                El bienestar de una comunidad también comienza
+                con una buena organización.
             </p>
 
 
@@ -1085,18 +936,12 @@
                 Sentir
             </strong>
 
-
         </section>
-
 
     </main>
 
-
 </div>
 
-
-
-<!-- TOAST -->
 
 <div
     class="toast"
@@ -1108,9 +953,7 @@
 </div>
 
 
-
 <script src="Admin.js"></script>
-
 
 </body>
 

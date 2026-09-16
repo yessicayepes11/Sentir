@@ -49,23 +49,22 @@ body {
         "Poppins",
         sans-serif;
 
+    font-size: 15px;
+
     color:
         var(--text-dark);
 
     background:
-
         radial-gradient(
             circle at 20% 5%,
-            rgba(184, 168, 255, .17),
+            rgba(184,168,255,.17),
             transparent 23%
         ),
-
         radial-gradient(
             circle at 90% 8%,
-            rgba(101, 184, 255, .15),
+            rgba(101,184,255,.15),
             transparent 25%
         ),
-
         #F9FAFF;
 
     overflow-x: hidden;
@@ -84,7 +83,9 @@ button {
 }
 
 
-/* SIDEBAR */
+/* =========================================================
+   SIDEBAR
+========================================================= */
 
 .sidebar {
 
@@ -92,9 +93,9 @@ button {
 
     position: fixed;
 
+    left: 0;
     top: 0;
     bottom: 0;
-    left: 0;
 
     z-index: 1000;
 
@@ -116,6 +117,7 @@ button {
         );
 
     border-right:
+
         1px solid
         rgba(108, 77, 246, .09);
 
@@ -130,21 +132,28 @@ button {
 
     display: flex;
 
-    align-items: center;
-
     justify-content: center;
+
+    align-items: center;
 }
 
 
 .official-logo {
 
-    width: 160px;
+    width: 260px;
 
     max-width: 90%;
+
+    height: auto;
 
     object-fit: contain;
 }
 
+
+
+/* =========================================================
+   NAV
+========================================================= */
 
 .nav-menu {
 
@@ -176,15 +185,14 @@ button {
 
     border-radius: 11px;
 
+    background: transparent;
+
     color:
         var(--text-dark);
 
-    background: transparent;
-
     font-weight: 500;
 
-    transition:
-        .2s ease;
+    transition: .2s;
 }
 
 .sin-subrayado {
@@ -213,15 +221,25 @@ button {
         var(--gradient);
 
     box-shadow:
-        0 9px 25px
+
+        0
+        9px
+        25px
+
         rgba(108, 77, 246, .23);
 }
 
 
 .nav-item.active svg {
+
     color: white;
 }
 
+
+
+/* =========================================================
+   SIDEBAR BOTTOM
+========================================================= */
 
 .sidebar-bottom {
 
@@ -257,7 +275,7 @@ button {
 
 .sidebar-characters {
 
-    height: 180px;
+    height: 250px;
 
     display: flex;
 
@@ -288,7 +306,7 @@ button {
 }
 
 
-/* HAMBURGUESA */
+/* MOBILE */
 
 .mobile-menu-button {
 
@@ -317,11 +335,12 @@ button {
 
     box-shadow:
         0 10px 25px
-        rgba(108, 77, 246, .25);
+        rgba(108,77,246,.25);
 }
 
 
 #menuIcon {
+
     font-size: 23px;
 }
 
@@ -337,7 +356,7 @@ button {
     z-index: 900;
 
     background:
-        rgba(20, 16, 70, .26);
+        rgba(20,16,70,.26);
 
     backdrop-filter:
         blur(3px);
@@ -346,7 +365,8 @@ button {
 
     visibility: hidden;
 
-    transition: .25s;
+    transition:
+        .25s;
 }
 
 
@@ -396,7 +416,7 @@ button {
     color:
         var(--purple);
 
-    font-size: 11px;
+    font-size: 13px;
 
     font-weight: 600;
 
@@ -408,33 +428,31 @@ button {
 
 .welcome-title h1 {
 
-    margin-top: 2px;
+    margin-top: 3px;
 
     font-size:
         clamp(
-            29px,
+            32px,
             3vw,
-            40px
+            42px
         );
 
-    line-height: 1.05;
-
-    letter-spacing: -1px;
+    line-height: 1.08;
 }
 
 
 .welcome-copy {
 
-    margin-top: 7px;
+    margin-top: 9px;
 
-    max-width: 560px;
+    max-width: 590px;
 
     color:
         var(--text-soft);
 
-    font-size: 11px;
+    font-size: 14px;
 
-    line-height: 1.55;
+    line-height: 1.65;
 }
 
 
@@ -452,7 +470,7 @@ button {
 
     width: 290px;
 
-    height: 44px;
+    height: 46px;
 
     padding:
         0
@@ -490,22 +508,20 @@ button {
 
     width: 100%;
 
-    min-width: 0;
-
     border: none;
 
     outline: none;
 
     background: transparent;
 
-    font-size: 10px;
+    font-size: 13px;
 }
 
 
 .notification-button {
 
-    width: 43px;
-    height: 43px;
+    width: 45px;
+    height: 45px;
 
     position: relative;
 
@@ -571,7 +587,8 @@ button {
 
 
 .admin-info strong {
-    font-size: 12px;
+
+    font-size: 14px;
 }
 
 
@@ -580,7 +597,7 @@ button {
     color:
         var(--text-soft);
 
-    font-size: 9px;
+    font-size: 11px;
 }
 
 
@@ -612,8 +629,8 @@ button {
     display: grid;
 
     grid-template-columns:
-        1.1fr
-        .9fr;
+        1.05fr
+        .95fr;
 
     align-items: center;
 
@@ -623,12 +640,11 @@ button {
 
     border:
         1px solid
-        rgba(108, 77, 246, .11);
+        rgba(108,77,246,.11);
 
     border-radius: 26px;
 
     background:
-
         linear-gradient(
             135deg,
             #F8F4FF 0%,
@@ -646,8 +662,8 @@ button {
     width: max-content;
 
     padding:
-        7px
-        11px;
+        8px
+        13px;
 
     display: inline-flex;
 
@@ -661,9 +677,9 @@ button {
         #6948D7;
 
     background:
-        rgba(255, 255, 255, .78);
+        rgba(255,255,255,.78);
 
-    font-size: 9px;
+    font-size: 11px;
 
     font-weight: 600;
 }
@@ -671,26 +687,26 @@ button {
 
 .hero-label svg {
 
-    width: 15px;
+    width: 16px;
 }
 
 
 .hero-copy h2 {
 
-    margin-top: 15px;
+    margin-top: 16px;
 
-    max-width: 600px;
+    max-width: 620px;
 
     font-size:
         clamp(
-            27px,
-            3.4vw,
-            46px
+            30px,
+            3.5vw,
+            48px
         );
 
-    line-height: 1.05;
+    line-height: 1.08;
 
-    letter-spacing: -1.4px;
+    letter-spacing: -1px;
 }
 
 
@@ -703,91 +719,16 @@ button {
 
 .hero-copy > p {
 
-    margin-top: 13px;
+    margin-top: 14px;
 
-    max-width: 580px;
+    max-width: 630px;
 
     color:
         #6F6B9F;
 
-    font-size: 11px;
+    font-size: 14px;
 
-    line-height: 1.65;
-}
-
-
-.hero-actions {
-
-    margin-top: 20px;
-
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 10px;
-}
-
-
-.primary-button,
-.secondary-button {
-
-    min-height: 43px;
-
-    padding:
-        0
-        18px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 8px;
-
-    border-radius: 11px;
-
-    font-size: 9px;
-
-    font-weight: 600;
-
-    transition:
-        .2s ease;
-}
-
-
-.primary-button {
-
-    color: white;
-
-    background:
-        var(--gradient);
-
-    box-shadow:
-        0 10px 24px
-        rgba(108, 77, 246, .23);
-}
-
-
-.secondary-button {
-
-    color:
-        var(--purple);
-
-    background:
-        rgba(255,255,255,.88);
-
-    border:
-        1px solid
-        rgba(108,77,246,.19);
-}
-
-
-.primary-button:hover,
-.secondary-button:hover {
-
-    transform:
-        translateY(-2px);
+    line-height: 1.7;
 }
 
 
@@ -807,7 +748,7 @@ button {
 
 .hero-characters {
 
-    width: 340px;
+    width: 500px;
 
     max-width: 100%;
 
@@ -816,12 +757,6 @@ button {
     z-index: 2;
 
     object-fit: contain;
-
-    filter:
-        drop-shadow(
-            0 18px 24px
-            rgba(92, 65, 186, .14)
-        );
 }
 
 
@@ -830,9 +765,6 @@ button {
     position: absolute;
 
     border-radius: 50%;
-
-    filter:
-        blur(2px);
 }
 
 
@@ -846,7 +778,7 @@ button {
     bottom: 10px;
 
     background:
-        rgba(184, 168, 255, .38);
+        rgba(184,168,255,.38);
 }
 
 
@@ -860,7 +792,7 @@ button {
     top: 20px;
 
     background:
-        rgba(101, 184, 255, .25);
+        rgba(101,184,255,.25);
 }
 
 
@@ -871,14 +803,14 @@ button {
     z-index: 3;
 
     padding:
-        10px
-        12px;
+        11px
+        13px;
 
     display: flex;
 
     align-items: center;
 
-    gap: 9px;
+    gap: 10px;
 
     border:
         1px solid
@@ -887,10 +819,7 @@ button {
     border-radius: 14px;
 
     background:
-        rgba(255,255,255,.85);
-
-    backdrop-filter:
-        blur(10px);
+        rgba(255,255,255,.88);
 
     box-shadow:
         0 12px 28px
@@ -916,20 +845,29 @@ button {
 
 .floating-icon {
 
-    width: 34px;
-    height: 34px;
+    width: 40px;
+    height: 40px;
 
-    display: grid;
+    display: flex;
 
-    place-items: center;
+    align-items: center;
 
-    border-radius: 11px;
+    justify-content: center;
+
+    border-radius: 12px;
 
     color:
         var(--purple);
 
     background:
         #EEE9FF;
+}
+
+
+.floating-icon svg {
+
+    width: 20px;
+    height: 20px;
 }
 
 
@@ -943,17 +881,11 @@ button {
 }
 
 
-.floating-icon svg {
-
-    width: 17px;
-}
-
-
 .floating-card strong {
 
     display: block;
 
-    font-size: 9px;
+    font-size: 11px;
 }
 
 
@@ -966,7 +898,7 @@ button {
     color:
         var(--text-soft);
 
-    font-size: 7px;
+    font-size: 9px;
 }
 
 
@@ -974,12 +906,12 @@ button {
 
 .stats-grid {
 
-    margin-top: 15px;
+    margin-top: 16px;
 
     display: grid;
 
     grid-template-columns:
-        repeat(4, 1fr);
+        repeat(4,1fr);
 
     gap: 12px;
 }
@@ -987,10 +919,9 @@ button {
 
 .stat-card {
 
-    min-height: 112px;
+    min-height: 118px;
 
-    padding:
-        15px;
+    padding: 16px;
 
     display: flex;
 
@@ -1004,8 +935,7 @@ button {
 
     border-radius: 16px;
 
-    background:
-        rgba(255,255,255,.94);
+    background: white;
 
     box-shadow:
         var(--shadow);
@@ -1014,8 +944,8 @@ button {
 
 .stat-icon {
 
-    width: 64px;
-    height: 64px;
+    width: 66px;
+    height: 66px;
 
     flex-shrink: 0;
 
@@ -1029,10 +959,8 @@ button {
 
 .stat-icon svg {
 
-    width: 30px;
-    height: 30px;
-
-    display: block;
+    width: 31px;
+    height: 31px;
 }
 
 
@@ -1081,7 +1009,7 @@ button {
     color:
         #2A256A;
 
-    font-size: 10px;
+    font-size: 12px;
 
     font-weight: 600;
 }
@@ -1091,7 +1019,7 @@ button {
 
     margin-top: 4px;
 
-    font-size: 26px;
+    font-size: 30px;
 }
 
 
@@ -1104,7 +1032,7 @@ button {
     color:
         #8A86AA;
 
-    font-size: 7px;
+    font-size: 9px;
 }
 
 
@@ -1112,7 +1040,7 @@ button {
 
 .dashboard-grid {
 
-    margin-top: 14px;
+    margin-top: 15px;
 
     display: grid;
 
@@ -1140,7 +1068,7 @@ button {
 
 .dashboard-card {
 
-    padding: 17px;
+    padding: 18px;
 
     border:
         1px solid
@@ -1148,8 +1076,7 @@ button {
 
     border-radius: 17px;
 
-    background:
-        white;
+    background: white;
 
     box-shadow:
         var(--shadow);
@@ -1173,7 +1100,7 @@ button {
     color:
         var(--purple);
 
-    font-size: 7px;
+    font-size: 9px;
 
     font-weight: 600;
 
@@ -1185,20 +1112,19 @@ button {
 
 .card-header h3 {
 
-    margin-top: 2px;
+    margin-top: 3px;
 
-    font-size: 15px;
+    font-size: 18px;
 }
 
 
-.small-badge,
-.soft-button {
+.small-badge {
 
-    min-height: 31px;
+    min-height: 32px;
 
     padding:
         0
-        10px;
+        11px;
 
     display: flex;
 
@@ -1214,43 +1140,49 @@ button {
     background:
         #F3F0FF;
 
-    font-size: 7px;
+    font-size: 9px;
 }
 
 
 .small-badge svg {
 
-    width: 14px;
+    width: 15px;
 }
 
 
-/* ROLES */
+/* CHART */
 
 .roles-content {
 
-    margin-top: 15px;
+    margin-top: 17px;
 
     display: grid;
 
     grid-template-columns:
-        210px
+        220px
         1fr;
 
     align-items: center;
 
-    gap: 25px;
+    gap: 28px;
 }
 
 
 .chart-wrapper {
 
-    width: 190px;
-
-    height: 190px;
+    width: 200px;
+    height: 200px;
 
     position: relative;
 
     margin: auto;
+}
+
+
+.chart-wrapper canvas {
+
+    width: 100% !important;
+    height: 100% !important;
 }
 
 
@@ -1274,7 +1206,7 @@ button {
 
 .chart-center strong {
 
-    font-size: 24px;
+    font-size: 28px;
 }
 
 
@@ -1283,7 +1215,7 @@ button {
     color:
         var(--text-soft);
 
-    font-size: 8px;
+    font-size: 10px;
 }
 
 
@@ -1293,7 +1225,7 @@ button {
 
     flex-direction: column;
 
-    gap: 10px;
+    gap: 12px;
 }
 
 
@@ -1302,13 +1234,13 @@ button {
     display: grid;
 
     grid-template-columns:
-        8px
+        9px
         1fr
         auto;
 
     align-items: center;
 
-    gap: 8px;
+    gap: 9px;
 }
 
 
@@ -1317,20 +1249,20 @@ button {
     color:
         #504B83;
 
-    font-size: 9px;
+    font-size: 11px;
 }
 
 
 .role-row strong {
 
-    font-size: 9px;
+    font-size: 11px;
 }
 
 
 .role-dot {
 
-    width: 8px;
-    height: 8px;
+    width: 9px;
+    height: 9px;
 
     border-radius: 50%;
 }
@@ -1365,13 +1297,13 @@ button {
 
 .quick-actions {
 
-    margin-top: 15px;
+    margin-top: 17px;
 
     display: flex;
 
     flex-direction: column;
 
-    gap: 10px;
+    gap: 13px;
 }
 
 
@@ -1379,24 +1311,24 @@ button {
 
     width: 100%;
 
-    min-height: 77px;
+    min-height: 105px;
 
     padding:
-        11px
-        12px;
+        16px
+        16px;
 
     display: grid;
 
     grid-template-columns:
-        42px
+        48px
         1fr
-        18px;
+        19px;
 
     align-items: center;
 
-    gap: 10px;
+    gap: 12px;
 
-    border-radius: 13px;
+    border-radius: 14px;
 
     text-align: left;
 
@@ -1409,6 +1341,10 @@ button {
 
     transform:
         translateY(-2px);
+
+    box-shadow:
+        0 9px 24px
+        rgba(78,46,199,.08);
 }
 
 
@@ -1434,39 +1370,31 @@ button {
 }
 
 
-.lavender-action {
-
-    background:
-        linear-gradient(
-            135deg,
-            #F6F3FF,
-            #F2F0FF
-        );
-}
-
-
 .quick-icon {
 
-    width: 42px;
-    height: 42px;
+    width: 48px;
+    height: 48px;
 
-    display: grid;
+    display: flex;
 
-    place-items: center;
+    align-items: center;
 
-    border-radius: 13px;
+    justify-content: center;
+
+    border-radius: 14px;
 
     color:
         var(--purple);
 
     background:
-        rgba(255,255,255,.75);
+        rgba(255,255,255,.9);
 }
 
 
 .quick-icon svg {
 
-    width: 20px;
+    width: 23px;
+    height: 23px;
 }
 
 
@@ -1477,7 +1405,7 @@ button {
     color:
         #2E296E;
 
-    font-size: 9px;
+    font-size: 12px;
 }
 
 
@@ -1485,20 +1413,20 @@ button {
 
     display: block;
 
-    margin-top: 3px;
+    margin-top: 5px;
 
     color:
         #7A76A3;
 
-    font-size: 7px;
+    font-size: 10px;
 
-    line-height: 1.45;
+    line-height: 1.55;
 }
 
 
 .quick-arrow {
 
-    width: 16px;
+    width: 17px;
 
     color:
         var(--purple);
@@ -1509,24 +1437,24 @@ button {
 
 .activity-list {
 
-    margin-top: 10px;
+    margin-top: 12px;
 }
 
 
 .activity-item {
 
-    min-height: 54px;
+    min-height: 68px;
 
     display: grid;
 
     grid-template-columns:
-        38px
+        40px
         1fr
         auto;
 
     align-items: center;
 
-    gap: 10px;
+    gap: 11px;
 
     border-bottom:
         1px solid
@@ -1535,14 +1463,15 @@ button {
 
 
 .activity-item:last-child {
+
     border-bottom: none;
 }
 
 
 .activity-icon {
 
-    width: 34px;
-    height: 34px;
+    width: 37px;
+    height: 37px;
 
     display: grid;
 
@@ -1553,7 +1482,8 @@ button {
 
 
 .activity-icon svg {
-    width: 16px;
+
+    width: 18px;
 }
 
 
@@ -1591,18 +1521,18 @@ button {
 
     display: block;
 
-    font-size: 8px;
+    font-size: 11px;
 }
 
 
 .activity-copy p {
 
-    margin-top: 2px;
+    margin-top: 3px;
 
     color:
         #7C78A4;
 
-    font-size: 7px;
+    font-size: 9px;
 }
 
 
@@ -1611,7 +1541,7 @@ button {
     color:
         #9591B1;
 
-    font-size: 7px;
+    font-size: 9px;
 }
 
 
@@ -1621,8 +1551,7 @@ button {
 
     min-height: 100%;
 
-    padding:
-        24px;
+    padding: 25px;
 
     position: relative;
 
@@ -1630,22 +1559,21 @@ button {
 
     border-radius: 17px;
 
-    color:
-        white;
+    color: white;
 
     background:
         var(--gradient);
 
     box-shadow:
         0 17px 38px
-        rgba(93, 65, 211, .2);
+        rgba(93,65,211,.2);
 }
 
 
 .wellbeing-main-icon {
 
-    width: 50px;
-    height: 50px;
+    width: 52px;
+    height: 52px;
 
     position: relative;
 
@@ -1657,13 +1585,8 @@ button {
 
     border-radius: 16px;
 
-    color: white;
-
     background:
         rgba(255,255,255,.16);
-
-    backdrop-filter:
-        blur(8px);
 }
 
 
@@ -1683,13 +1606,9 @@ button {
 
     margin-top: 18px;
 
-    font-size: 8px;
+    font-size: 10px;
 
     text-transform: uppercase;
-
-    letter-spacing: .6px;
-
-    opacity: .85;
 }
 
 
@@ -1699,11 +1618,11 @@ button {
 
     z-index: 2;
 
-    margin-top: 5px;
+    margin-top: 6px;
 
-    font-size: 23px;
+    font-size: 26px;
 
-    line-height: 1.1;
+    line-height: 1.2;
 }
 
 
@@ -1713,15 +1632,13 @@ button {
 
     z-index: 2;
 
-    margin-top: 10px;
+    margin-top: 11px;
 
-    max-width: 310px;
+    max-width: 320px;
 
-    font-size: 8px;
+    font-size: 10px;
 
-    line-height: 1.6;
-
-    opacity: .9;
+    line-height: 1.7;
 }
 
 
@@ -1737,22 +1654,22 @@ button {
 
     flex-wrap: wrap;
 
-    gap: 6px;
+    gap: 7px;
 }
 
 
 .wellbeing-tags span {
 
     padding:
-        5px
-        8px;
+        6px
+        10px;
 
     border-radius: 20px;
 
     background:
         rgba(255,255,255,.14);
 
-    font-size: 7px;
+    font-size: 9px;
 }
 
 
@@ -1787,16 +1704,16 @@ button {
 }
 
 
-/* FOOTER MESSAGE */
+/* BOTTOM MESSAGE */
 
 .bottom-message {
 
-    min-height: 57px;
+    min-height: 62px;
 
     margin-top: 14px;
 
     padding:
-        10px
+        11px
         16px;
 
     display: flex;
@@ -1822,8 +1739,8 @@ button {
 
 .bottom-message-icon {
 
-    width: 35px;
-    height: 35px;
+    width: 37px;
+    height: 37px;
 
     flex-shrink: 0;
 
@@ -1836,14 +1753,13 @@ button {
     color:
         var(--purple);
 
-    background:
-        white;
+    background: white;
 }
 
 
 .bottom-message-icon svg {
 
-    width: 17px;
+    width: 18px;
 }
 
 
@@ -1854,7 +1770,7 @@ button {
     color:
         #5E5990;
 
-    font-size: 8px;
+    font-size: 10px;
 }
 
 
@@ -1863,9 +1779,7 @@ button {
     color:
         var(--purple);
 
-    font-size: 15px;
-
-    font-weight: 700;
+    font-size: 17px;
 }
 
 
@@ -1894,7 +1808,7 @@ button {
     box-shadow:
         var(--shadow);
 
-    font-size: 10px;
+    font-size: 11px;
 
     opacity: 0;
 
@@ -1924,7 +1838,7 @@ button {
     .stats-grid {
 
         grid-template-columns:
-            repeat(2, 1fr);
+            repeat(2,1fr);
     }
 
 
@@ -1948,6 +1862,7 @@ button {
 @media (max-width: 1050px) {
 
     .global-search {
+
         display: none;
     }
 
@@ -2031,21 +1946,20 @@ button {
     .hero-section {
 
         padding:
-            23px
+            24px
             18px;
     }
 
 
     .hero-copy h2 {
 
-        font-size: 30px;
+        font-size: 31px;
     }
 
 
-    .floating-card {
+    .hero-copy > p {
 
-        transform:
-            scale(.88);
+        font-size: 13px;
     }
 
 
@@ -2077,20 +1991,6 @@ button {
             auto;
     }
 
-
-    .hero-actions {
-
-        flex-direction:
-            column;
-    }
-
-
-    .primary-button,
-    .secondary-button {
-
-        width: 100%;
-    }
-
 }
 
 
@@ -2114,7 +2014,7 @@ button {
 
     .hero-characters {
 
-        width: 270px;
+        width: 280px;
     }
 
 
@@ -2127,7 +2027,7 @@ button {
     .activity-item {
 
         grid-template-columns:
-            35px
+            38px
             1fr;
     }
 

@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Sentir | Buscar duplicados</title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin="anonymous"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <script
+        src="https://unpkg.com/lucide@latest"
+        defer
+    ></script>
+
+    <link
+        rel="stylesheet"
+        href="Duplicates.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- ================================================= -->
+    <!-- SIDEBAR -->
+    <!-- ================================================= -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+
+        <div class="brand">
+
+            <img
+                src="/Sentir/Shared/AdminResources/Logo-nombrelado.png"
+                alt="Logo Sentir"
+                class="official-logo"
+            >
+
+        </div>
+
+
+        <nav class="nav-menu">
+
+
+            <button
+                class="nav-item active"
+                id="inicioNav"
+                type="button"
+            >
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                >
+
+                    <path
+                        d="M3 10.5L12 3L21 10.5V21H15V14H9V21H3V10.5Z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+
+                </svg>
+
+                <span><a href="/Sentir/Client/ScreenAdmin/Admin.html" class="sin-subrayado">
+                    Inicio
+                </span></a>
+
+            </button>
+
+
+            <button
+                class="nav-item"
+                id="usuariosNav"
+                type="button"
+            >
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                >
+
+                    <circle
+                        cx="9"
+                        cy="7"
+                        r="4"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    />
+
+                    <path
+                        d="M3 21V19C3 16.8 4.8 15 7 15H11C13.2 15 15 16.8 15 19V21"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
+
+                    <path
+                        d="M16 4.5C17.8 4.9 19 6.5 19 8.3C19 10 17.8 11.6 16 12"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
+
+                    <path
+                        d="M18 15C20 15.5 21.5 17.1 21.5 19V21"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
+
+                </svg>
+
+                <span><a href="/Sentir/Client/ScreenAdmin/Users/Users.html" class="sin-subrayado">
+                    Usuarios
+                </span></a>
+
+            </button>
+
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+
+            <div class="sidebar-heart">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                >
+
+                    <path
+                        d="M12 21S4 16.4 4 9.5C4 6.5 6.3 4 9.2 4C10.8 4 12 4.8 12 4.8C12 4.8 13.2 4 14.8 4C17.7 4 20 6.5 20 9.5C20 16.4 12 21 12 21Z"
+                    />
+
+                </svg>
+
+            </div>
+
+
+            <p class="community-message">
+
+                Un entorno más humano,
+                <br>
+                una comunidad más fuerte.
+
+            </p>
+
+
+            <div class="sidebar-illustration">
+
+                <img
+                    src="/Sentir/Shared/AdminResources/MuñEsquina.png"
+                    alt="Comunidad Sentir"
+                >
+
+            </div>
+
+
+            <p class="copyright">
+
+                © 2026 Sentir
+                <br>
+                Todos los derechos reservados.
+
+            </p>
+
+
+        </div>
+
+
+    </aside>
+
+
+    <!-- OVERLAY -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- HAMBURGUESA -->
+
+    <button
+        class="mobile-menu-button"
+        id="mobileMenuButton"
+        type="button"
+        aria-label="Abrir menú"
+    >
+
+        <span id="menuIcon">
+            ☰
+        </span>
+
+    </button>
+
+
+    <!-- ================================================= -->
+    <!-- MAIN -->
+    <!-- ================================================= -->
+
+    <main class="main-content">
+
+
+        <!-- HEADER -->
+
+        <header class="top-header">
+
+
+            <div class="page-heading">
+
+
+                <button
+                    class="back-button"
+                    id="backButton"
+                    type="button"
+                >
+
+                    <span><a href="/Sentir/Client/ScreenAdmin/Admin.html" class="sin-subrayado">
+                        Volver al inicio
+                    </a></span>
+                </button>
+
+
+                <p class="section-label">
+                    Control de información
+                </p>
+
+
+                <h1>
+                    Buscar duplicados
+                </h1>
+
+
+                <p class="page-description">
+
+                    Encuentra registros con documentos
+                    o correos electrónicos repetidos.
+
+                </p>
+
+
+            </div>
+
+
+            <!-- PERFIL -->
+
+            <div class="header-user-area">
+
+
+                <button
+                    class="notification-button"
+                    type="button"
+                    aria-label="Notificaciones"
+                >
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
+                        <path
+                            d="M18 8C18 4.7 15.3 2 12 2C8.7 2 6 4.7 6 8V11.2C6 12.7 5.5 14.2 4.5 15.4L3 17H21L19.5 15.4C18.5 14.2 18 12.7 18 11.2V8Z"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+
+                        <path
+                            d="M9.5 21H14.5"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                    </svg>
+
+
+                    <span class="notification-badge">
+                        3
+                    </span>
+
+                </button>
+
+
+                <div class="admin-profile">
+
+                    <div class="admin-info">
+
+                        <strong>
+                            Admin
+                        </strong>
+
+                        <span>
+                            Administradora
+                        </span>
+
+                    </div>
+
+
+                    <svg
+                        class="profile-chevron"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
+                        <path
+                            d="M6 9L12 15L18 9"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+
+                    </svg>
+
+                </div>
+
+
+            </div>
+
+
+        </header>
+
+
+        <!-- HERO -->
+
+        <section class="tool-hero">
+
+
+            <div class="hero-icon">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                >
+
+                    <rect
+                        x="4"
+                        y="4"
+                        width="10"
+                        height="10"
+                        rx="2"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    />
+
+                    <rect
+                        x="10"
+                        y="10"
+                        width="10"
+                        height="10"
+                        rx="2"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    />
+
+                    <path
+                        d="M17 17L21 21"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
+
+                </svg>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Calidad de datos
+                </span>
+
+                <h2>
+                    Evita registros repetidos
+                </h2>
+
+                <p>
+
+                    Sentir puede revisar la información
+                    y ayudarte a identificar posibles usuarios duplicados.
+
+                </p>
+
+            </div>
+
+
+            <button
+                class="hero-scan-button"
+                id="scanButton"
+                type="button"
+            >
+
+                <i data-lucide="scan-search"></i>
+
+                Analizar usuarios
+
+            </button>
+
+
+        </section>
+
+
+        <!-- RESUMEN -->
+
+        <section class="summary-grid">
+
+
+            <article class="summary-card">
+
+                <div class="summary-icon purple-soft">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
+                        <circle
+                            cx="9"
+                            cy="7"
+                            r="4"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        />
+
+                        <path
+                            d="M3 21V19C3 16.8 4.8 15 7 15H11C13.2 15 15 16.8 15 19V21"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M16 4.5C18 5 19 6.5 19 8.5C19 10 18 11.5 16 12"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                    </svg>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Usuarios analizados
+                    </span>
+
+                    <strong id="analysedCount">
+                        0
+                    </strong>
+
+                </div>
+
+            </article>
+
+
+            <article class="summary-card">
+
+                <div class="summary-icon warning-soft">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
+                        <rect
+                            x="4"
+                            y="4"
+                            width="10"
+                            height="10"
+                            rx="2"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        />
+
+                        <rect
+                            x="10"
+                            y="10"
+                            width="10"
+                            height="10"
+                            rx="2"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        />
+
+                    </svg>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Grupos duplicados
+                    </span>
+
+                    <strong id="duplicateGroups">
+                        0
+                    </strong>
+
+                </div>
+
+            </article>
+
+
+            <article class="summary-card">
+
+                <div class="summary-icon blue-soft">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
+                        <circle
+                            cx="9"
+                            cy="7"
+                            r="4"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        />
+
+                        <path
+                            d="M3 21V19C3 16.8 4.8 15 7 15H11C13.2 15 15 16.8 15 19V21"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M16 17L18 19L22 15"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+
+                    </svg>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Sin coincidencias
+                    </span>
+
+                    <strong id="cleanUsers">
+                        0
+                    </strong>
+
+                </div>
+
+            </article>
+
+
+        </section>
+
+
+        <!-- RESULTADOS -->
+
+        <section class="main-card">
+
+
+            <div class="card-heading">
+
+
+                <div>
+
+                    <span>
+                        Resultados
+                    </span>
+
+                    <h3>
+                        Coincidencias encontradas
+                    </h3>
+
+                </div>
+
+
+                <div class="duplicate-filter">
+
+
+                    <button
+                        class="duplicate-filter-button active"
+                        data-type="all"
+                        type="button"
+                    >
+                        Todos
+                    </button>
+
+
+                    <button
+                        class="duplicate-filter-button"
+                        data-type="Documento"
+                        type="button"
+                    >
+                        Documento
+                    </button>
+
+
+                    <button
+                        class="duplicate-filter-button"
+                        data-type="Correo"
+                        type="button"
+                    >
+                        Correo
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+            <div
+                class="duplicate-list"
+                id="duplicateList"
+            ></div>
+
+
+            <div
+                class="empty-state"
+                id="emptyState"
+            >
+
+
+                <div class="empty-icon">
+
+                    <i data-lucide="scan-search"></i>
+
+                </div>
+
+
+                <h3>
+                    Analiza los usuarios
+                </h3>
+
+
+                <p>
+
+                    Presiona “Analizar usuarios”
+                    para buscar posibles registros duplicados.
+
+                </p>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- CONSEJO -->
+
+        <section class="data-tip-card">
+
+
+            <div class="tip-icon">
+
+                <i data-lucide="shield-check"></i>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Antes de eliminar un registro
+                </strong>
+
+                <p>
+
+                    Verifica que realmente corresponda al mismo usuario.
+                    Personas diferentes podrían compartir datos similares.
+
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+<!-- TOAST -->
+
+<div
+    class="toast"
+    id="toast"
+>
+
+    <i data-lucide="circle-check"></i>
+
+    <span id="toastText"></span>
+
+</div>
+
+
+<script src="Duplicates.js"></script>
+
+
+</body>
+
+</html>

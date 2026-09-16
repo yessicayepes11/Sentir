@@ -148,7 +148,7 @@ button {
 
 .brand {
 
-    min-height: 100px;
+    min-height: 450px;
 
     display: flex;
 
@@ -160,7 +160,7 @@ button {
 
 .official-logo {
 
-    width: 160px;
+    width: 200px;
 
     max-width: 90%;
 
@@ -177,13 +177,13 @@ button {
 
 .nav-menu {
 
-    margin-top: 20px;
+    margin-top: 10px;
 
     display: flex;
 
     flex-direction: column;
 
-    gap: 8px;
+    gap: 15px;
 }
 
 

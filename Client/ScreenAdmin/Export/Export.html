@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Sentir | Exportar usuarios</title>
+
+    <!-- POPPINS -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin="anonymous"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- LUCIDE -->
+
+    <script
+        src="https://unpkg.com/lucide@latest"
+        defer
+    ></script>
+
+    <!-- CSS -->
+
+    <link
+        rel="stylesheet"
+        href="Export.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- ================================================= -->
+    <!-- SIDEBAR -->
+    <!-- ================================================= -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+
+        <!-- LOGO -->
+
+        <div class="brand">
+
+            <img
+                src="/Sentir/Shared/AdminResources/Logo-nombrelado.png"
+                alt="Logo Sentir"
+                class="official-logo"
+            >
+
+        </div>
+
+
+        <!-- NAVEGACIÓN -->
+
+        <nav class="nav-menu">
+
+
+            <button
+                class="nav-item active"
+                id="inicioNav"
+                type="button"
+            >
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                >
+
+                    <path
+                        d="M3 10.5L12 3L21 10.5V21H15V14H9V21H3V10.5Z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+
+                </svg>
+
+                <span><a href="/Sentir/Client/ScreenAdmin/Admin.html" class="sin-subrayado">
+                    Inicio
+                </span></a>
+
+            </button>
+
+
+            <button
+                class="nav-item"
+                id="usuariosNav"
+                type="button"
+            >
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                >
+
+                    <circle
+                        cx="9"
+                        cy="7"
+                        r="4"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    />
+
+                    <path
+                        d="M3 21V19C3 16.8 4.8 15 7 15H11C13.2 15 15 16.8 15 19V21"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
+
+                    <path
+                        d="M16 4.5C17.8 4.9 19 6.5 19 8.3C19 10 17.8 11.6 16 12"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
+
+                    <path
+                        d="M18 15C20 15.5 21.5 17.1 21.5 19V21"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
+
+                </svg>
+
+                <span><a href="/Sentir/Client/ScreenAdmin/Users/Users.html" class="sin-subrayado">
+                    Usuarios
+                </span></a>
+            </button>
+
+
+        </nav>
+
+
+        <!-- PARTE INFERIOR -->
+
+        <div class="sidebar-bottom">
+
+
+            <div class="sidebar-heart">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                >
+
+                    <path
+                        d="M12 21S4 16.4 4 9.5C4 6.5 6.3 4 9.2 4C10.8 4 12 4.8 12 4.8C12 4.8 13.2 4 14.8 4C17.7 4 20 6.5 20 9.5C20 16.4 12 21 12 21Z"
+                    />
+
+                </svg>
+
+            </div>
+
+
+            <p class="community-message">
+
+                Un entorno más humano,
+                <br>
+                una comunidad más fuerte.
+
+            </p>
+
+
+            <div class="sidebar-illustration">
+
+                <img
+                    src="/Sentir/Shared/AdminResources/MuñEsquina.png"
+                    alt="Comunidad Sentir"
+                >
+
+            </div>
+
+
+            <p class="copyright">
+
+                © 2026 Sentir
+                <br>
+                Todos los derechos reservados.
+
+            </p>
+
+
+        </div>
+
+
+    </aside>
+
+
+    <!-- ================================================= -->
+    <!-- OVERLAY -->
+    <!-- ================================================= -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- ================================================= -->
+    <!-- HAMBURGUESA -->
+    <!-- ================================================= -->
+
+    <button
+        class="mobile-menu-button"
+        id="mobileMenuButton"
+        type="button"
+        aria-label="Abrir menú"
+    >
+
+        <span id="menuIcon">
+            ☰
+        </span>
+
+    </button>
+
+
+    <!-- ================================================= -->
+    <!-- MAIN -->
+    <!-- ================================================= -->
+
+    <main class="main-content">
+
+
+        <!-- ================================================= -->
+        <!-- HEADER -->
+        <!-- ================================================= -->
+
+        <header class="top-header">
+
+
+            <div class="page-heading">
+
+
+                <button
+                    class="back-button"
+                    id="backButton"
+                    type="button"
+                >
+
+                    <span><a href="/Sentir/Client/ScreenAdmin/Admin.html" class="sin-subrayado">
+                        Volver al inicio
+                    </a></span>
+
+                </button>
+
+
+                <p class="section-label">
+                    Gestión administrativa
+                </p>
+
+
+                <h1>
+                    Exportar usuarios
+                </h1>
+
+
+                <p class="page-description">
+
+                    Selecciona los usuarios que deseas incluir
+                    y descarga la información de manera organizada.
+
+                </p>
+
+
+            </div>
+
+
+            <!-- PERFIL SUPERIOR DERECHO -->
+
+            <div class="header-user-area">
+
+
+                <button
+                    class="notification-button"
+                    type="button"
+                    aria-label="Notificaciones"
+                >
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
+                        <path
+                            d="M18 8C18 4.7 15.3 2 12 2C8.7 2 6 4.7 6 8V11.2C6 12.7 5.5 14.2 4.5 15.4L3 17H21L19.5 15.4C18.5 14.2 18 12.7 18 11.2V8Z"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+
+                        <path
+                            d="M9.5 21H14.5"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                    </svg>
+
+
+                    <span class="notification-badge">
+                        3
+                    </span>
+
+                </button>
+
+
+                <div class="admin-profile">
+
+                    <div class="admin-info">
+
+                        <strong>
+                            Admin
+                        </strong>
+
+                        <span>
+                            Administradora
+                        </span>
+
+                    </div>
+
+
+                    <svg
+                        class="profile-chevron"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
+                        <path
+                            d="M6 9L12 15L18 9"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+
+                    </svg>
+
+                </div>
+
+
+            </div>
+
+
+        </header>
+
+
+        <!-- ================================================= -->
+        <!-- HERO -->
+        <!-- ================================================= -->
+
+        <section class="tool-hero">
+
+
+            <div class="hero-icon">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                >
+
+                    <path
+                        d="M12 3V15"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
+
+                    <path
+                        d="M7 10L12 15L17 10"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+
+                    <path
+                        d="M5 21H19"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
+
+                </svg>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Exportación de datos
+                </span>
+
+                <h2>
+                    Lleva la información de Sentir contigo
+                </h2>
+
+                <p>
+
+                    Filtra los registros y genera un archivo listo
+                    para organizar, revisar o respaldar.
+
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- RESUMEN -->
+        <!-- ================================================= -->
+
+        <section class="summary-grid">
+
+
+            <article class="summary-card">
+
+                <div class="summary-icon purple-soft">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
+                        <circle
+                            cx="9"
+                            cy="7"
+                            r="4"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        />
+
+                        <path
+                            d="M3 21V19C3 16.8 4.8 15 7 15H11C13.2 15 15 16.8 15 19V21"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M16 4.5C18 5 19 6.5 19 8.5C19 10 18 11.5 16 12"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                    </svg>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Total disponibles
+                    </span>
+
+                    <strong id="totalAvailable">
+                        0
+                    </strong>
+
+                </div>
+
+            </article>
+
+
+            <article class="summary-card">
+
+                <div class="summary-icon blue-soft">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
+                        <path
+                            d="M4 6H20"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M7 12H17"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M10 18H14"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                    </svg>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Seleccionados
+                    </span>
+
+                    <strong id="selectedCount">
+                        0
+                    </strong>
+
+                </div>
+
+            </article>
+
+
+            <article class="summary-card">
+
+                <div class="summary-icon lavender-soft">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
+                        <path
+                            d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2Z"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linejoin="round"
+                        />
+
+                        <path
+                            d="M14 2V8H20"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linejoin="round"
+                        />
+
+                        <path
+                            d="M12 11V17"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M9 14L12 17L15 14"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+
+                    </svg>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Formato
+                    </span>
+
+                    <strong id="selectedFormatText">
+                        CSV
+                    </strong>
+
+                </div>
+
+            </article>
+
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- CONFIGURACIÓN -->
+        <!-- ================================================= -->
+
+        <section class="content-grid">
+
+
+            <article class="main-card">
+
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <span>
+                            Configuración
+                        </span>
+
+                        <h3>
+                            ¿Qué deseas exportar?
+                        </h3>
+
+                    </div>
+
+
+                    <div class="heading-badge">
+
+                        <i data-lucide="sliders-horizontal"></i>
+
+                        Personalizar
+
+                    </div>
+
+                </div>
+
+
+                <!-- FILTROS -->
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="roleFilter">
+                            Rol
+                        </label>
+
+
+                        <div class="pretty-field">
+
+                            <i data-lucide="shield-user"></i>
+
+
+                            <select id="roleFilter">
+
+                                <option value="">
+                                    Todos los roles
+                                </option>
+
+                                <option value="Estudiante">
+                                    Estudiante
+                                </option>
+
+                                <option value="Docente">
+                                    Docente
+                                </option>
+
+                                <option value="UAI">
+                                    UAI
+                                </option>
+
+                                <option value="Psicóloga">
+                                    Psicóloga
+                                </option>
+
+                                <option value="Directivo">
+                                    Directivo
+                                </option>
+
+                                <option value="Comité de convivencia">
+                                    Comité de convivencia
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="statusFilter">
+                            Estado
+                        </label>
+
+
+                        <div class="pretty-field">
+
+                            <i data-lucide="circle-check"></i>
+
+
+                            <select id="statusFilter">
+
+                                <option value="">
+                                    Todos los estados
+                                </option>
+
+                                <option value="Activo">
+                                    Activo
+                                </option>
+
+                                <option value="Inactivo">
+                                    Inactivo
+                                </option>
+
+                                <option value="Pendiente">
+                                    Pendiente
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- FORMATO -->
+
+                <div class="format-section">
+
+
+                    <p class="field-title">
+                        Formato del archivo
+                    </p>
+
+
+                    <div class="format-options">
+
+
+                        <button
+                            class="format-card active"
+                            data-format="csv"
+                            type="button"
+                        >
+
+                            <div class="format-icon">
+
+                                <i data-lucide="sheet"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    Excel / CSV
+                                </strong>
+
+                                <span>
+                                    Ideal para hojas de cálculo
+                                </span>
+
+                            </div>
+
+
+                            <i
+                                class="format-check"
+                                data-lucide="circle-check-big"
+                            ></i>
+
+                        </button>
+
+
+                        <button
+                            class="format-card"
+                            data-format="json"
+                            type="button"
+                        >
+
+                            <div class="format-icon json-icon">
+
+                                <i data-lucide="braces"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    JSON
+                                </strong>
+
+                                <span>
+                                    Ideal para respaldo y desarrollo
+                                </span>
+
+                            </div>
+
+
+                            <i
+                                class="format-check"
+                                data-lucide="circle-check-big"
+                            ></i>
+
+                        </button>
+
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- NOTA -->
+
+                <div class="export-note">
+
+                    <i data-lucide="shield-check"></i>
+
+                    <p>
+
+                        La exportación incluirá únicamente
+                        los usuarios que coincidan con los filtros seleccionados.
+
+                    </p>
+
+                </div>
+
+
+                <!-- BOTONES -->
+
+                <div class="card-actions">
+
+                    <button
+                        class="soft-action-button"
+                        id="clearFilters"
+                        type="button"
+                    >
+
+                        <i data-lucide="rotate-ccw"></i>
+
+                        Restablecer
+
+                    </button>
+
+
+                    <button
+                        class="main-action-button"
+                        id="exportButton"
+                        type="button"
+                    >
+
+                        <i data-lucide="download"></i>
+
+                        Exportar usuarios
+
+                    </button>
+
+                </div>
+
+
+            </article>
+
+
+            <!-- CONSEJO -->
+
+            <aside class="side-card">
+
+
+                <div class="side-card-icon">
+
+                    <i data-lucide="lightbulb"></i>
+
+                </div>
+
+
+                <span>
+                    Consejo Sentir
+                </span>
+
+
+                <h3>
+
+                    Información organizada,
+                    decisiones más sencillas.
+
+                </h3>
+
+
+                <p>
+
+                    Utiliza los filtros para exportar
+                    únicamente la información que necesites.
+
+                </p>
+
+
+                <div class="side-list">
+
+
+                    <div>
+
+                        <i data-lucide="check"></i>
+
+                        <span>
+                            Compatible con Excel
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <i data-lucide="check"></i>
+
+                        <span>
+                            Filtrado por rol
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <i data-lucide="check"></i>
+
+                        <span>
+                            Filtrado por estado
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+            </aside>
+
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- TABLA -->
+        <!-- ================================================= -->
+
+        <section class="main-card preview-card">
+
+
+            <div class="card-heading">
+
+                <div>
+
+                    <span>
+                        Vista previa
+                    </span>
+
+                    <h3>
+                        Usuarios que serán exportados
+                    </h3>
+
+                </div>
+
+
+                <span
+                    class="preview-count"
+                    id="previewCount"
+                >
+                    0 registros
+                </span>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+
+                    <thead>
+
+                    <tr>
+
+                        <th>Nombre</th>
+                        <th>Documento</th>
+                        <th>Correo</th>
+                        <th>Rol</th>
+                        <th>Estado</th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="previewBody"></tbody>
+
+
+                </table>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+<!-- TOAST -->
+
+<div
+    class="toast"
+    id="toast"
+>
+
+    <i data-lucide="circle-check"></i>
+
+    <span id="toastText"></span>
+
+</div>
+
+
+<script src="Export.js"></script>
+
+
+</body>
+
+</html>

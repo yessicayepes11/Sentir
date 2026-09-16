@@ -1,6 +1,7 @@
 // ======================================================
-// DOM
+// SENTIR - INICIO ADMINISTRADOR
 // ======================================================
+
 
 const byId =
     id =>
@@ -23,36 +24,16 @@ const menuIcon =
     byId("menuIcon");
 
 
-const inicioNav =
-    byId("inicioNav");
-
-
 const usuariosNav =
     byId("usuariosNav");
 
 
-const heroAddUser =
-    byId("heroAddUser");
+const quickExport =
+    byId("quickExport");
 
 
-const heroViewUsers =
-    byId("heroViewUsers");
-
-
-const quickRegister =
-    byId("quickRegister");
-
-
-const quickUsers =
-    byId("quickUsers");
-
-
-const quickReport =
-    byId("quickReport");
-
-
-const viewActivity =
-    byId("viewActivity");
+const quickDuplicates =
+    byId("quickDuplicates");
 
 
 const globalSearch =
@@ -105,7 +86,6 @@ function showToast(message) {
 
 
     setTimeout(
-
         () => {
 
             toast.classList.remove(
@@ -113,9 +93,7 @@ function showToast(message) {
             );
 
         },
-
         2400
-
     );
 
 }
@@ -124,28 +102,6 @@ function showToast(message) {
 // ======================================================
 // SIDEBAR
 // ======================================================
-
-function openSidebar() {
-
-    sidebar.classList.add(
-        "open"
-    );
-
-
-    sidebarOverlay.classList.add(
-        "show"
-    );
-
-
-    menuIcon.textContent =
-        "×";
-
-
-    document.body.style.overflow =
-        "hidden";
-
-}
-
 
 function closeSidebar() {
 
@@ -170,38 +126,39 @@ function closeSidebar() {
 
 
 mobileMenuButton.addEventListener(
-
     "click",
-
     () => {
 
-        if (
-            sidebar.classList.contains(
+        const open =
+            sidebar.classList.toggle(
                 "open"
-            )
-        ) {
+            );
 
-            closeSidebar();
 
-        }
+        sidebarOverlay.classList.toggle(
+            "show",
+            open
+        );
 
-        else {
 
-            openSidebar();
+        menuIcon.textContent =
+            open
+                ? "×"
+                : "☰";
 
-        }
+
+        document.body.style.overflow =
+            open
+                ? "hidden"
+                : "";
 
     }
-
 );
 
 
 sidebarOverlay.addEventListener(
-
     "click",
-
     closeSidebar
-
 );
 
 
@@ -209,99 +166,45 @@ sidebarOverlay.addEventListener(
 // NAVEGACIÓN
 // ======================================================
 
-inicioNav.addEventListener(
-
+usuariosNav.addEventListener(
     "click",
-
     () => {
 
-        if (
-            window.innerWidth <=
-            900
-        ) {
-
-            closeSidebar();
-
-        }
+        window.location.href =
+            "Users.html";
 
     }
-
-);
-
-
-function goToUsers() {
-
-    window.location.href =
-        "Users.html";
-
-}
-
-
-usuariosNav.addEventListener(
-
-    "click",
-
-    goToUsers
-
-);
-
-
-heroViewUsers.addEventListener(
-
-    "click",
-
-    goToUsers
-
-);
-
-
-quickUsers.addEventListener(
-
-    "click",
-
-    goToUsers
-
 );
 
 
 // ======================================================
-// REGISTRO DE USUARIO
+// ACCIONES RÁPIDAS
 // ======================================================
 
-function goToRegisterUser() {
-
-    /*
-    Esto abre Users.html.
-    Luego, si quieres, podemos hacer
-    que abra directamente el modal.
-    */
-
-    window.location.href =
-        "Users.html";
-
-}
-
-
-heroAddUser.addEventListener(
-
+quickExport.addEventListener(
     "click",
+    () => {
 
-    goToRegisterUser
+        window.location.href =
+            "ExportUsers.html";
 
+    }
 );
 
 
-quickRegister.addEventListener(
-
+quickDuplicates.addEventListener(
     "click",
+    () => {
 
-    goToRegisterUser
+        window.location.href =
+            "Duplicates.html";
 
+    }
 );
 
 
 // ======================================================
-// ACTIVIDAD
+// ACTIVIDAD RECIENTE
 // ======================================================
 
 const recentActivity = [
@@ -387,12 +290,9 @@ function renderActivity() {
 
 
     recentActivity.forEach(
-
         activity => {
 
-
             const item =
-
                 document.createElement(
                     "div"
                 );
@@ -443,7 +343,6 @@ function renderActivity() {
             );
 
         }
-
     );
 
 
@@ -453,20 +352,10 @@ function renderActivity() {
 
 
 // ======================================================
-// GRÁFICO
+// GRÁFICA
 // ======================================================
 
 function createRolesChart() {
-
-    if (
-        typeof Chart ===
-        "undefined"
-    ) {
-
-        return;
-
-    }
-
 
     const canvas =
         byId("rolesChart");
@@ -479,10 +368,23 @@ function createRolesChart() {
     }
 
 
+    if (
+        typeof Chart ===
+        "undefined"
+    ) {
+
+        setTimeout(
+            createRolesChart,
+            300
+        );
+
+        return;
+
+    }
+
+
     new Chart(
-
         canvas,
-
         {
 
             type:
@@ -494,15 +396,10 @@ function createRolesChart() {
                 labels: [
 
                     "Estudiantes",
-
                     "Docentes",
-
                     "UAI",
-
                     "Psicóloga",
-
                     "Directivos",
-
                     "Comité"
 
                 ],
@@ -515,15 +412,10 @@ function createRolesChart() {
                         data: [
 
                             86,
-
                             18,
-
                             6,
-
                             5,
-
                             7,
-
                             6
 
                         ],
@@ -532,15 +424,10 @@ function createRolesChart() {
                         backgroundColor: [
 
                             "#4195F5",
-
                             "#668DF0",
-
                             "#9A5BF3",
-
                             "#CC72EE",
-
                             "#5D70E3",
-
                             "#AA60D4"
 
                         ],
@@ -550,8 +437,12 @@ function createRolesChart() {
                             0,
 
 
+                        spacing:
+                            2,
+
+
                         hoverOffset:
-                            4
+                            5
 
                     }
 
@@ -571,7 +462,7 @@ function createRolesChart() {
 
 
                 cutout:
-                    "70%",
+                    "72%",
 
 
                 plugins: {
@@ -581,6 +472,14 @@ function createRolesChart() {
                         display:
                             false
 
+                    },
+
+
+                    tooltip: {
+
+                        enabled:
+                            true
+
                     }
 
                 }
@@ -588,7 +487,6 @@ function createRolesChart() {
             }
 
         }
-
     );
 
 }
@@ -599,9 +497,7 @@ function createRolesChart() {
 // ======================================================
 
 globalSearch.addEventListener(
-
     "keydown",
-
     event => {
 
         if (
@@ -614,88 +510,26 @@ globalSearch.addEventListener(
         }
 
 
-        const value =
-
+        const search =
             globalSearch.value
                 .trim();
 
 
-        if (!value) {
+        if (!search) {
 
             showToast(
-                "Escribe algo para buscar"
+                "Escribe un usuario para buscar"
             );
-
 
             return;
 
         }
 
 
-        showToast(
-            `Buscando: ${value}`
-        );
+        window.location.href =
+            `Users.html?search=${encodeURIComponent(search)}`;
 
     }
-
-);
-
-
-// ======================================================
-// ACCIONES SIN PANTALLA AÚN
-// ======================================================
-
-quickReport.addEventListener(
-
-    "click",
-
-    () => {
-
-        showToast(
-            "El resumen completo se conectará después"
-        );
-
-    }
-
-);
-
-
-viewActivity.addEventListener(
-
-    "click",
-
-    () => {
-
-        showToast(
-            "Aquí podremos mostrar el historial completo"
-        );
-
-    }
-
-);
-
-
-// ======================================================
-// ESC
-// ======================================================
-
-document.addEventListener(
-
-    "keydown",
-
-    event => {
-
-        if (
-            event.key ===
-            "Escape"
-        ) {
-
-            closeSidebar();
-
-        }
-
-    }
-
 );
 
 
@@ -704,9 +538,7 @@ document.addEventListener(
 // ======================================================
 
 window.addEventListener(
-
     "resize",
-
     () => {
 
         if (
@@ -719,12 +551,11 @@ window.addEventListener(
         }
 
     }
-
 );
 
 
 // ======================================================
-// INICIO
+// INIT
 // ======================================================
 
 function init() {
@@ -733,17 +564,14 @@ function init() {
 
 
     setTimeout(
+        refreshIcons,
+        200
+    );
 
-        () => {
 
-            refreshIcons();
-
-            createRolesChart();
-
-        },
-
-        350
-
+    setTimeout(
+        createRolesChart,
+        500
     );
 
 }

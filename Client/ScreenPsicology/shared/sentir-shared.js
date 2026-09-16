@@ -16,8 +16,7 @@ const SENTIR_DEFAULT_PROFILE = {
     email: 'jannette.cardeno@sentir.edu.co',
     especialidad: 'Psicología Educativa y Clínica Infanto-Juvenil',
     sedes: 'Sede Principal · Sede Norte',
-    horario: 'Lunes a Viernes · 7:00am – 3:00pm',
-    idiomas: 'Español, Inglés'
+    horario: 'Lunes a Viernes · 7:00am – 3:00pm'
 };
 
 function getPsychProfile() {
@@ -54,15 +53,15 @@ const SentirStore = {
 };
 
 const DEFAULT_STUDENTS = [
-    { name: 'Mateo Silva', grade: '11°1', id: '#8841', caseNumber: 'CASO-0001', risk: 'high', mood: 'sad', moodText: 'Ansiedad severa', avatar: 'https://i.pinimg.com/1200x/12/c7/aa/12c7aaba085ad70b996ecb4b25588217.jpg' },
-    { name: 'Camila Pérez', grade: '9°4', id: '#3219', caseNumber: 'CASO-0002', risk: 'medium', mood: 'neutral', moodText: 'Tristeza prolongada', avatar: 'https://i.pinimg.com/736x/7e/bc/d4/7ebcd44c2049c791c8c02304bc2ac7ad.jpg' },
-    { name: 'Alejandro Toro Restrepo', grade: '10°3', id: '#4412', caseNumber: 'CASO-0003', risk: 'medium', mood: 'neutral', moodText: 'Estrés por rendimiento', avatar: 'https://i.pinimg.com/736x/e2/c5/a6/e2c5a6fffcfe479e16254a6984244c28.jpg' },
-    { name: 'Carlos Mendoza', grade: '10°3', id: '#5502', caseNumber: 'CASO-0004', risk: 'stable', mood: 'happy', moodText: 'Ánimo estable', avatar: 'https://ui-avatars.com/api/?name=Carlos+Mendoza&background=65B8FF&color=fff&bold=true' },
-    { name: 'Sofía Gómez', grade: '8°2', id: '#2207', caseNumber: 'CASO-0005', risk: 'stable', mood: 'happy', moodText: 'En seguimiento leve', avatar: 'https://ui-avatars.com/api/?name=Sofia+Gomez&background=B8A8FF&color=1E1B4B&bold=true' },
-    { name: 'Valentina Ríos', grade: '7°1', id: '#7791', caseNumber: 'CASO-0006', risk: 'stable', mood: 'happy', moodText: 'Ánimo positivo', avatar: 'https://ui-avatars.com/api/?name=Valentina+Rios&background=6C4DF6&color=fff&bold=true' },
-    { name: 'Daniel Ortiz', grade: '11°2', id: '#9034', caseNumber: 'CASO-0007', risk: 'high', mood: 'sad', moodText: 'Aislamiento social', avatar: 'https://ui-avatars.com/api/?name=Daniel+Ortiz&background=EF4444&color=fff&bold=true' },
-    { name: 'Isabella Castro', grade: '6°3', id: '#1187', caseNumber: 'CASO-0008', risk: 'stable', mood: 'happy', moodText: 'Ánimo estable', avatar: 'https://ui-avatars.com/api/?name=Isabella+Castro&background=22C55E&color=fff&bold=true' },
-    { name: 'Juan Pablo Díaz', grade: '9°1', id: '#6650', caseNumber: 'CASO-0009', risk: 'medium', mood: 'neutral', moodText: 'Baja concentración', avatar: 'https://ui-avatars.com/api/?name=Juan+Diaz&background=F59E0B&color=1E1B4B&bold=true' }
+    { name: 'Mateo Silva', grade: '11°1', id: '#8841', caseNumber: 'CASO-0001', risk: 'high', mood: 'sad', moodText: 'Ansiedad severa', avatar: 'https://i.pinimg.com/1200x/12/c7/aa/12c7aaba085ad70b996ecb4b25588217.jpg', riskHistory: [{ fecha: addDaysISO(-60), risk: 'medium' }, { fecha: addDaysISO(-25), risk: 'medium' }, { fecha: addDaysISO(0), risk: 'high' }] },
+    { name: 'Camila Pérez', grade: '9°4', id: '#3219', caseNumber: 'CASO-0002', risk: 'medium', mood: 'neutral', moodText: 'Tristeza prolongada', avatar: 'https://i.pinimg.com/736x/7e/bc/d4/7ebcd44c2049c791c8c02304bc2ac7ad.jpg', riskHistory: [{ fecha: addDaysISO(-70), risk: 'stable' }, { fecha: addDaysISO(-20), risk: 'medium' }, { fecha: addDaysISO(0), risk: 'medium' }] },
+    { name: 'Alejandro Toro Restrepo', grade: '10°3', id: '#4412', caseNumber: 'CASO-0003', risk: 'medium', mood: 'neutral', moodText: 'Estrés por rendimiento', avatar: 'https://i.pinimg.com/736x/e2/c5/a6/e2c5a6fffcfe479e16254a6984244c28.jpg', riskHistory: [{ fecha: addDaysISO(-50), risk: 'stable' }, { fecha: addDaysISO(-15), risk: 'stable' }, { fecha: addDaysISO(0), risk: 'medium' }] },
+    { name: 'Carlos Mendoza', grade: '10°3', id: '#5502', caseNumber: 'CASO-0004', risk: 'stable', mood: 'happy', moodText: 'Ánimo estable', avatar: 'https://ui-avatars.com/api/?name=Carlos+Mendoza&background=65B8FF&color=fff&bold=true', riskHistory: [{ fecha: addDaysISO(-45), risk: 'stable' }, { fecha: addDaysISO(0), risk: 'stable' }] },
+    { name: 'Sofía Gómez', grade: '8°2', id: '#2207', caseNumber: 'CASO-0005', risk: 'stable', mood: 'happy', moodText: 'En seguimiento leve', avatar: 'https://ui-avatars.com/api/?name=Sofia+Gomez&background=B8A8FF&color=1E1B4B&bold=true', riskHistory: [{ fecha: addDaysISO(-40), risk: 'medium' }, { fecha: addDaysISO(-10), risk: 'stable' }, { fecha: addDaysISO(0), risk: 'stable' }] },
+    { name: 'Valentina Ríos', grade: '7°1', id: '#7791', caseNumber: 'CASO-0006', risk: 'stable', mood: 'happy', moodText: 'Ánimo positivo', avatar: 'https://ui-avatars.com/api/?name=Valentina+Rios&background=6C4DF6&color=fff&bold=true', riskHistory: [{ fecha: addDaysISO(-30), risk: 'stable' }, { fecha: addDaysISO(0), risk: 'stable' }] },
+    { name: 'Daniel Ortiz', grade: '11°2', id: '#9034', caseNumber: 'CASO-0007', risk: 'high', mood: 'sad', moodText: 'Aislamiento social', avatar: 'https://ui-avatars.com/api/?name=Daniel+Ortiz&background=EF4444&color=fff&bold=true', riskHistory: [{ fecha: addDaysISO(-55), risk: 'medium' }, { fecha: addDaysISO(-18), risk: 'high' }, { fecha: addDaysISO(0), risk: 'high' }] },
+    { name: 'Isabella Castro', grade: '6°3', id: '#1187', caseNumber: 'CASO-0008', risk: 'stable', mood: 'happy', moodText: 'Ánimo estable', avatar: 'https://ui-avatars.com/api/?name=Isabella+Castro&background=22C55E&color=fff&bold=true', riskHistory: [{ fecha: addDaysISO(-90), risk: 'high' }, { fecha: addDaysISO(-40), risk: 'medium' }, { fecha: addDaysISO(0), risk: 'stable' }] },
+    { name: 'Juan Pablo Díaz', grade: '9°1', id: '#6650', caseNumber: 'CASO-0009', risk: 'medium', mood: 'neutral', moodText: 'Baja concentración', avatar: 'https://ui-avatars.com/api/?name=Juan+Diaz&background=F59E0B&color=1E1B4B&bold=true', riskHistory: [{ fecha: addDaysISO(-35), risk: 'stable' }, { fecha: addDaysISO(0), risk: 'medium' }] }
 ];
 
 const DEFAULT_ALERTS = [
@@ -262,12 +261,12 @@ function initNotificationDropdown() {
 // para ir a otro módulo simplemente subimos un nivel y entramos a la carpeta destino.
 function resolveModulePath(target) {
     const map = {
-        'inicio.html': '../inicio/Inicio.html',
-        'estudiantes.html': '../estudiantes/Estudiantes.html',
+        'inicio.html': '../home/Home.html',
+        'estudiantes.html': '../students/Students.html',
         'agenda.html': '../agenda/Agenda.html',
-        'alertas.html': '../alertas/Alertas.html',
-        'actividades.html': '../actividades/Actividades.html',
-        'perfil.html': '../perfil/Perfil.html'
+        'alertas.html': '../alerts/Alerts.html',
+        'actividades.html': '../activities/Activities.html',
+        'perfil.html': '../profile/Profile.html'
     };
     return map[target] || target;
 }
@@ -389,9 +388,54 @@ function openStudentPanel(name) {
     document.getElementById('panelAvatar').src = student ? student.avatar : 'https://ui-avatars.com/api/?name=' + encodeURIComponent(name);
     panel.dataset.currentStudent = name;
 
+    renderRiskTimeline(student);
+
     document.body.style.overflow = 'hidden';
     overlay.classList.add('show');
     panel.classList.add('open');
+}
+
+const RISK_LABELS = { high: 'Alto', medium: 'Medio', stable: 'Estable' };
+const RISK_DOT_COLOR = { high: 'var(--riesgo-alto)', medium: 'var(--riesgo-medio)', stable: 'var(--riesgo-estable)' };
+
+function renderRiskTimeline(student) {
+    const container = document.getElementById('panelRiskTimeline');
+    if (!container) return;
+
+    if (!student || !student.riskHistory || !student.riskHistory.length) {
+        container.innerHTML = '';
+        container.style.display = 'none';
+        return;
+    }
+    container.style.display = 'block';
+
+    // El último punto SIEMPRE refleja el riesgo actual real del estudiante (nunca queda desactualizado)
+    const history = student.riskHistory.slice(0, -1);
+    const points = [...history, { fecha: todayISO(), risk: student.risk }];
+
+    const stepsHTML = points.map((p, i) => {
+        const isLast = i === points.length - 1;
+        const dateLabel = isLast ? 'Hoy' : 'Hace ' + daysAgoLabel(p.fecha);
+        return `
+        <div class="risk-timeline-step">
+            <div class="risk-timeline-dot" style="background:${RISK_DOT_COLOR[p.risk]}"></div>
+            <span class="risk-timeline-label">${RISK_LABELS[p.risk]}</span>
+            <span class="risk-timeline-date">${dateLabel}</span>
+        </div>`;
+    }).join('<div class="risk-timeline-line"></div>');
+
+    container.innerHTML = `
+        <h3 style="margin-bottom:10px;"><i class="fa-solid fa-chart-line"></i> Evolución de Riesgo</h3>
+        <div class="risk-timeline">${stepsHTML}</div>
+    `;
+}
+
+function daysAgoLabel(fechaISO) {
+    const diffDays = Math.round((new Date(todayISO()) - new Date(fechaISO)) / 86400000);
+    if (diffDays <= 0) return 'hoy';
+    if (diffDays < 30) return `${diffDays}d`;
+    const months = Math.round(diffDays / 30);
+    return `${months} mes${months > 1 ? 'es' : ''}`;
 }
 
 function closePanel() {
@@ -412,11 +456,62 @@ function initStudentPanelActions() {
     const historyBtn = document.getElementById('viewInterventionHistoryBtn');
     const contactBtn = document.getElementById('panelContactBtn');
     const deriveBtn = document.getElementById('panelDeriveBtn');
+    const printBtn = document.getElementById('printPanelBtn');
 
     if (registerBtn) registerBtn.addEventListener('click', () => openRegisterInterventionModal(currentName()));
     if (historyBtn) historyBtn.addEventListener('click', () => openInterventionHistoryModal(currentName()));
     if (contactBtn) contactBtn.addEventListener('click', () => openContactGuardianModal(currentName()));
     if (deriveBtn) deriveBtn.addEventListener('click', () => openMedicalReferralModal(currentName()));
+    if (printBtn) printBtn.addEventListener('click', () => printStudentExpediente(currentName()));
+}
+
+/* --------------------------------------------------------------------------
+   EXPORTAR / IMPRIMIR EXPEDIENTE EN PDF (vía diálogo de impresión del navegador)
+   -------------------------------------------------------------------------- */
+function printStudentExpediente(name) {
+    const student = getStudents().find(s => s.name === name);
+    const history = getStudentHistory(name);
+    const contacts = getGuardianContacts(name);
+    const profile = getPsychProfile();
+
+    const historyHTML = history.length
+        ? history.map(h => `<div class="pe-entry"><strong>${h.titulo}</strong> <span>${h.fecha}</span><p>${h.detalle}</p></div>`).join('')
+        : '<p>Sin intervenciones registradas.</p>';
+
+    const contactsHTML = contacts.map(c => `<div class="pe-entry"><strong>${c.nombre}</strong> (${c.parentesco}) — ${c.telefono}${c.correo ? ' · ' + c.correo : ''}</div>`).join('');
+
+    const riskHTML = (student && student.riskHistory)
+        ? student.riskHistory.map(p => `${RISK_LABELS[p.risk]} (${p.fecha})`).join(' → ')
+        : 'Sin historial de riesgo registrado.';
+
+    const win = window.open('', '_blank');
+    win.document.write(`
+        <html><head><title>Expediente · ${name}</title>
+        <style>
+            body { font-family: Arial, sans-serif; color: #1E1B4B; padding: 40px; max-width: 720px; margin: auto; }
+            h1 { font-size: 20px; margin-bottom: 2px; }
+            .pe-sub { color: #64748B; font-size: 12px; margin-bottom: 24px; }
+            h2 { font-size: 14px; border-bottom: 2px solid #6C4DF6; padding-bottom: 6px; margin-top: 26px; color: #4E2FC7; }
+            .pe-entry { margin-bottom: 10px; font-size: 12.5px; }
+            .pe-entry span { color: #64748B; font-size: 11px; margin-left: 6px; }
+            .pe-entry p { margin-top: 3px; color: #334155; }
+            .pe-footer { margin-top: 40px; font-size: 10.5px; color: #94A3B8; }
+        </style></head>
+        <body>
+            <h1>Expediente Psicológico — ${name}</h1>
+            <p class="pe-sub">${student ? `Grado: ${student.grade} · ID: ${student.id} · ${student.caseNumber}` : ''} · Generado por ${profile.name}, ${profile.role}</p>
+            <h2>Evolución de Riesgo</h2>
+            <p style="font-size:12.5px;">${riskHTML}</p>
+            <h2>Contactos de Acudientes</h2>
+            ${contactsHTML}
+            <h2>Historial de Intervenciones</h2>
+            ${historyHTML}
+            <p class="pe-footer">Documento generado por SENTIR el ${new Date().toLocaleDateString('es-CO')}. Uso confidencial exclusivo del área de psicología.</p>
+        </body></html>
+    `);
+    win.document.close();
+    win.focus();
+    setTimeout(() => win.print(), 300);
 }
 
 function openInterventionHistoryModal(studentName) {
@@ -498,9 +593,9 @@ function openContactGuardianModal(studentName) {
             <div class="contact-entry-info">
                 <strong>${c.nombre}${c.principal ? '<span class="contact-principal-tag">CONFIANZA</span>' : '<span class="contact-alt-tag">ALTERNATIVO</span>'}</strong>
                 <span>${c.parentesco}</span>
-                ${c.correo ? `<span class="contact-email"><i class="fa-solid fa-envelope"></i> ${c.correo}</span>` : ''}
+                ${c.correo ? `<a href="https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(c.correo)}" target="_blank" rel="noopener" class="contact-email-link"><i class="fa-solid fa-envelope"></i> ${c.correo}</a>` : ''}
             </div>
-            <a href="tel:${c.telefono.replace(/\s+/g, '')}" class="contact-call-btn"><i class="fa-solid fa-phone"></i> ${c.telefono}</a>
+            <span class="contact-phone-display"><i class="fa-solid fa-phone"></i> ${c.telefono}</span>
         </div>
     `).join('');
 
@@ -573,7 +668,7 @@ function openContactGuardianModal(studentName) {
 function openMedicalReferralModal(studentName) {
     const networks = [
         { nombre: 'EPS Sura - Salud Mental', tipo: 'Red asegurada', contacto: '018000 51 15 15' },
-        { nombre: 'Hospital Mental de Antioquia', tipo: 'Atención especializada', contacto: '(604) 445 9999' },
+        { nombre: 'Centro de Salud Mental Comunitario', tipo: 'Atención especializada', contacto: 'Coordinar con Coordinación Académica' },
         { nombre: 'Línea Amiga 106', tipo: 'Línea de apoyo emocional 24/7', contacto: '106' }
     ];
     const listHTML = networks.map(n => `
@@ -621,7 +716,138 @@ function openMedicalReferralModal(studentName) {
 }
 
 /* --------------------------------------------------------------------------
-   6. ARRANQUE COMÚN — cada página llama a esto en su DOMContentLoaded
+   COLOR/ÍCONO POR TIPO DE CITA (deducido del título, usado en Inicio y Agenda)
+   -------------------------------------------------------------------------- */
+const APPOINTMENT_TYPE_RULES = [
+    { keywords: ['acudiente'], label: 'Reunión con Acudiente', color: '#EF4444', bg: 'rgba(239,68,68,0.12)', icon: 'fa-user-group' },
+    { keywords: ['docente', 'profesor'], label: 'Reunión con Docente', color: '#DB2777', bg: 'rgba(219,39,119,0.12)', icon: 'fa-chalkboard-user' },
+    { keywords: ['taller'], label: 'Taller Grupal', color: '#8B5CF6', bg: 'rgba(139,92,246,0.12)', icon: 'fa-people-group' },
+    { keywords: ['seguimiento'], label: 'Seguimiento', color: '#22C55E', bg: 'rgba(34,197,94,0.12)', icon: 'fa-chart-line' },
+    { keywords: ['orientación', 'orientacion', 'vocacional'], label: 'Orientación Vocacional', color: '#0284C7', bg: 'rgba(2,132,199,0.12)', icon: 'fa-compass' },
+    { keywords: ['consulta'], label: 'Consulta Breve', color: '#F59E0B', bg: 'rgba(245,158,11,0.12)', icon: 'fa-comment-medical' },
+    { keywords: ['individual', 'terapia'], label: 'Sesión Individual', color: '#6C4DF6', bg: 'rgba(108,77,246,0.12)', icon: 'fa-user' }
+];
+const DEFAULT_APPOINTMENT_TYPE = { label: 'Cita', color: '#64748B', bg: 'rgba(100,116,139,0.12)', icon: 'fa-calendar-day' };
+
+function getAppointmentColor(titulo) {
+    const t = (titulo || '').toLowerCase();
+    const match = APPOINTMENT_TYPE_RULES.find(rule => rule.keywords.some(k => t.includes(k)));
+    const found = match || DEFAULT_APPOINTMENT_TYPE;
+    return { solid: found.color, bg: found.bg, icon: found.icon, label: found.label };
+}
+
+/* --------------------------------------------------------------------------
+   6. NOTIFICACIONES REALES DEL NAVEGADOR PARA ALERTAS NUEVAS
+   -------------------------------------------------------------------------- */
+function playAlertSound() {
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        [880, 660].forEach((freq, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(0.001, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.18, ctx.currentTime + i * 0.18 + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.18 + 0.28);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(ctx.currentTime + i * 0.18);
+            osc.stop(ctx.currentTime + i * 0.18 + 0.3);
+        });
+    } catch (e) { /* Web Audio no disponible: se omite el sonido silenciosamente */ }
+}
+
+function requestBrowserNotificationPermission() {
+    if (!('Notification' in window)) {
+        showToast({ title: 'No disponible', message: 'Tu navegador no soporta notificaciones del sistema.', icon: 'fa-circle-exclamation', type: 'info' });
+        return;
+    }
+    Notification.requestPermission().then(perm => {
+        if (perm === 'granted') {
+            showToast({ title: 'Notificaciones activadas', message: 'Recibirás avisos del navegador cuando llegue una alerta nueva.', icon: 'fa-bell', type: 'success' });
+        } else {
+            showToast({ title: 'Notificaciones no activadas', message: 'Puedes activarlas más tarde desde los permisos del sitio en tu navegador.', icon: 'fa-bell-slash', type: 'info' });
+        }
+    });
+}
+
+function checkForNewAlerts() {
+    const seen = SentirStore.get('seen_alert_ids', []);
+    const alerts = getAlerts();
+    const activos = alerts.filter(a => a.estado !== 'Resuelta');
+    const nuevos = activos.filter(a => !seen.includes(a.id));
+
+    if (nuevos.length) {
+        playAlertSound();
+        nuevos.forEach(a => {
+            showToast({ title: '🚨 Nueva alerta de estudiante', message: `${a.estudiante} (Grado ${a.grado}) necesita atención.`, icon: 'fa-triangle-exclamation', type: 'urgent' });
+            if ('Notification' in window && Notification.permission === 'granted') {
+                new Notification('SENTIR · Nueva alerta de estudiante', {
+                    body: `${a.estudiante} (Grado ${a.grado}): ${a.motivo}`,
+                    icon: '../assets/logos.png.png'
+                });
+            }
+        });
+        SentirStore.set('seen_alert_ids', alerts.map(a => a.id));
+        initSidebarActiveState();
+        if (typeof renderAlerts === 'function') renderAlerts();
+    } else {
+        // Mantener sincronizado el registro de "vistas" con las que ya no están activas
+        SentirStore.set('seen_alert_ids', alerts.map(a => a.id));
+    }
+}
+
+function initAlertWatcher() {
+    checkForNewAlerts();
+    setInterval(checkForNewAlerts, 6000);
+}
+
+/* --------------------------------------------------------------------------
+   7. RESPALDO DE DATOS (export / import / reset)
+   -------------------------------------------------------------------------- */
+const SENTIR_STORAGE_KEYS = ['students', 'alerts', 'interventions', 'guardians', 'agenda', 'activities', 'psych_profile'];
+
+function exportSentirBackup() {
+    const data = {};
+    SENTIR_STORAGE_KEYS.forEach(key => { data[key] = SentirStore.get(key, null); });
+    data._exportedAt = new Date().toISOString();
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `sentir-respaldo-${todayISO()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+}
+
+function importSentirBackup(file, onDone) {
+    const reader = new FileReader();
+    reader.onload = () => {
+        try {
+            const data = JSON.parse(reader.result);
+            SENTIR_STORAGE_KEYS.forEach(key => {
+                if (data[key] !== undefined && data[key] !== null) SentirStore.set(key, data[key]);
+            });
+            onDone(true);
+        } catch (e) {
+            onDone(false);
+        }
+    };
+    reader.onerror = () => onDone(false);
+    reader.readAsText(file);
+}
+
+function resetSentirDefaults() {
+    SENTIR_STORAGE_KEYS.forEach(key => localStorage.removeItem('sentir_' + key));
+    localStorage.removeItem('sentir_seen_alert_ids');
+}
+
+/* --------------------------------------------------------------------------
+   8. ARRANQUE COMÚN — cada página llama a esto en su DOMContentLoaded
    -------------------------------------------------------------------------- */
 function initSentirCore() {
     renderHeaderProfile();
@@ -631,4 +857,5 @@ function initSentirCore() {
     initPsychologistProfileMenu();
     initMobileSidebar();
     initStudentPanelActions();
+    initAlertWatcher();
 }

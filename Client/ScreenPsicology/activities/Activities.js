@@ -103,7 +103,39 @@ function formatSpanishDate(fechaISO) {
 function suggestActivity(id) {
     const activity = getActivities().find(a => a.id === id);
     if (!activity) return;
-    showToast({ title: 'Actividad sugerida', message: `"${activity.titulo}" fue marcada para sugerir al estudiante en su próxima sesión.`, icon: 'fa-paper-plane', type: 'success' });
+
+    const students = getStudents();
+    const optionsHTML = students.map(s => `<option value="${s.name}">${s.name} — Grado ${s.grade}</option>`).join('');
+
+    const overlay = openSentirModal(`
+        <div class="sentir-modal-header">
+            <div class="sentir-modal-icon"><i class="fa-solid fa-paper-plane"></i></div>
+            <div><h3>Sugerir Actividad</h3><p>"${activity.titulo}" · Elige a quién se la vas a sugerir</p></div>
+        </div>
+        <div class="sentir-modal-body">
+            <div class="modal-field"><label>ESTUDIANTE</label><select id="suggestStudentSelect">${optionsHTML}</select></div>
+            <div class="modal-field"><label>NOTA PARA EL EXPEDIENTE (OPCIONAL)</label><textarea id="suggestNote" rows="2" placeholder="Ej. Practicar antes de la evaluación de la próxima semana..."></textarea></div>
+        </div>
+        <div class="sentir-modal-actions">
+            <button class="modal-btn-cancel" id="suggestCancel">Cancelar</button>
+            <button class="modal-btn-confirm" id="suggestConfirm"><i class="fa-solid fa-check"></i> Confirmar Sugerencia</button>
+        </div>
+    `);
+
+    overlay.querySelector('#suggestCancel').addEventListener('click', () => closeSentirModal(overlay));
+    overlay.querySelector('#suggestConfirm').addEventListener('click', () => {
+        const studentName = overlay.querySelector('#suggestStudentSelect').value;
+        const note = overlay.querySelector('#suggestNote').value.trim();
+
+        addInterventionRecord(studentName, {
+            fecha: new Date().toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' }),
+            titulo: 'Actividad de relajación sugerida',
+            detalle: `Se sugirió "${activity.titulo}" (${activity.tipo}).${note ? ' Nota: ' + note : ''}`
+        });
+
+        closeSentirModal(overlay);
+        showToast({ title: 'Actividad sugerida', message: `Se registró en el expediente de ${studentName}.`, icon: 'fa-paper-plane', type: 'success' });
+    });
 }
 
 function deleteActivity(id) {

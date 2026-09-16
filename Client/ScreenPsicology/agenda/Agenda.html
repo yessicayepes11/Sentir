@@ -16,16 +16,16 @@
     <div class="dashboard-container">
 
         <aside class="sidebar">
-            <div class="logo-area" data-logo-home="../inicio/Inicio.html">
+            <div class="logo-area" data-logo-home="../home/Home.html">
                 <img src="../assets/logos.png.png" alt="Sentir Logo" class="main-logo-img">
             </div>
             <nav class="nav-menu">
-                <a href="../inicio/Inicio.html" class="nav-item" data-view="inicio"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
-                <a href="../estudiantes/Estudiantes.html" class="nav-item" data-view="estudiantes"><i class="fa-solid fa-graduation-cap"></i><span>Estudiantes</span></a>
-                <a href="../alertas/Alertas.html" class="nav-item" data-view="alertas"><i class="fa-solid fa-triangle-exclamation"></i><span>Alertas</span><span class="nav-badge alert-badge" id="navAlertBadge" style="display:none;">0</span></a>
+                <a href="../home/Home.html" class="nav-item" data-view="inicio"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
+                <a href="../students/Students.html" class="nav-item" data-view="estudiantes"><i class="fa-solid fa-graduation-cap"></i><span>Estudiantes</span></a>
+                <a href="../alerts/Alerts.html" class="nav-item" data-view="alertas"><i class="fa-solid fa-triangle-exclamation"></i><span>Alertas</span><span class="nav-badge alert-badge" id="navAlertBadge" style="display:none;">0</span></a>
                 <a href="../agenda/Agenda.html" class="nav-item" data-view="agenda"><i class="fa-solid fa-calendar-days"></i><span>Agenda</span></a>
-                <a href="../actividades/Actividades.html" class="nav-item" data-view="actividades"><i class="fa-solid fa-spa"></i><span>Control de Actividades</span></a>
-                <a href="../perfil/Perfil.html" class="nav-item" data-view="perfil"><i class="fa-solid fa-user"></i><span>Perfil</span></a>
+                <a href="../activities/Activities.html" class="nav-item" data-view="actividades"><i class="fa-solid fa-spa"></i><span>Control de Actividades</span></a>
+                <a href="../profile/Profile.html" class="nav-item" data-view="perfil"><i class="fa-solid fa-user"></i><span>Perfil</span></a>
             </nav>
             <div class="sidebar-footer"><p class="quote">"El bienestar emocional es el primer paso para el éxito académico."</p></div>
         </aside>
@@ -65,11 +65,30 @@
                         <i class="fa-solid fa-magnifying-glass"></i>
                         <input type="text" placeholder="Buscar por nombre, título o grado..." id="agendaSearch">
                     </div>
-                    <div class="filter-chips" id="agendaChips">
-                        <button class="chip active" data-filter="all">Todas</button>
-                        <button class="chip" data-filter="today">Hoy</button>
-                        <button class="chip" data-filter="upcoming">Próximas</button>
+                    <div class="agenda-toolbar-right">
+                        <div class="filter-chips" id="agendaChips">
+                            <button class="chip active" data-filter="all">Todas</button>
+                            <button class="chip" data-filter="today">Hoy</button>
+                            <button class="chip" data-filter="upcoming">Próximas</button>
+                        </div>
+                        <div class="view-toggle" id="agendaViewToggle">
+                            <button class="view-toggle-btn active" data-view="list"><i class="fa-solid fa-list"></i> Lista</button>
+                            <button class="view-toggle-btn" data-view="calendar"><i class="fa-solid fa-calendar-days"></i> Calendario</button>
+                        </div>
                     </div>
+                </div>
+
+                <div class="calendar-wrapper" id="calendarWrapper" style="display:none;">
+                    <div class="calendar-nav">
+                        <button class="calendar-nav-btn" id="calPrevBtn"><i class="fa-solid fa-chevron-left"></i></button>
+                        <h3 id="calMonthLabel">Mes</h3>
+                        <button class="calendar-nav-btn" id="calNextBtn"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                    <div class="calendar-weekdays">
+                        <span>Dom</span><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid"></div>
+                    <div class="calendar-legend" id="calendarLegend"></div>
                 </div>
 
                 <div class="agenda-columns" id="agendaColumns"></div>

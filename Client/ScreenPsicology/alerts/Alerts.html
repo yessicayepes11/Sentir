@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sentir · Estudiantes</title>
+    <title>Sentir · Alertas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../shared/sentir-shared.css">
-    <link rel="stylesheet" href="Estudiantes.css">
+    <link rel="stylesheet" href="Alerts.css">
 </head>
-<body data-page="estudiantes">
+<body data-page="alertas">
 
     <div class="dashboard-container">
 
         <aside class="sidebar">
-            <div class="logo-area" data-logo-home="../inicio/Inicio.html">
+            <div class="logo-area" data-logo-home="../home/Home.html">
                 <img src="../assets/logos.png.png" alt="Sentir Logo" class="main-logo-img">
             </div>
             <nav class="nav-menu">
-                <a href="../inicio/Inicio.html" class="nav-item" data-view="inicio"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
-                <a href="../estudiantes/Estudiantes.html" class="nav-item" data-view="estudiantes"><i class="fa-solid fa-graduation-cap"></i><span>Estudiantes</span></a>
-                <a href="../alertas/Alertas.html" class="nav-item" data-view="alertas"><i class="fa-solid fa-triangle-exclamation"></i><span>Alertas</span><span class="nav-badge alert-badge" id="navAlertBadge" style="display:none;">0</span></a>
+                <a href="../home/Home.html" class="nav-item" data-view="inicio"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
+                <a href="../students/Students.html" class="nav-item" data-view="estudiantes"><i class="fa-solid fa-graduation-cap"></i><span>Estudiantes</span></a>
+                <a href="../alerts/Alerts.html" class="nav-item" data-view="alertas"><i class="fa-solid fa-triangle-exclamation"></i><span>Alertas</span><span class="nav-badge alert-badge" id="navAlertBadge" style="display:none;">0</span></a>
                 <a href="../agenda/Agenda.html" class="nav-item" data-view="agenda"><i class="fa-solid fa-calendar-days"></i><span>Agenda</span></a>
-                <a href="../actividades/Actividades.html" class="nav-item" data-view="actividades"><i class="fa-solid fa-spa"></i><span>Control de Actividades</span></a>
-                <a href="../perfil/Perfil.html" class="nav-item" data-view="perfil"><i class="fa-solid fa-user"></i><span>Perfil</span></a>
+                <a href="../activities/Activities.html" class="nav-item" data-view="actividades"><i class="fa-solid fa-spa"></i><span>Control de Actividades</span></a>
+                <a href="../profile/Profile.html" class="nav-item" data-view="perfil"><i class="fa-solid fa-user"></i><span>Perfil</span></a>
             </nav>
             <div class="sidebar-footer"><p class="quote">"El bienestar emocional es el primer paso para el éxito académico."</p></div>
         </aside>
@@ -51,40 +51,40 @@
 
                 <div class="view-header">
                     <div>
-                        <span class="view-eyebrow">GESTIÓN Y SEGUIMIENTO</span>
-                        <h1>Estudiantes</h1>
-                        <p class="subtitle-view">Explora, filtra y da seguimiento al bienestar emocional de cada estudiante de la institución.</p>
-                    </div>
-                    <button class="btn-primary-action" id="addStudentBtn"><i class="fa-solid fa-user-plus"></i> Nuevo Estudiante</button>
-                </div>
-
-                <div class="students-overview" id="studentsOverview">
-                    <div class="students-overview-bar" id="studentsOverviewBar"></div>
-                    <div class="overview-legend" id="studentsOverviewLegend"></div>
-                </div>
-
-                <div class="students-toolbar">
-                    <div class="header-search students-search">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <input type="text" placeholder="Buscar por nombre, grado o ID..." id="studentsSearch">
-                    </div>
-                    <div class="filter-chips" id="studentsChips">
-                        <button class="chip active" data-filter="all">Todos <span id="countAll">0</span></button>
-                        <button class="chip chip-high" data-filter="high">Riesgo Alto <span id="countHigh">0</span></button>
-                        <button class="chip chip-medium" data-filter="medium">Riesgo Medio <span id="countMedium">0</span></button>
-                        <button class="chip chip-stable" data-filter="stable">Estable <span id="countStable">0</span></button>
+                        <span class="view-eyebrow" style="color:var(--alerta-color);">ATENCIÓN PRIORITARIA</span>
+                        <h1>Alertas y Casos de Riesgo</h1>
+                        <p class="subtitle-view">Las alertas activadas por los propios estudiantes van primero: son solicitudes de ayuda reales. Debajo encuentras los casos organizados por nivel de riesgo.</p>
                     </div>
                 </div>
 
-                <div class="students-grid" id="studentsGrid"></div>
-                <p class="empty-state-msg" id="studentsEmptyMsg">No encontramos estudiantes que coincidan con tu búsqueda.</p>
+                <section class="alerts-section">
+                    <div class="section-title-area">
+                        <h3><i class="fa-solid fa-triangle-exclamation" style="color:var(--alerta-color);"></i> Alertas Activadas por Estudiantes <span class="section-count-badge urgent" id="alertsCountBadge">0</span></h3>
+                    </div>
+                    <div class="alerts-list" id="alertsList"></div>
+                </section>
+
+                <section class="risk-cases-section">
+                    <div class="section-title-area">
+                        <h3><i class="fa-solid fa-user-shield"></i> Casos por Nivel de Riesgo <span class="section-count-badge" id="riskCountBadge">0</span></h3>
+                        <div class="filter-chips" id="riskChips">
+                            <button class="chip active" data-filter="all">Todos</button>
+                            <button class="chip chip-high" data-filter="high">Riesgo Alto</button>
+                            <button class="chip chip-medium" data-filter="medium">Riesgo Medio</button>
+                        </div>
+                    </div>
+                    <div class="cases-container" id="riskCasesList"></div>
+                </section>
 
             </div>
         </main>
 
         <div class="panel-overlay" id="panelOverlay" onclick="closePanel()"></div>
         <div class="sliding-panel" id="detailPanel">
-            <button class="close-panel-btn" onclick="closePanel()"><i class="fa-solid fa-xmark"></i> Cerrar Panel</button>
+            <div class="panel-top-actions">
+                <button class="close-panel-btn" onclick="closePanel()"><i class="fa-solid fa-xmark"></i> Cerrar Panel</button>
+                <button class="print-panel-btn" id="printPanelBtn" title="Exportar / Imprimir expediente"><i class="fa-solid fa-print"></i></button>
+            </div>
             <div class="panel-header">
                 <img src="" alt="Avatar Estudiante" class="panel-student-avatar" id="panelAvatar">
                 <h2 id="panelName">Expediente de Intervención</h2>
@@ -92,6 +92,7 @@
                 <span class="panel-sub-tag">Análisis de Sentimiento Automatizado</span>
             </div>
             <div class="panel-body">
+                <div id="panelRiskTimeline" style="display:none;"></div>
                 <h3><i class="fa-solid fa-shield-heart"></i> Acciones Inmediatas</h3>
                 <div class="panel-actions">
                     <button class="btn-action-trigger register-btn" id="registerInterventionBtn"><i class="fa-solid fa-notes-medical"></i> Registrar Intervención</button>
@@ -105,6 +106,6 @@
     </div>
 
     <script src="../shared/sentir-shared.js"></script>
-    <script src="Estudiantes.js"></script>
+    <script src="Alerts.js"></script>
 </body>
 </html>

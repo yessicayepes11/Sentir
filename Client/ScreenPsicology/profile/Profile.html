@@ -9,23 +9,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../shared/sentir-shared.css">
-    <link rel="stylesheet" href="Perfil.css">
+    <link rel="stylesheet" href="Profile.css">
 </head>
 <body data-page="perfil">
 
     <div class="dashboard-container">
 
         <aside class="sidebar">
-            <div class="logo-area" data-logo-home="../inicio/Inicio.html">
+            <div class="logo-area" data-logo-home="../home/Home.html">
                 <img src="../assets/logos.png.png" alt="Sentir Logo" class="main-logo-img">
             </div>
             <nav class="nav-menu">
-                <a href="../inicio/Inicio.html" class="nav-item" data-view="inicio"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
-                <a href="../estudiantes/Estudiantes.html" class="nav-item" data-view="estudiantes"><i class="fa-solid fa-graduation-cap"></i><span>Estudiantes</span></a>
-                <a href="../alertas/Alertas.html" class="nav-item" data-view="alertas"><i class="fa-solid fa-triangle-exclamation"></i><span>Alertas</span><span class="nav-badge alert-badge" id="navAlertBadge" style="display:none;">0</span></a>
+                <a href="../home/Home.html" class="nav-item" data-view="inicio"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
+                <a href="../students/Students.html" class="nav-item" data-view="estudiantes"><i class="fa-solid fa-graduation-cap"></i><span>Estudiantes</span></a>
+                <a href="../alerts/Alerts.html" class="nav-item" data-view="alertas"><i class="fa-solid fa-triangle-exclamation"></i><span>Alertas</span><span class="nav-badge alert-badge" id="navAlertBadge" style="display:none;">0</span></a>
                 <a href="../agenda/Agenda.html" class="nav-item" data-view="agenda"><i class="fa-solid fa-calendar-days"></i><span>Agenda</span></a>
-                <a href="../actividades/Actividades.html" class="nav-item" data-view="actividades"><i class="fa-solid fa-spa"></i><span>Control de Actividades</span></a>
-                <a href="../perfil/Perfil.html" class="nav-item" data-view="perfil"><i class="fa-solid fa-user"></i><span>Perfil</span></a>
+                <a href="../activities/Activities.html" class="nav-item" data-view="actividades"><i class="fa-solid fa-spa"></i><span>Control de Actividades</span></a>
+                <a href="../profile/Profile.html" class="nav-item" data-view="perfil"><i class="fa-solid fa-user"></i><span>Perfil</span></a>
             </nav>
             <div class="sidebar-footer"><p class="quote">"El bienestar emocional es el primer paso para el éxito académico."</p></div>
         </aside>
@@ -83,7 +83,6 @@
                             <li><span>Especialidad</span><strong id="infoEspecialidad"></strong></li>
                             <li><span>Sedes a cargo</span><strong id="infoSedes"></strong></li>
                             <li><span>Horario de atención</span><strong id="infoHorario"></strong></li>
-                            <li><span>Idiomas</span><strong id="infoIdiomas"></strong></li>
                         </ul>
                     </div>
 
@@ -93,6 +92,44 @@
                         <div class="toggle-row"><div><strong>Resumen diario por correo</strong><p>Recibe un resumen del ecosistema emocional</p></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
                         <div class="toggle-row"><div><strong>Sugerencias de Sentir AI</strong><p>Recomendaciones proactivas de intervención</p></div><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
                         <div class="toggle-row"><div><strong>Recordatorios de agenda</strong><p>Avisos antes de cada cita programada</p></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+                        <div class="toggle-row">
+                            <div><strong>Notificaciones del navegador</strong><p>Sonido + aviso del sistema cuando llegue una alerta nueva</p></div>
+                            <button class="btn-secondary" id="enableNotifBtn">Activar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-columns" style="margin-top:20px;">
+                    <div class="sidebar-box profile-box backup-box">
+                        <div class="profile-box-header">
+                            <span class="profile-box-icon icon-purple"><i class="fa-solid fa-database"></i></span>
+                            <div>
+                                <h3>Respaldo de Datos</h3>
+                                <p class="profile-box-desc">Toda la información vive en este navegador. Descarga una copia por seguridad o restáurala si cambias de computador.</p>
+                            </div>
+                        </div>
+                        <div class="backup-actions">
+                            <button class="btn-secondary" id="exportBackupBtn"><i class="fa-solid fa-download"></i> Exportar Respaldo (.json)</button>
+                            <div class="file-upload-box" id="importUploadBox">
+                                <input type="file" id="importBackupInput" accept="application/json" class="file-upload-input">
+                                <label for="importBackupInput" class="file-upload-label">
+                                    <i class="fa-solid fa-upload"></i>
+                                    <span class="file-upload-text">Importar Respaldo (.json)</span>
+                                    <span class="file-upload-btn">Elegir archivo</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-box profile-box reset-box">
+                        <div class="profile-box-header">
+                            <span class="profile-box-icon icon-danger"><i class="fa-solid fa-rotate-left"></i></span>
+                            <div>
+                                <h3>Restablecer Valores</h3>
+                                <p class="profile-box-desc">Borra estudiantes, alertas, agenda y actividades agregadas, y vuelve todo a los datos de ejemplo originales. Esta acción no se puede deshacer.</p>
+                            </div>
+                        </div>
+                        <button class="btn-danger-outline" id="resetDefaultsBtn"><i class="fa-solid fa-triangle-exclamation"></i> Restablecer valores por defecto</button>
                     </div>
                 </div>
 
@@ -102,6 +139,6 @@
     </div>
 
     <script src="../shared/sentir-shared.js"></script>
-    <script src="Perfil.js"></script>
+    <script src="Profile.js"></script>
 </body>
 </html>

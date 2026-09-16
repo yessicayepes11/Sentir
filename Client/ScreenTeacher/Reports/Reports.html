@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SENTIR | Mis reportes</title>
+
+    <link rel="stylesheet" href="Reports.css">
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- OVERLAY MOBILE -->
+    <div
+        class="mobile-overlay"
+        id="mobileOverlay"
+    ></div>
+
+
+    <!-- ======================================
+         SIDEBAR
+    ======================================= -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <div class="sidebar-top">
+
+            <button
+                class="hamburger"
+                id="hamburger"
+                type="button"
+                aria-label="Contraer menú"
+            >
+                <i class="bi bi-list"></i>
+            </button>
+
+            <div class="logo-container">
+
+                <img
+                    src="Resources/logo.png"
+                    alt="Logo SENTIR"
+                    class="logo"
+                >
+
+            </div>
+
+        </div>
+
+
+        <nav class="nav-menu">
+
+            <a
+                href="Teacher.html"
+                class="nav-item"
+            >
+
+                <i class="bi bi-house-door"></i>
+
+                <span>
+                    Inicio
+                </span>
+
+            </a>
+
+
+            <a
+                href="Reports.html"
+                class="nav-item active"
+            >
+
+                <i class="bi bi-file-earmark-text"></i>
+
+                <span>
+                    Mis reportes
+                </span>
+
+            </a>
+
+
+            <a
+                href="#"
+                class="nav-item"
+            >
+
+                <i class="bi bi-folder"></i>
+
+                <span>
+                    Recursos
+                </span>
+
+            </a>
+
+
+            <div class="nav-divider"></div>
+
+
+            <a
+                href="#"
+                class="nav-item"
+            >
+
+                <i class="bi bi-person"></i>
+
+                <span>
+                    Perfil
+                </span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-decoration">
+
+            <div class="sidebar-message">
+                Educar<br>
+                también<br>
+                es cuidar
+            </div>
+
+            <i class="bi bi-heart-fill sidebar-heart"></i>
+
+            <div class="plant">
+
+                <span class="leaf leaf-1"></span>
+
+                <span class="leaf leaf-2"></span>
+
+                <span class="leaf leaf-3"></span>
+
+                <span class="stem"></span>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ======================================
+         CONTENIDO PRINCIPAL
+    ======================================= -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <button
+                class="mobile-menu-button"
+                id="mobileMenuButton"
+                type="button"
+                aria-label="Abrir menú"
+            >
+                <i class="bi bi-list"></i>
+            </button>
+
+
+            <div class="topbar-actions">
+
+                <div class="search-box">
+
+                    <i class="bi bi-search"></i>
+
+                    <input
+                        type="text"
+                        id="searchReports"
+                        placeholder="Buscar reportes..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <button
+                    class="notification-button"
+                    type="button"
+                >
+
+                    <i class="bi bi-bell"></i>
+
+                    <span class="notification-number">
+                        3
+                    </span>
+
+                </button>
+
+
+                <!-- PERFIL DOCENTE -->
+
+                <div class="profile-top">
+
+
+                    <button
+                        class="profile-avatar"
+                        id="profileAvatar"
+                        type="button"
+                        title="Cambiar foto de perfil"
+                    >
+
+                        <img
+                            id="profilePhoto"
+                            alt="Foto de perfil"
+                        >
+
+                        <span
+                            class="profile-initials"
+                            id="profileInitials"
+                        >
+                            ML
+                        </span>
+
+                        <span class="avatar-edit">
+                            <i class="bi bi-camera-fill"></i>
+                        </span>
+
+                    </button>
+
+
+                    <input
+                        type="file"
+                        id="profilePhotoInput"
+                        accept="image/png,image/jpeg,image/webp"
+                        hidden
+                    >
+
+
+                    <div class="profile-text">
+
+                        <strong id="profileName">
+                            María López
+                        </strong>
+
+                        <span>
+                            Docente
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        class="profile-chevron"
+                        type="button"
+                    >
+
+                        <i class="bi bi-chevron-down"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ======================================
+             HEADER PAGINA
+        ======================================= -->
+
+        <section class="page-heading">
+
+            <div class="heading-icon">
+                <i class="bi bi-file-earmark-text"></i>
+            </div>
+
+            <div>
+
+                <h1>
+                    Mis reportes
+                </h1>
+
+                <p>
+                    Aquí puedes consultar, dar seguimiento
+                    y ver el estado de las situaciones que has reportado.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================================
+             TARJETAS RESUMEN
+        ======================================= -->
+
+        <section class="summary-grid">
+
+            <article class="summary-card">
+
+                <div class="summary-icon purple">
+                    <i class="bi bi-file-earmark-text"></i>
+                </div>
+
+                <div>
+
+                    <strong>6</strong>
+
+                    <span>
+                        Total de reportes
+                    </span>
+
+                </div>
+
+            </article>
+
+
+            <article class="summary-card">
+
+                <div class="summary-icon blue">
+                    <i class="bi bi-clock"></i>
+                </div>
+
+                <div>
+
+                    <strong>2</strong>
+
+                    <span>
+                        En revisión
+                    </span>
+
+                </div>
+
+            </article>
+
+
+            <article class="summary-card">
+
+                <div class="summary-icon green">
+                    <i class="bi bi-eye"></i>
+                </div>
+
+                <div>
+
+                    <strong>3</strong>
+
+                    <span>
+                        En seguimiento
+                    </span>
+
+                </div>
+
+            </article>
+
+
+            <article class="summary-card">
+
+                <div class="summary-icon yellow">
+                    <i class="bi bi-check-lg"></i>
+                </div>
+
+                <div>
+
+                    <strong>1</strong>
+
+                    <span>
+                        Cerrado
+                    </span>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- ======================================
+             FILTROS
+        ======================================= -->
+
+        <section class="filters-grid">
+
+            <div class="filter-group">
+
+                <label for="statusFilter">
+                    Estado
+                </label>
+
+                <select id="statusFilter">
+
+                    <option value="all">
+                        Todos
+                    </option>
+
+                    <option value="En revisión">
+                        En revisión
+                    </option>
+
+                    <option value="En seguimiento">
+                        En seguimiento
+                    </option>
+
+                    <option value="Cerrado">
+                        Cerrado
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <label for="typeFilter">
+                    Tipo de situación
+                </label>
+
+                <select id="typeFilter">
+
+                    <option value="all">
+                        Todos
+                    </option>
+
+                    <option value="Cambio de comportamiento">
+                        Cambio de comportamiento
+                    </option>
+
+                    <option value="Convivencia">
+                        Convivencia
+                    </option>
+
+                    <option value="Aislamiento">
+                        Aislamiento
+                    </option>
+
+                    <option value="Dificultad académica">
+                        Dificultad académica
+                    </option>
+
+                    <option value="Posible acoso escolar">
+                        Posible acoso escolar
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <label for="groupFilter">
+                    Grupo
+                </label>
+
+                <div class="filter-group">
+
+    <select id="groupFilter">
+
+        <option value="all">
+            Todos
+        </option>
+
+        <!-- SEXTOS -->
+        <option value="6°1">6°1</option>
+        <option value="6°2">6°2</option>
+        <option value="6°3">6°3</option>
+        <option value="6°4">6°4</option>
+        <option value="6°5">6°5</option>
+
+        <!-- SÉPTIMOS -->
+        <option value="7°1">7°1</option>
+        <option value="7°2">7°2</option>
+        <option value="7°3">7°3</option>
+        <option value="7°4">7°4</option>
+
+        <!-- OCTAVOS -->
+        <option value="8°1">8°1</option>
+        <option value="8°2">8°2</option>
+        <option value="8°3">8°3</option>
+
+        <!-- NOVENOS -->
+        <option value="9°1">9°1</option>
+        <option value="9°2">9°2</option>
+        <option value="9°3">9°3</option>
+
+        <!-- DÉCIMOS -->
+        <option value="10°1">10°1</option>
+        <option value="10°2">10°2</option>
+        <option value="10°3">10°3</option>
+        <option value="10°4">10°4</option>
+
+        <!-- ONCES -->
+        <option value="11°1">11°1</option>
+        <option value="11°2">11°2</option>
+        <option value="11°3">11°3</option>
+        <option value="11°4">11°4</option>
+
+    </select>
+
+</div>
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <label for="dateFilter">
+                    Fecha
+                </label>
+
+                <div class="date-box">
+
+                    <i class="bi bi-calendar3"></i>
+
+                    <input
+                        type="date"
+                        id="dateFilter"
+                    >
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================================
+             TABLA
+        ======================================= -->
+
+        <section class="reports-card">
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Estudiante</th>
+
+                            <th>Grupo</th>
+
+                            <th>Tipo de situación</th>
+
+                            <th>Fecha de reporte</th>
+
+                            <th>Estado</th>
+
+                            <th>Acciones</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="reportsTable">
+
+
+                        <tr
+                            data-status="En revisión"
+                            data-type="Cambio de comportamiento"
+                            data-group="8° A"
+                        >
+
+                            <td>
+
+                                <div class="student-cell">
+
+                                    <span class="student-avatar pink-avatar">
+                                        SC
+                                    </span>
+
+                                    Sofía Castaño
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                8° A
+                            </td>
+
+                            <td>
+                                Cambio de comportamiento
+                            </td>
+
+                            <td>
+                                8 sep. 2026
+                            </td>
+
+                            <td>
+
+                                <span class="status review">
+                                    En revisión
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="action-button"
+                                    type="button"
+                                >
+
+                                    <i class="bi bi-chevron-right"></i>
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr
+                            data-status="En seguimiento"
+                            data-type="Convivencia"
+                            data-group="9° B"
+                        >
+
+                            <td>
+
+                                <div class="student-cell">
+
+                                    <span class="student-avatar green-avatar">
+                                        JM
+                                    </span>
+
+                                    Juan Morales
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                9° B
+                            </td>
+
+                            <td>
+                                Convivencia
+                            </td>
+
+                            <td>
+                                5 sep. 2026
+                            </td>
+
+                            <td>
+
+                                <span class="status tracking">
+                                    En seguimiento
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="action-button"
+                                    type="button"
+                                >
+
+                                    <i class="bi bi-chevron-right"></i>
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr
+                            data-status="Cerrado"
+                            data-type="Aislamiento"
+                            data-group="7° A"
+                        >
+
+                            <td>
+
+                                <div class="student-cell">
+
+                                    <span class="student-avatar purple-avatar">
+                                        LP
+                                    </span>
+
+                                    Luciana Pérez
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                7° A
+                            </td>
+
+                            <td>
+                                Aislamiento
+                            </td>
+
+                            <td>
+                                2 sep. 2026
+                            </td>
+
+                            <td>
+
+                                <span class="status closed">
+                                    Cerrado
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="action-button"
+                                    type="button"
+                                >
+
+                                    <i class="bi bi-chevron-right"></i>
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr
+                            data-status="En seguimiento"
+                            data-type="Dificultad académica"
+                            data-group="8° A"
+                        >
+
+                            <td>
+
+                                <div class="student-cell">
+
+                                    <span class="student-avatar yellow-avatar">
+                                        DR
+                                    </span>
+
+                                    Diego Ramírez
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                8° A
+                            </td>
+
+                            <td>
+                                Dificultad académica
+                            </td>
+
+                            <td>
+                                28 ago. 2026
+                            </td>
+
+                            <td>
+
+                                <span class="status tracking">
+                                    En seguimiento
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="action-button"
+                                    type="button"
+                                >
+
+                                    <i class="bi bi-chevron-right"></i>
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr
+                            data-status="En revisión"
+                            data-type="Posible acoso escolar"
+                            data-group="9° B"
+                        >
+
+                            <td>
+
+                                <div class="student-cell">
+
+                                    <span class="student-avatar pink-avatar">
+                                        VM
+                                    </span>
+
+                                    Valentina Morales
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                9° B
+                            </td>
+
+                            <td>
+                                Posible acoso escolar
+                            </td>
+
+                            <td>
+                                20 ago. 2026
+                            </td>
+
+                            <td>
+
+                                <span class="status review">
+                                    En revisión
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="action-button"
+                                    type="button"
+                                >
+
+                                    <i class="bi bi-chevron-right"></i>
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr
+                            data-status="En seguimiento"
+                            data-type="Convivencia"
+                            data-group="7° A"
+                        >
+
+                            <td>
+
+                                <div class="student-cell">
+
+                                    <span class="student-avatar blue-avatar">
+                                        CR
+                                    </span>
+
+                                    Camilo Rojas
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                7° A
+                            </td>
+
+                            <td>
+                                Convivencia
+                            </td>
+
+                            <td>
+                                15 ago. 2026
+                            </td>
+
+                            <td>
+
+                                <span class="status tracking">
+                                    En seguimiento
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="action-button"
+                                    type="button"
+                                >
+
+                                    <i class="bi bi-chevron-right"></i>
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- FOOTER DE TABLA -->
+
+            <div class="reports-footer">
+
+                <span id="resultsText">
+                    Mostrando 6 de 6 reportes
+                </span>
+
+
+                <div class="pagination">
+
+                    <button
+                        class="pagination-button"
+                        type="button"
+                        disabled
+                    >
+
+                        <i class="bi bi-chevron-left"></i>
+
+                    </button>
+
+
+                    <button
+                        class="pagination-number active"
+                        type="button"
+                    >
+                        1
+                    </button>
+
+
+                    <button
+                        class="pagination-button"
+                        type="button"
+                        disabled
+                    >
+
+                        <i class="bi bi-chevron-right"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MENSAJE DECORATIVO -->
+
+        <div class="bottom-message">
+
+            <i class="bi bi-heart"></i>
+
+            <span>
+                Cada reporte cuenta para construir
+                un mejor entorno
+            </span>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="Reports.js"></script>
+
+</body>
+
+</html>

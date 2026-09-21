@@ -12,60 +12,24 @@
 
     <title>SENTIR | Docente</title>
 
-    <!-- CSS -->
     <link
         rel="stylesheet"
         href="teacher.css"
     >
 
-    <!-- Bootstrap Icons -->
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    >
-
-    <!-- Google Fonts -->
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet"
-    >
-
 </head>
+
 
 <body>
 
 
-<!-- ======================================================
-     APLICACIÓN
-====================================================== -->
-
 <div class="app">
 
 
-    <!-- ==================================================
-         OVERLAY PARA MÓVIL
-    =================================================== -->
-
-    <div
-        class="mobile-overlay"
-        id="mobileOverlay"
-    ></div>
-
-
-    <!-- ==================================================
+    <!-- =====================================================
          SIDEBAR
-    =================================================== -->
+         NO CONTIENE ENLACES
+    ====================================================== -->
 
     <aside
         class="sidebar"
@@ -73,143 +37,186 @@
     >
 
 
-        <div class="sidebar-top">
+        <!-- =================================================
+             LOGO SENTIR
+        ================================================== -->
 
+        <div class="logo-area">
 
-            <!-- BOTÓN HAMBURGUESA ESCRITORIO -->
+            <div class="logo-slot">
 
-            <button
-                class="hamburger"
-                id="hamburger"
-                type="button"
-                aria-label="Contraer menú"
-            >
-
-                <i class="bi bi-list"></i>
-
-            </button>
-
-
-            <!-- LOGO -->
-
-            <div class="logo-container">
-
-                <img
-                    src="/Sentir/Shared/TeacherResources/logolado.png"
-                    alt="Logo SENTIR"
-                    class="logo"
-                >
+                <img src="/Sentir/Shared/TeacherResources/logolado.png" alt="Logo SENTIR">
 
             </div>
 
         </div>
 
 
-        <!-- ==================================================
+
+        <!-- =================================================
              MENÚ
-        =================================================== -->
+             NO SON LINKS
+        ================================================== -->
 
-        <nav class="nav-menu">
+        <div class="sidebar-menu">
 
 
-            <a
-                href="#"
-                class="nav-item active"
-                data-section="inicio"
-            >
+            <!-- INICIO -->
 
-                <i class="bi bi-house-door"></i>
+            <div class="nav-item active">
+
+                <div class="nav-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path
+                            d="M3 10.5L12 3l9 7.5v10a.5.5 0 0 1-.5.5H15v-6H9v6H3.5a.5.5 0 0 1-.5-.5z"
+                        />
+
+                    </svg>
+
+                </div>
 
                 <span>
                     Inicio
                 </span>
 
-            </a>
-
-            <a
-                href="#activitySection"
-                class="nav-item"
-                data-section="reportes"
-            >
-
-                <i class="bi bi-file-earmark-text"></i>
-
-                <span>
-                    Mis reportes
-                </span>
-
-            </a>
+            </div>
 
 
-            <a
-                href="#chatSection"
-                class="nav-item"
-                data-section="recursos"
-            >
 
-                <i class="bi bi-folder"></i>
+            <!-- MIS ESTUDIANTES -->
 
-                <span>
-                    Recursos
-                </span>
+            <div class="nav-item">
 
-            </a>
+                <div class="nav-icon">
 
+                    <svg viewBox="0 0 24 24">
 
-            <div class="nav-divider"></div>
+                        <circle
+                            cx="8"
+                            cy="8"
+                            r="3"
+                        />
 
+                        <circle
+                            cx="17"
+                            cy="9"
+                            r="2.4"
+                        />
 
-            <a
-                href="#"
-                class="nav-item"
-                id="profileMenuButton"
-            >
+                        <path
+                            d="M2.5 20v-2c0-3.1 2.4-5 5.5-5s5.5 1.9 5.5 5v2"
+                        />
 
-                <i class="bi bi-person"></i>
+                        <path
+                            d="M14.5 14c3 0 5 1.5 5 4v2"
+                        />
+
+                    </svg>
+
+                </div>
 
                 <span>
-                    Perfil
+                    Mis estudiantes
                 </span>
 
-            </a>
+            </div>
 
 
-        </nav>
+
+            <!-- ORIENTACIÓN -->
+
+            <div class="nav-item">
+
+                <div class="nav-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path
+                            d="M4 5.5C4 4.1 5.1 3 6.5 3H11c1.5 0 2.7.6 3.5 1.6C15.3 3.6 16.5 3 18 3h1.5C20.9 3 22 4.1 22 5.5V19c-1-.6-2.2-1-3.5-1H18c-1.5 0-2.8.6-3.5 1.6C13.7 18.6 12.5 18 11 18H6.5C5.1 18 4 19 4 20.4z"
+                        />
+
+                    </svg>
+
+                </div>
+
+                <span>
+                    Orientación
+                </span>
+
+            </div>
 
 
-        <!-- ==================================================
-             DECORACIÓN SIDEBAR
-        =================================================== -->
 
-        <div class="sidebar-decoration">
+            <!-- PERFIL -->
+
+            <div class="nav-item">
+
+                <div class="nav-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="12"
+                            cy="8"
+                            r="4"
+                        />
+
+                        <path
+                            d="M4 21c.5-5 3.6-7 8-7s7.5 2 8 7"
+                        />
+
+                    </svg>
+
+                </div>
+
+                <span>
+                    Mi perfil
+                </span>
+
+            </div>
 
 
-            <div class="sidebar-message">
+        </div>
 
+
+
+        <!-- =================================================
+             PARTE INFERIOR
+        ================================================== -->
+
+        <div class="sidebar-bottom">
+
+
+            <div class="sidebar-heart">
+
+                <svg viewBox="0 0 24 24">
+
+                    <path
+                        d="M12 21
+                           C10 18.8 4 14.2 4 8.8
+                           C4 5.7 6.3 4 8.8 4
+                           C10.5 4 11.6 5 12 5.8
+                           C12.4 5 13.5 4 15.2 4
+                           C17.7 4 20 5.7 20 8.8
+                           C20 14.2 14 18.8 12 21Z"
+                    />
+
+                </svg>
+
+            </div>
+
+
+            <p>
                 Educar<br>
-                también<br>
-                es cuidar
-
-            </div>
-
-
-            <i
-                class="bi bi-heart-fill sidebar-heart"
-            ></i>
+                también es<br>
+                cuidar ♡
+            </p>
 
 
-            <div class="plant">
-
-                <span class="leaf leaf-1"></span>
-
-                <span class="leaf leaf-2"></span>
-
-                <span class="leaf leaf-3"></span>
-
-                <span class="stem"></span>
-
-            </div>
-
+            <div class="plant plant-one"></div>
+            <div class="plant plant-two"></div>
 
         </div>
 
@@ -217,826 +224,809 @@
     </aside>
 
 
-    <!-- ==================================================
+
+    <!-- =====================================================
          CONTENIDO PRINCIPAL
-    =================================================== -->
+    ====================================================== -->
 
     <main class="main-content">
 
 
-        <!-- ==================================================
-             TOPBAR
-        =================================================== -->
-
-        <header class="topbar">
+        <div class="page-wrapper">
 
 
-            <!-- MENÚ HAMBURGUESA MÓVIL -->
+            <!-- =================================================
+                 TOPBAR
+            ================================================== -->
 
-            <button
-                class="mobile-menu-button"
-                id="mobileMenuButton"
-                type="button"
-                aria-label="Abrir menú"
-            >
-
-                <i class="bi bi-list"></i>
-
-            </button>
+            <header class="topbar">
 
 
-            <div class="topbar-actions">
+                <div class="topbar-left">
 
 
-                <!-- BUSCADOR -->
-
-                <div class="search-box">
-
-                    <i class="bi bi-search"></i>
-
-                    <input
-                        type="text"
-                        id="globalSearch"
-                        placeholder="Buscar estudiantes..."
-                        autocomplete="off"
-                    >
-
-                </div>
-
-
-                <!-- NOTIFICACIONES -->
-
-                <button
-                    class="notification-button"
-                    type="button"
-                >
-
-                    <i class="bi bi-bell"></i>
-
-                    <span class="notification-number">
-                        3
-                    </span>
-
-                </button>
-
-
-                <!-- ==================================================
-                     PERFIL
-                =================================================== -->
-
-                <div class="profile-top">
-
-
-                    <!-- AVATAR -->
+                    <!-- HAMBURGUESA -->
 
                     <button
-                        class="profile-avatar"
-                        id="profileAvatar"
                         type="button"
-                        title="Cambiar foto de perfil"
+                        class="hamburger"
+                        id="hamburger"
+                        aria-label="Abrir menú"
                     >
 
+                        <svg viewBox="0 0 24 24">
 
-                        <img
-                            id="profilePhoto"
-                            alt="Foto de perfil"
-                        >
+                            <path d="M4 6h16"/>
+                            <path d="M4 12h16"/>
+                            <path d="M4 18h16"/>
 
-
-                        <span
-                            class="profile-initials"
-                            id="profileInitials"
-                        >
-                            ML
-                        </span>
-
-
-                        <span class="avatar-edit">
-
-                            <i class="bi bi-camera-fill"></i>
-
-                        </span>
-
+                        </svg>
 
                     </button>
 
-
-                    <!-- INPUT OCULTO PARA FOTO -->
-
-                    <input
-                        type="file"
-                        id="profilePhotoInput"
-                        accept="image/png,image/jpeg,image/webp"
-                        hidden
-                    >
-
-
-                    <div class="profile-text">
-
-                        <strong id="profileName">
-                            María López
-                        </strong>
-
-                        <span>
-                            Docente
-                        </span>
-
-                    </div>
-
-
-                    <button
-                        class="profile-chevron"
-                        id="profileChevron"
-                        type="button"
-                    >
-
-                        <i class="bi bi-chevron-down"></i>
-
-                    </button>
-
-
-                </div>
-
-
-            </div>
-
-
-        </header>
-
-
-        <!-- ==================================================
-             HERO
-        =================================================== -->
-
-        <section
-            class="hero-section"
-            id="inicio"
-        >
-
-
-            <div class="hero-main">
-
-
-                <div class="hero-copy">
-
-
-                    <h1>
-
-                        ¡Hola,
-                        <span id="heroTeacherName">
-                            María
-                        </span>!
-
-                        <span class="wave">
-                            👋
-                        </span>
-
-                    </h1>
-
-
-                    <h2>
-                        Gracias por ser parte de SENTIR
-                    </h2>
-
-
-                    <p>
-
-                        Tu labor como docente es muy importante
-                        para crear un entorno escolar más seguro,
-                        empático y saludable.
-
-                    </p>
-
-
-                    <div class="hero-phrase">
-
-                        <i class="bi bi-heart-fill"></i>
-
-                        “Pequeñas acciones pueden generar
-                        grandes cambios”
-
-                    </div>
-
-
-                </div>
-
-
-                <!-- ILUSTRACIÓN -->
-
-                <div class="hero-image-area">
-
-
-                    <div class="hero-blob blob-one"></div>
-
-                    <div class="hero-blob blob-two"></div>
-
-
-                    <img
-                        src="/Sentir/Shared/TeacherResources/DocenteMujer.png"
-                        alt="Ilustración docente"
-                        class="hero-teacher"
-                    >
-
-
-                    <span class="handwritten">
-
-                        Aquí también se<br>
-                        construye<br>
-                        bienestar 💜
-
-                    </span>
-
-
-                </div>
-
-
-            </div>
-
-
-            <!-- ==================================================
-                 LATERAL HERO
-            =================================================== -->
-
-            <div class="hero-side">
-
-
-                <div class="quote-card">
-
-
-                    <div class="quote-symbol">
-                        “
-                    </div>
-
-
-                    <p>
-
-                        Un entorno positivo también
-                        se construye en el aula.
-
-                    </p>
-
-
-                    <i class="bi bi-heart-fill"></i>
-
-
-                </div>
-
-
-                <button
-                    class="report-main-button"
-                    id="openReportButton"
-                    type="button"
-                >
-
-
-                    <div class="button-icon">
-
-                        <i class="bi bi-plus-lg"></i>
-
-                    </div>
 
 
                     <div>
 
-                        <strong>
-                            Reportar una situación
-                        </strong>
+                        <h3>
+                            Inicio Docente
+                        </h3>
 
-                        <span>
-                            Tu observación puede hacer la diferencia.
+                        <p>
+                            Colegio demo • SENTIR
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="topbar-right">
+
+
+                    <!-- =========================================
+                         NOTIFICACIONES
+                    ========================================== -->
+
+                    <div class="notification-box">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path
+                                d="M18 8a6 6 0 0 0-12 0
+                                   c0 7-3 7-3 9h18
+                                   c0-2-3-2-3-9"
+                            />
+
+                            <path d="M10 21h4"/>
+
+                        </svg>
+
+                        <span class="notification-number">
+                            3
                         </span>
 
                     </div>
 
 
-                    <i class="bi bi-chevron-right"></i>
 
+                    <!-- =========================================
+                         PERFIL DOCENTE
+                    ========================================== -->
 
-                </button>
+                    <div class="header-user">
 
 
-            </div>
+                        <!-- FOTO DE PERFIL DEL DOCENTE -->
 
+                        <div class="profile-photo-wrapper">
 
-        </section>
+                            <label
+                                for="profilePhotoInput"
+                                class="header-avatar"
+                                title="Cambiar foto de perfil"
+                            >
 
+                                <!-- Imagen seleccionada -->
+                                <img
+                                    id="profilePhoto"
+                                    src=""
+                                    alt="Foto de perfil del docente"
+                                >
 
-        <!-- ==================================================
-             TARJETAS RESUMEN
-        =================================================== -->
 
-        <section class="summary-grid">
+                                <!-- Icono que aparece cuando todavía no hay foto -->
+                                <div
+                                    class="profile-placeholder"
+                                    id="profilePlaceholder"
+                                >
 
+                                    <svg viewBox="0 0 24 24">
 
-            <!-- GRUPOS -->
+                                        <circle
+                                            cx="12"
+                                            cy="8"
+                                            r="4"
+                                        />
 
-            <article class="summary-card">
+                                        <path
+                                            d="M4 21c.5-5 3.6-7 8-7s7.5 2 8 7"
+                                        />
 
+                                    </svg>
 
-                <div class="summary-icon blue">
+                                </div>
 
-                    <i class="bi bi-people"></i>
 
-                </div>
+                                <!-- Cámara al pasar el mouse -->
 
+                                <div class="camera-overlay">
 
-                <div>
+                                    <svg viewBox="0 0 24 24">
 
-                    <span>
-                        Mis grupos
-                    </span>
+                                        <path
+                                            d="M4 7h4l1.5-2h5L16 7h4
+                                            a2 2 0 0 1 2 2v9
+                                            a2 2 0 0 1-2 2H4
+                                            a2 2 0 0 1-2-2V9
+                                            a2 2 0 0 1 2-2z"
+                                        />
 
-                    <strong>
-                        3
-                    </strong>
+                                        <circle
+                                            cx="12"
+                                            cy="13"
+                                            r="4"
+                                        />
 
-                    <small>
-                        Grupos a cargo
-                    </small>
+                                    </svg>
 
-                </div>
+                                </div>
 
+                            </label>
 
-            </article>
 
+                            <!-- INPUT OCULTO -->
 
-            <!-- ESTUDIANTES -->
-
-            <article class="summary-card">
-
-
-                <div class="summary-icon purple">
-
-                    <i class="bi bi-people"></i>
-
-                </div>
-
-
-                <div>
-
-                    <span>
-                        Total de estudiantes
-                    </span>
-
-                    <strong>
-                        78
-                    </strong>
-
-                    <small>
-                        En tus grupos
-                    </small>
-
-                </div>
-
-
-            </article>
-
-
-            <!-- ACTIVOS -->
-
-            <article class="summary-card">
-
-
-                <div class="summary-icon green">
-
-                    <i class="bi bi-emoji-smile"></i>
-
-                </div>
-
-
-                <div>
-
-                    <span>
-                        Estudiantes activos
-                    </span>
-
-                    <strong>
-                        75
-                    </strong>
-
-                    <small>
-                        Han registrado esta semana
-                    </small>
-
-                </div>
-
-
-            </article>
-
-
-            <!-- REPORTES -->
-
-            <article class="summary-card">
-
-
-                <div class="summary-icon pink">
-
-                    <i class="bi bi-exclamation-triangle"></i>
-
-                </div>
-
-
-                <div>
-
-                    <span>
-                        Situaciones reportadas
-                    </span>
-
-                    <strong>
-                        6
-                    </strong>
-
-                    <small>
-                        Este periodo
-                    </small>
-
-                </div>
-
-
-            </article>
-
-
-        </section>
-
-
-        <!-- ==================================================
-             DASHBOARD
-        =================================================== -->
-
-        <section class="dashboard-grid">
-
-
-            <!-- ==================================================
-                 PANORAMA GENERAL
-            =================================================== -->
-
-            <article class="general-card">
-
-
-                <div class="section-title-row">
-
-
-                    <div class="section-title">
-
-                        <i class="bi bi-bar-chart"></i>
-
-                        <h3>
-                            Panorama general de tus grupos
-                        </h3>
-
-                    </div>
-
-                </div>
-
-
-                <div class="overview-content">
-
-
-                    <!-- GRÁFICO -->
-
-                    <div class="chart-box">
-
-
-                        <div class="donut-chart">
-
-
-                            <div class="donut-center">
-
-                                <strong>
-                                    78
-                                </strong>
-
-                                <span>
-                                    Estudiantes
-                                </span>
-
-                            </div>
-
+                            <input
+                                type="file"
+                                id="profilePhotoInput"
+                                accept="image/png, image/jpeg, image/webp"
+                                hidden
+                            >
 
                         </div>
 
+
+                        <div class="header-user-data">
+
+                            <strong>
+                                Prof. Ana Torres
+                            </strong>
+
+                            <span>
+                                Docente
+                            </span>
+
+                        </div>
 
                     </div>
 
 
-                    <!-- LEYENDA -->
 
-                    <div class="legend">
+                    <div class="dropdown-icon">
 
+                        <svg viewBox="0 0 24 24">
 
-                        <div class="legend-row">
+                            <path d="M6 9l6 6 6-6"/>
 
-                            <span class="dot green-dot"></span>
-
-                            <span>
-                                Bien
-                            </span>
-
-                            <strong>
-                                68 (87%)
-                            </strong>
-
-                        </div>
-
-
-                        <div class="legend-row">
-
-                            <span class="dot yellow-dot"></span>
-
-                            <span>
-                                En observación
-                            </span>
-
-                            <strong>
-                                7 (9%)
-                            </strong>
-
-                        </div>
-
-
-                        <div class="legend-row">
-
-                            <span class="dot red-dot"></span>
-
-                            <span>
-                                Requiere atención
-                            </span>
-
-                            <strong>
-                                3 (4%)
-                            </strong>
-
-                        </div>
-
+                        </svg>
 
                     </div>
 
 
-                    <!-- MENSAJE -->
+                </div>
 
-                    <div class="remember-box">
+            </header>
 
 
-                        <div class="remember-title">
 
-                            <i class="bi bi-info-circle"></i>
+            <!-- =================================================
+                 HERO
+            ================================================== -->
 
-                            <strong>
-                                Recuerda
-                            </strong>
+            <section class="hero">
+
+
+                <div class="hero-content">
+
+
+                    <h1>
+                        ¡Hola, Docente!
+                    </h1>
+
+
+                    <h2>
+                        Gracias por estar atenta al bienestar
+                        de tus estudiantes.
+                    </h2>
+
+
+
+                    <div class="hero-quote">
+
+
+                        <div class="hero-heart">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path
+                                    d="M12 21
+                                       C10 18.8 4 14.2 4 8.8
+                                       C4 5.7 6.3 4 8.8 4
+                                       C10.5 4 11.6 5 12 5.8
+                                       C12.4 5 13.5 4 15.2 4
+                                       C17.7 4 20 5.7 20 8.8
+                                       C20 14.2 14 18.8 12 21Z"
+                                />
+
+                            </svg>
 
                         </div>
 
 
                         <p>
-
-                            Esta información es general y te
-                            permite tener una visión global de
-                            tus grupos.
-
-                            Si notas alguna situación preocupante,
-                            puedes realizar un reporte.
-
+                            “Un entorno escolar más humano
+                            comienza con tu mirada.”
                         </p>
 
 
-                        <div class="mini-plant">
-                            🌿
-                        </div>
-
-
                     </div>
-
 
                 </div>
 
 
-            </article>
 
+                <!-- =============================================
+                     FOTO GRANDE DOCENTE
+                ============================================== -->
 
-            <!-- ==================================================
-                 CHAT SENTIR
-            =================================================== -->
+                <div class="teacher-photo-area">
 
-            <aside
-                class="chat-card"
-                id="chatSection"
-            >
 
+                    <div class="hero-circle circle-one"></div>
 
-                <!-- HEADER -->
+                    <div class="hero-circle circle-two"></div>
 
-                <div class="chat-header">
 
 
-                    <div class="chat-header-left">
+                    <div class="teacher-image-slot">
 
-
-                        <div class="chat-ai-icon">
-
-                            <i class="bi bi-stars"></i>
-
-                        </div>
-
-
-                        <div class="chat-title">
-
-
-                            <div class="chat-title-line">
-
-                                <h3>
-                                    Asistente SENTIR
-                                </h3>
-
-
-                                <span class="chat-status">
-                                    Próximamente IA
-                                </span>
-
-                            </div>
-
-
-                            <p>
-                                Orientación para docentes
-                            </p>
-
-
-                        </div>
-
-
-                    </div>
-
-
-                </div>
-
-
-                <!-- ==================================================
-                     MENSAJES
-                =================================================== -->
-
-                <div
-                    class="chat-messages"
-                    id="chatMessages"
-                >
-
-
-                    <div class="message-row assistant">
-
-
-                        <div class="message-avatar">
-
-                            <i class="bi bi-heart-fill"></i>
-
-                        </div>
-
-
-                        <div class="message-content">
-
-
-                            <div
-                                class="message-bubble assistant-message"
-                            >
-
-
-                                <p>
-
-                                    ¡Hola,
-                                    <span id="chatTeacherName">
-                                        María
-                                    </span>!
-                                    💜
-
-                                </p>
-
-
-                                <p>
-
-                                    Este espacio estará disponible
-                                    para orientarte en situaciones
-                                    relacionadas con convivencia,
-                                    acompañamiento y bienestar
-                                    dentro del entorno escolar.
-
-                                </p>
-
-
-                            </div>
-
-
-                            <span class="message-time">
-                                Asistente SENTIR
-                            </span>
-
-
-                        </div>
-
-
-                    </div>
-
-
-                    <!-- AVISO -->
-
-                    <div class="chat-info-message">
-
-
-                        <i class="bi bi-info-circle"></i>
-
-
-                        <span>
-
-                            Este asistente será conectado
-                            posteriormente con la Inteligencia
-                            Artificial de SENTIR.
-
-                        </span>
-
-
-                    </div>
-
-
-                </div>
-
-
-                <!-- ==================================================
-                     INPUT DEL CHAT
-                =================================================== -->
-
-                <div class="chat-input-area">
-
-
-                    <div class="chat-input-wrapper">
-
-
-                        <textarea
-                            id="chatInput"
-                            rows="1"
-                            maxlength="800"
-                            placeholder="Escribe tu mensaje..."
-                        ></textarea>
-
-
-                        <button
-                            class="chat-send-button"
-                            id="chatSendButton"
-                            type="button"
-                            aria-label="Enviar mensaje"
+                        <img
+                        src="/Sentir/Shared/TeacherResources/ImgenDocentes.png"
+                        alt="Docente"
                         >
 
-                            <i class="bi bi-send-fill"></i>
-
-                        </button>
-
-
                     </div>
 
 
-                    <p class="chat-helper">
 
-                        La respuesta automática se activará
-                        cuando se conecte la IA.
-
+                    <p class="hero-side-text">
+                        Acompañar<br>
+                        también<br>
+                        transforma ♡
                     </p>
 
 
+                    <div class="hero-leaf leaf-one"></div>
+
+                    <div class="hero-leaf leaf-two"></div>
+
+
                 </div>
 
 
-            </aside>
+            </section>
 
 
-            <!-- ==================================================
-                 ACTIVIDAD RECIENTE
-            =================================================== -->
 
-            <article
-                class="activity-card"
-                id="activitySection"
-            >
+            <!-- =================================================
+                 CARDS SUPERIORES
+            ================================================== -->
+
+            <section class="summary-grid">
 
 
-                <div class="section-title-row">
+                <!-- =============================================
+                     MIS GRUPOS
+                ============================================== -->
+
+                <article class="summary-card">
 
 
-                    <div class="section-title">
+                    <div class="summary-icon purple">
 
-                        <i class="bi bi-file-earmark-text"></i>
+                        <svg viewBox="0 0 24 24">
 
-                        <h3>
-                            Actividad reciente
-                        </h3>
+                            <circle
+                                cx="8"
+                                cy="8"
+                                r="3"
+                            />
+
+                            <circle
+                                cx="17"
+                                cy="9"
+                                r="2.4"
+                            />
+
+                            <path
+                                d="M2.5 20v-2c0-3.1 2.4-5 5.5-5s5.5 1.9 5.5 5v2"
+                            />
+
+                            <path
+                                d="M14.5 14c3 0 5 1.5 5 4v2"
+                            />
+
+                        </svg>
 
                     </div>
 
 
-                    <button
-                        class="text-button"
-                        type="button"
-                    >
-                        Ver todos
-                    </button>
+
+                    <div class="summary-info">
+
+                        <span class="summary-label">
+                            Mis grupos
+                        </span>
+
+                        <strong>
+                            3 grupos asignados
+                        </strong>
+
+                        <span class="info-pill">
+                            Información general
+                        </span>
+
+                    </div>
+
+
+                </article>
+
+
+
+                <!-- =============================================
+                     ALERTAS
+                ============================================== -->
+
+                <article class="summary-card">
+
+
+                    <div class="summary-icon pink">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path
+                                d="M5 3h10l4 4v14H5z"
+                            />
+
+                            <path
+                                d="M15 3v5h5"
+                            />
+
+                            <path d="M8 12h8"/>
+
+                            <path d="M8 16h6"/>
+
+                        </svg>
+
+                    </div>
+
+
+
+                    <div class="summary-info">
+
+                        <span class="summary-label">
+                            Mis alertas
+                        </span>
+
+                        <strong>
+                            6 alertas enviadas
+                        </strong>
+
+                        <span class="info-pill">
+                            Solo visualización
+                        </span>
+
+                    </div>
+
+
+                </article>
+
+
+
+                <!-- =============================================
+                     ESTUDIANTES
+                ============================================== -->
+
+                <article class="summary-card">
+
+
+                    <div class="summary-icon blue">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <circle
+                                cx="12"
+                                cy="8"
+                                r="4"
+                            />
+
+                            <path
+                                d="M4 21c.5-5 3.6-7 8-7s7.5 2 8 7"
+                            />
+
+                        </svg>
+
+                    </div>
+
+
+
+                    <div class="summary-info">
+
+                        <span class="summary-label">
+                            Estudiantes
+                        </span>
+
+                        <strong>
+                            90 estudiantes
+                        </strong>
+
+                        <span class="info-pill blue-pill">
+                            Información general
+                        </span>
+
+                    </div>
+
+
+                </article>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 ENVIAR ALERTA
+            ================================================== -->
+
+            <section class="alert-section">
+
+
+                <div class="alert-left">
+
+
+                    <div class="alert-icon">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path d="M4 11v3"/>
+
+                            <path
+                                d="M7 10
+                                   L18 5
+                                   v14
+                                   L7 14Z"
+                            />
+
+                            <path
+                                d="M7 14l2 5h3l-2-5"
+                            />
+
+                        </svg>
+
+                    </div>
+
+
+
+                    <div class="alert-text">
+
+                        <h2>
+                            ¿Observaste un comportamiento inusual?
+                        </h2>
+
+                        <p>
+                            Si notas alguna situación que te preocupe,
+                            puedes registrar una alerta para que el equipo
+                            correspondiente la revise.
+                        </p>
+
+                    </div>
 
 
                 </div>
+
+
+
+                <div class="alert-action">
+
+
+                    <button
+                        type="button"
+                        class="alert-button"
+                        id="openAlert"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path d="M12 5v14"/>
+                            <path d="M5 12h14"/>
+
+                        </svg>
+
+                        <span>
+                            ENVIAR ALERTA
+                        </span>
+
+                    </button>
+
+
+                    <small>
+                        Tu alerta será revisada por el equipo
+                        de orientación y psicología.
+                    </small>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 MIS GRUPOS
+            ================================================== -->
+
+            <section class="content-card">
+
+
+                <div class="section-title">
+
+
+                    <div class="section-title-icon">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <circle
+                                cx="8"
+                                cy="8"
+                                r="3"
+                            />
+
+                            <circle
+                                cx="17"
+                                cy="9"
+                                r="2.4"
+                            />
+
+                            <path
+                                d="M2.5 20v-2c0-3.1 2.4-5 5.5-5s5.5 1.9 5.5 5v2"
+                            />
+
+                            <path
+                                d="M14.5 14c3 0 5 1.5 5 4v2"
+                            />
+
+                        </svg>
+
+                    </div>
+
+
+                    <h2>
+                        Mis grupos
+                    </h2>
+
+
+                </div>
+
+
+
+                <div class="groups-grid">
+
+
+                    <!-- =========================================
+                         GRUPO 8°1
+                    ========================================== -->
+
+                    <article class="group-card">
+
+
+                        <div class="group-icon purple">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path
+                                    d="M2 8l10-5 10 5-10 5z"
+                                />
+
+                                <path
+                                    d="M6 10.5V16c3 2.5 9 2.5 12 0v-5.5"
+                                />
+
+                                <path
+                                    d="M22 8v7"
+                                />
+
+                            </svg>
+
+                        </div>
+
+
+
+                        <div class="group-data">
+
+                            <strong>
+                                8°1
+                            </strong>
+
+                            <p>
+                                32 estudiantes
+                            </p>
+
+                            <span>
+                                Información general
+                            </span>
+
+                        </div>
+
+
+                    </article>
+
+
+
+                    <!-- =========================================
+                         GRUPO 9°2
+                    ========================================== -->
+
+                    <article class="group-card">
+
+
+                        <div class="group-icon blue">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path
+                                    d="M2 8l10-5 10 5-10 5z"
+                                />
+
+                                <path
+                                    d="M6 10.5V16c3 2.5 9 2.5 12 0v-5.5"
+                                />
+
+                                <path
+                                    d="M22 8v7"
+                                />
+
+                            </svg>
+
+                        </div>
+
+
+
+                        <div class="group-data">
+
+                            <strong>
+                                9°2
+                            </strong>
+
+                            <p>
+                                30 estudiantes
+                            </p>
+
+                            <span>
+                                Información general
+                            </span>
+
+                        </div>
+
+
+                    </article>
+
+
+
+                    <!-- =========================================
+                         GRUPO 10°1
+                    ========================================== -->
+
+                    <article class="group-card">
+
+
+                        <div class="group-icon purple">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path
+                                    d="M2 8l10-5 10 5-10 5z"
+                                />
+
+                                <path
+                                    d="M6 10.5V16c3 2.5 9 2.5 12 0v-5.5"
+                                />
+
+                                <path
+                                    d="M22 8v7"
+                                />
+
+                            </svg>
+
+                        </div>
+
+
+
+                        <div class="group-data">
+
+                            <strong>
+                                10°1
+                            </strong>
+
+                            <p>
+                                28 estudiantes
+                            </p>
+
+                            <span>
+                                Información general
+                            </span>
+
+                        </div>
+
+
+                    </article>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 ALERTAS RECIENTES
+            ================================================== -->
+
+            <section class="content-card reports-card">
+
+
+                <div class="section-title">
+
+
+                    <div class="section-title-icon">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path
+                                d="M5 3h14v18H5z"
+                            />
+
+                            <path d="M8 8h8"/>
+
+                            <path d="M8 12h8"/>
+
+                            <path d="M8 16h5"/>
+
+                        </svg>
+
+                    </div>
+
+
+                    <h2>
+                        Mis alertas recientes
+                    </h2>
+
+
+                </div>
+
 
 
                 <div class="table-wrapper">
@@ -1047,228 +1037,247 @@
 
                         <thead>
 
+                        <tr>
 
-                            <tr>
+                            <th>
+                                Estudiante
+                            </th>
 
-                                <th>
-                                    Estudiante
-                                </th>
+                            <th>
+                                Fecha
+                            </th>
 
-                                <th>
-                                    Grupo
-                                </th>
+                            <th>
+                                Situación observada
+                            </th>
 
-                                <th>
-                                    Tipo de situación
-                                </th>
+                            <th>
+                                Estudiante(s)
+                            </th>
 
-                                <th>
-                                    Fecha
-                                </th>
+                            <th>
+                                Estado
+                            </th>
 
-                                <th>
-                                    Estado
-                                </th>
-
-                                <th>
-                                </th>
-
-                            </tr>
-
+                        </tr>
 
                         </thead>
 
 
-                        <tbody id="reportsTable">
+
+                        <tbody>
 
 
-                            <!-- FILA 1 -->
+                        <!-- =====================================
+                             ALERTA 1
+                        ====================================== -->
 
-                            <tr>
-
-
-                                <td>
-
-                                    <div class="student-cell">
-
-                                        <span
-                                            class="student-avatar purple-avatar"
-                                        >
-                                            SC
-                                        </span>
-
-                                        Sofía Castaño
-
-                                    </div>
-
-                                </td>
+                        <tr>
 
 
-                                <td>
-                                    8° A
-                                </td>
+                            <td>
 
 
-                                <td>
-                                    Cambio de comportamiento
-                                </td>
+                                <div class="student-table-data">
 
 
-                                <td>
-                                    8 sep. 2026
-                                </td>
+                                    <div class="student-avatar">
 
+                                        <svg viewBox="0 0 24 24">
 
-                                <td>
+                                            <circle
+                                                cx="12"
+                                                cy="8"
+                                                r="4"
+                                            />
 
-                                    <span class="status review">
-                                        En revisión
-                                    </span>
+                                            <path
+                                                d="M4 21c.5-5 3.6-7 8-7s7.5 2 8 7"
+                                            />
 
-                                </td>
-
-
-                                <td>
-
-                                    <button
-                                        class="arrow-button"
-                                        type="button"
-                                    >
-
-                                        <i class="bi bi-chevron-right"></i>
-
-                                    </button>
-
-                                </td>
-
-
-                            </tr>
-
-
-                            <!-- FILA 2 -->
-
-                            <tr>
-
-
-                                <td>
-
-                                    <div class="student-cell">
-
-                                        <span
-                                            class="student-avatar pink-avatar"
-                                        >
-                                            JM
-                                        </span>
-
-                                        Juan Morales
+                                        </svg>
 
                                     </div>
 
-                                </td>
+
+                                    <strong>
+                                        Mariana G.
+                                    </strong>
 
 
-                                <td>
-                                    9° B
-                                </td>
+                                </div>
 
 
-                                <td>
-                                    Convivencia
-                                </td>
+                            </td>
 
 
-                                <td>
-                                    5 sep. 2026
-                                </td>
+                            <td>
+                                15 sep
+                            </td>
 
 
-                                <td>
-
-                                    <span class="status tracking">
-                                        En seguimiento
-                                    </span>
-
-                                </td>
+                            <td>
+                                Cambios en el comportamiento
+                            </td>
 
 
-                                <td>
-
-                                    <button
-                                        class="arrow-button"
-                                        type="button"
-                                    >
-
-                                        <i class="bi bi-chevron-right"></i>
-
-                                    </button>
-
-                                </td>
+                            <td>
+                                1 estudiante
+                            </td>
 
 
-                            </tr>
+                            <td>
+
+                                <span class="status sent">
+                                    Enviado
+                                </span>
+
+                            </td>
 
 
-                            <!-- FILA 3 -->
-
-                            <tr>
+                        </tr>
 
 
-                                <td>
 
-                                    <div class="student-cell">
+                        <!-- =====================================
+                             ALERTA 2
+                        ====================================== -->
 
-                                        <span
-                                            class="student-avatar green-avatar"
-                                        >
-                                            LP
-                                        </span>
+                        <tr>
 
-                                        Luciana Pérez
+
+                            <td>
+
+
+                                <div class="student-table-data">
+
+
+                                    <div class="student-avatar">
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <circle
+                                                cx="12"
+                                                cy="8"
+                                                r="4"
+                                            />
+
+                                            <path
+                                                d="M4 21c.5-5 3.6-7 8-7s7.5 2 8 7"
+                                            />
+
+                                        </svg>
 
                                     </div>
 
-                                </td>
+
+                                    <strong>
+                                        Samuel R.
+                                    </strong>
 
 
-                                <td>
-                                    7° A
-                                </td>
+                                </div>
 
 
-                                <td>
-                                    Aislamiento
-                                </td>
+                            </td>
 
 
-                                <td>
-                                    2 sep. 2026
-                                </td>
+                            <td>
+                                10 sep
+                            </td>
 
 
-                                <td>
-
-                                    <span class="status closed">
-                                        Cerrado
-                                    </span>
-
-                                </td>
+                            <td>
+                                Dificultades de convivencia
+                            </td>
 
 
-                                <td>
-
-                                    <button
-                                        class="arrow-button"
-                                        type="button"
-                                    >
-
-                                        <i class="bi bi-chevron-right"></i>
-
-                                    </button>
-
-                                </td>
+                            <td>
+                                1 estudiante
+                            </td>
 
 
-                            </tr>
+                            <td>
+
+                                <span class="status received">
+                                    Recibido
+                                </span>
+
+                            </td>
+
+
+                        </tr>
+
+
+
+                        <!-- =====================================
+                             ALERTA 3
+                        ====================================== -->
+
+                        <tr>
+
+
+                            <td>
+
+
+                                <div class="student-table-data">
+
+
+                                    <div class="student-avatar">
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <circle
+                                                cx="12"
+                                                cy="8"
+                                                r="4"
+                                            />
+
+                                            <path
+                                                d="M4 21c.5-5 3.6-7 8-7s7.5 2 8 7"
+                                            />
+
+                                        </svg>
+
+                                    </div>
+
+
+                                    <strong>
+                                        Valentina M.
+                                    </strong>
+
+
+                                </div>
+
+
+                            </td>
+
+
+                            <td>
+                                3 sep
+                            </td>
+
+
+                            <td>
+                                Aislamiento en clases
+                            </td>
+
+
+                            <td>
+                                1 estudiante
+                            </td>
+
+
+                            <td>
+
+                                <span class="status reviewed">
+                                    Revisado por orientación
+                                </span>
+
+                            </td>
+
+
+                        </tr>
 
 
                         </tbody>
@@ -1280,10 +1289,10 @@
                 </div>
 
 
-            </article>
+            </section>
 
 
-        </section>
+        </div>
 
 
     </main>
@@ -1292,51 +1301,84 @@
 </div>
 
 
-<!-- ======================================================
-     MODAL REPORTAR SITUACIÓN
+
+<!-- =====================================================
+     MODAL ENVIAR ALERTA
 ====================================================== -->
 
 <div
     class="modal-overlay"
-    id="reportModal"
+    id="alertModal"
 >
 
 
     <div class="modal">
 
 
+        <!-- CERRAR -->
+
         <button
-            class="modal-close"
-            id="closeModal"
             type="button"
+            class="close-modal"
+            id="closeAlert"
+            aria-label="Cerrar"
         >
 
-            <i class="bi bi-x-lg"></i>
+            <svg viewBox="0 0 24 24">
+
+                <path d="M5 5l14 14"/>
+
+                <path d="M19 5L5 19"/>
+
+            </svg>
 
         </button>
 
+
+
+        <!-- =================================================
+             HEADER MODAL
+        ================================================== -->
 
         <div class="modal-header">
 
 
             <div class="modal-icon">
 
-                <i class="bi bi-plus-square"></i>
+                <svg viewBox="0 0 24 24">
+
+                    <path d="M4 11v3"/>
+
+                    <path
+                        d="M7 10
+                           L18 5
+                           v14
+                           L7 14Z"
+                    />
+
+                    <path
+                        d="M7 14l2 5h3l-2-5"
+                    />
+
+                </svg>
 
             </div>
 
 
+
             <div>
 
+                <span class="modal-tag">
+                    Alerta docente
+                </span>
+
                 <h2>
-                    Reportar una situación
+                    Enviar alerta
                 </h2>
 
                 <p>
-
-                    Registra de forma clara
-                    aquello que observaste.
-
+                    Describe únicamente la situación
+                    que observaste en el estudiante.
                 </p>
 
             </div>
@@ -1345,143 +1387,82 @@
         </div>
 
 
-        <form id="reportForm">
+
+        <!-- =================================================
+             FORMULARIO
+        ================================================== -->
+
+        <form id="alertForm">
 
 
-            <div class="form-grid">
+            <div class="form-row">
 
 
-                <div class="form-group">
+                <!-- ESTUDIANTE -->
 
+                <div class="form-field">
 
-                    <label for="studentSelect">
+                    <label for="student">
                         Estudiante
                     </label>
 
-
                     <select
-                        id="studentSelect"
+                        id="student"
                         required
                     >
 
                         <option value="">
-                            Seleccionar estudiante
+                            Selecciona un estudiante
                         </option>
 
-                        <option>
-                            Sofía Castaño
+                        <option value="mariana">
+                            Mariana Gómez
                         </option>
 
-                        <option>
-                            Juan Morales
+                        <option value="samuel">
+                            Samuel Rodríguez
                         </option>
 
-                        <option>
-                            Luciana Pérez
+                        <option value="valentina">
+                            Valentina Martínez
                         </option>
 
                     </select>
 
-
                 </div>
 
 
-                <div class="form-group">
 
+                <!-- GRUPO -->
 
-                    <label for="groupSelect">
+                <div class="form-field">
+
+                    <label for="group">
                         Grupo
                     </label>
 
-
                     <select
-                        id="groupSelect"
+                        id="group"
                         required
                     >
 
                         <option value="">
-                            Seleccionar grupo
+                            Selecciona el grupo
                         </option>
 
-                        <option>
-                            7° A
+                        <option value="8-1">
+                            8°1
                         </option>
 
-                        <option>
-                            8° A
+                        <option value="9-2">
+                            9°2
                         </option>
 
-                        <option>
-                            9° B
-                        </option>
-
-                    </select>
-
-
-                </div>
-
-
-                <div class="form-group full">
-
-
-                    <label for="typeSelect">
-                        Tipo de situación
-                    </label>
-
-
-                    <select
-                        id="typeSelect"
-                        required
-                    >
-
-                        <option value="">
-                            Seleccionar
-                        </option>
-
-                        <option>
-                            Cambio de comportamiento
-                        </option>
-
-                        <option>
-                            Convivencia
-                        </option>
-
-                        <option>
-                            Aislamiento
-                        </option>
-
-                        <option>
-                            Dificultad académica
-                        </option>
-
-                        <option>
-                            Posible acoso escolar
-                        </option>
-
-                        <option>
-                            Otro
+                        <option value="10-1">
+                            10°1
                         </option>
 
                     </select>
-
-
-                </div>
-
-
-                <div class="form-group full">
-
-
-                    <label for="descriptionInput">
-                        Descripción
-                    </label>
-
-
-                    <textarea
-                        id="descriptionInput"
-                        required
-                        placeholder="Describe brevemente lo observado..."
-                    ></textarea>
-
 
                 </div>
 
@@ -1489,29 +1470,134 @@
             </div>
 
 
+
+            <!-- SITUACIÓN -->
+
+            <div class="form-field">
+
+                <label for="type">
+                    Situación observada
+                </label>
+
+                <select
+                    id="type"
+                    required
+                >
+
+                    <option value="">
+                        Selecciona una opción
+                    </option>
+
+                    <option value="comportamiento">
+                        Cambio de comportamiento
+                    </option>
+
+                    <option value="aislamiento">
+                        Aislamiento
+                    </option>
+
+                    <option value="convivencia">
+                        Dificultades de convivencia
+                    </option>
+
+                    <option value="rendimiento">
+                        Cambio en rendimiento académico
+                    </option>
+
+                    <option value="otro">
+                        Otro comportamiento observado
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- DESCRIPCIÓN -->
+
+            <div class="form-field">
+
+                <label for="description">
+                    Describe lo observado
+                </label>
+
+                <textarea
+                    id="description"
+                    maxlength="500"
+                    rows="5"
+                    placeholder="Describe objetivamente la situación o comportamiento que observaste..."
+                    required
+                ></textarea>
+
+
+                <small
+                    class="counter"
+                    id="counter"
+                >
+                    0 / 500
+                </small>
+
+            </div>
+
+
+
+            <!-- AVISO -->
+
+            <div class="privacy-note">
+
+
+                <div class="privacy-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <rect
+                            x="5"
+                            y="10"
+                            width="14"
+                            height="11"
+                            rx="2"
+                        />
+
+                        <path
+                            d="M8 10V7a4 4 0 0 1 8 0v3"
+                        />
+
+                    </svg>
+
+                </div>
+
+
+                <p>
+                    El docente únicamente envía la alerta.
+                    La valoración, seguimiento e intervención
+                    corresponde a las áreas autorizadas de SENTIR.
+                </p>
+
+
+            </div>
+
+
+
+            <!-- BOTONES -->
+
             <div class="modal-actions">
 
 
                 <button
                     type="button"
                     class="cancel-button"
-                    id="cancelModal"
+                    id="cancelAlert"
                 >
-
                     Cancelar
-
                 </button>
 
 
                 <button
                     type="submit"
-                    class="submit-button"
+                    class="send-button"
                 >
-
-                    <i class="bi bi-send"></i>
-
-                    Enviar reporte
-
+                    ENVIAR ALERTA
                 </button>
 
 
@@ -1527,9 +1613,55 @@
 </div>
 
 
-<!-- ======================================================
-     JAVASCRIPT
+
+<!-- =====================================================
+     CONFIRMACIÓN
 ====================================================== -->
+
+<div
+    class="toast"
+    id="successToast"
+>
+
+
+    <div class="toast-icon">
+
+        <svg viewBox="0 0 24 24">
+
+            <path d="M5 12l4 4L19 6"/>
+
+        </svg>
+
+    </div>
+
+
+    <div>
+
+        <strong>
+            Alerta enviada
+        </strong>
+
+        <p>
+            El equipo responsable podrá revisarla.
+        </p>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     OVERLAY SIDEBAR MÓVIL
+====================================================== -->
+
+<div
+    class="mobile-overlay"
+    id="mobileOverlay"
+></div>
+
+
 
 <script src="teacher.js"></script>
 

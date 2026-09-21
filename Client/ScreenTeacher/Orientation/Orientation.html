@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SENTIR | Orientación</title>
+
+    <link
+        rel="stylesheet"
+        href="Orientation.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- =====================================================
+         SIDEBAR DOCENTE
+         SIN ENLACES
+    ====================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+
+        <!-- =================================================
+             LOGO
+        ================================================== -->
+
+        <div class="logo-area">
+
+            <div class="logo-slot">
+
+                    <img
+                        src="/Sentir/Shared/TeacherResources/logolado.png"
+                        alt="Logo SENTIR"
+                    >
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             MENÚ
+             SON ELEMENTOS VISUALES, NO ENLACES
+        ================================================== -->
+
+        <div class="sidebar-menu">
+
+
+            <!-- INICIO -->
+
+            <div class="nav-item">
+
+                <div class="nav-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path
+                            d="M3 10.5L12 3l9 7.5v10a.5.5 0 0 1-.5.5H15v-6H9v6H3.5a.5.5 0 0 1-.5-.5z"
+                        />
+
+                    </svg>
+
+                </div>
+
+                <span><a href="/Sentir/Client/ScreenTeacher/teacher.html" class="sin-subrayado">Inicio</a></span>
+            </div>
+
+
+
+            <!-- MIS ESTUDIANTES -->
+
+            <div class="nav-item">
+
+                <div class="nav-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="8"
+                            cy="8"
+                            r="3"
+                        />
+
+                        <circle
+                            cx="17"
+                            cy="9"
+                            r="2.4"
+                        />
+
+                        <path
+                            d="M2.5 20v-2c0-3.1 2.4-5 5.5-5s5.5 1.9 5.5 5v2"
+                        />
+
+                        <path
+                            d="M14.5 14c3 0 5 1.5 5 4v2"
+                        />
+
+                    </svg>
+
+                </div>
+
+                <span><a href="/Sentir/Client/ScreenTeacher/MyStudents/MyStudents.html" class="sin-subrayado">Mis estudiantes</a></span>
+
+            </div>
+
+
+
+            <!-- ORIENTACIÓN -->
+
+            <div class="nav-item active">
+
+                <div class="nav-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path
+                            d="M4 5.5C4 4.1 5.1 3 6.5 3H11c1.5 0 2.7.6 3.5 1.6C15.3 3.6 16.5 3 18 3h1.5C20.9 3 22 4.1 22 5.5V19c-1-.6-2.2-1-3.5-1H18c-1.5 0-2.8.6-3.5 1.6C13.7 18.6 12.5 18 11 18H6.5C5.1 18 4 19 4 20.4z"
+                        />
+
+                    </svg>
+
+                </div>
+
+                <span><a href="/Sentir/Client/ScreenTeacher/Orientation/Orientation.html" class="sin-subrayado">Orientación</a></span>
+
+            </div>
+
+
+
+            <!-- MI PERFIL -->
+
+            <div class="nav-item">
+
+                <div class="nav-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="12"
+                            cy="8"
+                            r="4"
+                        />
+
+                        <path
+                            d="M4 21c.5-5 3.6-7 8-7s7.5 2 8 7"
+                        />
+
+                    </svg>
+
+                </div>
+
+                <span><a href="/Sentir/Client/ScreenTeacher/Profile/Profile.html" class="sin-subrayado">Mi perfil</a></span>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             PARTE INFERIOR SIDEBAR
+        ================================================== -->
+
+        <div class="sidebar-bottom">
+
+
+            <div class="sidebar-heart">
+
+                <svg viewBox="0 0 24 24">
+
+                    <path
+                        d="M12 21
+                           C10 18.8 4 14.2 4 8.8
+                           C4 5.7 6.3 4 8.8 4
+                           C10.5 4 11.6 5 12 5.8
+                           C12.4 5 13.5 4 15.2 4
+                           C17.7 4 20 5.7 20 8.8
+                           C20 14.2 14 18.8 12 21Z"
+                    />
+
+                </svg>
+
+            </div>
+
+
+            <p>
+                Educar<br>
+                también es<br>
+                cuidar ♡
+            </p>
+
+
+            <div class="plant plant-one"></div>
+
+            <div class="plant plant-two"></div>
+
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         CONTENIDO
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <div class="page-wrapper">
+
+
+            <!-- =================================================
+                 TOPBAR
+            ================================================== -->
+
+            <header class="topbar">
+
+
+                <div class="topbar-left">
+
+
+                    <!-- HAMBURGUESA -->
+
+                    <button
+                        type="button"
+                        class="hamburger"
+                        id="hamburger"
+                        aria-label="Abrir menú"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path d="M4 6h16"/>
+
+                            <path d="M4 12h16"/>
+
+                            <path d="M4 18h16"/>
+
+                        </svg>
+
+                    </button>
+
+
+
+                    <div>
+
+                        <h3>
+                            Orientación
+                        </h3>
+
+                        <p>
+                            Colegio demo • SENTIR
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="topbar-right">
+
+
+                    <!-- =================================================
+                         CAMPANA
+                    ================================================== -->
+
+                    <div class="notification-box">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path
+                                d="M18 8a6 6 0 0 0-12 0
+                                   c0 7-3 7-3 9h18
+                                   c0-2-3-2-3-9"
+                            />
+
+                            <path d="M10 21h4"/>
+
+                        </svg>
+
+
+                        <span class="notification-number">
+                            3
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         FOTO DOCENTE EDITABLE
+                    ================================================== -->
+
+                    <div class="header-user">
+
+
+                        <div class="profile-photo-wrapper">
+
+
+                            <label
+                                for="profilePhotoInput"
+                                class="header-avatar"
+                                title="Cambiar foto de perfil"
+                            >
+
+
+                                <img
+                                    id="profilePhoto"
+                                    src=""
+                                    alt="Foto del docente"
+                                >
+
+
+
+                                <div
+                                    class="profile-placeholder"
+                                    id="profilePlaceholder"
+                                >
+
+                                    <svg viewBox="0 0 24 24">
+
+                                        <circle
+                                            cx="12"
+                                            cy="8"
+                                            r="4"
+                                        />
+
+                                        <path
+                                            d="M4 21c.5-5 3.6-7 8-7s7.5 2 8 7"
+                                        />
+
+                                    </svg>
+
+                                </div>
+
+
+
+                                <div class="camera-overlay">
+
+                                    <svg viewBox="0 0 24 24">
+
+                                        <path
+                                            d="M4 7h4l1.5-2h5L16 7h4
+                                               a2 2 0 0 1 2 2v9
+                                               a2 2 0 0 1-2 2H4
+                                               a2 2 0 0 1-2-2V9
+                                               a2 2 0 0 1 2-2z"
+                                        />
+
+                                        <circle
+                                            cx="12"
+                                            cy="13"
+                                            r="4"
+                                        />
+
+                                    </svg>
+
+                                </div>
+
+
+                            </label>
+
+
+
+                            <input
+                                type="file"
+                                id="profilePhotoInput"
+                                accept="image/png,image/jpeg,image/webp"
+                                hidden
+                            >
+
+
+                        </div>
+
+
+
+                        <div class="header-user-data">
+
+                            <strong>
+                                Prof. Ana Torres
+                            </strong>
+
+                            <span>
+                                Docente
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="dropdown-icon">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path d="M6 9l6 6 6-6"/>
+
+                        </svg>
+
+                    </div>
+
+
+                </div>
+
+
+            </header>
+
+
+
+            <!-- =================================================
+                 HERO
+            ================================================== -->
+
+            <section class="hero">
+
+
+                <div class="hero-content">
+
+
+                    <span class="hero-label">
+                        Orientación docente
+                    </span>
+
+
+                    <h1>
+                        Aquí también encuentras apoyo
+                    </h1>
+
+
+                    <h2>
+                        Conversa con nuestra asistente virtual
+                        y encuentra orientación para tu día a día.
+                    </h2>
+
+
+
+                    <div class="hero-quote">
+
+
+                        <div class="hero-heart">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path
+                                    d="M12 21
+                                       C10 18.8 4 14.2 4 8.8
+                                       C4 5.7 6.3 4 8.8 4
+                                       C10.5 4 11.6 5 12 5.8
+                                       C12.4 5 13.5 4 15.2 4
+                                       C17.7 4 20 5.7 20 8.8
+                                       C20 14.2 14 18.8 12 21Z"
+                                />
+
+                            </svg>
+
+                        </div>
+
+
+                        <p>
+                            “Un docente que se cuida
+                            también transforma.”
+                        </p>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     IMAGEN DOCENTE
+                ================================================== -->
+
+                <div class="teacher-photo-area">
+
+
+                    <div class="hero-circle circle-one"></div>
+
+                    <div class="hero-circle circle-two"></div>
+
+
+                    <div class="teacher-image-slot">
+
+                        <!--
+                            AQUÍ PUEDES USAR LA MISMA
+                            IMAGEN DEL DOCENTE DEL INICIO:
+
+                            <img
+                                src="../Images/docente-banner.png"
+                                alt="Docente"
+                            >
+                        -->
+
+                    </div>
+
+
+                    <p class="hero-side-text">
+                        Orientar<br>
+                        también<br>
+                        es construir ♡
+                    </p>
+
+
+                    <div class="hero-leaf leaf-one"></div>
+
+                    <div class="hero-leaf leaf-two"></div>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 CONTENIDO PRINCIPAL
+                 CHAT + TIPS
+            ================================================== -->
+
+            <section class="orientation-layout">
+
+
+                <!-- =================================================
+                     CHAT
+                ================================================== -->
+
+                <section class="chat-card">
+
+
+                    <!-- =============================================
+                         HEADER CHAT
+                    ============================================== -->
+
+                    <div class="chat-header">
+
+
+                        <div class="assistant-info">
+
+
+                            <div class="assistant-avatar">
+
+                                <svg viewBox="0 0 24 24">
+
+                                    <rect
+                                        x="4"
+                                        y="7"
+                                        width="16"
+                                        height="12"
+                                        rx="4"
+                                    />
+
+                                    <circle
+                                        cx="9"
+                                        cy="13"
+                                        r="1"
+                                    />
+
+                                    <circle
+                                        cx="15"
+                                        cy="13"
+                                        r="1"
+                                    />
+
+                                    <path
+                                        d="M9 16h6"
+                                    />
+
+                                    <path
+                                        d="M12 7V4"
+                                    />
+
+                                    <circle
+                                        cx="12"
+                                        cy="3"
+                                        r="1"
+                                    />
+
+                                </svg>
+
+                            </div>
+
+
+
+                            <div>
+
+                                <div class="assistant-title-line">
+
+                                    <h2>
+                                        Asistente SENTIR
+                                    </h2>
+
+
+                                    <span class="online-badge">
+                                        Disponible
+                                    </span>
+
+                                </div>
+
+
+                                <p>
+                                    Tu apoyo para situaciones cotidianas
+                                    dentro del aula.
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- =============================================
+                         MENSAJES
+                    ============================================== -->
+
+                    <div
+                        class="chat-messages"
+                        id="chatMessages"
+                    >
+
+
+                        <!-- DIVISOR -->
+
+                        <div class="date-divider">
+
+                            <span>
+                                Hoy
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- MENSAJE ASISTENTE -->
+
+                        <div class="message-row assistant-row">
+
+
+                            <div class="message-avatar">
+
+                                <svg viewBox="0 0 24 24">
+
+                                    <rect
+                                        x="4"
+                                        y="7"
+                                        width="16"
+                                        height="12"
+                                        rx="4"
+                                    />
+
+                                    <circle
+                                        cx="9"
+                                        cy="13"
+                                        r="1"
+                                    />
+
+                                    <circle
+                                        cx="15"
+                                        cy="13"
+                                        r="1"
+                                    />
+
+                                    <path
+                                        d="M9 16h6"
+                                    />
+
+                                    <path
+                                        d="M12 7V4"
+                                    />
+
+                                </svg>
+
+                            </div>
+
+
+
+                            <div class="message-wrapper">
+
+
+                                <div class="message assistant-message">
+
+                                    <strong>
+                                        ¡Hola, Ana!
+                                    </strong>
+
+                                    <p>
+                                        Estoy aquí para orientarte.
+                                        Puedes escribirme sobre situaciones
+                                        que observes en tus estudiantes,
+                                        convivencia en el aula o estrategias
+                                        generales de acompañamiento.
+                                    </p>
+
+
+                                    <p>
+                                        Recuerda que mis recomendaciones
+                                        son una guía inicial. Las situaciones
+                                        que requieran valoración o intervención
+                                        deben ser atendidas por el equipo
+                                        correspondiente.
+                                    </p>
+
+                                </div>
+
+
+                                <span class="message-time">
+                                    10:24 a. m.
+                                </span>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- MENSAJE DOCENTE -->
+
+                        <div class="message-row user-row">
+
+
+                            <div class="message-wrapper">
+
+
+                                <div class="message user-message">
+
+                                    <p>
+                                        ¿Qué puedo hacer si noto que un
+                                        estudiante está más callado
+                                        de lo habitual?
+                                    </p>
+
+                                </div>
+
+
+                                <div class="user-message-info">
+
+                                    <span class="message-time">
+                                        10:24 a. m.
+                                    </span>
+
+
+                                    <span class="message-check">
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <path
+                                                d="M3 12l4 4L15 8"
+                                            />
+
+                                            <path
+                                                d="M9 15l2 2L21 7"
+                                            />
+
+                                        </svg>
+
+                                    </span>
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- RESPUESTA -->
+
+                        <div class="message-row assistant-row">
+
+
+                            <div class="message-avatar">
+
+                                <svg viewBox="0 0 24 24">
+
+                                    <rect
+                                        x="4"
+                                        y="7"
+                                        width="16"
+                                        height="12"
+                                        rx="4"
+                                    />
+
+                                    <circle
+                                        cx="9"
+                                        cy="13"
+                                        r="1"
+                                    />
+
+                                    <circle
+                                        cx="15"
+                                        cy="13"
+                                        r="1"
+                                    />
+
+                                    <path
+                                        d="M9 16h6"
+                                    />
+
+                                    <path
+                                        d="M12 7V4"
+                                    />
+
+                                </svg>
+
+                            </div>
+
+
+
+                            <div class="message-wrapper">
+
+
+                                <div class="message assistant-message">
+
+                                    <p>
+                                        Un cambio de comportamiento no siempre
+                                        significa que exista un problema,
+                                        pero sí puede ser una señal que vale
+                                        la pena observar.
+                                    </p>
+
+
+                                    <p>
+                                        Algunas acciones que puedes realizar:
+                                    </p>
+
+
+                                    <ul>
+
+                                        <li>
+                                            Observa si el cambio se mantiene
+                                            durante varios días.
+                                        </li>
+
+                                        <li>
+                                            Genera un espacio de conversación
+                                            tranquilo y respetuoso.
+                                        </li>
+
+                                        <li>
+                                            Escucha sin presionar al estudiante
+                                            para que cuente algo que no desea.
+                                        </li>
+
+                                        <li>
+                                            Si la situación continúa o te preocupa,
+                                            puedes enviar una alerta desde
+                                            <strong>Mis estudiantes</strong>.
+                                        </li>
+
+                                    </ul>
+
+
+                                    <p>
+                                        ¿Quieres contarme un poco más
+                                        sobre lo que has observado?
+                                    </p>
+
+
+                                </div>
+
+
+                                <span class="message-time">
+                                    10:25 a. m.
+                                </span>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- =============================================
+                         SUGERENCIAS RÁPIDAS
+                    ============================================== -->
+
+                    <div class="quick-prompts">
+
+
+                        <button
+                            type="button"
+                            class="quick-prompt"
+                            data-message="¿Cómo puedo hablar con un estudiante que está aislado?"
+                        >
+                            Estudiante aislado
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="quick-prompt"
+                            data-message="¿Qué puedo hacer ante un conflicto entre estudiantes?"
+                        >
+                            Conflicto en el aula
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="quick-prompt"
+                            data-message="Dame consejos para escuchar mejor a mis estudiantes"
+                        >
+                            Escucha activa
+                        </button>
+
+
+                    </div>
+
+
+
+                    <!-- =============================================
+                         INPUT
+                    ============================================== -->
+
+                    <form
+                        class="chat-input-area"
+                        id="chatForm"
+                    >
+
+
+                        <button
+                            type="button"
+                            class="attachment-button"
+                            aria-label="Adjuntar"
+                        >
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path
+                                    d="M21 11.5L12.5 20
+                                       a6 6 0 0 1-8.5-8.5
+                                       l9-9
+                                       a4 4 0 0 1 5.7 5.7
+                                       l-9 9
+                                       a2 2 0 1 1-2.8-2.8
+                                       l8.5-8.5"
+                                />
+
+                            </svg>
+
+                        </button>
+
+
+
+                        <textarea
+                            id="chatInput"
+                            rows="1"
+                            maxlength="1000"
+                            placeholder="Escribe tu mensaje aquí..."
+                        ></textarea>
+
+
+
+                        <button
+                            type="submit"
+                            class="send-message-button"
+                            aria-label="Enviar mensaje"
+                        >
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path
+                                    d="M22 2L11 13"
+                                />
+
+                                <path
+                                    d="M22 2L15 22l-4-9-9-4z"
+                                />
+
+                            </svg>
+
+                        </button>
+
+
+                    </form>
+
+
+                    <!-- AVISO -->
+
+                    <div class="ai-notice">
+
+
+                        <svg viewBox="0 0 24 24">
+
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="9"
+                            />
+
+                            <path d="M12 11v5"/>
+
+                            <path d="M12 8h.01"/>
+
+                        </svg>
+
+
+                        <span>
+                            El asistente brinda orientación general.
+                            No realiza diagnósticos ni reemplaza
+                            la atención profesional.
+                        </span>
+
+
+                    </div>
+
+
+                </section>
+
+
+
+                <!-- =================================================
+                     TIPS
+                ================================================== -->
+
+                <aside class="tips-card">
+
+
+                    <div class="tips-header">
+
+
+                        <div class="tips-header-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path
+                                    d="M9 18h6"
+                                />
+
+                                <path
+                                    d="M10 22h4"
+                                />
+
+                                <path
+                                    d="M8 14
+                                       c-1.4-1.1-2.5-2.8-2.5-5
+                                       A6.5 6.5 0 0 1 12 2.5
+                                       6.5 6.5 0 0 1 18.5 9
+                                       c0 2.2-1.1 3.9-2.5 5
+                                       -.7.6-1 1.2-1 2H9
+                                       c0-.8-.3-1.4-1-2z"
+                                />
+
+                            </svg>
+
+                        </div>
+
+
+
+                        <div>
+
+                            <h2>
+                                Tips para ti
+                            </h2>
+
+                            <p>
+                                Pequeñas acciones,
+                                grandes cambios.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- =============================================
+                         TIP 1
+                    ============================================== -->
+
+                    <article class="tip-item mint-tip">
+
+
+                        <div class="tip-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path
+                                    d="M4 5h16v11H8l-4 4z"
+                                />
+
+                                <path d="M8 9h8"/>
+
+                                <path d="M8 12h5"/>
+
+                            </svg>
+
+                        </div>
+
+
+
+                        <div class="tip-text">
+
+                            <h3>
+                                Escucha activa
+                            </h3>
+
+                            <p>
+                                A veces, escuchar con atención
+                                ya es una gran forma de acompañar.
+                            </p>
+
+                        </div>
+
+
+                    </article>
+
+
+
+                    <!-- =============================================
+                         TIP 2
+                    ============================================== -->
+
+                    <article class="tip-item pink-tip">
+
+
+                        <div class="tip-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path
+                                    d="M12 21
+                                       C10 18.8 4 14.2 4 8.8
+                                       C4 5.7 6.3 4 8.8 4
+                                       C10.5 4 11.6 5 12 5.8
+                                       C12.4 5 13.5 4 15.2 4
+                                       C17.7 4 20 5.7 20 8.8
+                                       C20 14.2 14 18.8 12 21Z"
+                                />
+
+                            </svg>
+
+                        </div>
+
+
+
+                        <div class="tip-text">
+
+                            <h3>
+                                Reconoce sus emociones
+                            </h3>
+
+                            <p>
+                                Validar cómo se siente un estudiante
+                                puede fortalecer la confianza.
+                            </p>
+
+                        </div>
+
+
+                    </article>
+
+
+
+                    <!-- =============================================
+                         TIP 3
+                    ============================================== -->
+
+                    <article class="tip-item blue-tip">
+
+
+                        <div class="tip-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <circle
+                                    cx="8"
+                                    cy="8"
+                                    r="3"
+                                />
+
+                                <circle
+                                    cx="17"
+                                    cy="9"
+                                    r="2.4"
+                                />
+
+                                <path
+                                    d="M2.5 20v-2
+                                       c0-3.1 2.4-5 5.5-5
+                                       s5.5 1.9 5.5 5v2"
+                                />
+
+                                <path
+                                    d="M14.5 14c3 0 5 1.5 5 4v2"
+                                />
+
+                            </svg>
+
+                        </div>
+
+
+
+                        <div class="tip-text">
+
+                            <h3>
+                                Crea un ambiente seguro
+                            </h3>
+
+                            <p>
+                                Un aula donde puedan expresarse
+                                con respeto favorece el bienestar.
+                            </p>
+
+                        </div>
+
+
+                    </article>
+
+
+
+                    <!-- =============================================
+                         TIP 4
+                    ============================================== -->
+
+                    <article class="tip-item purple-tip">
+
+
+                        <div class="tip-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path
+                                    d="M4 5.5C4 4.1 5.1 3 6.5 3H11
+                                       c1.5 0 2.7.6 3.5 1.6
+                                       C15.3 3.6 16.5 3 18 3h1.5
+                                       C20.9 3 22 4.1 22 5.5V19
+                                       c-1-.6-2.2-1-3.5-1H18
+                                       c-1.5 0-2.8.6-3.5 1.6
+                                       C13.7 18.6 12.5 18 11 18H6.5
+                                       C5.1 18 4 19 4 20.4z"
+                                />
+
+                            </svg>
+
+                        </div>
+
+
+
+                        <div class="tip-text">
+
+                            <h3>
+                                Trabaja en equipo
+                            </h3>
+
+                            <p>
+                                Cuando una situación lo requiera,
+                                apóyate en las áreas responsables
+                                de la institución.
+                            </p>
+
+                        </div>
+
+
+                    </article>
+
+
+
+                    <!-- =============================================
+                         TIP 5
+                    ============================================== -->
+
+                    <article class="tip-item yellow-tip">
+
+
+                        <div class="tip-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <circle
+                                    cx="12"
+                                    cy="12"
+                                    r="9"
+                                />
+
+                                <path
+                                    d="M8.5 10
+                                       c.7-1 1.9-1.5 3.5-1.5
+                                       2.1 0 3.5 1.1 3.5 2.7
+                                       0 1.5-.9 2.1-2.2 2.8
+                                       -.9.5-1.3 1-1.3 2"
+                                />
+
+                                <path
+                                    d="M12 18h.01"
+                                />
+
+                            </svg>
+
+                        </div>
+
+
+
+                        <div class="tip-text">
+
+                            <h3>
+                                Pregunta sin presionar
+                            </h3>
+
+                            <p>
+                                Usa preguntas abiertas y permite
+                                que cada estudiante decida
+                                cuánto desea compartir.
+                            </p>
+
+                        </div>
+
+
+                    </article>
+
+
+
+                    <!-- =============================================
+                         RECORDATORIO
+                    ============================================== -->
+
+                    <div class="tips-reminder">
+
+
+                        <div class="reminder-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path
+                                    d="M12 21
+                                       C10 18.8 4 14.2 4 8.8
+                                       C4 5.7 6.3 4 8.8 4
+                                       C10.5 4 11.6 5 12 5.8
+                                       C12.4 5 13.5 4 15.2 4
+                                       C17.7 4 20 5.7 20 8.8
+                                       C20 14.2 14 18.8 12 21Z"
+                                />
+
+                            </svg>
+
+                        </div>
+
+
+                        <p>
+                            Tu papel es observar, escuchar y comunicar.
+                            La intervención corresponde al personal
+                            autorizado.
+                        </p>
+
+
+                    </div>
+
+
+                </aside>
+
+
+            </section>
+
+
+        </div>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     OVERLAY MÓVIL
+====================================================== -->
+
+<div
+    class="mobile-overlay"
+    id="mobileOverlay"
+></div>
+
+
+
+<script src="Orientation.js"></script>
+
+
+</body>
+
+</html>

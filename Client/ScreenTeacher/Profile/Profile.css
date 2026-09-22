@@ -221,9 +221,9 @@ svg {
 
 .logo-slot {
 
-    width: 165px;
+    width: 465px;
 
-    height: 80px;
+    height: 300px;
 
     display: flex;
 
@@ -286,6 +286,13 @@ svg {
 
 }
 
+.sin-subrayado {
+
+    text-decoration: none;
+
+    color: inherit;
+
+}
 
 .nav-item.active {
 
@@ -1128,6 +1135,365 @@ svg {
 
 }
 
+/* =========================================================
+   TARJETAS DE FRASES
+========================================================= */
+
+.phrase-card {
+
+    min-height: 190px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    padding:
+        21px
+        22px;
+
+    border-radius: 23px;
+
+    background: white;
+
+    box-shadow:
+        var(--shadow);
+
+}
+
+
+/* =========================================================
+   CABECERA
+========================================================= */
+
+.phrase-heading {
+
+    position: relative;
+
+    z-index: 3;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+.phrase-heading h3 {
+
+    color:
+        #2e286e;
+
+    font-size: 15px;
+
+}
+
+
+.phrase-icon {
+
+    width: 45px;
+
+    height: 45px;
+
+    flex-shrink: 0;
+
+    display: grid;
+
+    place-items: center;
+
+    padding: 10px;
+
+    border-radius: 14px;
+
+}
+
+
+.phrase-icon svg {
+
+    width: 100%;
+
+    height: 100%;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.9;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+
+}
+
+
+/* =========================================================
+   FRASE
+========================================================= */
+
+.phrase-content {
+
+    position: relative;
+
+    z-index: 3;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 112px;
+
+    padding:
+        12px
+        12px
+        5px;
+
+    text-align: center;
+
+}
+
+
+.phrase-content p {
+
+    color:
+        #5147a2;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 17px;
+
+    font-style: italic;
+
+    line-height: 1.55;
+
+}
+
+
+/* =========================================================
+   DECORACIÓN
+========================================================= */
+
+.phrase-decoration {
+
+    position: absolute;
+
+    right: 22px;
+
+    bottom: 14px;
+
+    z-index: 2;
+
+    font-size: 27px;
+
+    opacity: .55;
+
+}
+
+
+
+/* =========================================================
+   MORADA
+========================================================= */
+
+.phrase-purple {
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f4f0ff
+        );
+
+}
+
+
+.phrase-purple
+.phrase-icon {
+
+    background:
+        #eee8ff;
+
+    color:
+        #7147ef;
+
+}
+
+
+.phrase-purple
+.phrase-decoration {
+
+    color:
+        #8056ef;
+
+}
+
+
+
+/* =========================================================
+   VERDE
+========================================================= */
+
+.phrase-green {
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #ebfaf5
+        );
+
+}
+
+
+.phrase-green
+.phrase-icon {
+
+    background:
+        #daf7e9;
+
+    color:
+        #24b57a;
+
+}
+
+
+.phrase-green
+.phrase-decoration {
+
+    color:
+        #55cda1;
+
+}
+
+
+
+/* =========================================================
+   ROSA
+========================================================= */
+
+.phrase-pink {
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #fff0f5
+        );
+
+}
+
+
+.phrase-pink
+.phrase-icon {
+
+    background:
+        #ffe1eb;
+
+    color:
+        #ed6088;
+
+}
+
+
+.phrase-pink
+.phrase-decoration {
+
+    color:
+        #ee6f96;
+
+}
+
+
+
+/* =========================================================
+   HOJITAS DECORATIVAS
+========================================================= */
+
+.phrase-card::before,
+.phrase-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    border-radius:
+        100% 0
+        100% 0;
+
+    opacity: .18;
+
+}
+
+
+.phrase-card::before {
+
+    width: 45px;
+
+    height: 90px;
+
+    right: 17px;
+
+    bottom: -17px;
+
+    background:
+        currentColor;
+
+    transform:
+        rotate(27deg);
+
+}
+
+
+.phrase-card::after {
+
+    width: 28px;
+
+    height: 63px;
+
+    right: 58px;
+
+    bottom: -13px;
+
+    background:
+        currentColor;
+
+    transform:
+        rotate(-25deg);
+
+}
+
+
+.phrase-purple {
+
+    color:
+        #7865e7;
+
+}
+
+
+.phrase-green {
+
+    color:
+        #38b989;
+
+}
+
+
+.phrase-pink {
+
+    color:
+        #ed7899;
+
+}
 
 /* =========================================================
    PROFILE CARD
@@ -1135,7 +1501,6 @@ svg {
 
 .profile-card,
 .wellbeing-card,
-.side-card,
 .help-card {
 
     border-radius: 23px;
@@ -1788,7 +2153,7 @@ svg {
     display: grid;
 
     grid-template-columns:
-        repeat(3, 1fr);
+        repeat(4, 1fr);
 
     gap: 12px;
 
@@ -1841,57 +2206,190 @@ svg {
 }
 
 
-.green-wellbeing {
+/* =========================================================
+   TARJETAS DE BIENESTAR
+========================================================= */
 
-    background: #ebfaf4;
+.wellbeing-item {
+
+    min-height: 140px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding:
+        16px;
+
+    border-radius: 18px;
+
+    text-align: center;
 
 }
 
 
-.green-wellbeing
 .wellbeing-icon {
 
-    color: #21b678;
+    width: 40px;
+
+    height: 40px;
+
+    margin-bottom: 11px;
 
 }
 
 
-.pink-wellbeing {
-
-    background: #fff0f5;
-
-}
-
-
-.pink-wellbeing
-.wellbeing-icon {
-
-    color: #ef5f88;
-
-}
-
-
-.pink-wellbeing
 .wellbeing-icon svg {
 
-    fill: #ef5f88;
+    width: 100%;
 
-    stroke: #ef5f88;
+    height: 100%;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.9;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
 
 }
 
 
-.purple-wellbeing {
+.wellbeing-item h3 {
 
-    background: #f3efff;
+    color:
+        #30296f;
+
+    font-size: 13px;
 
 }
 
 
-.purple-wellbeing
+.wellbeing-item p {
+
+    margin-top: 6px;
+
+    color:
+        #69658d;
+
+    font-size: 10px;
+
+    line-height: 1.45;
+
+}
+
+
+/* RESPIRA */
+
+.breathe-card {
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #f3efff,
+            #ebe5ff
+        );
+
+}
+
+
+.breathe-card
 .wellbeing-icon {
 
-    color: #764def;
+    color:
+        #784ff1;
+
+}
+
+
+/* AGRADECE */
+
+.gratitude-card {
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #effbf7,
+            #ddf7ec
+        );
+
+}
+
+
+.gratitude-card
+.wellbeing-icon {
+
+    color:
+        #23b77a;
+
+}
+
+
+/* CONFÍA */
+
+.trust-card {
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #fff2f6,
+            #ffe5ee
+        );
+
+}
+
+
+.trust-card
+.wellbeing-icon {
+
+    color:
+        #ef5f88;
+
+}
+
+
+.trust-card
+.wellbeing-icon svg {
+
+    fill:
+        #ef5f88;
+
+    stroke:
+        #ef5f88;
+
+}
+
+
+/* SIGUE */
+
+.continue-card {
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #f1f8ff,
+            #e3f2ff
+        );
+
+}
+
+
+.continue-card
+.wellbeing-icon {
+
+    color:
+        #368fe7;
 
 }
 
@@ -1899,48 +2397,6 @@ svg {
 /* =========================================================
    SIDE CARDS
 ========================================================= */
-
-.side-card {
-
-    padding: 20px;
-
-}
-
-
-.side-card-title {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-    margin-bottom: 17px;
-
-}
-
-
-.side-title-icon {
-
-    width: 49px;
-
-    height: 49px;
-
-    flex-shrink: 0;
-
-    display: grid;
-
-    place-items: center;
-
-    padding: 12px;
-
-    border-radius: 15px;
-
-    background: var(--purple-soft);
-
-    color: var(--purple);
-
-}
 
 
 .side-card-title h2 {
@@ -1959,57 +2415,6 @@ svg {
     font-size: 10px;
 
 }
-
-
-/* =========================================================
-   ACCOUNT ITEMS
-========================================================= */
-
-.account-item,
-.security-item {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-    min-height: 73px;
-
-    margin-top: 10px;
-
-    padding:
-        11px
-        12px;
-
-    border:
-        1px solid
-        #eeebf8;
-
-    border-radius: 15px;
-
-}
-
-
-.account-item-icon,
-.security-icon {
-
-    width: 43px;
-
-    height: 43px;
-
-    flex-shrink: 0;
-
-    display: grid;
-
-    place-items: center;
-
-    padding: 10px;
-
-    border-radius: 13px;
-
-}
-
 
 .account-item > div:last-child,
 .security-item > div:last-child {
@@ -2037,82 +2442,6 @@ svg {
     color: #8580a5;
 
     font-size: 9px;
-
-}
-
-
-.green-account {
-
-    background: #def7ea;
-
-    color: #22ac73;
-
-}
-
-
-.purple-account {
-
-    background: #eee9ff;
-
-    color: #754cef;
-
-}
-
-
-.blue-account {
-
-    background: #e2f2ff;
-
-    color: #3197e8;
-
-}
-
-
-.security-icon {
-
-    background: #f0ebff;
-
-    color: #734de7;
-
-}
-
-
-/* =========================================================
-   HELP
-========================================================= */
-
-.help-card {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 13px;
-
-    padding: 18px;
-
-}
-
-
-.help-icon {
-
-    width: 46px;
-
-    height: 46px;
-
-    flex-shrink: 0;
-
-    display: grid;
-
-    place-items: center;
-
-    padding: 11px;
-
-    border-radius: 14px;
-
-    background: #eee9ff;
-
-    color: var(--purple);
 
 }
 

@@ -271,6 +271,20 @@ function resolveModulePath(target) {
     return map[target] || target;
 }
 
+function performPsychologistLogout() {
+    sessionStorage.removeItem('sentir_psych_session');
+    window.location.href = '../auth/Welcome.html';
+}
+
+function initLogoutButtons() {
+    document.querySelectorAll('[data-action="logout"]').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            performPsychologistLogout();
+        });
+    });
+}
+
 function initPsychologistProfileMenu() {
     const profileContainer = document.querySelector('.profile-info');
     if (!profileContainer) return;
@@ -302,7 +316,7 @@ function initPsychologistProfileMenu() {
                 const action = item.dataset.action;
                 if (action === 'perfil') window.location.href = resolveModulePath('perfil.html');
                 else if (action === 'turnos') openShiftHistoryModal();
-                else if (action === 'salir') showToast({ title: 'Sesión cerrada', message: 'Saliste de forma segura del sistema Sentir.', icon: 'fa-right-from-bracket', type: 'info' });
+                else if (action === 'salir') { dropdown.remove(); performPsychologistLogout(); return; }
                 dropdown.remove();
             });
         });
@@ -853,6 +867,7 @@ function initSentirCore() {
     initSidebarActiveState();
     initNotificationDropdown();
     initPsychologistProfileMenu();
+    initLogoutButtons();
     initMobileSidebar();
     initStudentPanelActions();
     initAlertWatcher();

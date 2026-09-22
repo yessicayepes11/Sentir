@@ -1,6 +1,9 @@
-.activities-summary { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-size: 12.5px; color: var(--text-muted); flex-wrap: wrap; }
-.activities-summary strong { color: var(--dark-slate); font-weight: 700; }
-.activities-summary .dot-sep { width: 4px; height: 4px; border-radius: 50%; background: #CBD5E1; }
+.activities-summary { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; flex-wrap: wrap; background: var(--purple-soft); border-radius: var(--radius-lg); padding: 12px 18px; }
+.activities-summary-icon { width: 28px; height: 28px; border-radius: 9px; background: var(--white); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+.activities-summary-count { font-size: 12.5px; color: var(--text-secondary); }
+.activities-summary-count strong { color: var(--primary-dark); font-weight: 700; }
+.activities-summary-pill { font-size: 10.5px; font-weight: 600; color: var(--primary-dark); background: var(--white); padding: 4px 10px; border-radius: var(--radius-pill); }
+.activities-summary-pill b { font-weight: 700; }
 
 .activities-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 24px; flex-wrap: wrap; }
 .activities-search { width: 320px; }
@@ -8,10 +11,10 @@
 .activities-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
 
 .activity-card { background: var(--white); border: 1px solid #E5E7EB; border-radius: 20px; padding: 22px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 12px; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
-.activity-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--lavanda); }
+.activity-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover-glow); border-color: var(--lavanda); }
 
 .activity-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
-.activity-icon { width: 46px; height: 46px; border-radius: 14px; color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.activity-icon { width: 46px; height: 46px; border-radius: 14px; color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; box-shadow: 0 6px 14px rgba(30, 27, 75, 0.14); }
 .activity-type-tag { font-size: 10px; font-weight: 700; background: rgba(108, 77, 246, 0.08); color: var(--morado-sentir); padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
 
 .activity-card h4 { font-size: 15px; font-weight: 700; color: var(--dark-slate); }

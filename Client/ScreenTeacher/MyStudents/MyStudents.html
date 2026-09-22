@@ -2,7 +2,6 @@
 <html lang="es">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -16,7 +15,6 @@
         rel="stylesheet"
         href="MyStudents.css"
     >
-
 </head>
 
 
@@ -26,8 +24,7 @@
 
 
     <!-- =====================================================
-         SIDEBAR
-         MISMA BARRA DEL MÓDULO DOCENTE
+         SIDEBAR DOCENTE
          SIN ENLACES
     ====================================================== -->
 
@@ -43,6 +40,7 @@
 
             <div class="logo-slot">
 
+
                     <img
                         src="/Sentir/Shared/TeacherResources/logolado.png"
                         alt="Logo SENTIR"
@@ -54,9 +52,7 @@
 
 
 
-        <!-- =================================================
-             MENÚ
-        ================================================== -->
+        <!-- MENÚ -->
 
         <div class="sidebar-menu">
 
@@ -91,17 +87,9 @@
 
                     <svg viewBox="0 0 24 24">
 
-                        <circle
-                            cx="8"
-                            cy="8"
-                            r="3"
-                        />
+                        <circle cx="8" cy="8" r="3"/>
 
-                        <circle
-                            cx="17"
-                            cy="9"
-                            r="2.4"
-                        />
+                        <circle cx="17" cy="9" r="2.4"/>
 
                         <path
                             d="M2.5 20v-2c0-3.1 2.4-5 5.5-5s5.5 1.9 5.5 5v2"
@@ -130,7 +118,14 @@
                     <svg viewBox="0 0 24 24">
 
                         <path
-                            d="M4 5.5C4 4.1 5.1 3 6.5 3H11c1.5 0 2.7.6 3.5 1.6C15.3 3.6 16.5 3 18 3h1.5C20.9 3 22 4.1 22 5.5V19c-1-.6-2.2-1-3.5-1H18c-1.5 0-2.8.6-3.5 1.6C13.7 18.6 12.5 18 11 18H6.5C5.1 18 4 19 4 20.4z"
+                            d="M4 5.5C4 4.1 5.1 3 6.5 3H11
+                               c1.5 0 2.7.6 3.5 1.6
+                               C15.3 3.6 16.5 3 18 3h1.5
+                               C20.9 3 22 4.1 22 5.5V19
+                               c-1-.6-2.2-1-3.5-1H18
+                               c-1.5 0-2.8.6-3.5 1.6
+                               C13.7 18.6 12.5 18 11 18H6.5
+                               C5.1 18 4 19 4 20.4z"
                         />
 
                     </svg>
@@ -151,11 +146,7 @@
 
                     <svg viewBox="0 0 24 24">
 
-                        <circle
-                            cx="12"
-                            cy="8"
-                            r="4"
-                        />
+                        <circle cx="12" cy="8" r="4"/>
 
                         <path
                             d="M4 21c.5-5 3.6-7 8-7s7.5 2 8 7"
@@ -166,7 +157,6 @@
                 </div>
 
                 <span><a href="/Sentir/Client/ScreenTeacher/Profile/Profile.html" class="sin-subrayado">Mi perfil</a></span>
-
             </div>
 
 
@@ -174,9 +164,7 @@
 
 
 
-        <!-- =================================================
-             PARTE INFERIOR
-        ================================================== -->
+        <!-- PARTE INFERIOR -->
 
         <div class="sidebar-bottom">
 
@@ -208,8 +196,8 @@
 
 
             <div class="plant plant-one"></div>
-
             <div class="plant plant-two"></div>
+
 
         </div>
 
@@ -219,7 +207,7 @@
 
 
     <!-- =====================================================
-         MAIN
+         CONTENIDO PRINCIPAL
     ====================================================== -->
 
     <main class="main-content">
@@ -229,7 +217,7 @@
 
 
             <!-- =================================================
-                 TOP BAR
+                 HEADER
             ================================================== -->
 
             <header class="topbar">
@@ -248,15 +236,12 @@
                         <svg viewBox="0 0 24 24">
 
                             <path d="M4 6h16"/>
-
                             <path d="M4 12h16"/>
-
                             <path d="M4 18h16"/>
 
                         </svg>
 
                     </button>
-
 
 
                     <div>
@@ -304,87 +289,73 @@
 
 
 
-                    <!-- FOTO DOCENTE -->
+                    <!-- PERFIL DOCENTE -->
 
                     <div class="header-user">
 
 
-                        <div class="profile-photo-wrapper">
+                        <label
+                            for="profilePhotoInput"
+                            class="header-avatar"
+                            title="Cambiar foto"
+                        >
 
-
-                            <label
-                                for="profilePhotoInput"
-                                class="header-avatar"
-                                title="Cambiar foto"
+                            <img
+                                id="profilePhoto"
+                                src=""
+                                alt=""
                             >
 
 
-                                <img
-                                    id="profilePhoto"
-                                    src=""
-                                    alt="Foto docente"
-                                >
-
-
-                                <div
-                                    class="profile-placeholder"
-                                    id="profilePlaceholder"
-                                >
-
-                                    <svg viewBox="0 0 24 24">
-
-                                        <circle
-                                            cx="12"
-                                            cy="8"
-                                            r="4"
-                                        />
-
-                                        <path
-                                            d="M4 21c.5-5 3.6-7 8-7s7.5 2 8 7"
-                                        />
-
-                                    </svg>
-
-                                </div>
-
-
-
-                                <div class="camera-overlay">
-
-                                    <svg viewBox="0 0 24 24">
-
-                                        <path
-                                            d="M4 7h4l1.5-2h5L16 7h4
-                                               a2 2 0 0 1 2 2v9
-                                               a2 2 0 0 1-2 2H4
-                                               a2 2 0 0 1-2-2V9
-                                               a2 2 0 0 1 2-2z"
-                                        />
-
-                                        <circle
-                                            cx="12"
-                                            cy="13"
-                                            r="4"
-                                        />
-
-                                    </svg>
-
-                                </div>
-
-
-                            </label>
-
-
-
-                            <input
-                                type="file"
-                                id="profilePhotoInput"
-                                accept="image/png,image/jpeg,image/webp"
-                                hidden
+                            <div
+                                class="profile-placeholder"
+                                id="profilePlaceholder"
                             >
 
+                                <svg viewBox="0 0 24 24">
 
-                        </div>
+                                    <circle cx="12" cy="8" r="4"/>
+
+                                    <path
+                                        d="M4 21c.5-5 3.6-7 8-7s7.5 2 8 7"
+                                    />
+
+                                </svg>
+
+                            </div>
+
+
+                            <div class="camera-overlay">
+
+                                <svg viewBox="0 0 24 24">
+
+                                    <path
+                                        d="M4 7h4l1.5-2h5L16 7h4
+                                           a2 2 0 0 1 2 2v9
+                                           a2 2 0 0 1-2 2H4
+                                           a2 2 0 0 1-2-2V9
+                                           a2 2 0 0 1 2-2z"
+                                    />
+
+                                    <circle
+                                        cx="12"
+                                        cy="13"
+                                        r="4"
+                                    />
+
+                                </svg>
+
+                            </div>
+
+                        </label>
+
+
+                        <input
+                            type="file"
+                            id="profilePhotoInput"
+                            accept="image/png,image/jpeg,image/webp"
+                            hidden
+                        >
 
 
 
@@ -402,7 +373,6 @@
 
 
                     </div>
-
 
 
                     <div class="dropdown-icon">
@@ -424,13 +394,18 @@
 
 
             <!-- =================================================
-                 HERO
+                 ENCABEZADO PÁGINA
             ================================================== -->
 
-            <section class="hero">
+            <section class="page-heading">
 
 
-                <div class="hero-content">
+                <div>
+
+
+                    <span class="page-tag">
+                        Comunidad educativa
+                    </span>
 
 
                     <h1>
@@ -438,112 +413,26 @@
                     </h1>
 
 
-                    <h2>
-                        Conoce la información general de tus grupos.
-                    </h2>
-
-
-
-                    <div class="hero-quote">
-
-
-                        <div class="hero-heart">
-
-                            <svg viewBox="0 0 24 24">
-
-                                <path
-                                    d="M12 21
-                                       C10 18.8 4 14.2 4 8.8
-                                       C4 5.7 6.3 4 8.8 4
-                                       C10.5 4 11.6 5 12 5.8
-                                       C12.4 5 13.5 4 15.2 4
-                                       C17.7 4 20 5.7 20 8.8
-                                       C20 14.2 14 18.8 12 21Z"
-                                />
-
-                            </svg>
-
-                        </div>
-
-
-                        <p>
-                            “Observar también es una forma
-                            de acompañar.”
-                        </p>
-
-
-                    </div>
-
-
-                </div>
-
-
-
-                <!-- =============================================
-                     ESPACIO PARA IMAGEN DOCENTE
-                ============================================== -->
-
-                <div class="teacher-photo-area">
-
-
-                    <div class="hero-circle circle-one"></div>
-
-                    <div class="hero-circle circle-two"></div>
-
-
-
-                    <div class="teacher-image-slot">
-
-                            <img
-                                src="/Sentir/Shared/TeacherResources/ImgenDocentes.png"
-                                alt="Docente"
-                            >
-
-                    </div>
-
-
-
-                    <p class="hero-side-text">
-                        Observar<br>
-                        también<br>
-                        es cuidar ♡
+                    <p>
+                        Consulta información general de los estudiantes
+                        pertenecientes a tus grupos.
                     </p>
 
 
                 </div>
 
 
-            </section>
+
+                <div class="heading-decoration">
 
 
-
-            <!-- =================================================
-                 RESUMEN
-            ================================================== -->
-
-            <section class="summary-grid">
-
-
-                <!-- TOTAL ESTUDIANTES -->
-
-                <article class="summary-card">
-
-
-                    <div class="summary-icon blue">
+                    <div class="heading-icon">
 
                         <svg viewBox="0 0 24 24">
 
-                            <circle
-                                cx="8"
-                                cy="8"
-                                r="3"
-                            />
+                            <circle cx="8" cy="8" r="3"/>
 
-                            <circle
-                                cx="17"
-                                cy="9"
-                                r="2.4"
-                            />
+                            <circle cx="17" cy="9" r="2.4"/>
 
                             <path
                                 d="M2.5 20v-2c0-3.1 2.4-5 5.5-5s5.5 1.9 5.5 5v2"
@@ -558,118 +447,20 @@
                     </div>
 
 
-                    <div class="summary-info">
-
-                        <span>
-                            Total de estudiantes
-                        </span>
+                    <div>
 
                         <strong>
-                            90
+                            90 estudiantes
                         </strong>
-
-                        <small>
-                            En 3 grupos
-                        </small>
-
-                    </div>
-
-
-                </article>
-
-
-
-                <!-- GRUPOS -->
-
-                <article class="summary-card">
-
-
-                    <div class="summary-icon purple">
-
-                        <svg viewBox="0 0 24 24">
-
-                            <path
-                                d="M2 8l10-5 10 5-10 5z"
-                            />
-
-                            <path
-                                d="M6 10.5V16c3 2.5 9 2.5 12 0v-5.5"
-                            />
-
-                            <path
-                                d="M22 8v7"
-                            />
-
-                        </svg>
-
-                    </div>
-
-
-                    <div class="summary-info">
 
                         <span>
-                            Grupos asignados
+                            3 grupos asignados
                         </span>
 
-                        <strong>
-                            3
-                        </strong>
-
-                        <small>
-                            8°1 • 9°2 • 10°1
-                        </small>
-
                     </div>
 
 
-                </article>
-
-
-
-                <!-- ALERTAS DOCENTE -->
-
-                <article class="summary-card">
-
-
-                    <div class="summary-icon pink">
-
-                        <svg viewBox="0 0 24 24">
-
-                            <path
-                                d="M12 3L2.8 20h18.4z"
-                            />
-
-                            <path
-                                d="M12 9v4"
-                            />
-
-                            <path
-                                d="M12 17h.01"
-                            />
-
-                        </svg>
-
-                    </div>
-
-
-                    <div class="summary-info">
-
-                        <span>
-                            Alertas enviadas por mí
-                        </span>
-
-                        <strong>
-                            6
-                        </strong>
-
-                        <small>
-                            Solo tus reportes
-                        </small>
-
-                    </div>
-
-
-                </article>
+                </div>
 
 
             </section>
@@ -677,16 +468,13 @@
 
 
             <!-- =================================================
-                 BUSCADOR Y FILTROS
+                 FILTROS
             ================================================== -->
 
             <section class="filters-card">
 
 
-                <!-- BUSCADOR -->
-
                 <div class="search-box">
-
 
                     <div class="search-icon">
 
@@ -710,43 +498,34 @@
                     <input
                         type="text"
                         id="studentSearch"
-                        placeholder="Buscar estudiante por nombre..."
+                        placeholder="Buscar estudiante..."
                     >
 
-
                 </div>
 
 
 
-                <!-- GRUPO -->
+                <select id="groupFilter">
 
-                <div class="filter-select-wrapper">
+                    <option value="all">
+                        Todos los grupos
+                    </option>
 
-                    <select id="groupFilter">
+                    <option value="8°1">
+                        8°1
+                    </option>
 
-                        <option value="all">
-                            Todos los grupos
-                        </option>
+                    <option value="9°2">
+                        9°2
+                    </option>
 
-                        <option value="8°1">
-                            8°1
-                        </option>
+                    <option value="10°1">
+                        10°1
+                    </option>
 
-                        <option value="9°2">
-                            9°2
-                        </option>
-
-                        <option value="10°1">
-                            10°1
-                        </option>
-
-                    </select>
-
-                </div>
+                </select>
 
 
-
-                <!-- LIMPIAR -->
 
                 <button
                     type="button"
@@ -756,23 +535,13 @@
 
                     <svg viewBox="0 0 24 24">
 
-                        <path
-                            d="M4 5h16"
-                        />
-
-                        <path
-                            d="M7 12h10"
-                        />
-
-                        <path
-                            d="M10 19h4"
-                        />
+                        <path d="M4 5h16"/>
+                        <path d="M7 12h10"/>
+                        <path d="M10 19h4"/>
 
                     </svg>
 
-                    <span>
-                        Limpiar filtros
-                    </span>
+                    Limpiar filtros
 
                 </button>
 
@@ -793,19 +562,16 @@
 
                     <div>
 
-
                         <h2>
                             Lista de estudiantes
                         </h2>
 
                         <p>
-                            Solo puedes consultar información general
-                            de los estudiantes de tus grupos.
+                            Puedes consultar información general
+                            o enviar una alerta sobre una situación observada.
                         </p>
 
-
                     </div>
-
 
 
                     <span
@@ -843,10 +609,6 @@
                             </th>
 
                             <th>
-                                Jornada
-                            </th>
-
-                            <th>
                                 Correo institucional
                             </th>
 
@@ -863,21 +625,22 @@
                         <tbody>
 
 
+                        <!-- =================================================
+                             MARIANA
+                        ================================================== -->
+
                         <tr
                             data-name="Mariana Gómez"
                             data-group="8°1"
-                            data-schedule="Mañana"
                         >
 
                             <td>
 
                                 <div class="student-info">
 
-
-                                    <div class="student-avatar">
+                                    <div class="student-avatar purple-avatar">
                                         MG
                                     </div>
-
 
                                     <div>
 
@@ -890,7 +653,6 @@
                                         </span>
 
                                     </div>
-
 
                                 </div>
 
@@ -908,11 +670,6 @@
 
 
                             <td>
-                                Mañana
-                            </td>
-
-
-                            <td>
                                 mariana.g@colegio.edu.co
                             </td>
 
@@ -925,17 +682,21 @@
                                     <button
                                         type="button"
                                         class="detail-button"
+
                                         data-student="Mariana Gómez"
+                                        data-document="1023467890"
                                         data-group="8°1"
                                         data-grade="Octavo"
-                                        data-schedule="Mañana"
+                                        data-age="13 años"
                                         data-email="mariana.g@colegio.edu.co"
                                     >
 
                                         <svg viewBox="0 0 24 24">
 
                                             <path
-                                                d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"
+                                                d="M2 12s3.5-6 10-6
+                                                   10 6 10 6
+                                                   -3.5 6-10 6S2 12 2 12z"
                                             />
 
                                             <circle
@@ -946,16 +707,23 @@
 
                                         </svg>
 
-                                        Ver información
+                                        <span>
+                                            Ver información
+                                        </span>
 
                                     </button>
+
 
 
                                     <button
                                         type="button"
                                         class="student-alert-button"
+
                                         data-student="Mariana Gómez"
                                         data-group="8°1"
+                                        data-grade="Octavo"
+
+                                        aria-label="Enviar alerta sobre Mariana Gómez"
                                     >
 
                                         <svg viewBox="0 0 24 24">
@@ -970,6 +738,10 @@
 
                                         </svg>
 
+                                        <span class="tooltip">
+                                            Enviar alerta
+                                        </span>
+
                                     </button>
 
 
@@ -981,12 +753,13 @@
 
 
 
-                        <!-- SAMUEL -->
+                        <!-- =================================================
+                             SAMUEL
+                        ================================================== -->
 
                         <tr
                             data-name="Samuel Rodríguez"
                             data-group="8°1"
-                            data-schedule="Mañana"
                         >
 
                             <td>
@@ -1013,34 +786,45 @@
 
                             </td>
 
-                            <td>8°1</td>
 
-                            <td>Octavo</td>
+                            <td>
+                                8°1
+                            </td>
 
-                            <td>Mañana</td>
+
+                            <td>
+                                Octavo
+                            </td>
+
 
                             <td>
                                 samuel.r@colegio.edu.co
                             </td>
 
+
                             <td>
 
                                 <div class="table-actions">
 
+
                                     <button
                                         type="button"
                                         class="detail-button"
+
                                         data-student="Samuel Rodríguez"
+                                        data-document="1023467891"
                                         data-group="8°1"
                                         data-grade="Octavo"
-                                        data-schedule="Mañana"
+                                        data-age="14 años"
                                         data-email="samuel.r@colegio.edu.co"
                                     >
 
                                         <svg viewBox="0 0 24 24">
 
                                             <path
-                                                d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"
+                                                d="M2 12s3.5-6 10-6
+                                                   10 6 10 6
+                                                   -3.5 6-10 6S2 12 2 12z"
                                             />
 
                                             <circle
@@ -1051,16 +835,23 @@
 
                                         </svg>
 
-                                        Ver información
+                                        <span>
+                                            Ver información
+                                        </span>
 
                                     </button>
+
 
 
                                     <button
                                         type="button"
                                         class="student-alert-button"
+
                                         data-student="Samuel Rodríguez"
                                         data-group="8°1"
+                                        data-grade="Octavo"
+
+                                        aria-label="Enviar alerta sobre Samuel Rodríguez"
                                     >
 
                                         <svg viewBox="0 0 24 24">
@@ -1075,7 +866,12 @@
 
                                         </svg>
 
+                                        <span class="tooltip">
+                                            Enviar alerta
+                                        </span>
+
                                     </button>
+
 
                                 </div>
 
@@ -1085,12 +881,13 @@
 
 
 
-                        <!-- VALENTINA -->
+                        <!-- =================================================
+                             VALENTINA
+                        ================================================== -->
 
                         <tr
                             data-name="Valentina Martínez"
                             data-group="8°1"
-                            data-schedule="Mañana"
                         >
 
                             <td>
@@ -1117,34 +914,45 @@
 
                             </td>
 
-                            <td>8°1</td>
 
-                            <td>Octavo</td>
+                            <td>
+                                8°1
+                            </td>
 
-                            <td>Mañana</td>
+
+                            <td>
+                                Octavo
+                            </td>
+
 
                             <td>
                                 valentina.m@colegio.edu.co
                             </td>
 
+
                             <td>
 
                                 <div class="table-actions">
 
+
                                     <button
                                         type="button"
                                         class="detail-button"
+
                                         data-student="Valentina Martínez"
+                                        data-document="1023467892"
                                         data-group="8°1"
                                         data-grade="Octavo"
-                                        data-schedule="Mañana"
+                                        data-age="13 años"
                                         data-email="valentina.m@colegio.edu.co"
                                     >
 
                                         <svg viewBox="0 0 24 24">
 
                                             <path
-                                                d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"
+                                                d="M2 12s3.5-6 10-6
+                                                   10 6 10 6
+                                                   -3.5 6-10 6S2 12 2 12z"
                                             />
 
                                             <circle
@@ -1155,16 +963,23 @@
 
                                         </svg>
 
-                                        Ver información
+                                        <span>
+                                            Ver información
+                                        </span>
 
                                     </button>
+
 
 
                                     <button
                                         type="button"
                                         class="student-alert-button"
+
                                         data-student="Valentina Martínez"
                                         data-group="8°1"
+                                        data-grade="Octavo"
+
+                                        aria-label="Enviar alerta sobre Valentina Martínez"
                                     >
 
                                         <svg viewBox="0 0 24 24">
@@ -1179,7 +994,12 @@
 
                                         </svg>
 
+                                        <span class="tooltip">
+                                            Enviar alerta
+                                        </span>
+
                                     </button>
+
 
                                 </div>
 
@@ -1189,12 +1009,13 @@
 
 
 
-                        <!-- SEBASTIÁN -->
+                        <!-- =================================================
+                             SEBASTIÁN
+                        ================================================== -->
 
                         <tr
                             data-name="Sebastián López"
                             data-group="9°2"
-                            data-schedule="Mañana"
                         >
 
                             <td>
@@ -1221,34 +1042,45 @@
 
                             </td>
 
-                            <td>9°2</td>
 
-                            <td>Noveno</td>
+                            <td>
+                                9°2
+                            </td>
 
-                            <td>Mañana</td>
+
+                            <td>
+                                Noveno
+                            </td>
+
 
                             <td>
                                 sebastian.l@colegio.edu.co
                             </td>
 
+
                             <td>
 
                                 <div class="table-actions">
 
+
                                     <button
                                         type="button"
                                         class="detail-button"
+
                                         data-student="Sebastián López"
+                                        data-document="1023467893"
                                         data-group="9°2"
                                         data-grade="Noveno"
-                                        data-schedule="Mañana"
+                                        data-age="14 años"
                                         data-email="sebastian.l@colegio.edu.co"
                                     >
 
                                         <svg viewBox="0 0 24 24">
 
                                             <path
-                                                d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"
+                                                d="M2 12s3.5-6 10-6
+                                                   10 6 10 6
+                                                   -3.5 6-10 6S2 12 2 12z"
                                             />
 
                                             <circle
@@ -1259,16 +1091,23 @@
 
                                         </svg>
 
-                                        Ver información
+                                        <span>
+                                            Ver información
+                                        </span>
 
                                     </button>
+
 
 
                                     <button
                                         type="button"
                                         class="student-alert-button"
+
                                         data-student="Sebastián López"
                                         data-group="9°2"
+                                        data-grade="Noveno"
+
+                                        aria-label="Enviar alerta sobre Sebastián López"
                                     >
 
                                         <svg viewBox="0 0 24 24">
@@ -1283,7 +1122,12 @@
 
                                         </svg>
 
+                                        <span class="tooltip">
+                                            Enviar alerta
+                                        </span>
+
                                     </button>
+
 
                                 </div>
 
@@ -1293,19 +1137,20 @@
 
 
 
-                        <!-- CAMILA -->
+                        <!-- =================================================
+                             CAMILA
+                        ================================================== -->
 
                         <tr
                             data-name="Camila Herrera"
                             data-group="9°2"
-                            data-schedule="Mañana"
                         >
 
                             <td>
 
                                 <div class="student-info">
 
-                                    <div class="student-avatar">
+                                    <div class="student-avatar purple-avatar">
                                         CH
                                     </div>
 
@@ -1325,34 +1170,45 @@
 
                             </td>
 
-                            <td>9°2</td>
 
-                            <td>Noveno</td>
+                            <td>
+                                9°2
+                            </td>
 
-                            <td>Mañana</td>
+
+                            <td>
+                                Noveno
+                            </td>
+
 
                             <td>
                                 camila.h@colegio.edu.co
                             </td>
 
+
                             <td>
 
                                 <div class="table-actions">
 
+
                                     <button
                                         type="button"
                                         class="detail-button"
+
                                         data-student="Camila Herrera"
+                                        data-document="1023467894"
                                         data-group="9°2"
                                         data-grade="Noveno"
-                                        data-schedule="Mañana"
+                                        data-age="14 años"
                                         data-email="camila.h@colegio.edu.co"
                                     >
 
                                         <svg viewBox="0 0 24 24">
 
                                             <path
-                                                d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"
+                                                d="M2 12s3.5-6 10-6
+                                                   10 6 10 6
+                                                   -3.5 6-10 6S2 12 2 12z"
                                             />
 
                                             <circle
@@ -1363,16 +1219,23 @@
 
                                         </svg>
 
-                                        Ver información
+                                        <span>
+                                            Ver información
+                                        </span>
 
                                     </button>
+
 
 
                                     <button
                                         type="button"
                                         class="student-alert-button"
+
                                         data-student="Camila Herrera"
                                         data-group="9°2"
+                                        data-grade="Noveno"
+
+                                        aria-label="Enviar alerta sobre Camila Herrera"
                                     >
 
                                         <svg viewBox="0 0 24 24">
@@ -1387,7 +1250,12 @@
 
                                         </svg>
 
+                                        <span class="tooltip">
+                                            Enviar alerta
+                                        </span>
+
                                     </button>
+
 
                                 </div>
 
@@ -1397,12 +1265,13 @@
 
 
 
-                        <!-- TOMÁS -->
+                        <!-- =================================================
+                             TOMÁS
+                        ================================================== -->
 
                         <tr
                             data-name="Tomás Pérez"
                             data-group="9°2"
-                            data-schedule="Tarde"
                         >
 
                             <td>
@@ -1429,34 +1298,45 @@
 
                             </td>
 
-                            <td>9°2</td>
 
-                            <td>Noveno</td>
+                            <td>
+                                9°2
+                            </td>
 
-                            <td>Tarde</td>
+
+                            <td>
+                                Noveno
+                            </td>
+
 
                             <td>
                                 tomas.p@colegio.edu.co
                             </td>
 
+
                             <td>
 
                                 <div class="table-actions">
 
+
                                     <button
                                         type="button"
                                         class="detail-button"
+
                                         data-student="Tomás Pérez"
+                                        data-document="1023467895"
                                         data-group="9°2"
                                         data-grade="Noveno"
-                                        data-schedule="Tarde"
+                                        data-age="15 años"
                                         data-email="tomas.p@colegio.edu.co"
                                     >
 
                                         <svg viewBox="0 0 24 24">
 
                                             <path
-                                                d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"
+                                                d="M2 12s3.5-6 10-6
+                                                   10 6 10 6
+                                                   -3.5 6-10 6S2 12 2 12z"
                                             />
 
                                             <circle
@@ -1467,16 +1347,23 @@
 
                                         </svg>
 
-                                        Ver información
+                                        <span>
+                                            Ver información
+                                        </span>
 
                                     </button>
+
 
 
                                     <button
                                         type="button"
                                         class="student-alert-button"
+
                                         data-student="Tomás Pérez"
                                         data-group="9°2"
+                                        data-grade="Noveno"
+
+                                        aria-label="Enviar alerta sobre Tomás Pérez"
                                     >
 
                                         <svg viewBox="0 0 24 24">
@@ -1491,7 +1378,12 @@
 
                                         </svg>
 
+                                        <span class="tooltip">
+                                            Enviar alerta
+                                        </span>
+
                                     </button>
+
 
                                 </div>
 
@@ -1501,12 +1393,13 @@
 
 
 
-                        <!-- ISABELLA -->
+                        <!-- =================================================
+                             ISABELLA
+                        ================================================== -->
 
                         <tr
                             data-name="Isabella Ramírez"
                             data-group="10°1"
-                            data-schedule="Tarde"
                         >
 
                             <td>
@@ -1533,34 +1426,45 @@
 
                             </td>
 
-                            <td>10°1</td>
 
-                            <td>Décimo</td>
+                            <td>
+                                10°1
+                            </td>
 
-                            <td>Tarde</td>
+
+                            <td>
+                                Décimo
+                            </td>
+
 
                             <td>
                                 isabella.r@colegio.edu.co
                             </td>
 
+
                             <td>
 
                                 <div class="table-actions">
 
+
                                     <button
                                         type="button"
                                         class="detail-button"
+
                                         data-student="Isabella Ramírez"
+                                        data-document="1023467896"
                                         data-group="10°1"
                                         data-grade="Décimo"
-                                        data-schedule="Tarde"
+                                        data-age="15 años"
                                         data-email="isabella.r@colegio.edu.co"
                                     >
 
                                         <svg viewBox="0 0 24 24">
 
                                             <path
-                                                d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"
+                                                d="M2 12s3.5-6 10-6
+                                                   10 6 10 6
+                                                   -3.5 6-10 6S2 12 2 12z"
                                             />
 
                                             <circle
@@ -1571,16 +1475,23 @@
 
                                         </svg>
 
-                                        Ver información
+                                        <span>
+                                            Ver información
+                                        </span>
 
                                     </button>
+
 
 
                                     <button
                                         type="button"
                                         class="student-alert-button"
+
                                         data-student="Isabella Ramírez"
                                         data-group="10°1"
+                                        data-grade="Décimo"
+
+                                        aria-label="Enviar alerta sobre Isabella Ramírez"
                                     >
 
                                         <svg viewBox="0 0 24 24">
@@ -1595,7 +1506,12 @@
 
                                         </svg>
 
+                                        <span class="tooltip">
+                                            Enviar alerta
+                                        </span>
+
                                     </button>
+
 
                                 </div>
 
@@ -1605,12 +1521,13 @@
 
 
 
-                        <!-- MATEO -->
+                        <!-- =================================================
+                             MATEO
+                        ================================================== -->
 
                         <tr
                             data-name="Mateo Santos"
                             data-group="10°1"
-                            data-schedule="Tarde"
                         >
 
                             <td>
@@ -1637,34 +1554,45 @@
 
                             </td>
 
-                            <td>10°1</td>
 
-                            <td>Décimo</td>
+                            <td>
+                                10°1
+                            </td>
 
-                            <td>Tarde</td>
+
+                            <td>
+                                Décimo
+                            </td>
+
 
                             <td>
                                 mateo.s@colegio.edu.co
                             </td>
 
+
                             <td>
 
                                 <div class="table-actions">
 
+
                                     <button
                                         type="button"
                                         class="detail-button"
+
                                         data-student="Mateo Santos"
+                                        data-document="1023467897"
                                         data-group="10°1"
                                         data-grade="Décimo"
-                                        data-schedule="Tarde"
+                                        data-age="15 años"
                                         data-email="mateo.s@colegio.edu.co"
                                     >
 
                                         <svg viewBox="0 0 24 24">
 
                                             <path
-                                                d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"
+                                                d="M2 12s3.5-6 10-6
+                                                   10 6 10 6
+                                                   -3.5 6-10 6S2 12 2 12z"
                                             />
 
                                             <circle
@@ -1675,16 +1603,23 @@
 
                                         </svg>
 
-                                        Ver información
+                                        <span>
+                                            Ver información
+                                        </span>
 
                                     </button>
+
 
 
                                     <button
                                         type="button"
                                         class="student-alert-button"
+
                                         data-student="Mateo Santos"
                                         data-group="10°1"
+                                        data-grade="Décimo"
+
+                                        aria-label="Enviar alerta sobre Mateo Santos"
                                     >
 
                                         <svg viewBox="0 0 24 24">
@@ -1699,7 +1634,12 @@
 
                                         </svg>
 
+                                        <span class="tooltip">
+                                            Enviar alerta
+                                        </span>
+
                                     </button>
+
 
                                 </div>
 
@@ -1735,9 +1675,7 @@
                                 r="7"
                             />
 
-                            <path
-                                d="M20 20l-4-4"
-                            />
+                            <path d="M20 20l-4-4"/>
 
                         </svg>
 
@@ -1749,10 +1687,8 @@
                     </h3>
 
                     <p>
-                        Intenta cambiar los filtros o escribir
-                        otro nombre.
+                        Intenta buscar otro nombre o cambiar el grupo.
                     </p>
-
 
                 </div>
 
@@ -1771,7 +1707,7 @@
 
 
 <!-- =====================================================
-     MODAL INFORMACIÓN DEL ESTUDIANTE
+     MODAL VER INFORMACIÓN
 ====================================================== -->
 
 <div
@@ -1779,20 +1715,19 @@
     id="studentModal"
 >
 
-
-    <div class="modal">
+    <div class="modal information-modal">
 
 
         <button
             type="button"
             class="close-modal"
             id="closeStudentModal"
+            aria-label="Cerrar"
         >
 
             <svg viewBox="0 0 24 24">
 
                 <path d="M5 5l14 14"/>
-
                 <path d="M19 5L5 19"/>
 
             </svg>
@@ -1801,18 +1736,164 @@
 
 
 
-        <div class="student-modal-header">
+        <!-- CABECERA ESTUDIANTE -->
+
+        <div class="modal-student-header">
 
 
-            <div class="large-student-avatar">
+            <div
+                class="modal-avatar"
+                id="modalStudentInitials"
+            >
+                MG
+            </div>
+
+
+            <div>
+
+                <span class="modal-label">
+                    Información del estudiante
+                </span>
+
+                <h2 id="modalStudentName">
+                    Mariana Gómez
+                </h2>
+
+                <p id="modalStudentSubtitle">
+                    8°1 • Octavo
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- DOCUMENTO -->
+
+        <div class="information-full-card">
+
+            <div class="information-icon">
 
                 <svg viewBox="0 0 24 24">
 
-                    <circle
-                        cx="12"
-                        cy="8"
-                        r="4"
-                    />
+                    <path d="M5 3h10l4 4v14H5z"/>
+
+                    <path d="M15 3v5h5"/>
+
+                    <path d="M8 12h8"/>
+
+                    <path d="M8 16h6"/>
+
+                </svg>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Documento
+                </span>
+
+                <strong id="modalStudentDocument">
+                    1023467890
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- GRADO + GRUPO -->
+
+        <div class="information-two-columns">
+
+
+            <div class="information-small-card">
+
+                <div class="information-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path
+                            d="M2 8l10-5 10 5-10 5z"
+                        />
+
+                        <path
+                            d="M6 10.5V16c3 2.5 9 2.5 12 0v-5.5"
+                        />
+
+                    </svg>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Grado
+                    </span>
+
+                    <strong id="modalStudentGrade">
+                        Octavo
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="information-small-card">
+
+                <div class="information-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle cx="8" cy="8" r="3"/>
+
+                        <circle cx="17" cy="9" r="2.4"/>
+
+                        <path
+                            d="M2.5 20v-2c0-3.1 2.4-5 5.5-5s5.5 1.9 5.5 5v2"
+                        />
+
+                    </svg>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Grupo
+                    </span>
+
+                    <strong id="modalStudentGroup">
+                        8°1
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- EDAD -->
+
+        <div class="information-full-card age-card">
+
+            <div class="information-icon">
+
+                <svg viewBox="0 0 24 24">
+
+                    <circle cx="12" cy="8" r="4"/>
 
                     <path
                         d="M4 21c.5-5 3.6-7 8-7s7.5 2 8 7"
@@ -1823,19 +1904,97 @@
             </div>
 
 
+            <div>
+
+                <span>
+                    Edad
+                </span>
+
+                <strong id="modalStudentAge">
+                    13 años
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CORREO -->
+
+        <div class="information-full-card">
+
+            <div class="information-icon">
+
+                <svg viewBox="0 0 24 24">
+
+                    <rect
+                        x="3"
+                        y="5"
+                        width="18"
+                        height="14"
+                        rx="2"
+                    />
+
+                    <path
+                        d="M3 7l9 6 9-6"
+                    />
+
+                </svg>
+
+            </div>
+
 
             <div>
 
                 <span>
-                    Información general
+                    Correo institucional
                 </span>
 
-                <h2 id="modalStudentName">
-                    Estudiante
-                </h2>
+                <strong id="modalStudentEmail">
+                    mariana.g@colegio.edu.co
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- AVISO -->
+
+        <div class="protected-box">
+
+
+            <div class="protected-icon">
+
+                <svg viewBox="0 0 24 24">
+
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="9"
+                    />
+
+                    <path d="M12 11v5"/>
+
+                    <path d="M12 8h.01"/>
+
+                </svg>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Información protegida
+                </strong>
 
                 <p>
-                    Información autorizada para docentes.
+                    Aquí solo se muestra información general del estudiante.
+                    Los datos personales sensibles, emocionales y psicológicos
+                    no están disponibles para el rol docente.
                 </p>
 
             </div>
@@ -1845,104 +2004,20 @@
 
 
 
-        <div class="student-data-grid">
+        <div class="information-modal-footer">
 
-
-            <div class="data-item">
-
-                <span>
-                    Grupo
-                </span>
-
-                <strong id="modalStudentGroup">
-                    -
-                </strong>
-
-            </div>
-
-
-
-            <div class="data-item">
-
-                <span>
-                    Grado
-                </span>
-
-                <strong id="modalStudentGrade">
-                    -
-                </strong>
-
-            </div>
-
-
-
-            <div class="data-item">
-
-                <span>
-                    Jornada
-                </span>
-
-                <strong id="modalStudentSchedule">
-                    -
-                </strong>
-
-            </div>
-
-
-
-            <div class="data-item">
-
-                <span>
-                    Correo institucional
-                </span>
-
-                <strong id="modalStudentEmail">
-                    -
-                </strong>
-
-            </div>
-
-
-        </div>
-
-
-
-        <div class="privacy-message">
-
-
-            <div>
-
-                <svg viewBox="0 0 24 24">
-
-                    <rect
-                        x="5"
-                        y="10"
-                        width="14"
-                        height="11"
-                        rx="2"
-                    />
-
-                    <path
-                        d="M8 10V7a4 4 0 0 1 8 0v3"
-                    />
-
-                </svg>
-
-            </div>
-
-
-            <p>
-                La información emocional, psicológica y los
-                seguimientos realizados por Entorno Protector
-                no están disponibles para el rol docente.
-            </p>
-
+            <button
+                type="button"
+                class="close-information-button"
+                id="closeInformationButton"
+            >
+                Cerrar
+            </button>
 
         </div>
 
 
     </div>
-
 
 </div>
 
@@ -1957,20 +2032,19 @@
     id="alertModal"
 >
 
-
-    <div class="modal">
+    <div class="modal alert-modal">
 
 
         <button
             type="button"
             class="close-modal"
             id="closeAlertModal"
+            aria-label="Cerrar"
         >
 
             <svg viewBox="0 0 24 24">
 
                 <path d="M5 5l14 14"/>
-
                 <path d="M19 5L5 19"/>
 
             </svg>
@@ -1979,10 +2053,11 @@
 
 
 
-        <div class="student-modal-header">
+        <!-- CABECERA -->
 
+        <div class="alert-modal-title">
 
-            <div class="alert-modal-icon">
+            <div class="alert-title-icon">
 
                 <svg viewBox="0 0 24 24">
 
@@ -2009,8 +2084,37 @@
                     ENVIAR ALERTA
                 </h2>
 
-                <p id="alertStudentText">
-                    Estudiante seleccionado
+                <p>
+                    Registra únicamente lo que observaste.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ESTUDIANTE -->
+
+        <div class="selected-student-box">
+
+
+            <div
+                class="selected-student-avatar"
+                id="alertStudentInitials"
+            >
+                MG
+            </div>
+
+
+            <div>
+
+                <strong id="alertStudentNameLabel">
+                    Mariana Gómez
+                </strong>
+
+                <p id="alertStudentInformation">
+                    8°1 • Octavo
                 </p>
 
             </div>
@@ -2028,12 +2132,26 @@
                 id="alertStudentName"
             >
 
+            <input
+                type="hidden"
+                id="alertStudentGroup"
+            >
+
+            <input
+                type="hidden"
+                id="alertStudentGrade"
+            >
+
+
+
+            <!-- TIPO -->
 
             <div class="form-field">
 
                 <label for="alertType">
-                    Situación observada
+                    ¿Qué observaste?
                 </label>
+
 
                 <select
                     id="alertType"
@@ -2044,24 +2162,28 @@
                         Selecciona una opción
                     </option>
 
-                    <option>
+                    <option value="Cambio de comportamiento">
                         Cambio de comportamiento
                     </option>
 
-                    <option>
+                    <option value="Aislamiento">
                         Aislamiento
                     </option>
 
-                    <option>
+                    <option value="Dificultades de convivencia">
                         Dificultades de convivencia
                     </option>
 
-                    <option>
+                    <option value="Cambio en participación">
+                        Cambio notable en participación
+                    </option>
+
+                    <option value="Cambio en rendimiento académico">
                         Cambio en rendimiento académico
                     </option>
 
-                    <option>
-                        Otro comportamiento observado
+                    <option value="Otro">
+                        Otro
                     </option>
 
                 </select>
@@ -2070,61 +2192,82 @@
 
 
 
+            <!-- DESCRIPCIÓN -->
+
             <div class="form-field">
 
                 <label for="alertDescription">
-                    Describe lo observado
+                    Describe lo que observaste
                 </label>
+
 
                 <textarea
                     id="alertDescription"
-                    rows="5"
                     maxlength="500"
-                    placeholder="Describe objetivamente lo que observaste..."
+                    rows="5"
+                    placeholder="Escribe aquí los detalles de lo que observaste. Procura ser clara y específica..."
                     required
                 ></textarea>
 
-                <small id="alertCounter">
-                    0 / 500
-                </small>
+
+                <div class="textarea-footer">
+
+                    <span>
+                        Describe hechos concretos.
+                    </span>
+
+                    <small id="alertCounter">
+                        0 / 500
+                    </small>
+
+                </div>
 
             </div>
 
 
 
-            <div class="privacy-message">
+            <!-- RECORDATORIO -->
 
-                <div>
+            <div class="alert-reminder">
+
+
+                <div class="reminder-icon">
 
                     <svg viewBox="0 0 24 24">
 
-                        <rect
-                            x="5"
-                            y="10"
-                            width="14"
-                            height="11"
-                            rx="2"
+                        <path
+                            d="M12 3L2.8 20h18.4z"
                         />
 
-                        <path
-                            d="M8 10V7a4 4 0 0 1 8 0v3"
-                        />
+                        <path d="M12 9v4"/>
+
+                        <path d="M12 17h.01"/>
 
                     </svg>
 
                 </div>
 
 
-                <p>
-                    El docente reporta únicamente lo observado.
-                    La valoración e intervención corresponde
-                    al personal autorizado.
-                </p>
+                <div>
+
+                    <strong>
+                        Recuerda
+                    </strong>
+
+                    <p>
+                        Como docente, reportas únicamente lo que observaste.
+                        La valoración y la intervención corresponden
+                        al personal autorizado de SENTIR.
+                    </p>
+
+                </div>
 
 
             </div>
 
 
+
+            <!-- BOTONES -->
 
             <div class="modal-actions">
 
@@ -2141,7 +2284,19 @@
                     type="submit"
                     class="send-alert-button"
                 >
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M22 2L11 13"/>
+
+                        <path
+                            d="M22 2L15 22l-4-9-9-4z"
+                        />
+
+                    </svg>
+
                     ENVIAR ALERTA
+
                 </button>
 
             </div>
@@ -2152,28 +2307,21 @@
 
     </div>
 
-
 </div>
 
 
 
-<!-- OVERLAY SIDEBAR -->
-
-<div
-    class="mobile-overlay"
-    id="mobileOverlay"
-></div>
-
-
-
-<!-- TOAST -->
+<!-- =====================================================
+     CONFIRMACIÓN
+====================================================== -->
 
 <div
     class="toast"
     id="toast"
 >
 
-    <div class="toast-check">
+
+    <div class="toast-icon">
 
         <svg viewBox="0 0 24 24">
 
@@ -2201,7 +2349,16 @@
 
 
 
+<!-- OVERLAY SIDEBAR MÓVIL -->
+
+<div
+    class="mobile-overlay"
+    id="mobileOverlay"
+></div>
+
+
 <script src="MyStudents.js"></script>
+
 
 </body>
 

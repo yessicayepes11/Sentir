@@ -86,12 +86,12 @@ function renderActivities() {
 function renderActivitiesSummary(activities) {
     const byType = {};
     activities.forEach(a => { byType[a.tipo] = (byType[a.tipo] || 0) + 1; });
-    const topTypes = Object.entries(byType).sort((a, b) => b[1] - a[1]).slice(0, 3)
-        .map(([tipo, count]) => `${tipo} (${count})`).join(' · ');
+    const topTypes = Object.entries(byType).sort((a, b) => b[1] - a[1]).slice(0, 3);
 
     document.getElementById('activitiesSummary').innerHTML = `
-        <strong>${activities.length}</strong> actividad${activities.length !== 1 ? 'es' : ''} en el catálogo
-        ${topTypes ? `<span class="dot-sep"></span> ${topTypes}` : ''}
+        <span class="activities-summary-icon"><i class="fa-solid fa-layer-group"></i></span>
+        <span class="activities-summary-count"><strong>${activities.length}</strong> actividad${activities.length !== 1 ? 'es' : ''} en el catálogo</span>
+        ${topTypes.map(([tipo, count]) => `<span class="activities-summary-pill">${tipo} <b>${count}</b></span>`).join('')}
     `;
 }
 

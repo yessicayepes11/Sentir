@@ -362,13 +362,54 @@ function goToStudentExpediente(studentName) {
 
 function initMobileSidebar() {
     const toggleBtn = document.getElementById('menuToggleBtn');
+    const container = document.querySelector('.dashboard-container');
     const sidebar = document.querySelector('.sidebar');
-    if (!toggleBtn || !sidebar) return;
-    toggleBtn.addEventListener('click', (e) => { e.stopPropagation(); sidebar.classList.toggle('active'); });
-    document.addEventListener('click', (e) => {
-        if (sidebar.classList.contains('active') && !sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
-            sidebar.classList.remove('active');
+    if (!toggleBtn || !sidebar || !container) return;
+
+    const MOBILE_BREAKPOINT = 900;
+    const STORAGE_KEY = 'sentir_sidebar_collapsed';
+    const isMobile = () => window.innerWidth <= MOBILE_BREAKPOINT;
+
+    // Telón de fondo para el modo "menú lateral" en móvil (se crea una sola vez)
+    let backdrop = document.querySelector('.mobile-sidebar-backdrop');
+    if (!backdrop) {
+        backdrop = document.createElement('div');
+        backdrop.className = 'mobile-sidebar-backdrop';
+        document.body.appendChild(backdrop);
+    }
+
+    // En escritorio, "toggled" = sidebar oculto. En móvil, "toggled" = sidebar abierto como menú lateral.
+    function setToggled(toggled) {
+        container.classList.toggle('sidebar-toggled', toggled);
+        backdrop.classList.toggle('show', toggled && isMobile());
+        if (!isMobile()) {
+            try { localStorage.setItem(STORAGE_KEY, toggled ? '1' : '0'); } catch (e) { /* almacenamiento no disponible */ }
         }
+    }
+
+    // Estado inicial: en escritorio se respeta la preferencia guardada; en móvil siempre arranca oculto.
+    let initialToggled = false;
+    if (!isMobile()) {
+        try { initialToggled = localStorage.getItem(STORAGE_KEY) === '1'; } catch (e) { /* ignorar */ }
+    }
+    setToggled(initialToggled);
+
+    toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setToggled(!container.classList.contains('sidebar-toggled'));
+    });
+
+    backdrop.addEventListener('click', () => setToggled(false));
+
+    document.addEventListener('click', (e) => {
+        if (isMobile() && container.classList.contains('sidebar-toggled') &&
+            !sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
+            setToggled(false);
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        backdrop.classList.toggle('show', isMobile() && container.classList.contains('sidebar-toggled'));
     });
 }
 
@@ -804,50 +845,7 @@ function initAlertWatcher() {
 }
 
 /* --------------------------------------------------------------------------
-   7. RESPALDO DE DATOS (export / import / reset)
-   -------------------------------------------------------------------------- */
-const SENTIR_STORAGE_KEYS = ['students', 'alerts', 'interventions', 'guardians', 'agenda', 'activities', 'psych_profile'];
-
-function exportSentirBackup() {
-    const data = {};
-    SENTIR_STORAGE_KEYS.forEach(key => { data[key] = SentirStore.get(key, null); });
-    data._exportedAt = new Date().toISOString();
-
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `sentir-respaldo-${todayISO()}.json`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
-}
-
-function importSentirBackup(file, onDone) {
-    const reader = new FileReader();
-    reader.onload = () => {
-        try {
-            const data = JSON.parse(reader.result);
-            SENTIR_STORAGE_KEYS.forEach(key => {
-                if (data[key] !== undefined && data[key] !== null) SentirStore.set(key, data[key]);
-            });
-            onDone(true);
-        } catch (e) {
-            onDone(false);
-        }
-    };
-    reader.onerror = () => onDone(false);
-    reader.readAsText(file);
-}
-
-function resetSentirDefaults() {
-    SENTIR_STORAGE_KEYS.forEach(key => localStorage.removeItem('sentir_' + key));
-    localStorage.removeItem('sentir_seen_alert_ids');
-}
-
-/* --------------------------------------------------------------------------
-   8. ARRANQUE COMÚN — cada página llama a esto en su DOMContentLoaded
+   7. ARRANQUE COMÚN — cada página llama a esto en su DOMContentLoaded
    -------------------------------------------------------------------------- */
 function initSentirCore() {
     renderHeaderProfile();

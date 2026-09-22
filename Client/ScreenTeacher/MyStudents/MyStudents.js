@@ -25,14 +25,9 @@ if (hamburger) {
         "click",
         function () {
 
-            sidebar.classList.toggle(
-                "open"
-            );
+            sidebar.classList.toggle("open");
 
-
-            mobileOverlay.classList.toggle(
-                "show"
-            );
+            mobileOverlay.classList.toggle("show");
 
         }
     );
@@ -46,19 +41,15 @@ if (mobileOverlay) {
         "click",
         function () {
 
-            sidebar.classList.remove(
-                "open"
-            );
+            sidebar.classList.remove("open");
 
-
-            mobileOverlay.classList.remove(
-                "show"
-            );
+            mobileOverlay.classList.remove("show");
 
         }
     );
 
 }
+
 
 
 /* =========================================================
@@ -83,7 +74,8 @@ const profilePlaceholder =
     );
 
 
-let currentProfilePhotoURL = null;
+let currentPhotoURL =
+    null;
 
 
 if (profilePhotoInput) {
@@ -91,6 +83,7 @@ if (profilePhotoInput) {
     profilePhotoInput.addEventListener(
         "change",
         function (event) {
+
 
             const file =
                 event.target.files[0];
@@ -103,19 +96,17 @@ if (profilePhotoInput) {
             }
 
 
-            const allowedTypes = [
+            const validTypes = [
 
                 "image/jpeg",
-
                 "image/png",
-
                 "image/webp"
 
             ];
 
 
             if (
-                !allowedTypes.includes(
+                !validTypes.includes(
                     file.type
                 )
             ) {
@@ -124,31 +115,31 @@ if (profilePhotoInput) {
                     "Selecciona una imagen JPG, PNG o WEBP."
                 );
 
-
                 profilePhotoInput.value =
                     "";
-
 
                 return;
 
             }
 
 
-            if (currentProfilePhotoURL) {
+            if (currentPhotoURL) {
 
                 URL.revokeObjectURL(
-                    currentProfilePhotoURL
+                    currentPhotoURL
                 );
 
             }
 
 
-            currentProfilePhotoURL =
-                URL.createObjectURL(file);
+            currentPhotoURL =
+                URL.createObjectURL(
+                    file
+                );
 
 
             profilePhoto.src =
-                currentProfilePhotoURL;
+                currentPhotoURL;
 
 
             profilePhoto.classList.add(
@@ -160,14 +151,26 @@ if (profilePhotoInput) {
                 "hidden"
             );
 
+
+            /*
+                Después puedes enviar `file`
+                al backend utilizando FormData.
+            */
+
+            console.log(
+                "Foto docente seleccionada:",
+                file
+            );
+
         }
     );
 
 }
 
 
+
 /* =========================================================
-   BUSCADOR Y FILTROS
+   BUSCADOR Y FILTRO
 ========================================================= */
 
 const studentSearch =
@@ -179,12 +182,6 @@ const studentSearch =
 const groupFilter =
     document.getElementById(
         "groupFilter"
-    );
-
-
-const scheduleFilter =
-    document.getElementById(
-        "scheduleFilter"
     );
 
 
@@ -200,12 +197,6 @@ const studentRows =
     );
 
 
-const emptyState =
-    document.getElementById(
-        "emptyState"
-    );
-
-
 const studentsTable =
     document.getElementById(
         "studentsTable"
@@ -216,6 +207,13 @@ const resultsCounter =
     document.getElementById(
         "resultsCounter"
     );
+
+
+const emptyState =
+    document.getElementById(
+        "emptyState"
+    );
+
 
 
 function normalizeText(text) {
@@ -231,7 +229,9 @@ function normalizeText(text) {
 }
 
 
+
 function filterStudents() {
+
 
     const searchValue =
         normalizeText(
@@ -239,12 +239,8 @@ function filterStudents() {
         );
 
 
-    const selectedGroup =
+    const groupValue =
         groupFilter.value;
-
-
-    const selectedSchedule =
-        scheduleFilter.value;
 
 
     let visibleStudents = 0;
@@ -253,44 +249,32 @@ function filterStudents() {
     studentRows.forEach(
         function (row) {
 
-            const name =
+
+            const studentName =
                 normalizeText(
                     row.dataset.name
                 );
 
 
-            const group =
+            const studentGroup =
                 row.dataset.group;
 
 
-            const schedule =
-                row.dataset.schedule;
-
-
-            const matchesSearch =
-                name.includes(
+            const matchesName =
+                studentName.includes(
                     searchValue
                 );
 
 
             const matchesGroup =
-                selectedGroup === "all" ||
-                group === selectedGroup;
+                groupValue === "all" ||
+                studentGroup === groupValue;
 
 
-            const matchesSchedule =
-                selectedSchedule === "all" ||
-                schedule === selectedSchedule;
-
-
-            const shouldShow =
-
-                matchesSearch &&
-                matchesGroup &&
-                matchesSchedule;
-
-
-            if (shouldShow) {
+            if (
+                matchesName &&
+                matchesGroup
+            ) {
 
                 row.style.display = "";
 
@@ -344,7 +328,6 @@ function filterStudents() {
 }
 
 
-/* EVENTOS */
 
 studentSearch.addEventListener(
     "input",
@@ -358,24 +341,15 @@ groupFilter.addEventListener(
 );
 
 
-scheduleFilter.addEventListener(
-    "change",
-    filterStudents
-);
-
-
-/* LIMPIAR */
-
 clearFilters.addEventListener(
     "click",
     function () {
 
-        studentSearch.value = "";
+        studentSearch.value =
+            "";
+
 
         groupFilter.value =
-            "all";
-
-        scheduleFilter.value =
             "all";
 
 
@@ -385,8 +359,31 @@ clearFilters.addEventListener(
 );
 
 
+
 /* =========================================================
-   MODAL INFORMACIÓN GENERAL
+   FUNCIÓN PARA INICIALES
+========================================================= */
+
+function getInitials(name) {
+
+
+    return name
+        .split(" ")
+        .filter(Boolean)
+        .slice(0, 2)
+        .map(
+            word =>
+                word.charAt(0)
+                .toUpperCase()
+        )
+        .join("");
+
+}
+
+
+
+/* =========================================================
+   MODAL VER INFORMACIÓN
 ========================================================= */
 
 const studentModal =
@@ -401,33 +398,9 @@ const closeStudentModal =
     );
 
 
-const modalStudentName =
+const closeInformationButton =
     document.getElementById(
-        "modalStudentName"
-    );
-
-
-const modalStudentGroup =
-    document.getElementById(
-        "modalStudentGroup"
-    );
-
-
-const modalStudentGrade =
-    document.getElementById(
-        "modalStudentGrade"
-    );
-
-
-const modalStudentSchedule =
-    document.getElementById(
-        "modalStudentSchedule"
-    );
-
-
-const modalStudentEmail =
-    document.getElementById(
-        "modalStudentEmail"
+        "closeInformationButton"
     );
 
 
@@ -437,32 +410,130 @@ const detailButtons =
     );
 
 
+
+const modalStudentInitials =
+    document.getElementById(
+        "modalStudentInitials"
+    );
+
+
+const modalStudentName =
+    document.getElementById(
+        "modalStudentName"
+    );
+
+
+const modalStudentSubtitle =
+    document.getElementById(
+        "modalStudentSubtitle"
+    );
+
+
+const modalStudentDocument =
+    document.getElementById(
+        "modalStudentDocument"
+    );
+
+
+const modalStudentGrade =
+    document.getElementById(
+        "modalStudentGrade"
+    );
+
+
+const modalStudentGroup =
+    document.getElementById(
+        "modalStudentGroup"
+    );
+
+
+const modalStudentAge =
+    document.getElementById(
+        "modalStudentAge"
+    );
+
+
+const modalStudentEmail =
+    document.getElementById(
+        "modalStudentEmail"
+    );
+
+
+
 detailButtons.forEach(
     function (button) {
+
 
         button.addEventListener(
             "click",
             function () {
 
+
+                const student = {
+
+                    name:
+                        button.dataset.student,
+
+                    document:
+                        button.dataset.document,
+
+                    group:
+                        button.dataset.group,
+
+                    grade:
+                        button.dataset.grade,
+
+                    age:
+                        button.dataset.age,
+
+                    email:
+                        button.dataset.email
+
+                };
+
+
+
+                /* CABECERA */
+
+                modalStudentInitials.textContent =
+                    getInitials(
+                        student.name
+                    );
+
+
                 modalStudentName.textContent =
-                    button.dataset.student;
+                    student.name;
 
 
-                modalStudentGroup.textContent =
-                    button.dataset.group;
+                modalStudentSubtitle.textContent =
+                    `${student.group} • ${student.grade}`;
+
+
+
+                /* INFORMACIÓN */
+
+                modalStudentDocument.textContent =
+                    student.document;
 
 
                 modalStudentGrade.textContent =
-                    button.dataset.grade;
+                    student.grade;
 
 
-                modalStudentSchedule.textContent =
-                    button.dataset.schedule;
+                modalStudentGroup.textContent =
+                    student.group;
+
+
+                modalStudentAge.textContent =
+                    student.age;
 
 
                 modalStudentEmail.textContent =
-                    button.dataset.email;
+                    student.email;
 
+
+
+                /* ABRIR */
 
                 studentModal.classList.add(
                     "show"
@@ -479,7 +550,9 @@ detailButtons.forEach(
 );
 
 
+
 function closeStudentInformation() {
+
 
     studentModal.classList.remove(
         "show"
@@ -492,7 +565,14 @@ function closeStudentInformation() {
 }
 
 
+
 closeStudentModal.addEventListener(
+    "click",
+    closeStudentInformation
+);
+
+
+closeInformationButton.addEventListener(
     "click",
     closeStudentInformation
 );
@@ -501,6 +581,7 @@ closeStudentModal.addEventListener(
 studentModal.addEventListener(
     "click",
     function (event) {
+
 
         if (
             event.target ===
@@ -515,19 +596,14 @@ studentModal.addEventListener(
 );
 
 
+
 /* =========================================================
-   ALERTA DESDE ESTUDIANTE
+   MODAL ALERTA
 ========================================================= */
 
 const alertModal =
     document.getElementById(
         "alertModal"
-    );
-
-
-const alertButtons =
-    document.querySelectorAll(
-        ".student-alert-button"
     );
 
 
@@ -543,9 +619,28 @@ const cancelAlert =
     );
 
 
-const alertStudentText =
+const alertButtons =
+    document.querySelectorAll(
+        ".student-alert-button"
+    );
+
+
+
+const alertStudentInitials =
     document.getElementById(
-        "alertStudentText"
+        "alertStudentInitials"
+    );
+
+
+const alertStudentNameLabel =
+    document.getElementById(
+        "alertStudentNameLabel"
+    );
+
+
+const alertStudentInformation =
+    document.getElementById(
+        "alertStudentInformation"
     );
 
 
@@ -555,36 +650,98 @@ const alertStudentName =
     );
 
 
+const alertStudentGroup =
+    document.getElementById(
+        "alertStudentGroup"
+    );
+
+
+const alertStudentGrade =
+    document.getElementById(
+        "alertStudentGrade"
+    );
+
+
+
+/* =========================================================
+   ABRIR ALERTA
+========================================================= */
+
+function openAlert(student) {
+
+
+    alertStudentInitials.textContent =
+        getInitials(
+            student.name
+        );
+
+
+    alertStudentNameLabel.textContent =
+        student.name;
+
+
+    alertStudentInformation.textContent =
+        `${student.group} • ${student.grade}`;
+
+
+
+    /* INPUTS OCULTOS */
+
+    alertStudentName.value =
+        student.name;
+
+
+    alertStudentGroup.value =
+        student.group;
+
+
+    alertStudentGrade.value =
+        student.grade;
+
+
+
+    alertModal.classList.add(
+        "show"
+    );
+
+
+    document.body.style.overflow =
+        "hidden";
+
+}
+
+
+
+/* =========================================================
+   BOTÓN ALERTA DE LA TABLA
+========================================================= */
+
 alertButtons.forEach(
     function (button) {
+
 
         button.addEventListener(
             "click",
             function () {
 
-                const student =
-                    button.dataset.student;
+
+                const student = {
+
+                    name:
+                        button.dataset.student,
+
+                    group:
+                        button.dataset.group,
+
+                    grade:
+                        button.dataset.grade
+
+                };
 
 
-                const group =
-                    button.dataset.group;
-
-
-                alertStudentName.value =
-                    student;
-
-
-                alertStudentText.textContent =
-                    `${student} • ${group}`;
-
-
-                alertModal.classList.add(
-                    "show"
+                openAlert(
+                    student
                 );
-
-
-                document.body.style.overflow =
-                    "hidden";
 
             }
         );
@@ -593,7 +750,13 @@ alertButtons.forEach(
 );
 
 
+
+/* =========================================================
+   CERRAR ALERTA
+========================================================= */
+
 function closeAlert() {
+
 
     alertModal.classList.remove(
         "show"
@@ -604,6 +767,7 @@ function closeAlert() {
         "";
 
 }
+
 
 
 closeAlertModal.addEventListener(
@@ -622,6 +786,7 @@ alertModal.addEventListener(
     "click",
     function (event) {
 
+
         if (
             event.target ===
             alertModal
@@ -635,8 +800,9 @@ alertModal.addEventListener(
 );
 
 
+
 /* =========================================================
-   CONTADOR ALERTA
+   CONTADOR DE DESCRIPCIÓN
 ========================================================= */
 
 const alertDescription =
@@ -655,11 +821,13 @@ alertDescription.addEventListener(
     "input",
     function () {
 
+
         alertCounter.textContent =
             `${alertDescription.value.length} / 500`;
 
     }
 );
+
 
 
 /* =========================================================
@@ -682,7 +850,9 @@ studentAlertForm.addEventListener(
     "submit",
     function (event) {
 
+
         event.preventDefault();
+
 
 
         const alertData = {
@@ -690,22 +860,40 @@ studentAlertForm.addEventListener(
             student:
                 alertStudentName.value,
 
-            type:
+            group:
+                alertStudentGroup.value,
+
+            grade:
+                alertStudentGrade.value,
+
+            situation:
                 document.getElementById(
                     "alertType"
                 ).value,
 
             description:
-                alertDescription.value
+                alertDescription.value,
+
+            createdAt:
+                new Date()
+                .toISOString()
 
         };
 
+
+
+        /* =================================================
+           DESPUÉS AQUÍ CONECTAS EL BACKEND
+        ================================================= */
 
         console.log(
             "Alerta docente:",
             alertData
         );
 
+
+
+        /* LIMPIAR FORMULARIO */
 
         studentAlertForm.reset();
 
@@ -714,8 +902,14 @@ studentAlertForm.addEventListener(
             "0 / 500";
 
 
+
+        /* CERRAR */
+
         closeAlert();
 
+
+
+        /* MENSAJE DE ÉXITO */
 
         showToast();
 
@@ -723,11 +917,13 @@ studentAlertForm.addEventListener(
 );
 
 
+
 /* =========================================================
    TOAST
 ========================================================= */
 
 function showToast() {
+
 
     toast.classList.add(
         "show"
@@ -748,16 +944,19 @@ function showToast() {
 }
 
 
+
 /* =========================================================
-   ESCAPE
+   CERRAR MODALES CON ESC
 ========================================================= */
 
 document.addEventListener(
     "keydown",
     function (event) {
 
+
         if (
-            event.key !== "Escape"
+            event.key !==
+            "Escape"
         ) {
 
             return;
@@ -773,6 +972,7 @@ document.addEventListener(
 );
 
 
+
 /* =========================================================
    RESPONSIVE
 ========================================================= */
@@ -780,6 +980,7 @@ document.addEventListener(
 window.addEventListener(
     "resize",
     function () {
+
 
         if (
             window.innerWidth > 850

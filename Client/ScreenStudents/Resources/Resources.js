@@ -1,13 +1,23 @@
 document.addEventListener("DOMContentLoaded", function () {
+
     initSidebar();
+
     initActiveNavigation();
+
     initProfileMenu();
+
     initProfileSync();
-    initBreathingExercise();
+
+    initBreathingExercises();
+
     initResourceTabs();
-    initActivityModal();
-    initGuideModal();
+
+    initActivityButtons();
+
+    initVideos();
+
     initSearch();
+
 });
 
 
@@ -16,162 +26,230 @@ document.addEventListener("DOMContentLoaded", function () {
 ========================================================= */
 
 function initSidebar() {
-    const menuButton = document.getElementById("mobileMenu");
-    const sidebar = document.getElementById("sidebar");
-    const overlay = document.getElementById("sidebarOverlay");
+
+    const menuButton =
+        document.getElementById("mobileMenu");
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+    const overlay =
+        document.getElementById("sidebarOverlay");
+
 
     if (!menuButton || !sidebar || !overlay) {
         return;
     }
 
+
     function openSidebar() {
+
         sidebar.classList.add("open");
+
         overlay.classList.add("active");
 
-        menuButton.setAttribute(
-            "aria-expanded",
-            "true"
-        );
-
         document.body.style.overflow = "hidden";
+
     }
+
 
     function closeSidebar() {
+
         sidebar.classList.remove("open");
+
         overlay.classList.remove("active");
 
-        menuButton.setAttribute(
-            "aria-expanded",
-            "false"
-        );
-
         document.body.style.overflow = "";
+
     }
 
+
     menuButton.addEventListener("click", function () {
+
         if (sidebar.classList.contains("open")) {
+
             closeSidebar();
+
         } else {
+
             openSidebar();
+
         }
+
     });
+
 
     overlay.addEventListener(
         "click",
         closeSidebar
     );
 
-    document.querySelectorAll(".menu-item").forEach(function (item) {
-        item.addEventListener("click", function () {
-            if (window.innerWidth <= 920) {
-                closeSidebar();
-            }
+
+    document
+        .querySelectorAll(".menu-item")
+        .forEach(function (item) {
+
+            item.addEventListener("click", function () {
+
+                if (window.innerWidth <= 920) {
+
+                    closeSidebar();
+
+                }
+
+            });
+
         });
-    });
+
 
     window.addEventListener("resize", function () {
+
         if (window.innerWidth > 920) {
+
             closeSidebar();
+
         }
+
     });
+
 }
 
 
 /* =========================================================
-   OPCIÓN ACTIVA
+   SIDEBAR ACTIVO
 ========================================================= */
 
 function initActiveNavigation() {
-    const links = document.querySelectorAll(".menu-item");
 
-    const currentPath = normalizePath(
-        window.location.pathname
-    );
+    const links =
+        document.querySelectorAll(".menu-item");
+
+
+    const currentPath =
+        normalizePath(window.location.pathname);
+
 
     links.forEach(function (link) {
+
         link.classList.remove("active");
+
         link.removeAttribute("aria-current");
 
-        const href = link.getAttribute("href");
 
-        if (!href) return;
+        const href =
+            link.getAttribute("href");
 
-        const linkPath = normalizePath(
-            new URL(
-                href,
-                window.location.origin
-            ).pathname
-        );
 
-        const resourceMatch =
+        if (!href) {
+            return;
+        }
+
+
+        const linkPath =
+            normalizePath(
+                new URL(
+                    href,
+                    window.location.origin
+                ).pathname
+            );
+
+
+        const resourcesMatch =
             link.dataset.page === "recursos" &&
             (
                 currentPath.includes("/resources/") ||
                 currentPath.includes("/relaxation/")
             );
 
+
         if (
             currentPath === linkPath ||
-            resourceMatch
+            resourcesMatch
         ) {
+
             link.classList.add("active");
 
             link.setAttribute(
                 "aria-current",
                 "page"
             );
+
         }
+
     });
+
 }
 
 
 function normalizePath(path) {
+
     return (path || "")
         .split("?")[0]
         .split("#")[0]
         .replace(/\/+/g, "/")
         .replace(/\/$/, "")
         .toLowerCase();
+
 }
 
 
 /* =========================================================
-   PERFIL
+   PROFILE MENU
 ========================================================= */
 
 function initProfileMenu() {
-    const button = document.getElementById("profileButton");
-    const menu = document.getElementById("profileMenu");
+
+    const button =
+        document.getElementById("profileButton");
+
+
+    const menu =
+        document.getElementById("profileMenu");
+
 
     if (!button || !menu) {
         return;
     }
 
+
     button.addEventListener("click", function (event) {
+
         event.stopPropagation();
+
 
         const open =
             !menu.classList.contains("show");
+
 
         menu.classList.toggle(
             "show",
             open
         );
 
+
         button.classList.toggle(
             "is-open",
             open
         );
+
     });
+
 
     menu.addEventListener("click", function (event) {
+
         event.stopPropagation();
+
     });
 
+
     document.addEventListener("click", function () {
+
         menu.classList.remove("show");
+
         button.classList.remove("is-open");
+
     });
+
 }
 
 
@@ -182,436 +260,825 @@ function initProfileMenu() {
 const PROFILE_PHOTO_KEY =
     "sentirStudentProfilePhoto";
 
+
 const STUDENT_NAME_KEY =
     "sentirStudentName";
 
 
 function initProfileSync() {
+
     loadProfilePhoto();
+
     loadStudentName();
 
+
     window.addEventListener("storage", function (event) {
+
         if (event.key === PROFILE_PHOTO_KEY) {
+
             loadProfilePhoto();
+
         }
+
 
         if (event.key === STUDENT_NAME_KEY) {
+
             loadStudentName();
+
         }
+
     });
 
-    /*
-        También se puede llamar desde
-        StudentProfile.js:
-        
-        window.SentirProfile.refresh();
-    */
 
     window.SentirProfile = {
+
         refresh: function () {
+
             loadProfilePhoto();
+
             loadStudentName();
+
         }
+
     };
+
 }
 
 
 function loadProfilePhoto() {
+
     const photo =
-        localStorage.getItem(
-            PROFILE_PHOTO_KEY
-        );
+        localStorage.getItem(PROFILE_PHOTO_KEY);
+
 
     document
-        .querySelectorAll(
-            "[data-profile-avatar]"
-        )
+        .querySelectorAll("[data-profile-avatar]")
         .forEach(function (avatar) {
+
+
             const image =
-                avatar.querySelector(
-                    ".profile-avatar-image"
-                );
+                avatar.querySelector(".profile-avatar-image");
+
 
             const fallback =
-                avatar.querySelector(
-                    ".profile-avatar-fallback"
-                );
+                avatar.querySelector(".profile-avatar-fallback");
+
 
             if (!image || !fallback) {
                 return;
             }
 
+
             if (photo) {
+
                 image.src = photo;
+
                 image.hidden = false;
+
                 fallback.hidden = true;
+
             } else {
+
                 image.hidden = true;
+
                 fallback.hidden = false;
+
             }
+
         });
+
 }
 
 
 function loadStudentName() {
+
     const name =
-        localStorage.getItem(
-            STUDENT_NAME_KEY
-        ) || "Ana";
+        localStorage.getItem(STUDENT_NAME_KEY)
+        || "Ana";
+
 
     document
-        .querySelectorAll(
-            "[data-student-name]"
-        )
+        .querySelectorAll("[data-student-name]")
         .forEach(function (element) {
+
             element.textContent = name;
+
         });
+
 
     const initial =
         name.trim()
             .charAt(0)
-            .toUpperCase() || "A";
+            .toUpperCase()
+        || "A";
+
 
     document
-        .querySelectorAll(
-            ".profile-avatar-fallback"
-        )
+        .querySelectorAll(".profile-avatar-fallback")
         .forEach(function (element) {
+
             element.textContent = initial;
+
         });
+
 }
 
 
 /* =========================================================
-   RESPIRACIÓN
+   RESPIRACIONES
 ========================================================= */
 
-let breathingRunning = false;
-let breathingTimeout = null;
+const BREATHING_EXERCISES = {
 
-let currentCycle = 1;
-const totalCycles = 5;
+    calma: {
+
+        inhale: 4,
+
+        hold: 4,
+
+        exhale: 6,
+
+        cycles: 5,
+
+        icon: "fa-leaf"
+
+    },
 
 
-function initBreathingExercise() {
-    const startButton =
-        document.getElementById(
-            "startBreathing"
-        );
+    ansiedad: {
 
-    if (!startButton) {
-        return;
+        inhale: 4,
+
+        hold: 2,
+
+        exhale: 6,
+
+        cycles: 5,
+
+        icon: "fa-heart"
+
+    },
+
+
+    dormir: {
+
+        inhale: 4,
+
+        hold: 7,
+
+        exhale: 8,
+
+        cycles: 4,
+
+        icon: "fa-moon"
+
     }
 
-    startButton.addEventListener(
-        "click",
-        function () {
-            if (breathingRunning) {
-                stopBreathingExercise();
-            } else {
-                startBreathingExercise();
-            }
+};
+
+
+let currentExercise =
+    "calma";
+
+
+let breathingRunning =
+    false;
+
+
+let breathingTimer =
+    null;
+
+
+let counterTimer =
+    null;
+
+
+let currentCycle =
+    1;
+
+
+/* =========================================================
+   INICIAR RESPIRACIONES
+========================================================= */
+
+function initBreathingExercises() {
+
+    const typeButtons =
+        document.querySelectorAll(".breathing-type");
+
+
+    const startButton =
+        document.getElementById("startBreathing");
+
+
+    typeButtons.forEach(function (button) {
+
+        button.addEventListener("click", function () {
+
+            stopBreathingExercise(false);
+
+
+            currentExercise =
+                button.dataset.exercise;
+
+
+            typeButtons.forEach(function (item) {
+
+                item.classList.remove("active");
+
+            });
+
+
+            button.classList.add("active");
+
+
+            updateExerciseUI();
+
+        });
+
+    });
+
+
+    startButton?.addEventListener("click", function () {
+
+        if (breathingRunning) {
+
+            stopBreathingExercise(true);
+
+        } else {
+
+            startBreathingExercise();
+
         }
-    );
+
+    });
+
+
+    updateExerciseUI();
+
 }
 
 
+/* =========================================================
+   ACTUALIZAR EJERCICIO
+========================================================= */
+
+function updateExerciseUI() {
+
+    const exercise =
+        BREATHING_EXERCISES[currentExercise];
+
+
+    document.getElementById("inhaleLabel").textContent =
+        exercise.inhale + " segundos";
+
+
+    document.getElementById("holdLabel").textContent =
+        exercise.hold + " segundos";
+
+
+    document.getElementById("exhaleLabel").textContent =
+        exercise.exhale + " segundos";
+
+
+    const circle =
+        document.getElementById("breathingCircle");
+
+
+    circle.classList.remove(
+        "exercise-calma",
+        "exercise-ansiedad",
+        "exercise-dormir"
+    );
+
+
+    circle.classList.add(
+        "exercise-" + currentExercise
+    );
+
+
+    const icon =
+        document.getElementById("breathingIcon");
+
+
+    icon.className =
+        "fa-solid " + exercise.icon;
+
+
+    resetBreathingDisplay();
+
+}
+
+
+/* =========================================================
+   COMENZAR
+========================================================= */
+
 function startBreathingExercise() {
+
     breathingRunning = true;
+
     currentCycle = 1;
+
 
     updateStartButton(true);
 
-    runInhale();
-}
 
-
-function stopBreathingExercise() {
-    breathingRunning = false;
-
-    clearTimeout(
-        breathingTimeout
-    );
-
-    const circle =
-        document.getElementById(
-            "breathingCircle"
-        );
-
-    const action =
-        document.getElementById(
-            "breathingAction"
-        );
-
-    const cycle =
-        document.getElementById(
-            "breathingCycle"
-        );
-
-    circle?.classList.remove(
-        "inhale",
-        "hold",
-        "exhale"
-    );
-
-    if (action) {
-        action.textContent = "Inhala";
-    }
-
-    if (cycle) {
-        cycle.textContent = "Ciclo 1 de 5";
-    }
-
-    setActiveBreathingStep(
+    runPhase(
         "inhale"
     );
 
-    updateStartButton(false);
 }
 
 
-function runInhale() {
-    if (!breathingRunning) return;
+/* =========================================================
+   FASE
+========================================================= */
+
+function runPhase(phase) {
+
+    if (!breathingRunning) {
+        return;
+    }
+
+
+    const exercise =
+        BREATHING_EXERCISES[currentExercise];
+
+
+    const seconds =
+        exercise[phase];
+
 
     const circle =
-        document.getElementById(
-            "breathingCircle"
-        );
+        document.getElementById("breathingCircle");
 
-    const action =
-        document.getElementById(
-            "breathingAction"
-        );
-
-    const cycle =
-        document.getElementById(
-            "breathingCycle"
-        );
 
     circle.classList.remove(
-        "hold",
-        "exhale"
+        "phase-inhale",
+        "phase-hold",
+        "phase-exhale",
+        "running"
     );
 
-    /*
-       Forzamos reflow para que
-       la animación vuelva a comenzar.
-    */
 
     void circle.offsetWidth;
 
+
     circle.classList.add(
-        "inhale"
+        "phase-" + phase,
+        "running"
     );
 
-    action.textContent =
-        "Inhala";
 
-    cycle.textContent =
-        `Ciclo ${currentCycle} de ${totalCycles}`;
-
-    setActiveBreathingStep(
-        "inhale"
+    circle.style.setProperty(
+        "--phase-duration",
+        seconds + "s"
     );
 
-    breathingTimeout =
-        setTimeout(
-            runHold,
-            4000
-        );
+
+    updateActiveStep(
+        phase
+    );
+
+
+    updateBreathingText(
+        phase,
+        seconds
+    );
+
+
+    startCountdown(
+        seconds
+    );
+
+
+    breathingTimer =
+        setTimeout(function () {
+
+            if (phase === "inhale") {
+
+                runPhase("hold");
+
+                return;
+
+            }
+
+
+            if (phase === "hold") {
+
+                runPhase("exhale");
+
+                return;
+
+            }
+
+
+            if (
+                currentCycle >=
+                exercise.cycles
+            ) {
+
+                finishBreathingExercise();
+
+                return;
+
+            }
+
+
+            currentCycle++;
+
+
+            runPhase("inhale");
+
+        }, seconds * 1000);
+
 }
 
 
-function runHold() {
-    if (!breathingRunning) return;
+/* =========================================================
+   CUENTA REGRESIVA
+========================================================= */
 
-    const circle =
-        document.getElementById(
-            "breathingCircle"
-        );
+function startCountdown(seconds) {
 
-    const action =
-        document.getElementById(
-            "breathingAction"
-        );
+    clearInterval(counterTimer);
 
-    circle.classList.remove(
-        "inhale",
-        "exhale"
-    );
 
-    circle.classList.add(
-        "hold"
-    );
+    const counter =
+        document.getElementById("breathingCounter");
 
-    action.textContent =
-        "Sostén";
 
-    setActiveBreathingStep(
-        "hold"
-    );
+    let remaining =
+        seconds;
 
-    breathingTimeout =
-        setTimeout(
-            runExhale,
-            4000
-        );
+
+    counter.textContent =
+        remaining + " segundos";
+
+
+    counterTimer =
+        setInterval(function () {
+
+            remaining--;
+
+
+            if (remaining <= 0) {
+
+                clearInterval(counterTimer);
+
+                return;
+
+            }
+
+
+            counter.textContent =
+                remaining + " segundos";
+
+        }, 1000);
+
 }
 
 
-function runExhale() {
-    if (!breathingRunning) return;
+/* =========================================================
+   TEXTO
+========================================================= */
 
-    const circle =
-        document.getElementById(
-            "breathingCircle"
-        );
-
-    const action =
-        document.getElementById(
-            "breathingAction"
-        );
-
-    circle.classList.remove(
-        "inhale",
-        "hold"
-    );
-
-    circle.classList.add(
-        "exhale"
-    );
-
-    action.textContent =
-        "Exhala";
-
-    setActiveBreathingStep(
-        "exhale"
-    );
-
-    breathingTimeout =
-        setTimeout(
-            function () {
-
-                if (!breathingRunning) {
-                    return;
-                }
-
-                if (
-                    currentCycle >=
-                    totalCycles
-                ) {
-                    finishBreathingExercise();
-                    return;
-                }
-
-                currentCycle++;
-
-                runInhale();
-
-            },
-            6000
-        );
-}
-
-
-function finishBreathingExercise() {
-    breathingRunning = false;
-
-    clearTimeout(
-        breathingTimeout
-    );
-
-    const circle =
-        document.getElementById(
-            "breathingCircle"
-        );
+function updateBreathingText(
+    phase,
+    seconds
+) {
 
     const action =
-        document.getElementById(
-            "breathingAction"
-        );
+        document.getElementById("breathingAction");
+
 
     const cycle =
-        document.getElementById(
-            "breathingCycle"
-        );
+        document.getElementById("breathingCycle");
 
-    circle.classList.remove(
-        "inhale",
-        "hold",
-        "exhale"
+
+    const exercise =
+        BREATHING_EXERCISES[currentExercise];
+
+
+    if (phase === "inhale") {
+
+        action.textContent =
+            "Inhala";
+
+    }
+
+
+    if (phase === "hold") {
+
+        action.textContent =
+            "Sostén";
+
+    }
+
+
+    if (phase === "exhale") {
+
+        action.textContent =
+            "Exhala";
+
+    }
+
+
+    cycle.textContent =
+        "Ciclo "
+        + currentCycle
+        + " de "
+        + exercise.cycles;
+
+}
+
+
+/* =========================================================
+   STEP ACTIVO
+========================================================= */
+
+function updateActiveStep(step) {
+
+    document
+        .querySelectorAll(".breathing-step")
+        .forEach(function (item) {
+
+            item.classList.toggle(
+                "active",
+                item.dataset.step === step
+            );
+
+        });
+
+}
+
+
+/* =========================================================
+   TERMINAR
+========================================================= */
+
+function finishBreathingExercise() {
+
+    breathingRunning = false;
+
+
+    clearTimeout(
+        breathingTimer
     );
 
-    if (action) {
-        action.textContent =
-            "Muy bien 💜";
-    }
 
-    if (cycle) {
-        cycle.textContent =
-            "Ejercicio completado";
-    }
+    clearInterval(
+        counterTimer
+    );
 
-    setActiveBreathingStep("");
+
+    const circle =
+        document.getElementById("breathingCircle");
+
+
+    circle.classList.remove(
+        "running"
+    );
+
+
+    document.getElementById("breathingAction").textContent =
+        "Muy bien 💜";
+
+
+    document.getElementById("breathingCounter").textContent =
+        "Terminaste";
+
+
+    document.getElementById("breathingCycle").textContent =
+        "Ejercicio completado";
+
 
     updateStartButton(false);
 
-    saveCompletedBreathing();
 
     showToast(
-        "¡Muy bien! Completaste tu ejercicio de respiración."
+        "¡Muy bien! Terminaste tu ejercicio de respiración."
     );
-}
 
 
-function setActiveBreathingStep(step) {
-    document
-        .querySelectorAll(
-            ".breathing-step"
-        )
-        .forEach(function (element) {
-            element.classList.toggle(
-                "active",
-                element.dataset.step === step
-            );
-        });
-}
-
-
-function updateStartButton(running) {
-    const button =
-        document.getElementById(
-            "startBreathing"
-        );
-
-    if (!button) return;
-
-    if (running) {
-        button.innerHTML = `
-            <i class="fa-solid fa-stop"></i>
-            <span>Detener ejercicio</span>
-        `;
-    } else {
-        button.innerHTML = `
-            <i class="fa-solid fa-play"></i>
-            <span>Comenzar ejercicio</span>
-        `;
-    }
-}
-
-
-function saveCompletedBreathing() {
-    const stored =
+    const completed =
         Number(
             localStorage.getItem(
                 "sentirCompletedBreathing"
             ) || "0"
         );
 
+
     localStorage.setItem(
         "sentirCompletedBreathing",
-        String(stored + 1)
+        String(completed + 1)
     );
+
+}
+
+
+/* =========================================================
+   DETENER
+========================================================= */
+
+function stopBreathingExercise(
+    resetText = true
+) {
+
+    breathingRunning = false;
+
+
+    clearTimeout(
+        breathingTimer
+    );
+
+
+    clearInterval(
+        counterTimer
+    );
+
+
+    const circle =
+        document.getElementById("breathingCircle");
+
+
+    circle?.classList.remove(
+        "running"
+    );
+
+
+    if (resetText) {
+
+        resetBreathingDisplay();
+
+    }
+
+
+    updateStartButton(false);
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetBreathingDisplay() {
+
+    const exercise =
+        BREATHING_EXERCISES[currentExercise];
+
+
+    currentCycle = 1;
+
+
+    const circle =
+        document.getElementById("breathingCircle");
+
+
+    circle.classList.remove(
+        "phase-hold",
+        "phase-exhale",
+        "running"
+    );
+
+
+    circle.classList.add(
+        "phase-inhale"
+    );
+
+
+    document.getElementById("breathingAction").textContent =
+        "Inhala";
+
+
+    document.getElementById("breathingCounter").textContent =
+        exercise.inhale + " segundos";
+
+
+    document.getElementById("breathingCycle").textContent =
+        "Ciclo 1 de " + exercise.cycles;
+
+
+    updateActiveStep(
+        "inhale"
+    );
+
+}
+
+
+/* =========================================================
+   BOTÓN START
+========================================================= */
+
+function updateStartButton(running) {
+
+    const button =
+        document.getElementById("startBreathing");
+
+
+    if (!button) {
+        return;
+    }
+
+
+    if (running) {
+
+        button.innerHTML = `
+            <i class="fa-solid fa-stop"></i>
+            <span>Detener ejercicio</span>
+        `;
+
+    } else {
+
+        button.innerHTML = `
+            <i class="fa-solid fa-play"></i>
+            <span>Comenzar ejercicio</span>
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   BOTONES DE ACTIVIDADES
+========================================================= */
+
+function initActivityButtons() {
+
+    document
+        .querySelectorAll("[data-exercise-button]")
+        .forEach(function (button) {
+
+            button.addEventListener("click", function () {
+
+                const exercise =
+                    button.dataset.exerciseButton;
+
+
+                selectExercise(
+                    exercise
+                );
+
+
+                document
+                    .querySelector(".breathing-panel")
+                    ?.scrollIntoView({
+
+                        behavior: "smooth",
+
+                        block: "center"
+
+                    });
+
+
+                setTimeout(function () {
+
+                    startBreathingExercise();
+
+                }, 500);
+
+            });
+
+        });
+
+}
+
+
+/* =========================================================
+   SELECCIONAR EJERCICIO
+========================================================= */
+
+function selectExercise(exercise) {
+
+    if (!BREATHING_EXERCISES[exercise]) {
+        return;
+    }
+
+
+    stopBreathingExercise(false);
+
+
+    currentExercise =
+        exercise;
+
+
+    document
+        .querySelectorAll(".breathing-type")
+        .forEach(function (button) {
+
+            button.classList.toggle(
+                "active",
+                button.dataset.exercise === exercise
+            );
+
+        });
+
+
+    updateExerciseUI();
+
 }
 
 
@@ -620,257 +1087,202 @@ function saveCompletedBreathing() {
 ========================================================= */
 
 function initResourceTabs() {
-    const tabs =
-        document.querySelectorAll(
-            ".resource-tab"
-        );
+
+    const buttons =
+        document.querySelectorAll(".resource-tab");
+
 
     const contents = {
+
         breathing:
-            document.getElementById(
-                "breathingContent"
-            ),
+            document.getElementById("breathingContent"),
 
         meditations:
-            document.getElementById(
-                "meditationsContent"
-            ),
+            document.getElementById("meditationsContent"),
 
         psychologist:
-            document.getElementById(
-                "psychologistContent"
-            )
+            document.getElementById("psychologistContent")
+
     };
 
-    tabs.forEach(function (tab) {
-        tab.addEventListener(
-            "click",
-            function () {
-                const category =
-                    tab.dataset.category;
 
-                tabs.forEach(
-                    function (item) {
-                        item.classList.remove(
-                            "active"
-                        );
-                    }
-                );
+    buttons.forEach(function (button) {
 
-                Object.values(
-                    contents
-                ).forEach(function (content) {
-                    content?.classList.remove(
-                        "active"
-                    );
+        button.addEventListener("click", function () {
+
+            const category =
+                button.dataset.category;
+
+
+            buttons.forEach(function (item) {
+
+                item.classList.remove("active");
+
+            });
+
+
+            Object
+                .values(contents)
+                .forEach(function (content) {
+
+                    content?.classList.remove("active");
+
                 });
 
-                tab.classList.add(
-                    "active"
-                );
 
-                contents[
-                    category
-                ]?.classList.add(
-                    "active"
-                );
-            }
-        );
-    });
-}
+            button.classList.add("active");
 
 
-/* =========================================================
-   ACTIVITY MODAL
-========================================================= */
+            contents[category]?.classList.add("active");
 
-function initActivityModal() {
-    const modal =
-        document.getElementById(
-            "activityModal"
-        );
-
-    const close =
-        document.getElementById(
-            "closeActivityModal"
-        );
-
-    const title =
-        document.getElementById(
-            "activityTitle"
-        );
-
-    const duration =
-        document.getElementById(
-            "activityDuration"
-        );
-
-    const description =
-        document.getElementById(
-            "activityDescription"
-        );
-
-    const modalStart =
-        document.getElementById(
-            "modalStartExercise"
-        );
-
-    document
-        .querySelectorAll(
-            ".play-resource"
-        )
-        .forEach(function (button) {
-            button.addEventListener(
-                "click",
-                function () {
-                    /*
-                       El botón de psicóloga también
-                       usa .play-resource.
-                    */
-
-                    const activity =
-                        button.dataset.activity;
-
-                    if (!activity) {
-                        return;
-                    }
-
-                    title.textContent =
-                        activity;
-
-                    duration.textContent =
-                        button.dataset.duration ||
-                        "Actividad";
-
-                    description.textContent =
-                        button.dataset.description ||
-                        "";
-
-                    openModal(
-                        modal
-                    );
-                }
-            );
         });
 
-    close?.addEventListener(
-        "click",
-        function () {
-            closeModal(
-                modal
-            );
-        }
-    );
+    });
 
-    modal?.addEventListener(
-        "click",
-        function (event) {
-            if (
-                event.target ===
-                modal
-            ) {
-                closeModal(
-                    modal
-                );
-            }
-        }
-    );
-
-    modalStart?.addEventListener(
-        "click",
-        function () {
-            closeModal(
-                modal
-            );
-
-            document
-                .querySelector(
-                    ".breathing-section"
-                )
-                ?.scrollIntoView({
-                    behavior:
-                        "smooth",
-                    block:
-                        "center"
-                });
-
-            if (!breathingRunning) {
-                startBreathingExercise();
-            }
-        }
-    );
 }
 
 
 /* =========================================================
-   GUIDE MODAL
+   VIDEOS
 ========================================================= */
 
-function initGuideModal() {
-    const button =
-        document.getElementById(
-            "openGuide"
-        );
+function initVideos() {
 
     const modal =
-        document.getElementById(
-            "guideModal"
-        );
+        document.getElementById("videoModal");
+
+
+    const iframe =
+        document.getElementById("resourceVideo");
+
+
+    const title =
+        document.getElementById("videoModalTitle");
+
+
+    const description =
+        document.getElementById("videoModalDescription");
+
 
     const close =
-        document.getElementById(
-            "closeGuide"
-        );
+        document.getElementById("closeVideoModal");
 
-    const start =
-        document.getElementById(
-            "guideStart"
-        );
 
-    button?.addEventListener(
-        "click",
-        function () {
-            openModal(
-                modal
-            );
-        }
-    );
+    if (!modal || !iframe) {
+        return;
+    }
 
-    close?.addEventListener(
-        "click",
-        function () {
-            closeModal(
-                modal
-            );
-        }
-    );
 
-    modal?.addEventListener(
-        "click",
-        function (event) {
-            if (
-                event.target ===
-                modal
-            ) {
-                closeModal(
-                    modal
+    document
+        .querySelectorAll(".video-play")
+        .forEach(function (button) {
+
+            button.addEventListener("click", function () {
+
+                const videoURL =
+                    button.dataset.videoUrl;
+
+
+                const videoTitle =
+                    button.dataset.videoTitle;
+
+
+                const videoDescription =
+                    button.dataset.videoDescription;
+
+
+                if (
+                    !videoURL ||
+                    videoURL.includes("VIDEO_ID")
+                ) {
+
+                    showToast(
+                        "Solo falta colocar el enlace del video de YouTube."
+                    );
+
+                    return;
+
+                }
+
+
+                title.textContent =
+                    videoTitle;
+
+
+                description.textContent =
+                    videoDescription;
+
+
+                const separator =
+                    videoURL.includes("?")
+                        ? "&"
+                        : "?";
+
+
+                iframe.src =
+                    videoURL
+                    + separator
+                    + "autoplay=1&rel=0";
+
+
+                modal.classList.add("show");
+
+
+                document.body.classList.add(
+                    "modal-open"
                 );
-            }
-        }
-    );
 
-    start?.addEventListener(
-        "click",
-        function () {
-            closeModal(
-                modal
-            );
+            });
 
-            if (!breathingRunning) {
-                startBreathingExercise();
-            }
+        });
+
+
+    close?.addEventListener("click", function () {
+
+        closeVideo();
+
+    });
+
+
+    modal.addEventListener("click", function (event) {
+
+        if (event.target === modal) {
+
+            closeVideo();
+
         }
-    );
+
+    });
+
+
+    document.addEventListener("keydown", function (event) {
+
+        if (
+            event.key === "Escape" &&
+            modal.classList.contains("show")
+        ) {
+
+            closeVideo();
+
+        }
+
+    });
+
+
+    function closeVideo() {
+
+        iframe.src = "";
+
+
+        modal.classList.remove("show");
+
+
+        document.body.classList.remove(
+            "modal-open"
+        );
+
+    }
+
 }
 
 
@@ -879,47 +1291,49 @@ function initGuideModal() {
 ========================================================= */
 
 function initSearch() {
+
     const search =
-        document.getElementById(
-            "resourceSearch"
-        );
+        document.getElementById("resourceSearch");
+
 
     if (!search) {
         return;
     }
 
-    search.addEventListener(
-        "input",
-        function () {
-            const query =
-                normalizeText(
-                    search.value
-                );
 
-            document
-                .querySelectorAll(
-                    ".resource-card"
-                )
-                .forEach(function (card) {
-                    const cardText =
-                        normalizeText(
-                            card.textContent
-                        );
+    search.addEventListener("input", function () {
 
-                    card.style.display =
-                        !query ||
-                        cardText.includes(
-                            query
-                        )
-                            ? ""
-                            : "none";
-                });
-        }
-    );
+        const query =
+            normalizeText(search.value);
+
+
+        document
+            .querySelectorAll(
+                ".activity-card, .video-card"
+            )
+            .forEach(function (card) {
+
+                const text =
+                    normalizeText(
+                        card.textContent
+                    );
+
+
+                card.style.display =
+                    !query ||
+                    text.includes(query)
+                        ? ""
+                        : "none";
+
+            });
+
+    });
+
 }
 
 
 function normalizeText(text) {
+
     return (text || "")
         .toLowerCase()
         .normalize("NFD")
@@ -928,66 +1342,8 @@ function normalizeText(text) {
             ""
         )
         .trim();
+
 }
-
-
-/* =========================================================
-   MODAL HELPERS
-========================================================= */
-
-function openModal(modal) {
-    if (!modal) return;
-
-    modal.classList.add(
-        "show"
-    );
-
-    document.body.classList.add(
-        "modal-open"
-    );
-}
-
-
-function closeModal(modal) {
-    if (!modal) return;
-
-    modal.classList.remove(
-        "show"
-    );
-
-    if (
-        !document.querySelector(
-            ".modal-overlay.show"
-        )
-    ) {
-        document.body.classList.remove(
-            "modal-open"
-        );
-    }
-}
-
-
-document.addEventListener(
-    "keydown",
-    function (event) {
-        if (
-            event.key !==
-            "Escape"
-        ) {
-            return;
-        }
-
-        document
-            .querySelectorAll(
-                ".modal-overlay.show"
-            )
-            .forEach(function (modal) {
-                closeModal(
-                    modal
-                );
-            });
-    }
-);
 
 
 /* =========================================================
@@ -998,31 +1354,37 @@ let toastTimer;
 
 
 function showToast(message) {
-    const toast =
-        document.getElementById(
-            "toast"
-        );
 
-    if (!toast) return;
+    const toast =
+        document.getElementById("toast");
+
+
+    if (!toast) {
+        return;
+    }
+
 
     clearTimeout(
         toastTimer
     );
 
+
     toast.textContent =
         message;
+
 
     toast.classList.add(
         "show"
     );
 
+
     toastTimer =
-        setTimeout(
-            function () {
-                toast.classList.remove(
-                    "show"
-                );
-            },
-            2800
-        );
+        setTimeout(function () {
+
+            toast.classList.remove(
+                "show"
+            );
+
+        }, 2800);
+
 }

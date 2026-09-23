@@ -11,7 +11,7 @@
 
     <title>Sentir | Recursos</title>
 
-    <!-- POPPINS -->
+    <!-- FUENTE -->
     <link
         rel="preconnect"
         href="https://fonts.googleapis.com"
@@ -46,20 +46,16 @@
 
 <div class="app">
 
-    <!-- =============================================
-         OVERLAY
-    ============================================== -->
-
+    <!-- OVERLAY MOBILE -->
     <div
         class="sidebar-overlay"
         id="sidebarOverlay"
     ></div>
 
 
-    <!-- =============================================
+    <!-- =====================================================
          SIDEBAR
-         MISMO DE STUDENT PROFILE
-    ============================================== -->
+    ====================================================== -->
 
     <aside
         class="sidebar"
@@ -68,9 +64,7 @@
 
         <div class="sidebar-logo">
 
-            <a
-                href="/Sentir/Client/ScreenStudents/Students.html"
-            >
+            <a href="/Sentir/Client/ScreenStudents/Students.html">
 
                 <img
                     src="/Sentir/Shared/LoginResources/logos.png.png"
@@ -92,9 +86,7 @@
 
                 <i class="fa-solid fa-house"></i>
 
-                <span>
-                    Inicio
-                </span>
+                <span>Inicio</span>
 
             </a>
 
@@ -106,24 +98,20 @@
 
                 <i class="fa-solid fa-leaf"></i>
 
-                <span>
-                    Recursos
-                </span>
+                <span>Recursos</span>
 
             </a>
 
 
             <a
-                href="/Sentir/Client/ScreenStudents/EmotionalDiary/Daily.html"
+                href="/Sentir/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.html"
                 class="menu-item"
                 data-page="diario"
             >
 
                 <i class="fa-solid fa-book-open"></i>
 
-                <span>
-                    Diario emocional
-                </span>
+                <span>Diario emocional</span>
 
             </a>
 
@@ -135,9 +123,7 @@
 
                 <i class="fa-solid fa-life-ring"></i>
 
-                <span>
-                    Pedir ayuda
-                </span>
+                <span>Pedir ayuda</span>
 
             </a>
 
@@ -150,9 +136,7 @@
 
                 <i class="fa-solid fa-user"></i>
 
-                <span>
-                    Mi perfil
-                </span>
+                <span>Mi perfil</span>
 
             </a>
 
@@ -161,9 +145,9 @@
 
         <div class="sidebar-bottom">
 
-            <div class="privacy-box">
+            <div class="sidebar-message">
 
-                <div class="privacy-icon">
+                <div class="sidebar-message-icon">
 
                     <i class="fa-solid fa-seedling"></i>
 
@@ -177,14 +161,14 @@
                         grandes cambios
                     </strong>
 
-                    <span>
+                    <p>
                         Un espacio para volver a ti.
-                    </span>
+                    </p>
 
                 </div>
 
 
-                <i class="fa-solid fa-heart privacy-heart"></i>
+                <i class="fa-solid fa-heart sidebar-heart"></i>
 
             </div>
 
@@ -196,9 +180,7 @@
 
                 <i class="fa-solid fa-right-from-bracket"></i>
 
-                <span>
-                    Cerrar sesión
-                </span>
+                <span>Cerrar sesión</span>
 
             </a>
 
@@ -207,29 +189,28 @@
     </aside>
 
 
-    <!-- =============================================
+    <!-- =====================================================
          MAIN
-    ============================================== -->
+    ====================================================== -->
 
     <main class="main-content">
 
 
-        <!-- =========================================
+        <!-- =================================================
              HEADER
-        ========================================== -->
+        ================================================== -->
 
         <header class="topbar">
 
             <div class="header-left">
 
-                <!-- ÚNICO HAMBURGUESA -->
 
+                <!-- ÚNICO HAMBURGUESA -->
                 <button
                     class="mobile-menu"
                     id="mobileMenu"
                     type="button"
                     aria-label="Abrir menú"
-                    aria-expanded="false"
                 >
 
                     <i class="fa-solid fa-bars"></i>
@@ -252,8 +233,8 @@
                     <i class="fa-solid fa-magnifying-glass"></i>
 
                     <input
-                        type="search"
                         id="resourceSearch"
+                        type="search"
                         placeholder="Buscar recursos, ejercicios, meditaciones..."
                     >
 
@@ -263,6 +244,7 @@
 
 
             <div class="top-actions">
+
 
                 <button
                     class="notification"
@@ -326,9 +308,7 @@
                         id="profileMenu"
                     >
 
-                        <a
-                            href="/Sentir/Client/ScreenStudents/StudentProfile/StudentProfile.html"
-                        >
+                        <a href="/Sentir/Client/ScreenStudents/StudentProfile/StudentProfile.html">
 
                             <i class="fa-regular fa-user"></i>
 
@@ -337,9 +317,7 @@
                         </a>
 
 
-                        <a
-                            href="/Sentir/Client/index.html"
-                        >
+                        <a href="/Sentir/Client/index.html">
 
                             <i class="fa-solid fa-right-from-bracket"></i>
 
@@ -356,11 +334,12 @@
         </header>
 
 
-        <!-- =========================================
+        <!-- =================================================
              HERO
-        ========================================== -->
+        ================================================== -->
 
         <section class="resources-hero">
+
 
             <div class="hero-copy">
 
@@ -393,17 +372,15 @@
 
             <div class="hero-character">
 
-                <div class="hero-glow"></div>
-
                 <img
-                    src="/Sentir/Shared/StudentResources/EstudianteRecursos.png"
-                    alt="Estudiante practicando calma"
+                    src="/Sentir/Shared/StudentResources/Resources.png"
+                    alt="Estudiante relajándose"
                 >
 
             </div>
 
 
-            <div class="hero-handwriting">
+            <div class="hero-note">
 
                 Respira
                 <br>
@@ -411,41 +388,26 @@
                 <br>
                 Cuídate
                 <br>
-                Tú puedes
-
-                <i class="fa-regular fa-heart"></i>
-
-            </div>
-
-
-            <div class="hero-stars">
-
-                <i class="fa-solid fa-star"></i>
-
-                <i class="fa-solid fa-heart"></i>
-
-                <i class="fa-solid fa-star"></i>
+                Tú puedes ♡
 
             </div>
 
         </section>
 
 
-        <!-- =========================================
-             RESPIRACIÓN PRINCIPAL
-        ========================================== -->
+        <!-- =================================================
+             RESPIRACIÓN
+        ================================================== -->
 
-        <section class="breathing-section">
+        <section class="breathing-panel">
 
-
-            <!-- LADO IZQUIERDO -->
 
             <div class="breathing-main">
 
 
-                <div class="breathing-heading">
+                <div class="section-heading">
 
-                    <div class="resource-title-icon">
+                    <div class="section-heading-icon">
 
                         <i class="fa-solid fa-wind"></i>
 
@@ -464,79 +426,122 @@
 
                     </div>
 
+                </div>
+
+
+                <!-- TIPOS DE RESPIRACIÓN -->
+
+                <div class="breathing-types">
+
 
                     <button
-                        class="quick-guide-button"
-                        id="openGuide"
+                        class="breathing-type active"
                         type="button"
+                        data-exercise="calma"
                     >
 
-                        <i class="fa-regular fa-circle-question"></i>
+                        <i class="fa-solid fa-wind"></i>
 
-                        Guía rápida
+                        <span>
+                            Calma
+                        </span>
 
                     </button>
+
+
+                    <button
+                        class="breathing-type"
+                        type="button"
+                        data-exercise="ansiedad"
+                    >
+
+                        <i class="fa-solid fa-heart-pulse"></i>
+
+                        <span>
+                            Ansiedad
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="breathing-type"
+                        type="button"
+                        data-exercise="dormir"
+                    >
+
+                        <i class="fa-solid fa-moon"></i>
+
+                        <span>
+                            Dormir
+                        </span>
+
+                    </button>
+
 
                 </div>
 
 
-                <div class="breathing-content">
+                <!-- CÍRCULO -->
+
+                <div class="breathing-layout">
 
 
-                    <div class="breathing-visual-wrapper">
+                    <div class="breathing-visual">
 
 
-                        <div class="breathing-note">
+                        <div class="breathing-text-note">
 
                             Respira...
                             <br>
-                            Estás aquí
+                            estás aquí
                             <br>
                             y todo estará
                             <br>
-                            bien
-
-                            <i class="fa-solid fa-heart"></i>
+                            bien 💜
 
                         </div>
 
 
                         <div
-                            class="breathing-circle"
+                            class="breathing-circle phase-inhale exercise-calma"
                             id="breathingCircle"
                         >
 
-                            <div class="breathing-ring ring-three"></div>
 
-                            <div class="breathing-ring ring-two"></div>
+                            <div class="circle-wave circle-wave-3"></div>
 
-                            <div class="breathing-ring ring-one"></div>
+                            <div class="circle-wave circle-wave-2"></div>
+
+                            <div class="circle-wave circle-wave-1"></div>
 
 
-                            <div class="breathing-center">
+                            <div class="circle-center">
 
-                                <i class="fa-solid fa-leaf"></i>
+                                <i
+                                    class="fa-solid fa-leaf"
+                                    id="breathingIcon"
+                                ></i>
+
 
                                 <strong id="breathingAction">
                                     Inhala
                                 </strong>
 
-                                <span id="breathingCycle">
-                                    Ciclo 1 de 5
+
+                                <span id="breathingCounter">
+                                    4 segundos
                                 </span>
+
+
+                                <small id="breathingCycle">
+                                    Ciclo 1 de 5
+                                </small>
 
                             </div>
 
                         </div>
 
-
-                        <div class="decorative-leaves">
-
-                            <i class="fa-solid fa-seedling"></i>
-
-                            <i class="fa-solid fa-leaf"></i>
-
-                        </div>
 
                     </div>
 
@@ -551,11 +556,11 @@
                             data-step="inhale"
                         >
 
-                            <div class="step-icon">
+                            <span class="step-icon">
 
                                 <i class="fa-solid fa-wind"></i>
 
-                            </div>
+                            </span>
 
 
                             <div>
@@ -564,7 +569,7 @@
                                     Inhala
                                 </strong>
 
-                                <span>
+                                <span id="inhaleLabel">
                                     4 segundos
                                 </span>
 
@@ -578,11 +583,11 @@
                             data-step="hold"
                         >
 
-                            <div class="step-icon">
+                            <span class="step-icon">
 
                                 <i class="fa-solid fa-pause"></i>
 
-                            </div>
+                            </span>
 
 
                             <div>
@@ -591,7 +596,7 @@
                                     Sostén
                                 </strong>
 
-                                <span>
+                                <span id="holdLabel">
                                     4 segundos
                                 </span>
 
@@ -605,11 +610,11 @@
                             data-step="exhale"
                         >
 
-                            <div class="step-icon">
+                            <span class="step-icon">
 
                                 <i class="fa-solid fa-wind"></i>
 
-                            </div>
+                            </span>
 
 
                             <div>
@@ -618,7 +623,7 @@
                                     Exhala
                                 </strong>
 
-                                <span>
+                                <span id="exhaleLabel">
                                     6 segundos
                                 </span>
 
@@ -634,13 +639,14 @@
             </div>
 
 
-            <!-- MOMENTO DE CALMA -->
+            <!-- BENEFICIOS -->
 
             <aside class="calm-card">
 
+
                 <div class="calm-heading">
 
-                    <div class="calm-icon">
+                    <div class="calm-heading-icon">
 
                         <i class="fa-regular fa-sun"></i>
 
@@ -662,33 +668,33 @@
                 </div>
 
 
-                <div class="calm-benefits">
-
-                    <div>
-
-                        <i class="fa-solid fa-thumbtack"></i>
-
-                        <span>
-                            Reduce la ansiedad
-                        </span>
-
-                    </div>
-
-
-                    <div>
-
-                        <i class="fa-solid fa-hand-sparkles"></i>
-
-                        <span>
-                            Te ayuda a concentrarte
-                        </span>
-
-                    </div>
-
+                <div class="calm-list">
 
                     <div>
 
                         <i class="fa-solid fa-heart"></i>
+
+                        <span>
+                            Reduce la tensión
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <i class="fa-solid fa-brain"></i>
+
+                        <span>
+                            Ayuda a concentrarte
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <i class="fa-solid fa-face-smile"></i>
 
                         <span>
                             Mejora tu estado de ánimo
@@ -729,16 +735,15 @@
         </section>
 
 
-        <!-- =========================================
-             CATEGORÍAS
-        ========================================== -->
+        <!-- =================================================
+             DIVISIONES
+        ================================================== -->
 
         <section class="resource-library">
 
-            <div
-                class="resource-tabs"
-                role="tablist"
-            >
+
+            <div class="resource-tabs">
+
 
                 <button
                     class="resource-tab active"
@@ -776,20 +781,19 @@
                     data-category="psychologist"
                 >
 
-                    <i class="fa-solid fa-user"></i>
+                    <i class="fa-solid fa-user-doctor"></i>
 
                     <span>
-                        Propuestas por la psicóloga
+                        Psicóloga
                     </span>
 
                 </button>
 
+
             </div>
 
 
-            <!-- =================================================
-                 RESPIRACIONES
-            ================================================== -->
+            <!-- RESPIRACIONES -->
 
             <div
                 class="category-content active"
@@ -805,50 +809,31 @@
                         </h2>
 
                         <p>
-                            Técnicas simples para calmarte, relajarte y sentirte mejor en cualquier momento.
+                            Técnicas simples para relajarte y volver al presente.
                         </p>
 
                     </div>
 
-
-                    <button
-                        class="view-all"
-                        type="button"
-                    >
-
-                        Ver todos
-
-                        <i class="fa-solid fa-arrow-right"></i>
-
-                    </button>
-
                 </div>
 
 
-                <div class="resources-grid">
+                <div class="activities-grid">
 
 
-                    <article
-                        class="resource-card"
-                        data-title="Respiración consciente"
-                    >
+                    <article class="activity-card">
 
-                        <div class="resource-image resource-image-one">
+                        <div class="activity-picture picture-1">
 
-                            <i class="fa-solid fa-heart"></i>
+                            <i class="fa-solid fa-wind"></i>
 
-                            <span class="duration">
-
-                                <i class="fa-regular fa-clock"></i>
-
+                            <span class="time-pill">
                                 3 min
-
                             </span>
 
                         </div>
 
 
-                        <div class="resource-card-body">
+                        <div class="activity-info">
 
                             <h3>
                                 Respiración consciente
@@ -860,11 +845,9 @@
 
 
                             <button
-                                class="play-resource"
+                                class="start-activity"
                                 type="button"
-                                data-activity="Respiración consciente"
-                                data-duration="3 min"
-                                data-description="Conecta con tu respiración y vuelve suavemente al presente."
+                                data-exercise-button="calma"
                             >
 
                                 <i class="fa-solid fa-play"></i>
@@ -878,43 +861,34 @@
                     </article>
 
 
-                    <article
-                        class="resource-card"
-                        data-title="Respiración 4-4-6"
-                    >
+                    <article class="activity-card">
 
-                        <div class="resource-image resource-image-two">
+                        <div class="activity-picture picture-2">
 
                             <i class="fa-solid fa-cloud"></i>
 
-                            <span class="duration">
-
-                                <i class="fa-regular fa-clock"></i>
-
+                            <span class="time-pill">
                                 5 min
-
                             </span>
 
                         </div>
 
 
-                        <div class="resource-card-body">
+                        <div class="activity-info">
 
                             <h3>
                                 Respiración 4-4-6
                             </h3>
 
                             <p>
-                                Ideal para reducir la ansiedad y relajar el cuerpo.
+                                Ideal para disminuir tensión y ansiedad.
                             </p>
 
 
                             <button
-                                class="play-resource"
+                                class="start-activity"
                                 type="button"
-                                data-activity="Respiración 4-4-6"
-                                data-duration="5 min"
-                                data-description="Inhala durante 4 segundos, sostén 4 y exhala lentamente durante 6."
+                                data-exercise-button="ansiedad"
                             >
 
                                 <i class="fa-solid fa-play"></i>
@@ -928,43 +902,34 @@
                     </article>
 
 
-                    <article
-                        class="resource-card"
-                        data-title="Respiración para dormir"
-                    >
+                    <article class="activity-card">
 
-                        <div class="resource-image resource-image-three">
+                        <div class="activity-picture picture-3">
 
                             <i class="fa-solid fa-moon"></i>
 
-                            <span class="duration">
-
-                                <i class="fa-regular fa-clock"></i>
-
+                            <span class="time-pill">
                                 4 min
-
                             </span>
 
                         </div>
 
 
-                        <div class="resource-card-body">
+                        <div class="activity-info">
 
                             <h3>
                                 Respiración para dormir
                             </h3>
 
                             <p>
-                                Relájate y prepárate para un mejor descanso.
+                                Relájate y prepara tu cuerpo para descansar.
                             </p>
 
 
                             <button
-                                class="play-resource"
+                                class="start-activity"
                                 type="button"
-                                data-activity="Respiración para dormir"
-                                data-duration="4 min"
-                                data-description="Una respiración suave y lenta para preparar el cuerpo antes de descansar."
+                                data-exercise-button="dormir"
                             >
 
                                 <i class="fa-solid fa-play"></i>
@@ -978,48 +943,34 @@
                     </article>
 
 
-                    <article
-                        class="resource-card"
-                        data-title="Respiración de gratitud"
-                    >
+                    <article class="activity-card">
 
-                        <div class="resource-image resource-image-four">
+                        <div class="activity-picture picture-4">
 
-                            <div class="little-heart-face">
+                            <i class="fa-solid fa-heart"></i>
 
-                                <i class="fa-solid fa-heart"></i>
-
-                            </div>
-
-
-                            <span class="duration">
-
-                                <i class="fa-regular fa-clock"></i>
-
+                            <span class="time-pill">
                                 3 min
-
                             </span>
 
                         </div>
 
 
-                        <div class="resource-card-body">
+                        <div class="activity-info">
 
                             <h3>
                                 Respiración de gratitud
                             </h3>
 
                             <p>
-                                Calma tu mente y enfócate en lo positivo.
+                                Respira lentamente y conecta con algo positivo.
                             </p>
 
 
                             <button
-                                class="play-resource"
+                                class="start-activity"
                                 type="button"
-                                data-activity="Respiración de gratitud"
-                                data-duration="3 min"
-                                data-description="Respira lentamente mientras reconoces algo pequeño por lo que te sientes agradecido/a."
+                                data-exercise-button="calma"
                             >
 
                                 <i class="fa-solid fa-play"></i>
@@ -1032,14 +983,13 @@
 
                     </article>
 
+
                 </div>
 
             </div>
 
 
-            <!-- =================================================
-                 MEDITACIONES
-            ================================================== -->
+            <!-- MEDITACIONES -->
 
             <div
                 class="category-content"
@@ -1055,7 +1005,7 @@
                         </h2>
 
                         <p>
-                            Pausas guiadas para volver a ti y descansar tu mente.
+                            Pequeñas pausas para descansar tu mente.
                         </p>
 
                     </div>
@@ -1063,134 +1013,86 @@
                 </div>
 
 
-                <div class="resources-grid">
+                <div class="activities-grid">
 
-                    <article class="resource-card">
+                    <article class="activity-card">
 
-                        <div class="resource-image meditation-one">
+                        <div class="activity-picture meditation-picture">
 
                             <i class="fa-solid fa-spa"></i>
 
-                            <span class="duration">
-                                <i class="fa-regular fa-clock"></i>
+                            <span class="time-pill">
                                 5 min
                             </span>
 
                         </div>
 
 
-                        <div class="resource-card-body">
+                        <div class="activity-info">
 
                             <h3>
-                                Regresa al presente
+                                Volver al presente
                             </h3>
 
                             <p>
-                                Una meditación breve para soltar pensamientos.
+                                Una pausa guiada para detener el ruido mental.
                             </p>
-
-
-                            <button
-                                class="play-resource"
-                                type="button"
-                                data-activity="Regresa al presente"
-                                data-duration="5 min"
-                                data-description="Una meditación breve para observar tu respiración y regresar al momento presente."
-                            >
-
-                                <i class="fa-solid fa-play"></i>
-
-                                Comenzar
-
-                            </button>
 
                         </div>
 
                     </article>
 
 
-                    <article class="resource-card">
+                    <article class="activity-card">
 
-                        <div class="resource-image meditation-two">
+                        <div class="activity-picture meditation-picture-2">
 
                             <i class="fa-solid fa-cloud-moon"></i>
 
-                            <span class="duration">
-                                <i class="fa-regular fa-clock"></i>
+                            <span class="time-pill">
                                 8 min
                             </span>
 
                         </div>
 
 
-                        <div class="resource-card-body">
+                        <div class="activity-info">
 
                             <h3>
                                 Calma antes de dormir
                             </h3>
 
                             <p>
-                                Libera la tensión acumulada durante el día.
+                                Libera poco a poco la tensión acumulada.
                             </p>
-
-
-                            <button
-                                class="play-resource"
-                                type="button"
-                                data-activity="Calma antes de dormir"
-                                data-duration="8 min"
-                                data-description="Una pausa tranquila para relajar el cuerpo antes de ir a dormir."
-                            >
-
-                                <i class="fa-solid fa-play"></i>
-
-                                Comenzar
-
-                            </button>
 
                         </div>
 
                     </article>
 
 
-                    <article class="resource-card">
+                    <article class="activity-card">
 
-                        <div class="resource-image meditation-three">
+                        <div class="activity-picture meditation-picture-3">
 
                             <i class="fa-solid fa-heart"></i>
 
-                            <span class="duration">
-                                <i class="fa-regular fa-clock"></i>
+                            <span class="time-pill">
                                 6 min
                             </span>
 
                         </div>
 
 
-                        <div class="resource-card-body">
+                        <div class="activity-info">
 
                             <h3>
-                                Trátate con cariño
+                                Háblate bonito
                             </h3>
 
                             <p>
-                                Una pausa para hablarte con más amabilidad.
+                                Una pausa para tratarte con mayor amabilidad.
                             </p>
-
-
-                            <button
-                                class="play-resource"
-                                type="button"
-                                data-activity="Trátate con cariño"
-                                data-duration="6 min"
-                                data-description="Una meditación centrada en la autocompasión y el cuidado personal."
-                            >
-
-                                <i class="fa-solid fa-play"></i>
-
-                                Comenzar
-
-                            </button>
 
                         </div>
 
@@ -1201,35 +1103,17 @@
             </div>
 
 
-            <!-- =================================================
-                 PSICÓLOGA
-            ================================================== -->
+            <!-- PSICÓLOGA -->
 
             <div
                 class="category-content"
                 id="psychologistContent"
             >
 
-                <div class="library-heading">
-
-                    <div>
-
-                        <h2>
-                            Propuestas por la psicóloga
-                        </h2>
-
-                        <p>
-                            Actividades recomendadas especialmente para acompañar tu bienestar.
-                        </p>
-
-                    </div>
-
-                </div>
+                <div class="psychologist-card">
 
 
-                <div class="psychologist-banner">
-
-                    <div class="psychologist-icon">
+                    <div class="psychologist-card-icon">
 
                         <i class="fa-solid fa-user-doctor"></i>
 
@@ -1239,27 +1123,26 @@
                     <div>
 
                         <span>
-                            RECOMENDADO PARA TI
+                            PROPUESTA PARA TI
                         </span>
 
                         <h3>
-                            Esta semana prueba una pausa consciente
+                            Pausa consciente
                         </h3>
 
                         <p>
-                            Encuentra un lugar tranquilo, realiza cinco respiraciones profundas
-                            y escribe una cosa que quieras reconocer de ti hoy.
+                            Busca un lugar tranquilo. Haz cinco respiraciones
+                            profundas y piensa en una cosa que quieras reconocer
+                            de ti hoy.
                         </p>
 
                     </div>
 
 
                     <button
-                        class="psychologist-action play-resource"
+                        class="psychologist-button"
                         type="button"
-                        data-activity="Pausa consciente"
-                        data-duration="5 min"
-                        data-description="Cinco respiraciones profundas y una breve reflexión para reconocer cómo te encuentras hoy."
+                        data-exercise-button="calma"
                     >
 
                         Comenzar
@@ -1274,196 +1157,323 @@
 
         </section>
 
+
+        <!-- =================================================
+             VIDEOS
+             SECCIÓN NUEVA, MÁS ABAJO
+        ================================================== -->
+
+        <section class="videos-section">
+
+
+            <div class="videos-heading">
+
+
+                <div>
+
+                    <span class="videos-small-title">
+
+                        <i class="fa-solid fa-play"></i>
+
+                        Para acompañarte
+
+                    </span>
+
+
+                    <h2>
+                        Videos que también pueden ayudarte
+                    </h2>
+
+
+                    <p>
+                        Elige un video, ponte cómodo/a y tómate unos minutos para ti.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="videos-grid">
+
+
+                <!-- VIDEO 1 -->
+
+                <article class="video-card">
+
+
+                    <div class="video-thumbnail video-thumb-1">
+
+                        <div class="thumbnail-decoration">
+
+                            <i class="fa-solid fa-wind"></i>
+
+                        </div>
+
+
+                        <button
+                            class="video-play"
+                            type="button"
+                            data-video-title="Respira conmigo"
+                            data-video-description="Una pausa breve para respirar lentamente y volver al presente."
+                            data-video-url="https://www.youtube.com/embed/VIDEO_ID_1"
+                        >
+
+                            <i class="fa-solid fa-play"></i>
+
+                        </button>
+
+
+                        <span class="video-duration">
+                            5 min
+                        </span>
+
+                    </div>
+
+
+                    <div class="video-info">
+
+                        <span class="video-category">
+                            RESPIRACIÓN
+                        </span>
+
+                        <h3>
+                            Respira conmigo
+                        </h3>
+
+                        <p>
+                            Una pausa breve para bajar el ritmo y volver al presente.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <!-- VIDEO 2 -->
+
+                <article class="video-card">
+
+
+                    <div class="video-thumbnail video-thumb-2">
+
+                        <div class="thumbnail-decoration">
+
+                            <i class="fa-solid fa-spa"></i>
+
+                        </div>
+
+
+                        <button
+                            class="video-play"
+                            type="button"
+                            data-video-title="Cinco minutos de calma"
+                            data-video-description="Una meditación corta para descansar un poco tu mente."
+                            data-video-url="https://www.youtube.com/embed/VIDEO_ID_2"
+                        >
+
+                            <i class="fa-solid fa-play"></i>
+
+                        </button>
+
+
+                        <span class="video-duration">
+                            5 min
+                        </span>
+
+                    </div>
+
+
+                    <div class="video-info">
+
+                        <span class="video-category">
+                            MEDITACIÓN
+                        </span>
+
+                        <h3>
+                            Cinco minutos de calma
+                        </h3>
+
+                        <p>
+                            Una meditación cortita para descansar tu mente.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <!-- VIDEO 3 -->
+
+                <article class="video-card">
+
+
+                    <div class="video-thumbnail video-thumb-3">
+
+                        <div class="thumbnail-decoration">
+
+                            <i class="fa-solid fa-moon"></i>
+
+                        </div>
+
+
+                        <button
+                            class="video-play"
+                            type="button"
+                            data-video-title="Prepárate para dormir"
+                            data-video-description="Respiración y relajación para cerrar el día con más calma."
+                            data-video-url="https://www.youtube.com/embed/VIDEO_ID_3"
+                        >
+
+                            <i class="fa-solid fa-play"></i>
+
+                        </button>
+
+
+                        <span class="video-duration">
+                            8 min
+                        </span>
+
+                    </div>
+
+
+                    <div class="video-info">
+
+                        <span class="video-category">
+                            DESCANSO
+                        </span>
+
+                        <h3>
+                            Prepárate para dormir
+                        </h3>
+
+                        <p>
+                            Una pausa suave para soltar tensión antes de descansar.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- MENSAJE FINAL -->
+
+        <section class="final-message">
+
+            <div class="final-icon">
+
+                <i class="fa-solid fa-seedling"></i>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    No tienes que hacerlo todo de una vez.
+                </strong>
+
+                <span>
+                    Incluso unos minutos para ti también cuentan. 💜
+                </span>
+
+            </div>
+
+        </section>
+
     </main>
 
 </div>
 
 
-<!-- =============================================
-     MODAL ACTIVIDAD
-============================================== -->
+<!-- =====================================================
+     MODAL VIDEO
+====================================================== -->
 
 <div
-    class="modal-overlay"
-    id="activityModal"
+    class="video-modal-overlay"
+    id="videoModal"
 >
 
-    <div class="activity-modal">
+    <div class="video-modal">
 
 
-        <button
-            class="modal-close"
-            id="closeActivityModal"
-            type="button"
-        >
+        <div class="video-modal-header">
 
-            <i class="fa-solid fa-xmark"></i>
+            <div>
 
-        </button>
+                <span>
+                    RECURSO PARA TU BIENESTAR
+                </span>
 
-
-        <div class="modal-resource-icon">
-
-            <i class="fa-solid fa-spa"></i>
-
-        </div>
-
-
-        <span class="modal-tag">
-            RECURSO PARA TU BIENESTAR
-        </span>
-
-
-        <h2 id="activityTitle">
-            Respiración consciente
-        </h2>
-
-
-        <span
-            class="modal-duration"
-            id="activityDuration"
-        >
-            3 min
-        </span>
-
-
-        <p id="activityDescription">
-            Regresa al presente con una respiración suave.
-        </p>
-
-
-        <div class="modal-visual">
-
-            <div class="mini-breath">
-
-                <i class="fa-solid fa-leaf"></i>
+                <h2 id="videoModalTitle">
+                    Video
+                </h2>
 
             </div>
 
+
+            <button
+                class="video-close"
+                id="closeVideoModal"
+                type="button"
+            >
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
         </div>
 
 
-        <button
-            class="modal-start"
-            id="modalStartExercise"
-            type="button"
-        >
+        <p
+            class="video-modal-description"
+            id="videoModalDescription"
+        ></p>
 
-            <i class="fa-solid fa-play"></i>
 
-            Iniciar ejercicio
+        <div class="video-player">
 
-        </button>
+            <iframe
+                id="resourceVideo"
+                src=""
+                title="Video de bienestar"
+                allow="
+                    accelerometer;
+                    autoplay;
+                    clipboard-write;
+                    encrypted-media;
+                    gyroscope;
+                    picture-in-picture;
+                    web-share
+                "
+                allowfullscreen
+            ></iframe>
+
+        </div>
+
+
+        <div class="video-modal-bottom">
+
+            <i class="fa-solid fa-heart"></i>
+
+            <span>
+                Disfruta este momento a tu ritmo.
+            </span>
+
+        </div>
 
     </div>
 
 </div>
 
 
-<!-- =============================================
-     MODAL GUÍA
-============================================== -->
-
-<div
-    class="modal-overlay"
-    id="guideModal"
->
-
-    <div class="guide-modal">
-
-        <button
-            class="modal-close"
-            id="closeGuide"
-            type="button"
-        >
-
-            <i class="fa-solid fa-xmark"></i>
-
-        </button>
-
-
-        <div class="guide-icon">
-
-            <i class="fa-solid fa-wind"></i>
-
-        </div>
-
-
-        <span class="modal-tag">
-            GUÍA RÁPIDA
-        </span>
-
-
-        <h2>
-            Respiración 4 · 4 · 6
-        </h2>
-
-
-        <p>
-            Sigue el ritmo de la pantalla. No necesitas hacerlo perfecto;
-            simplemente respira de manera cómoda.
-        </p>
-
-
-        <div class="guide-steps">
-
-            <div>
-
-                <strong>
-                    1
-                </strong>
-
-                <span>
-                    Inhala durante 4 segundos
-                </span>
-
-            </div>
-
-
-            <div>
-
-                <strong>
-                    2
-                </strong>
-
-                <span>
-                    Sostén durante 4 segundos
-                </span>
-
-            </div>
-
-
-            <div>
-
-                <strong>
-                    3
-                </strong>
-
-                <span>
-                    Exhala lentamente durante 6 segundos
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <button
-            class="modal-start"
-            id="guideStart"
-            type="button"
-        >
-
-            <i class="fa-solid fa-play"></i>
-
-            Comenzar ahora
-
-        </button>
-
-    </div>
-
-</div>
-
+<!-- TOAST -->
 
 <div
     class="toast"

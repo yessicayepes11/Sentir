@@ -2,135 +2,334 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Sentir | Estudiante</title>
 
-    <!-- Google Fonts -->
+    <!-- POPPINS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Iconos -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- ICONOS -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
 
     <!-- CSS -->
-    <link rel="stylesheet" href="/Sentir/Client/ScreenStudents/Students.css">
+    <link
+        rel="stylesheet"
+        href="/Students.css"
+    >
 </head>
 
 <body>
 
 <div class="app">
 
-    <!-- ================= SIDEBAR ================= -->
+    <!-- =========================================
+         OVERLAY SIDEBAR
+    ========================================== -->
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
 
- <!-- En el <head> de tus archivos HTML -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-<!-- ================= BOTÓN HAMBURGUESA (MÓVIL) ================= -->
-<button class="menu-toggle" id="mobileMenu" aria-label="Abrir menú">
-    <i class="fa-solid fa-bars"></i>
-</button>
+    <!-- =========================================
+         SIDEBAR
+    ========================================== -->
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
 
-<!-- ================= OVERLAY MÓVIL ================= -->
-<div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <div class="sidebar-logo">
 
-<!-- ================= SIDEBAR ================= -->
-<aside class="sidebar" id="sidebar">
-    <!-- Espacio / Contenedor para el Logo -->
-    <div class="sidebar-logo">
-        <div class="logo-symbol">
-            <a href="#">
-                <img src="/Sentir/Shared/LoginResources/logos.png.png" alt="Logo Sentir" id="logoSentir">
+            <a
+                href="/Sentir/Client/ScreenStudents/Students.html"
+                class="logo-link"
+            >
+
+                <img
+                    src="/Sentir/Shared/LoginResources/logos.png.png"
+                    alt="Logo Sentir"
+                >
+
             </a>
-        </div>
-    </div>
-    
-    <!-- Menú de Navegación -->
-    <nav class="menu">
-        <a href="/Sentir/Client/ScreenStudents/Students.html" class="menu-item active">
-            <i class="fa-solid fa-house"></i>
-            <span>Inicio</span>
-        </a>
-        <a href="/Sentir/Client/ScreenStudents/Follow-up/Follow-up.html" class="menu-item">
-            <i class="fa-solid fa-chart-line"></i>
-            <span>Mi seguimiento</span>
-        </a>
-        <a href="/Sentir/Client/ScreenStudents/Relaxation/Relaxation.html" class="menu-item">
-            <i class="fa-solid fa-leaf"></i>
-            <span>Recursos</span>
-        </a>
-        <a href="/Sentir/Client/ScreenStudents/EmotionalDiary/Daily.html" class="menu-item">
-            <i class="fa-solid fa-book"></i>
-            <span>Diario emocional</span>
-        </a>
-        <a href="/Sentir/Client/ScreenStudents/Badges/Badges.html" class="menu-item">
-            <i class="fa-solid fa-star"></i>
-            <span>Insignias</span>
-        </a>
-        <a href="/Sentir/Client/ScreenStudents/AskForHelp/AskForHelp.html" class="menu-item">
-            <i class="fa-solid fa-handshake-angle"></i>
-            <span>Pedir ayuda</span>
-        </a>
-    </nav>
 
-    <!-- Parte Inferior -->
-    <div class="sidebar-bottom">
-        <div class="privacy-box">
-            <i class="fa-solid fa-shield-heart"></i>
-            <div>
-                <strong>Tu bienestar importa</strong>
-                <small>Tu información está protegida.</small>
+        </div>
+
+
+        <nav class="menu">
+
+            <a
+                href="/Sentir/Client/ScreenStudents/Students.html"
+                class="menu-item"
+                data-page="inicio"
+            >
+
+                <i class="fa-solid fa-house"></i>
+
+                <span>
+                    Inicio
+                </span>
+
+            </a>
+
+
+            <a
+                href="/Sentir/Client/ScreenStudents/Relaxation/Relaxation.html"
+                class="menu-item"
+                data-page="relajacion"
+            >
+
+                <i class="fa-solid fa-leaf"></i>
+
+                <span>
+                    Relajación
+                </span>
+
+            </a>
+
+
+            <a
+                href="/Sentir/Client/ScreenStudents/EmotionalDiary/Daily.html"
+                class="menu-item"
+                data-page="diario"
+            >
+
+                <i class="fa-solid fa-book-open"></i>
+
+                <span>
+                    Diario emocional
+                </span>
+
+            </a>
+
+
+            <a
+                href="/Sentir/Client/ScreenStudents/AskForHelp/AskForHelp.html"
+                class="menu-item"
+                data-page="ayuda"
+            >
+
+                <i class="fa-solid fa-hands-holding-heart"></i>
+
+                <span>
+                    Pedir ayuda
+                </span>
+
+            </a>
+
+
+            <a
+                href="/Sentir/Client/ScreenStudents/StudentProfile/StudentProfile.html"
+                class="menu-item"
+                data-page="perfil"
+            >
+
+                <i class="fa-solid fa-user"></i>
+
+                <span>
+                    Mi perfil
+                </span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="privacy-box">
+
+                <div class="privacy-icon">
+
+                    <i class="fa-solid fa-shield-heart"></i>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        Tu bienestar importa
+                    </strong>
+
+                    <span>
+                        Aquí encontrarás un espacio seguro.
+                    </span>
+
+                </div>
+
             </div>
+
+
+            <a
+                href="/Sentir/Client/index.html"
+                class="logout"
+            >
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                <span>
+                    Cerrar sesión
+                </span>
+
+            </a>
+
         </div>
-        <a href="/Sentir/Client/index.html" class="logout">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span>Cerrar sesión</span>
-        </a>
-    </div>
-</aside>
+
+    </aside>
 
 
-
-    <!-- ================= CONTENIDO ================= -->
-
+    <!-- =========================================
+         CONTENIDO PRINCIPAL
+    ========================================== -->
     <main class="main-content">
 
-        <!-- HEADER -->
 
+        <!-- =====================================
+             HEADER
+        ====================================== -->
         <header class="topbar">
 
-            <button class="mobile-menu" id="mobileMenu">
-                <i class="fa-solid fa-bars"></i>
-            </button>
+            <div class="header-left">
 
-            <div class="mobile-logo">
-                <div class="logo-symbol small">
-                    <i class="fa-solid fa-heart"></i>
+                <!-- ÚNICO HAMBURGUESA -->
+                <button
+                    class="mobile-menu"
+                    id="mobileMenu"
+                    type="button"
+                    aria-label="Abrir menú"
+                >
+
+                    <i class="fa-solid fa-bars"></i>
+
+                </button>
+
+
+                <div class="mobile-logo">
+
+                    <img
+                        src="/Sentir/Shared/LoginResources/logos.png.png"
+                        alt="Sentir"
+                    >
+
                 </div>
-                <span>sentir</span>
+
+
+                <div class="search-box">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        type="search"
+                        id="resourceSearch"
+                        placeholder="Buscar recursos, ejercicios, temas..."
+                    >
+
+                </div>
+
             </div>
+
 
             <div class="top-actions">
 
-                <button class="notification">
+                <button
+                    class="notification"
+                    type="button"
+                >
+
                     <i class="fa-regular fa-bell"></i>
-                    <span></span>
+
+                    <span class="notification-dot"></span>
+
                 </button>
 
-                <div class="profile">
 
-                    <div class="profile-avatar">
-                        A
+                <div class="profile-wrapper">
+
+                    <button
+                        class="profile"
+                        id="profileButton"
+                        type="button"
+                    >
+
+                        <div
+                            class="profile-avatar"
+                            data-profile-avatar
+                        >
+
+                            <img
+                                class="profile-avatar-image"
+                                alt="Foto de perfil"
+                                hidden
+                            >
+
+                            <span class="profile-avatar-fallback">
+                                A
+                            </span>
+
+                        </div>
+
+
+                        <div class="profile-info">
+
+                            <strong data-student-name>
+                                Ana
+                            </strong>
+
+                            <span>
+                                Estudiante
+                            </span>
+
+                        </div>
+
+
+                        <i
+                            class="fa-solid fa-chevron-down profile-arrow"
+                        ></i>
+
+                    </button>
+
+
+                    <div
+                        class="profile-menu"
+                        id="profileMenu"
+                    >
+
+                        <a
+                            href="/Sentir/Client/ScreenStudents/StudentProfile/StudentProfile.html"
+                        >
+
+                            <i class="fa-regular fa-user"></i>
+
+                            Mi perfil
+
+                        </a>
+
+
+                        <a
+                            href="/Sentir/Client/index.html"
+                        >
+
+                            <i class="fa-solid fa-right-from-bracket"></i>
+
+                            Cerrar sesión
+
+                        </a>
+
                     </div>
-
-                    <div class="profile-info">
-                        <strong>Ana</strong>
-                        <small>Estudiante</small>
-                    </div>
-
-                    <i class="fa-solid fa-chevron-down"></i>
 
                 </div>
 
@@ -139,503 +338,812 @@
         </header>
 
 
-        <!-- ================= HERO ================= -->
+        <!-- =====================================
+             HERO
+        ====================================== -->
+        <section class="hero">
 
-        <section class="welcome-section">
+            <div class="hero-content">
 
-            <div class="welcome-text">
+                <span class="hero-tag">
 
-                <span class="welcome-tag">
-                    <i class="fa-solid fa-sparkles"></i>
+                    <i class="fa-solid fa-heart"></i>
+
                     Tu espacio seguro
+
                 </span>
 
+
                 <h1>
-                    ¡Hola, Ana! 👋
+
+                    ¡Hola,
+                    <span data-student-name>Ana</span>!
+
+                    <span class="hello">
+                        👋
+                    </span>
+
                 </h1>
+
 
                 <h2>
                     ¿Cómo te sientes hoy?
                 </h2>
 
+
                 <p>
-                    Tu bienestar importa. Registra cómo te sientes
-                    y descubre herramientas que pueden acompañarte.
+                    Tu bienestar importa. Aquí puedes encontrar
+                    apoyo, herramientas y personas que te escuchan.
                 </p>
+
+
+                <div class="hero-buttons">
+
+                    <button
+                        class="help-now"
+                        id="heroHelpButton"
+                        type="button"
+                    >
+
+                        <span class="button-icon">
+
+                            <i class="fa-solid fa-phone"></i>
+
+                        </span>
+
+                        <span>
+                            Necesito ayuda ahora
+                        </span>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </button>
+
+
+                    <button
+                        class="schedule-button"
+                        id="openAppointment"
+                        type="button"
+                    >
+
+                        <span class="button-icon">
+
+                            <i class="fa-regular fa-calendar"></i>
+
+                        </span>
+
+                        <span>
+                            Agendar cita
+                        </span>
+
+                        <i class="fa-solid fa-chevron-right"></i>
+
+                    </button>
+
+                </div>
 
             </div>
 
-            <!-- Imagen del personaje -->
-            <div class="character-container">
 
-                <!-- AQUÍ PUEDES PONER TU PERSONAJE -->
-                <img src="/Sentir/Shared/StudentResources/Estudiante.png"
-                     alt="Personaje estudiante">
+            <div class="hero-character">
+
+                <div class="hero-character-glow"></div>
+
+                <img
+                    src="/Sentir/Shared/StudentResources/Estudiante.png"
+                    alt="Estudiante Sentir"
+                >
+
+            </div>
+
+
+            <div class="hero-phrase">
+
+                Cuidar de ti también
+                <br>
+                es avanzar
+
+                <i class="fa-solid fa-heart"></i>
 
             </div>
 
         </section>
 
 
-        <!-- ================= ESTADO DE ÁNIMO ================= -->
-
+        <!-- =====================================
+             EMOCIONES
+        ====================================== -->
         <section class="emotion-section">
-  <div class="emotions">
 
-    <!-- Muy Bien (Happy) -->
-    <button class="emotion very-good" data-emotion="Muy bien">
-      <div class="emoji happy">
-        <input name="feedback" value="5" type="radio" />
-        <div>
-          <svg class="eye left"><use href="#eye"/></svg>
-          <svg class="eye right"><use href="#eye"/></svg>
-        </div>
-      </div>
-      <strong>Muy bien</strong>
-      <small>Me siento genial</small>
-    </button>
+            <div class="emotion-header">
 
-    <!-- Bien (Good) -->
-    <button class="emotion good" data-emotion="Bien">
-      <div class="emoji good">
-        <input checked name="feedback" value="4" type="radio" />
-        <div>
-          <svg class="eye left"><use href="#eye"/></svg>
-          <svg class="eye right"><use href="#eye"/></svg>
-          <svg class="mouth"><use href="#mouth"/></svg>
-        </div>
-      </div>
-      <strong>Bien</strong>
-      <small>Estoy tranquilo/a</small>
-    </button>
+                <div>
 
-    <!-- Regular (Ok) -->
-    <button class="emotion regular" data-emotion="Regular">
-      <div class="emoji ok">
-        <input name="feedback" value="3" type="radio" />
-        <div></div>
-      </div>
-      <strong>Regular</strong>
-      <small>Estoy estable</small>
-    </button>
+                    <h2>
+                        ¿Cómo te sientes hoy?
+                    </h2>
 
-    <!-- Mal (Sad) -->
-    <button class="emotion bad" data-emotion="Mal">
-      <div class="emoji sad">
-        <input name="feedback" value="2" type="radio" />
-        <div>
-          <svg class="eye left"><use href="#eye"/></svg>
-          <svg class="eye right"><use href="#eye"/></svg>
-          <svg class="mouth"><use href="#mouth"/></svg>
-        </div>
-      </div>
-      <strong>Mal</strong>
-      <small>No estoy muy bien</small>
-    </button>
+                    <p>
+                        Selecciona la emoción que mejor te represente.
+                    </p>
 
-    <!-- Muy Mal (Angry) -->
-    <button class="emotion very-bad" data-emotion="Muy mal">
-      <div class="emoji angry">
-        <input name="feedback" value="1" type="radio" />
-        <div>
-          <svg class="eye left"><use href="#eye"/></svg>
-          <svg class="eye right"><use href="#eye"/></svg>
-          <svg class="mouth"><use href="#mouth"/></svg>
-        </div>
-      </div>
-      <strong>Muy mal</strong>
-      <small>Necesito apoyo</small>
-    </button>
-
-  </div>
-
-  <!-- SVG Globales compartidos por los emojis -->
-  <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
-    <symbol id="eye" viewBox="0 0 7 4">
-      <path d="M1,1 C1.83333333,2.16666667 2.66666667,2.75 3.5,2.75 C4.33333333,2.75 5.16666667,2.16666667 6,1"></path>
-    </symbol>
-    <symbol id="mouth" viewBox="0 0 18 7">
-      <path d="M1,5.5 C3.66666667,2.5 6.33333333,1 9,1 C11.6666667,1 14.3333333,2.5 17,5.5"></path>
-    </symbol>
-  </svg>
-</section>
-
-            <!-- PREGUNTA QUE SE DESPLIEGA -->
-
-            <div class="emotion-question" id="emotionQuestion">
-
-                <div class="question-icon">
-                    <i class="fa-solid fa-comment-heart"></i>
                 </div>
 
-                <div class="question-content">
+
+                <div class="emotion-message">
+
+                    <i class="fa-solid fa-heart"></i>
+
+                    <span>
+                        Está bien sentir.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="emotions">
+
+
+                <!-- MUY BIEN -->
+                <button
+                    class="emotion very-good"
+                    data-emotion="Muy bien"
+                    type="button"
+                >
+
+                    <div class="emoji happy">
+
+                        <input
+                            name="feedback"
+                            value="5"
+                            type="radio"
+                        >
+
+                        <div>
+
+                            <svg class="eye left">
+                                <use href="#eye"></use>
+                            </svg>
+
+                            <svg class="eye right">
+                                <use href="#eye"></use>
+                            </svg>
+
+                        </div>
+
+                    </div>
+
+                    <strong>
+                        Muy bien
+                    </strong>
+
+                    <span>
+                        Me siento genial
+                    </span>
+
+                </button>
+
+
+                <!-- BIEN -->
+                <button
+                    class="emotion good"
+                    data-emotion="Bien"
+                    type="button"
+                >
+
+                    <div class="emoji good">
+
+                        <input
+                            checked
+                            name="feedback"
+                            value="4"
+                            type="radio"
+                        >
+
+                        <div>
+
+                            <svg class="eye left">
+                                <use href="#eye"></use>
+                            </svg>
+
+                            <svg class="eye right">
+                                <use href="#eye"></use>
+                            </svg>
+
+                            <svg class="mouth">
+                                <use href="#mouth"></use>
+                            </svg>
+
+                        </div>
+
+                    </div>
+
+                    <strong>
+                        Bien
+                    </strong>
+
+                    <span>
+                        Estoy tranquilo/a
+                    </span>
+
+                </button>
+
+
+                <!-- REGULAR -->
+                <button
+                    class="emotion regular"
+                    data-emotion="Regular"
+                    type="button"
+                >
+
+                    <div class="emoji ok">
+
+                        <input
+                            name="feedback"
+                            value="3"
+                            type="radio"
+                        >
+
+                        <div></div>
+
+                    </div>
+
+                    <strong>
+                        Regular
+                    </strong>
+
+                    <span>
+                        Estoy estable
+                    </span>
+
+                </button>
+
+
+                <!-- MAL -->
+                <button
+                    class="emotion bad"
+                    data-emotion="Mal"
+                    type="button"
+                >
+
+                    <div class="emoji sad">
+
+                        <input
+                            name="feedback"
+                            value="2"
+                            type="radio"
+                        >
+
+                        <div>
+
+                            <svg class="eye left">
+                                <use href="#eye"></use>
+                            </svg>
+
+                            <svg class="eye right">
+                                <use href="#eye"></use>
+                            </svg>
+
+                            <svg class="mouth">
+                                <use href="#mouth"></use>
+                            </svg>
+
+                        </div>
+
+                    </div>
+
+                    <strong>
+                        Mal
+                    </strong>
+
+                    <span>
+                        No estoy muy bien
+                    </span>
+
+                </button>
+
+
+                <!-- MUY MAL -->
+                <button
+                    class="emotion very-bad"
+                    data-emotion="Muy mal"
+                    type="button"
+                >
+
+                    <div class="emoji angry">
+
+                        <input
+                            name="feedback"
+                            value="1"
+                            type="radio"
+                        >
+
+                        <div>
+
+                            <svg class="eye left">
+                                <use href="#eye"></use>
+                            </svg>
+
+                            <svg class="eye right">
+                                <use href="#eye"></use>
+                            </svg>
+
+                            <svg class="mouth">
+                                <use href="#mouth"></use>
+                            </svg>
+
+                        </div>
+
+                    </div>
+
+                    <strong>
+                        Muy mal
+                    </strong>
+
+                    <span>
+                        Necesito apoyo
+                    </span>
+
+                </button>
+
+            </div>
+
+
+            <!-- SVG ORIGINALES -->
+            <svg
+                style="display:none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+
+                <symbol
+                    id="eye"
+                    viewBox="0 0 7 4"
+                >
+
+                    <path
+                        d="M1,1 C1.83333333,2.16666667 2.66666667,2.75 3.5,2.75 C4.33333333,2.75 5.16666667,2.16666667 6,1"
+                    ></path>
+
+                </symbol>
+
+
+                <symbol
+                    id="mouth"
+                    viewBox="0 0 18 7"
+                >
+
+                    <path
+                        d="M1,5.5 C3.66666667,2.5 6.33333333,1 9,1 C11.6666667,1 14.3333333,2.5 17,5.5"
+                    ></path>
+
+                </symbol>
+
+            </svg>
+
+
+            <div
+                class="emotion-question"
+                id="emotionQuestion"
+            >
+
+                <div class="question-icon">
+
+                    <i class="fa-solid fa-heart"></i>
+
+                </div>
+
+
+                <div class="question-info">
 
                     <span id="selectedEmotion">
                         ¿Cómo te sientes?
                     </span>
 
-                    <h3 id="questionTitle">
+                    <h3>
                         ¿Quieres contarnos un poco más?
                     </h3>
 
                     <p>
-                        Tu respuesta puede ayudarte a reconocer
-                        lo que estás sintiendo.
+                        Tu respuesta puede ayudarte a reconocer lo que estás sintiendo.
                     </p>
 
-                    <div class="question-buttons">
-
-                        <button class="primary-btn" id="openDiary">
-                            <i class="fa-solid fa-pen"></i>
-                            <a href="/Sentir/Client/ScreenStudents/EmotionalDiary/Daily.html">Escribir en mi diario</a>
-                        </button>
-
-                        <button class="secondary-btn" id="closeQuestion">
-                            Ahora no
-                        </button>
-
-                    </div>
-
                 </div>
 
-            </div>
 
-        </section>
+                <div class="question-actions">
 
+                    <a
+                        href="/Sentir/Client/ScreenStudents/EmotionalDiary/Daily.html"
+                        class="question-primary"
+                    >
 
-        <!-- ================= PANEL PRINCIPAL ================= -->
+                        <i class="fa-solid fa-pen"></i>
 
-        <section class="dashboard-grid">
+                        Escribir en mi diario
 
+                    </a>
 
-            <!-- SEGUIMIENTO -->
 
-            <article class="feature-card tracking-card" id="seguimiento">
+                    <button
+                        id="closeQuestion"
+                        class="question-secondary"
+                        type="button"
+                    >
 
-                <div class="card-top">
+                        Ahora no
 
-                    <div class="card-icon purple">
-                        <i class="fa-solid fa-chart-line"></i>
-                    </div>
-
-                    <span class="card-tag">
-                        MI PROCESO
-                    </span>
-
-                </div>
-
-                <h3>Mi seguimiento</h3>
-
-                <p>
-                    Registra y conoce cómo ha evolucionado
-                    tu bienestar emocional.
-                </p>
-
-                <div class="mini-chart">
-
-                    <div class="chart-bars">
-
-                        <span style="height:35%"></span>
-                        <span style="height:55%"></span>
-                        <span style="height:42%"></span>
-                        <span style="height:70%"></span>
-                        <span style="height:60%"></span>
-                        <span style="height:80%"></span>
-                        <span style="height:68%"></span>
-
-                    </div>
-
-                    <div class="chart-text">
-                        Tu evolución emocional
-                    </div>
-
-                </div>
-
-                <button class="card-link">
-                    <a href="/Sentir/Client/ScreenStudents/Follow-up/Follow-up.html">Ver seguimiento</a>
-                    <i class="fa-solid fa-arrow-right"></i>
-                </button>
-
-            </article>
-
-
-            <!-- RELAJACIÓN -->
-
-            <article class="feature-card relaxation-card">
-
-                <div class="card-top">
-
-                    <div class="card-icon blue">
-                        <i class="fa-solid fa-leaf"></i>
-                    </div>
-
-                    <span class="card-tag blue-tag">
-                        BIENESTAR
-                    </span>
-
-                </div>
-
-                <h3>Relajación</h3>
-
-                <p>
-                    Encuentra ejercicios para ayudarte
-                    a relajarte y cuidar tu bienestar.
-                </p>
-
-                <div class="relax-visual">
-
-                    <div class="breathing-circle">
-                        <i class="fa-solid fa-wind"></i>
-                    </div>
-
-                    <span>
-                        Respira y tómate un momento
-                    </span>
-
-                </div>
-
-                <button class="card-link">
-                    <a href="/Sentir/Client/ScreenStudents/Relaxation/Relaxation.html">Explorar ejercicios</a>
-                    <i class="fa-solid fa-arrow-right"></i>
-                </button>
-
-            </article>
-
-
-            <!-- INSIGNEAS -->
-
-            <article class="feature-card activities-card" id="actividades">
-
-                <div class="card-top">
-
-                    <div class="card-icon violet">
-                        <i class="fa-solid fa-star"></i>
-                    </div>
-
-                    <span class="card-tag violet-tag">
-                        INTERACTIVO
-                    </span>
-
-                </div>
-
-                <h3>Insignias</h3>
-
-                <p>
-                    Reconoce tus logros y avances en tu bienestar emocional.
-                </p>
-
-                <div class="activity-preview">
-
-                    <div class="activity-item">
-                        <i class="fa-solid fa-puzzle-piece"></i>
-                        <span>Descubre las que puedes desbloquear</span>
-                    </div>
-
-                    <div class="activity-item">
-                        <i class="fa-solid fa-face-smile"></i>
-                        <span>Reconocer cómo me siento</span>
-                    </div>
-
-                </div>
-
-                <button class="card-link">
-                    <a href="/Sentir/Client/ScreenStudents/Badges/Badges.html">Ver insignias</a>
-                    <i class="fa-solid fa-arrow-right"></i>
-                </button>
-
-            </article>
-
-
-            <!-- DIARIO -->
-
-            <article class="feature-card diary-card" id="diario">
-
-                <div class="card-top">
-
-                    <div class="card-icon silver">
-                        <i class="fa-solid fa-book-open"></i>
-                    </div>
-
-                    <span class="card-tag silver-tag">
-                        PRIVADO
-                    </span>
-
-                </div>
-
-                <h3>Diario emocional</h3>
-
-                <p>
-                    Un espacio para registrar lo que sientes
-                    y expresar tus emociones.
-                </p>
-
-                <div class="diary-line">
-
-                    <i class="fa-solid fa-lock"></i>
-
-                    <span>
-                        Solo tú puedes acceder a tu diario.
-                    </span>
-
-                </div>
-
-                <button class="card-link">
-                    <a href="/Sentir/Client/ScreenStudents/EmotionalDiary/Daily.html">Abrir diario</a>
-                    <i class="fa-solid fa-arrow-right"></i>
-                </button>
-
-            </article>
-
-
-            <!-- RECURSOS -->
-
-            <article class="wide-card resources-card" id="recursos">
-
-                <div class="wide-content">
-
-                    <span class="section-label">
-                        HERRAMIENTAS PARA TI
-                    </span>
-
-                    <h2>
-                        Recursos de bienestar
-                    </h2>
-
-                    <p>
-                        Explora recursos de apoyo pensados
-                        para acompañarte en diferentes momentos.
-                    </p>
-
-                    <button class="primary-btn">
-                       <a href="/Sentir/Client/ScreenStudents/Relaxation/Relaxation.html">Explorar recursos</a>
-                        <i class="fa-solid fa-arrow-right"></i>
                     </button>
 
                 </div>
 
-                <div class="resource-icons">
-
-                    <div>
-                        <i class="fa-solid fa-lungs"></i>
-                        <span>Respiración</span>
-                    </div>
-
-                    <div>
-                        <i class="fa-solid fa-leaf"></i>
-                        <span>Relajación</span>
-                    </div>
-
-                    <div>
-                        <i class="fa-solid fa-lightbulb"></i>
-                        <span>Consejos</span>
-                    </div>
-
-                </div>
-
-            </article>
-
-
-            <!-- PEDIR AYUDA -->
-
-            <article class="help-card" id="ayuda">
-
-                <div class="help-icon">
-                    <i class="fa-solid fa-hands-holding-heart"></i>
-                </div>
-
-                <div class="help-text">
-
-                    <span>¿NECESITAS APOYO?</span>
-
-                    <h2>
-                        No tienes que hacerlo todo solo/a.
-                    </h2>
-
-                    <p>
-                        Puedes pedir ayuda cuando lo necesites.
-                    </p>
-
-                </div>
-
-                <button class="help-button">
-                    Pedir ayuda
-                    <i class="fa-solid fa-arrow-right"></i>
-                </button>
-
-            </article>
-
+            </div>
 
         </section>
 
 
-        <!-- ================= ALERTA ================= -->
+        <!-- =====================================
+             HERRAMIENTAS
+        ====================================== -->
+        <section class="tools-section">
 
-        <button class="floating-alert" id="alertButton">
+            <div class="section-heading">
 
-            <i class="fa-solid fa-triangle-exclamation"></i>
+                <div>
 
-            <span>
-                Necesito ayuda
-            </span>
+                    <span>
+                        HERRAMIENTAS PARA TI
+                    </span>
 
-        </button>
+                    <h2>
+                        Tu espacio de bienestar
+                    </h2>
+
+                </div>
 
 
-        <!-- ================= FOOTER ================= -->
+                <p>
+                    Todo lo importante, organizado en un solo lugar.
+                </p>
 
-        <footer>
-
-            <div class="footer-logo">
-                sentir
             </div>
 
-            <span>
-                Tu bienestar importa.
-            </span>
 
-            <div class="footer-security">
-                <i class="fa-solid fa-shield"></i>
-                Espacio seguro
+            <div class="tools-grid">
+
+
+                <!-- DIARIO -->
+                <a
+                    href="/Sentir/Client/ScreenStudents/EmotionalDiary/Daily.html"
+                    class="tool-card diary-card"
+                >
+
+                    <div class="tool-top">
+
+                        <div class="tool-icon purple">
+
+                            <i class="fa-solid fa-book-open"></i>
+
+                        </div>
+
+                        <span class="tool-tag">
+                            PRIVADO
+                        </span>
+
+                    </div>
+
+
+                    <div class="tool-text">
+
+                        <h3>
+                            Diario emocional
+                        </h3>
+
+                        <p>
+                            Registra cómo te sientes y encuentra allí
+                            tu seguimiento e insignias.
+                        </p>
+
+                    </div>
+
+
+                    <div class="tool-link">
+
+                        Abrir diario
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </div>
+
+
+                    <i
+                        class="fa-solid fa-pen-nib card-decoration"
+                    ></i>
+
+                </a>
+
+
+                <!-- RELAJACIÓN -->
+                <a
+                    href="/Sentir/Client/ScreenStudents/Relaxation/Relaxation.html"
+                    class="tool-card relaxation-card"
+                >
+
+                    <div class="tool-top">
+
+                        <div class="tool-icon green">
+
+                            <i class="fa-solid fa-leaf"></i>
+
+                        </div>
+
+                        <span class="tool-tag green-tag">
+                            BIENESTAR
+                        </span>
+
+                    </div>
+
+
+                    <div class="tool-text">
+
+                        <h3>
+                            Relajación
+                        </h3>
+
+                        <p>
+                            Encuentra ejercicios de respiración y
+                            actividades para recuperar la calma.
+                        </p>
+
+                    </div>
+
+
+                    <div class="tool-link">
+
+                        Explorar ejercicios
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </div>
+
+
+                    <div class="breathing-decoration">
+
+                        <i class="fa-solid fa-wind"></i>
+
+                    </div>
+
+                </a>
+
+
+                <!-- PEDIR AYUDA -->
+                <button
+                    class="tool-card help-card"
+                    id="toolHelpButton"
+                    type="button"
+                >
+
+                    <div class="tool-top">
+
+                        <div class="tool-icon red">
+
+                            <i class="fa-solid fa-hands-holding-heart"></i>
+
+                        </div>
+
+                        <span class="tool-tag red-tag">
+                            APOYO
+                        </span>
+
+                    </div>
+
+
+                    <div class="tool-text">
+
+                        <h3>
+                            Pedir ayuda
+                        </h3>
+
+                        <p>
+                            Solicita acompañamiento cuando lo necesites.
+                            Estamos para escucharte.
+                        </p>
+
+                    </div>
+
+
+                    <div class="tool-link">
+
+                        Solicitar apoyo
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </div>
+
+
+                    <i
+                        class="fa-solid fa-heart card-decoration help-decoration"
+                    ></i>
+
+                </button>
+
+
+                <!-- PERFIL -->
+                <a
+                    href="/Sentir/Client/ScreenStudents/StudentProfile/StudentProfile.html"
+                    class="tool-card profile-card"
+                >
+
+                    <div class="tool-top">
+
+                        <div class="tool-icon blue">
+
+                            <i class="fa-solid fa-user"></i>
+
+                        </div>
+
+                        <span class="tool-tag blue-tag">
+                            TU CUENTA
+                        </span>
+
+                    </div>
+
+
+                    <div class="tool-text">
+
+                        <h3>
+                            Mi perfil
+                        </h3>
+
+                        <p>
+                            Consulta tu información y personaliza
+                            tu foto de perfil.
+                        </p>
+
+                    </div>
+
+
+                    <div class="tool-link">
+
+                        Ver mi perfil
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </div>
+
+
+                    <div
+                        class="profile-preview"
+                        data-profile-avatar
+                    >
+
+                        <img
+                            class="profile-avatar-image"
+                            alt="Foto"
+                            hidden
+                        >
+
+                        <span class="profile-avatar-fallback">
+                            A
+                        </span>
+
+                    </div>
+
+                </a>
+
             </div>
 
-        </footer>
+        </section>
+
+
+        <!-- =====================================
+             MENSAJE FINAL
+        ====================================== -->
+        <section class="bottom-message">
+
+            <div class="bottom-icon">
+
+                <i class="fa-solid fa-seedling"></i>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Recuerda: no estás solo/a
+                </strong>
+
+                <p>
+                    En la universidad y en la vida,
+                    tu salud mental también cuenta.
+                </p>
+
+            </div>
+
+
+            <span class="bottom-phrase">
+
+                Hoy también lo estás logrando
+
+                <i class="fa-solid fa-heart"></i>
+
+            </span>
+
+        </section>
 
     </main>
 
 </div>
 
 
-<!-- ================= MODAL ALERTA ================= -->
+<!-- =========================================
+     MODAL AYUDA
+========================================== -->
+<div
+    class="modal-overlay"
+    id="alertModal"
+>
 
-<div class="modal-overlay" id="alertModal">
+    <div class="help-modal">
 
-    <div class="modal">
+        <button
+            class="modal-close"
+            id="closeAlert"
+            type="button"
+        >
 
-        <button class="modal-close" id="closeAlert">
             <i class="fa-solid fa-xmark"></i>
+
         </button>
 
-        <div class="modal-icon alert">
+
+        <div class="help-modal-icon">
+
             <i class="fa-solid fa-heart"></i>
+
         </div>
 
+
+        <span class="modal-tag">
+            ESTAMOS CONTIGO
+        </span>
+
+
         <h2>
-            ¿Necesitas ayuda?
+            ¿Necesitas ayuda ahora?
         </h2>
+
 
         <p>
             Puedes solicitar apoyo cuando lo necesites.
             Tu bienestar es importante.
         </p>
 
-        <div class="modal-actions">
 
-            <button class="primary-btn">
-                Pedir ayuda
-            </button>
+        <div class="modal-buttons">
 
-            <button class="secondary-btn" id="cancelAlert">
+            <a
+                href="/Sentir/Client/ScreenStudents/AskForHelp/AskForHelp.html"
+                class="modal-primary red-button"
+            >
+
+                <i class="fa-solid fa-hands-holding-heart"></i>
+
+                Ir a pedir ayuda
+
+            </a>
+
+
+            <button
+                class="modal-secondary"
+                id="cancelAlert"
+                type="button"
+            >
+
                 Cancelar
+
             </button>
 
         </div>
@@ -645,7 +1153,265 @@
 </div>
 
 
-<script src="/Sentir/Client/ScreenStudents/Students.js"></script>
+<!-- =========================================
+     MODAL AGENDAR CITA
+========================================== -->
+<div
+    class="modal-overlay"
+    id="appointmentModal"
+>
+
+    <div class="appointment-modal">
+
+        <button
+            class="modal-close"
+            id="closeAppointment"
+            type="button"
+        >
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+
+        <div class="appointment-image-side">
+
+            <div class="appointment-image-placeholder">
+
+                <i class="fa-regular fa-calendar-check"></i>
+
+                <strong>
+                    Espacio para tu imagen
+                </strong>
+
+                <span>
+                    AgendarCita.png
+                </span>
+
+            </div>
+
+
+            <img
+                src="/Sentir/Shared/StudentResources/AgendarCita.png"
+                alt=""
+                id="appointmentImage"
+            >
+
+
+            <div class="appointment-image-message">
+
+                <span>
+                    Un espacio para ti
+                </span>
+
+                <strong>
+                    Hablar también es cuidarte.
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="appointment-form-side">
+
+            <span class="modal-tag">
+
+                <i class="fa-solid fa-heart"></i>
+
+                AGENDA TU ESPACIO
+
+            </span>
+
+
+            <h2>
+                Agenda una cita
+            </h2>
+
+
+            <p class="appointment-description">
+                Elige el día y la hora que mejor te funcionen.
+            </p>
+
+
+            <form id="appointmentForm">
+
+                <div class="form-row">
+
+                    <label>
+
+                        <span>
+                            Fecha
+                        </span>
+
+                        <div class="input-box">
+
+                            <i class="fa-regular fa-calendar"></i>
+
+                            <input
+                                type="date"
+                                id="appointmentDate"
+                                required
+                            >
+
+                        </div>
+
+                    </label>
+
+
+                    <label>
+
+                        <span>
+                            Hora
+                        </span>
+
+                        <div class="input-box">
+
+                            <i class="fa-regular fa-clock"></i>
+
+                            <select
+                                id="appointmentTime"
+                                required
+                            >
+
+                                <option value="">
+                                    Selecciona
+                                </option>
+
+                                <option value="08:00">
+                                    08:00
+                                </option>
+
+                                <option value="09:00">
+                                    09:00
+                                </option>
+
+                                <option value="10:00">
+                                    10:00
+                                </option>
+
+                                <option value="11:00">
+                                    11:00
+                                </option>
+
+                                <option value="13:00">
+                                    13:00
+                                </option>
+
+                                <option value="14:00">
+                                    14:00
+                                </option>
+
+                                <option value="15:00">
+                                    15:00
+                                </option>
+
+                                <option value="16:00">
+                                    16:00
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </label>
+
+                </div>
+
+
+                <label>
+
+                    <span>
+                        Motivo de la cita
+                    </span>
+
+                    <div class="input-box textarea-box">
+
+                        <i class="fa-regular fa-message"></i>
+
+                        <textarea
+                            id="appointmentReason"
+                            placeholder="Cuéntanos brevemente cómo podemos acompañarte..."
+                            required
+                        ></textarea>
+
+                    </div>
+
+                </label>
+
+
+                <div class="privacy-message">
+
+                    <i class="fa-solid fa-shield-heart"></i>
+
+                    <span>
+                        Tu información será tratada con cuidado y privacidad.
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="appointment-submit"
+                    type="submit"
+                >
+
+                    <i class="fa-regular fa-calendar-check"></i>
+
+                    Solicitar cita
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+            </form>
+
+
+            <div
+                class="appointment-success"
+                id="appointmentSuccess"
+                hidden
+            >
+
+                <div>
+
+                    <i class="fa-solid fa-check"></i>
+
+                </div>
+
+                <h3>
+                    ¡Solicitud guardada!
+                </h3>
+
+                <p id="appointmentSummary"></p>
+
+
+                <button
+                    id="finishAppointment"
+                    type="button"
+                    class="modal-secondary"
+                >
+
+                    Listo
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<script src="/Students.js"></script>
 
 </body>
 </html>

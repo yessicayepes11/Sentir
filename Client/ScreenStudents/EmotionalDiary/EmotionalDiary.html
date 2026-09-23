@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sentir | Mi diario emocional</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    />
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <link
+        rel="stylesheet"
+        href="/EmotionalDiary/EmotionalDiary.css"
+    />
+</head>
+<body>
+<div class="app">
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <a href="/Sentir/Client/ScreenStudents/Students.html">
+                <img
+                    src="/Sentir/Shared/LoginResources/logos.png.png"
+                    alt="Sentir"
+                />
+            </a>
+        </div>
+
+        <nav class="menu">
+            <a href="/Sentir/Client/ScreenStudents/Students.html" class="menu-item" data-page="inicio">
+                <i class="fa-solid fa-house"></i>
+                <span>Inicio</span>
+            </a>
+
+            <a href="/Sentir/Client/ScreenStudents/Follow-up/Follow-up.html" class="menu-item" data-page="seguimiento">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Mi seguimiento</span>
+            </a>
+
+            <a href="/Sentir/Client/ScreenStudents/Relaxation/Relaxation.html" class="menu-item" data-page="recursos">
+                <i class="fa-solid fa-leaf"></i>
+                <span>Recursos</span>
+            </a>
+
+            <a href="/Sentir/Client/ScreenStudents/EmotionalDiary/Daily.html" class="menu-item" data-page="diario">
+                <i class="fa-solid fa-book-open"></i>
+                <span>Diario emocional</span>
+            </a>
+
+            <a href="/Sentir/Client/ScreenStudents/Badges/Badges.html" class="menu-item" data-page="insignias">
+                <i class="fa-solid fa-star"></i>
+                <span>Insignias</span>
+            </a>
+
+            <a href="/Sentir/Client/ScreenStudents/AskForHelp/AskForHelp.html" class="menu-item" data-page="ayuda">
+                <i class="fa-solid fa-life-ring"></i>
+                <span>Pedir ayuda</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="privacy-box">
+                <div class="privacy-icon">
+                    <i class="fa-solid fa-seedling"></i>
+                </div>
+
+                <div>
+                    <strong>Tu bienestar importa</strong>
+                    <span>Aquí siempre encontrarás un espacio seguro.</span>
+                </div>
+
+                <i class="fa-solid fa-heart privacy-heart"></i>
+            </div>
+
+            <a href="/Sentir/Client/index.html" class="logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Cerrar sesión</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <!-- HEADER -->
+        <header class="topbar">
+            <div class="header-left">
+                <button
+                    class="mobile-menu"
+                    id="mobileMenu"
+                    type="button"
+                    aria-label="Abrir menú"
+                    aria-expanded="false"
+                >
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="mobile-logo">
+                    <img
+                        src="/Sentir/Shared/LoginResources/logos.png.png"
+                        alt="Sentir"
+                    />
+                </div>
+
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input
+                        type="search"
+                        placeholder="Buscar recursos, ejercicios, temas..."
+                    />
+                </div>
+            </div>
+
+            <div class="top-actions">
+                <button class="notification" type="button" aria-label="Notificaciones">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="notification-dot"></span>
+                </button>
+
+                <div class="profile-wrapper">
+                    <button class="profile" id="profileButton" type="button">
+                        <div class="profile-avatar" data-profile-avatar>
+                            <img class="profile-avatar-image" alt="Foto de perfil" hidden />
+                            <span class="profile-avatar-fallback">A</span>
+                        </div>
+
+                        <div class="profile-info">
+                            <strong data-student-name>Ana</strong>
+                            <span>Estudiante</span>
+                        </div>
+
+                        <i class="fa-solid fa-chevron-down profile-arrow"></i>
+                    </button>
+
+                    <div class="profile-menu" id="profileMenu">
+                        <a href="/Sentir/Client/ScreenStudents/StudentProfile/StudentProfile.html">
+                            <i class="fa-regular fa-user"></i>
+                            Mi perfil
+                        </a>
+
+                        <a href="/Sentir/Client/index.html">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            Cerrar sesión
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-copy">
+                <span class="hero-pill">
+                    <i class="fa-solid fa-heart"></i>
+                    Tu espacio seguro
+                </span>
+
+                <h1>Mi diario emocional</h1>
+                <h2>Un espacio solo para ti <i class="fa-regular fa-heart"></i></h2>
+
+                <p>
+                    Escribe, suelta, reconoce y entiende lo que sientes.
+                    Todas tus emociones son válidas y forman parte de tu historia.
+                </p>
+
+                <div class="hero-quote">
+                    “Conocer lo que sientes también es una forma de cuidarte”
+                </div>
+
+                <div class="hero-actions">
+                    <button class="history-button" id="openHistoryModal" type="button">
+                        <i class="fa-regular fa-clock"></i>
+                        Ver historial
+                    </button>
+                </div>
+            </div>
+
+            <div class="hero-illustration">
+                <img
+                    src="/Sentir/Shared/StudentResources/EstudianteDiarioEscribiendo.png"
+                    alt="Estudiante escribiendo en el diario"
+                />
+            </div>
+
+            <div class="hero-note">
+                Aquí <br> también <br> está bien <br> sentir ♡
+            </div>
+        </section>
+
+        <!-- 1. EMOCIÓN -->
+        <section class="diary-card">
+            <div class="section-head">
+                <div class="step-badge">1</div>
+                <div class="section-copy">
+                    <h3>¿Cómo te sientes hoy?</h3>
+                    <p>Selecciona la emoción que mejor representa tu momento actual.</p>
+                </div>
+            </div>
+
+            <div class="emotion-grid">
+
+                <button class="emotion-card" type="button" data-emotion="Muy bien" data-value="5">
+                    <div class="emoji happy">
+                        <input type="radio" name="feedback" value="5" tabindex="-1" />
+                        <div>
+                            <svg class="eye left"><use href="#eye"></use></svg>
+                            <svg class="eye right"><use href="#eye"></use></svg>
+                        </div>
+                    </div>
+                    <strong>Muy bien</strong>
+                    <span>Me siento genial</span>
+                </button>
+
+                <button class="emotion-card" type="button" data-emotion="Bien" data-value="4">
+                    <div class="emoji good">
+                        <input type="radio" name="feedback" value="4" tabindex="-1" />
+                        <div>
+                            <svg class="eye left"><use href="#eye"></use></svg>
+                            <svg class="eye right"><use href="#eye"></use></svg>
+                            <svg class="mouth"><use href="#mouth"></use></svg>
+                        </div>
+                    </div>
+                    <strong>Bien</strong>
+                    <span>Estoy tranquilo/a</span>
+                </button>
+
+                <button class="emotion-card" type="button" data-emotion="Regular" data-value="3">
+                    <div class="emoji ok">
+                        <input type="radio" name="feedback" value="3" tabindex="-1" />
+                        <div></div>
+                    </div>
+                    <strong>Regular</strong>
+                    <span>Estoy estable</span>
+                </button>
+
+                <button class="emotion-card" type="button" data-emotion="Mal" data-value="2">
+                    <div class="emoji sad">
+                        <input type="radio" name="feedback" value="2" tabindex="-1" />
+                        <div>
+                            <svg class="eye left"><use href="#eye"></use></svg>
+                            <svg class="eye right"><use href="#eye"></use></svg>
+                            <svg class="mouth"><use href="#mouth"></use></svg>
+                        </div>
+                    </div>
+                    <strong>Mal</strong>
+                    <span>No estoy muy bien</span>
+                </button>
+
+                <button class="emotion-card" type="button" data-emotion="Muy mal" data-value="1">
+                    <div class="emoji angry">
+                        <input type="radio" name="feedback" value="1" tabindex="-1" />
+                        <div>
+                            <svg class="eye left"><use href="#eye"></use></svg>
+                            <svg class="eye right"><use href="#eye"></use></svg>
+                            <svg class="mouth"><use href="#mouth"></use></svg>
+                        </div>
+                    </div>
+                    <strong>Muy mal</strong>
+                    <span>Necesito apoyo</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- SVG para los emojis -->
+        <svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+            <symbol id="eye" viewBox="0 0 7 4">
+                <path d="M1,1 C1.83333333,2.16666667 2.66666667,2.75 3.5,2.75 C4.33333333,2.75 5.16666667,2.16666667 6,1"></path>
+            </symbol>
+
+            <symbol id="mouth" viewBox="0 0 18 7">
+                <path d="M1,5.5 C3.66666667,2.5 6.33333333,1 9,1 C11.6666667,1 14.3333333,2.5 17,5.5"></path>
+            </symbol>
+        </svg>
+
+        <!-- NAVEGACIÓN -->
+        <section class="mini-nav">
+            <a href="/Sentir/Client/ScreenStudents/Follow-up/Follow-up.html" class="mini-nav-card blue">
+                <div class="mini-nav-icon">
+                    <i class="fa-solid fa-chart-simple"></i>
+                </div>
+                <div class="mini-nav-text">
+                    <h4>Ir a seguimiento</h4>
+                    <p>Conoce tu evolución y descubre patrones en tu bienestar.</p>
+                </div>
+                <div class="mini-nav-arrow">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </a>
+
+            <a href="/Sentir/Client/ScreenStudents/Badges/Badges.html" class="mini-nav-card purple">
+                <div class="mini-nav-icon">
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <div class="mini-nav-text">
+                    <h4>Ir a insignias</h4>
+                    <p>Reconoce tus logros y avanza en tu bienestar emocional.</p>
+                </div>
+                <div class="mini-nav-arrow">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </a>
+        </section>
+
+        <!-- 2. INTENSIDAD -->
+        <section class="diary-card">
+            <div class="section-head">
+                <div class="step-badge">2</div>
+                <div class="section-copy">
+                    <h3>¿Con qué intensidad lo sientes?</h3>
+                    <p>Mueve la barra del 1 al 10 según qué tan fuerte percibes esta emoción ahora.</p>
+                </div>
+            </div>
+
+            <div class="intensity-box">
+                <input type="range" id="intensityRange" min="1" max="10" value="6" />
+
+                <div class="range-numbers">
+                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                    <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                </div>
+
+                <div class="range-labels">
+                    <span>Muy leve</span>
+                    <span>Moderado</span>
+                    <span>Muy intenso</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. TEMA + PREGUNTAS -->
+        <section class="diary-card">
+            <div class="section-head">
+                <div class="step-badge">3</div>
+                <div class="section-copy">
+                    <h3>Cuéntame un poco más</h3>
+                    <p>Escribe o selecciona lo que pasa por tu mente. Puedes elegir varias opciones.</p>
+                </div>
+            </div>
+
+            <div class="thoughts-block">
+                <h4>¿Qué tienes en mente?</h4>
+
+                <div class="tag-list">
+                    <button class="tag-chip" type="button" data-tag="Mis estudios">Mis estudios</button>
+                    <button class="tag-chip" type="button" data-tag="Mi familia">Mi familia</button>
+                    <button class="tag-chip" type="button" data-tag="Mis amistades">Mis amistades</button>
+                    <button class="tag-chip" type="button" data-tag="Mi autoestima">Mi autoestima</button>
+                    <button class="tag-chip" type="button" data-tag="Ansiedad o estrés">Ansiedad o estrés</button>
+                    <button class="tag-chip" type="button" data-tag="Algo me preocupa">Algo me preocupa</button>
+                    <button class="tag-chip" type="button" data-tag="Me siento solo/a">Me siento solo/a</button>
+                    <button class="tag-chip" type="button" data-tag="Otra cosa">Otra cosa</button>
+                </div>
+
+                <div class="optional-questions-header">
+                    <h4>Preguntas opcionales</h4>
+                    <span>No son obligatorias, pero pueden ayudarte a expresarte mejor.</span>
+                </div>
+
+                <div class="optional-grid">
+                    <div class="optional-card">
+                        <div class="optional-title">
+                            <div class="optional-icon"><i class="fa-regular fa-comment"></i></div>
+                            <span>Algo que está pasando.</span>
+                        </div>
+                        <textarea
+                            id="optionalSituation"
+                            class="optional-input"
+                            maxlength="180"
+                            placeholder="Si quieres, cuéntame qué está pasando..."
+                        ></textarea>
+                    </div>
+
+                    <div class="optional-card">
+                        <div class="optional-title">
+                            <div class="optional-icon"><i class="fa-regular fa-lightbulb"></i></div>
+                            <span>Algo que yo pienso sobre eso.</span>
+                        </div>
+                        <textarea
+                            id="optionalThought"
+                            class="optional-input"
+                            maxlength="180"
+                            placeholder="Si quieres, escribe lo que piensas sobre eso..."
+                        ></textarea>
+                    </div>
+
+                    <div class="optional-card">
+                        <div class="optional-title">
+                            <div class="optional-icon"><i class="fa-regular fa-heart"></i></div>
+                            <span>Lo que necesito.</span>
+                        </div>
+                        <textarea
+                            id="optionalNeed"
+                            class="optional-input"
+                            maxlength="180"
+                            placeholder="Si quieres, escribe lo que necesitas..."
+                        ></textarea>
+                    </div>
+                </div>
+
+                <div class="main-writing">
+                    <label for="diaryText">Escribe aquí todo lo que quieras...</label>
+                    <div class="textarea-wrap">
+                        <textarea
+                            id="diaryText"
+                            maxlength="500"
+                            placeholder="Escribe aquí todo lo que quieras..."
+                        ></textarea>
+                        <span class="counter"><span id="characterCount">0</span>/500</span>
+                    </div>
+                </div>
+
+                <div class="save-row">
+                    <div class="thanks-message">
+                        <i class="fa-solid fa-seedling"></i>
+                        <span>Gracias por ser honesto/a contigo</span>
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+
+                    <button class="save-button" id="saveDiary" type="button">
+                        <i class="fa-regular fa-floppy-disk"></i>
+                        <span>Guardar mi diario</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- HISTORIAL -->
+<div class="modal-overlay" id="historyModal">
+    <div class="history-modal">
+        <div class="modal-top">
+            <div>
+                <span class="modal-pill">HISTORIAL</span>
+                <h3>Mis entradas del diario</h3>
+                <p>Podrás ver tus emociones y lo que escribiste, pero no eliminarlas.</p>
+            </div>
+
+            <button class="modal-close" id="closeHistoryModal" type="button">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="history-layout">
+            <div class="history-list" id="historyList"></div>
+            <div class="history-detail" id="historyDetail"></div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL GUARDADO -->
+<div class="modal-overlay" id="savedModal">
+    <div class="saved-modal">
+        <button class="modal-close" id="closeSavedModal" type="button">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="saved-icon">
+            <i class="fa-solid fa-heart"></i>
+        </div>
+
+        <span class="modal-pill">DIARIO EMOCIONAL</span>
+        <h3>Tu entrada fue guardada</h3>
+        <p>Gracias por tomarte un momento para reconocer cómo te sientes.</p>
+
+        <button class="confirm-button" id="finishSavedModal" type="button">
+            Listo
+            <i class="fa-solid fa-check"></i>
+        </button>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="/EmotionalDiary/EmotionalDiary.js"></script>
+</body>
+</html>

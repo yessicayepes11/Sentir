@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Mi seguimiento | SENTIR</title>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    >
+
+    <link rel="stylesheet" href="FollowUp.css">
+</head>
+
+
+<body>
+
+<div class="app">
+
+    <!-- =====================================================
+         FONDO OSCURO CUANDO SE ABRE EL SIDEBAR EN CELULAR
+    ====================================================== -->
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <!-- CABECERA SIDEBAR EN CELULAR -->
+
+        <div class="mobile-sidebar-header">
+
+            <span>Menú</span>
+
+            <button
+                class="close-sidebar"
+                id="closeSidebar"
+                aria-label="Cerrar menú"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <div class="sidebar-top">
+
+            <!-- =============================================
+                 LOGO
+
+                 Coloca tu imagen aquí:
+
+                 assets/logo-sentir.png
+            ============================================== -->
+
+            <a
+                href="Student.html"
+                class="logo-container"
+            >
+
+                <img
+                    src="/Sentir/Shared/StudentResources/Logo-nombrelado.png"
+                    alt="Logo SENTIR"
+                    class="logo-img"
+                    id="logoSentir"
+                >
+
+
+                <!-- SOLO APARECE SI NO ENCUENTRA LA IMAGEN -->
+
+                <div
+                    class="logo-fallback"
+                    id="logoFallback"
+                >
+
+                    <div class="fallback-heart">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+
+                    <div>
+
+                        <strong>sentir</strong>
+
+                        <small>
+                            Tu bienestar<br>
+                            te acompaña
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </a>
+
+
+            <!-- NAVEGACIÓN -->
+
+            <nav class="sidebar-menu">
+
+                <a
+                    href="/Sentir/Client/ScreenStudents/Students.html"
+                    class="sin-subrayado menu-item"
+                >
+                    <i class="fa-solid fa-house"></i>
+                    <span>Inicio</span>
+                </a>
+
+
+                <a
+                    href="Resources.html"
+                    class="menu-item"
+                >
+                    <i class="fa-solid fa-leaf"></i>
+                    <span>Recursos</span>
+                </a>
+
+
+                <a
+                    href="/Sentir/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.html"
+                    class="sin-subrayado menu-item"
+                >
+                    <i class="fa-solid fa-book"></i>
+                    <span>Diario emocional</span>
+                </a>
+
+                <a
+                    href="Help.html"
+                    class="menu-item"
+                >
+                    <i class="fa-solid fa-life-ring"></i>
+                    <span>Pedir ayuda</span>
+                </a>
+
+            </nav>
+
+        </div>
+
+
+        <!-- PARTE INFERIOR -->
+
+        <div class="sidebar-bottom">
+
+            <div class="wellness-message">
+
+                <div class="wellness-plant">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+
+
+                <div class="wellness-text">
+
+                    <h4>
+                        Tu bienestar importa
+                    </h4>
+
+                    <p>
+                        Aquí siempre encontrarás
+                        un espacio seguro.
+                    </p>
+
+                </div>
+
+
+                <i class="fa-solid fa-heart mini-heart"></i>
+
+            </div>
+
+
+            <button
+                class="logout-button"
+                id="logoutButton"
+            >
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                <span>
+                    Cerrar sesión
+                </span>
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         CONTENIDO PRINCIPAL
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <header class="topbar">
+
+
+            <!-- BOTÓN HAMBURGUESA -->
+
+            <button
+                class="hamburger-button"
+                id="hamburgerButton"
+                aria-label="Abrir menú"
+            >
+
+                <i class="fa-solid fa-bars"></i>
+
+            </button>
+
+
+
+            <!-- LOGO MÓVIL -->
+
+            <a
+                href="Student.html"
+                class="mobile-logo"
+            >
+
+                <img
+                    src="/Sentir/Shared/StudentResources/Logo-nombrelado.png"
+                    alt="SENTIR"
+                    id="mobileLogoImage"
+                >
+
+                <span
+                    class="mobile-logo-fallback"
+                    id="mobileLogoFallback"
+                >
+                    <i class="fa-solid fa-heart"></i>
+                    sentir
+                </span>
+
+            </a>
+
+
+
+            <!-- BUSCADOR -->
+
+            <div class="search-box">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="text"
+                    id="resourceSearch"
+                    placeholder="Buscar recursos, ejercicios, temas..."
+                >
+
+            </div>
+
+
+
+            <!-- ACCIONES DERECHA -->
+
+            <div class="topbar-actions">
+
+
+                <!-- NOTIFICACIONES -->
+
+                <button
+                    class="notification-button"
+                    id="notificationButton"
+                    aria-label="Notificaciones"
+                >
+
+                    <i class="fa-regular fa-bell"></i>
+
+                    <span class="notification-dot"></span>
+
+                </button>
+
+
+
+                <!-- PERFIL -->
+
+                <div
+                    class="student-profile"
+                    id="studentProfile"
+                >
+
+                    <div class="profile-avatar">
+
+                        <img
+                            id="headerProfileImage"
+                            src=""
+                            alt="Foto del estudiante"
+                        >
+
+                        <span id="profileInitial">
+                            A
+                        </span>
+
+                    </div>
+
+
+                    <div class="student-data">
+
+                        <strong id="studentName">
+                            Ana
+                        </strong>
+
+                        <span>
+                            Estudiante
+                        </span>
+
+                    </div>
+
+
+                    <i
+                        class="fa-solid fa-chevron-down profile-chevron"
+                    ></i>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <section class="hero-followup">
+
+
+            <div class="hero-copy">
+
+                <span class="hero-label">
+                    Tu progreso importa
+                    <i class="fa-solid fa-heart"></i>
+                </span>
+
+
+                <h1>
+                    Mi seguimiento
+                </h1>
+
+
+                <p>
+                    Aquí puedes ver cómo te sientes,
+                    celebrar tus avances y recordar todo
+                    lo que estás logrando.
+                </p>
+
+
+                <div class="hero-buttons">
+
+
+                    <a
+                        href="EmotionalDiary.html"
+                        class="hero-btn primary"
+                    >
+
+                        <span class="hero-btn-icon">
+                            <i class="fa-regular fa-calendar-days"></i>
+                        </span>
+
+                        <span>
+                            Ir a diario emocional
+                        </span>
+
+                        <i class="fa-solid fa-chevron-right"></i>
+
+                    </a>
+
+
+
+                    <a
+                        href="Badges.html"
+                        class="hero-btn secondary"
+                    >
+
+                        <span class="hero-btn-icon">
+                            <i class="fa-solid fa-star"></i>
+                        </span>
+
+                        <span>
+                            Ir a insignias
+                        </span>
+
+                        <i class="fa-solid fa-chevron-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 MUÑEQUITA
+
+                 Guarda la imagen PNG transparente como:
+
+                 assets/followup-girl.png
+            ============================================== -->
+
+            <div class="hero-illustration">
+
+
+                <div class="hand-message">
+                    Vas
+                    <span>muy bien</span>
+                </div>
+
+
+                <span class="hero-heart heart-one">
+                    <i class="fa-solid fa-heart"></i>
+                </span>
+
+                <span class="hero-heart heart-two">
+                    <i class="fa-solid fa-heart"></i>
+                </span>
+
+
+                <img
+                    src="/Sentir/Shared/StudentResources/Caricaturafollowup.png"
+                    alt="Estudiante abrazando un corazón"
+                    class="girl-image"
+                    id="followUpGirl"
+                >
+
+
+                <div
+                    class="girl-placeholder"
+                    id="girlPlaceholder"
+                >
+
+                    <i class="fa-regular fa-image"></i>
+
+                    <span>
+                        Coloca aquí<br>
+                        followup-girl.png
+                    </span>
+
+                </div>
+
+
+                <div class="progress-cloud">
+
+                    <span>
+                        Pequeños avances
+                    </span>
+
+                    <span>
+                        también son
+                    </span>
+
+                    <strong>
+                        grandes logros
+                    </strong>
+
+                    <i class="fa-solid fa-heart"></i>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             FILA PRINCIPAL
+        ================================================== -->
+
+        <section class="main-grid">
+
+
+            <!-- =============================================
+                 ESTADO DE ÁNIMO
+            ============================================== -->
+
+            <article class="dashboard-card mood-card">
+
+
+                <div class="card-header">
+
+                    <div class="card-title-group">
+
+
+                        <div class="card-icon purple">
+                            <i class="fa-solid fa-arrow-trend-up"></i>
+                        </div>
+
+
+                        <div>
+
+                            <h2>
+                                Tu estado de ánimo esta semana
+                            </h2>
+
+                            <p>
+                                Así ha sido tu estado de ánimo
+                                en los últimos 7 días.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <button class="period-button">
+
+                        Esta semana
+
+                        <i class="fa-solid fa-chevron-down"></i>
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- GRÁFICA -->
+
+                <div class="mood-chart-wrapper">
+
+
+                    <div class="chart-labels">
+
+                        <span>Muy bien</span>
+                        <span>Bien</span>
+                        <span>Regular</span>
+                        <span>Mal</span>
+                        <span>Muy mal</span>
+
+                    </div>
+
+
+
+                    <div class="chart-area">
+
+
+                        <div class="chart-grid-lines">
+
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+
+                        </div>
+
+
+                        <svg
+                            class="mood-chart"
+                            id="moodChart"
+                            viewBox="0 0 700 260"
+                            preserveAspectRatio="none"
+                        >
+
+                            <defs>
+
+                                <linearGradient
+                                    id="chartAreaGradient"
+                                    x1="0"
+                                    y1="0"
+                                    x2="0"
+                                    y2="1"
+                                >
+
+                                    <stop
+                                        offset="0%"
+                                        stop-color="#8c55ff"
+                                        stop-opacity="0.24"
+                                    />
+
+                                    <stop
+                                        offset="100%"
+                                        stop-color="#8c55ff"
+                                        stop-opacity="0"
+                                    />
+
+                                </linearGradient>
+
+                            </defs>
+
+
+                            <path
+                                id="moodAreaPath"
+                                class="mood-area"
+                            ></path>
+
+
+                            <path
+                                id="moodLinePath"
+                                class="mood-line"
+                            ></path>
+
+
+                            <g id="chartPoints"></g>
+
+                        </svg>
+
+
+                        <div
+                            class="chart-days"
+                            id="chartDays"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- =============================================
+                 BALANCE EMOCIONAL
+            ============================================== -->
+
+            <article class="dashboard-card balance-card">
+
+
+                <div class="card-header">
+
+
+                    <div class="card-title-group">
+
+
+                        <div class="card-icon purple">
+                            <i class="fa-solid fa-chart-pie"></i>
+                        </div>
+
+
+                        <div>
+
+                            <h2>
+                                Balance emocional
+                            </h2>
+
+                            <p>
+                                Un vistazo a tus emociones este mes.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <button class="period-button">
+
+                        Este mes
+
+                        <i class="fa-solid fa-chevron-down"></i>
+
+                    </button>
+
+                </div>
+
+
+
+                <div class="balance-content">
+
+
+                    <div class="donut-wrapper">
+
+                        <div class="donut-chart">
+
+                            <div class="donut-center">
+
+                                <strong>
+                                    78%
+                                </strong>
+
+                                <span>
+                                    Equilibrio
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="emotion-list">
+
+
+                        <div class="emotion-row">
+
+                            <span class="emotion-dot joy"></span>
+
+                            <span>Alegría</span>
+
+                            <strong>35%</strong>
+
+                        </div>
+
+
+                        <div class="emotion-row">
+
+                            <span class="emotion-dot calm"></span>
+
+                            <span>Calma</span>
+
+                            <strong>25%</strong>
+
+                        </div>
+
+
+                        <div class="emotion-row">
+
+                            <span class="emotion-dot peaceful"></span>
+
+                            <span>Tranquilidad</span>
+
+                            <strong>20%</strong>
+
+                        </div>
+
+
+                        <div class="emotion-row">
+
+                            <span class="emotion-dot sadness"></span>
+
+                            <span>Tristeza</span>
+
+                            <strong>12%</strong>
+
+                        </div>
+
+
+                        <div class="emotion-row">
+
+                            <span class="emotion-dot stress"></span>
+
+                            <span>Estrés</span>
+
+                            <strong>8%</strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="balance-message">
+
+
+                    <div class="balance-plant">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+
+                            Tu equilibrio emocional ha mejorado
+
+                            <i
+                                class="fa-solid fa-star balance-sparkle"
+                            ></i>
+
+                        </strong>
+
+                        <p>
+                            Has tenido más momentos de calma
+                            que la semana pasada. ¡Sigue así!
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SEGUNDA FILA
+        ================================================== -->
+
+        <section class="secondary-grid">
+
+
+            <!-- RACHA -->
+
+            <article class="dashboard-card streak-card">
+
+
+                <div class="mini-card-heading">
+
+                    <div class="card-icon orange">
+                        <i class="fa-solid fa-fire"></i>
+                    </div>
+
+                    <h2>
+                        Racha de bienestar
+                    </h2>
+
+                </div>
+
+
+                <div class="streak-main">
+
+                    <strong>
+                        5 días seguidos
+                    </strong>
+
+                    <span>
+                        Cuidando de ti
+                        <i class="fa-solid fa-heart"></i>
+                    </span>
+
+                </div>
+
+
+
+                <div class="week-streak">
+
+
+                    <div class="streak-day complete">
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                        </span>
+                        <small>Lun</small>
+                    </div>
+
+
+                    <div class="streak-day complete">
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                        </span>
+                        <small>Mar</small>
+                    </div>
+
+
+                    <div class="streak-day complete">
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                        </span>
+                        <small>Mié</small>
+                    </div>
+
+
+                    <div class="streak-day complete">
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                        </span>
+                        <small>Jue</small>
+                    </div>
+
+
+                    <div class="streak-day complete">
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                        </span>
+                        <small>Vie</small>
+                    </div>
+
+
+                    <div class="streak-day">
+                        <span></span>
+                        <small>Sáb</small>
+                    </div>
+
+
+                    <div class="streak-day">
+                        <span></span>
+                        <small>Dom</small>
+                    </div>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- LOGROS -->
+
+            <article class="dashboard-card achievements-card">
+
+
+                <div class="card-header compact">
+
+
+                    <div class="mini-card-heading">
+
+                        <div class="card-icon purple">
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+
+                        <h2>
+                            Tus logros recientes
+                        </h2>
+
+                    </div>
+
+
+                    <a
+                        href="Badges.html"
+                        class="small-link"
+                    >
+
+                        Ver todos
+
+                        <i class="fa-solid fa-chevron-right"></i>
+
+                    </a>
+
+                </div>
+
+
+
+                <div class="achievement-list">
+
+
+                    <div class="achievement">
+
+                        <div class="achievement-icon pink">
+
+                            <i class="fa-regular fa-face-smile"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Expresaste cómo te sentías
+                            </strong>
+
+                            <p>
+                                Continuar compartiendo
+                                te hace más fuerte.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="achievement">
+
+                        <div class="achievement-icon lavender">
+
+                            <i class="fa-solid fa-book-open"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Completaste un ejercicio
+                            </strong>
+
+                            <p>
+                                Un pequeño paso para un gran progreso.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- REFLEXIÓN -->
+
+            <article class="dashboard-card reflection-card">
+
+
+                <div class="mini-card-heading">
+
+                    <div class="card-icon yellow">
+
+                        <i class="fa-regular fa-lightbulb"></i>
+
+                    </div>
+
+                    <h2>
+                        Tu reflexión de hoy
+                    </h2>
+
+                </div>
+
+
+
+                <div class="reflection-box">
+
+                    <p>
+                        “Estoy aprendiendo a ser más amable
+                        conmigo misma, y eso también es
+                        un gran avance.”
+                    </p>
+
+                    <i class="fa-solid fa-heart"></i>
+
+                </div>
+
+
+
+                <a
+                    href="EmotionalDiary.html"
+                    class="reflection-button"
+                >
+
+                    <i class="fa-solid fa-pen"></i>
+
+                    <span>
+                        Escribir en mi diario
+                    </span>
+
+                    <i class="fa-solid fa-chevron-right"></i>
+
+                </a>
+
+            </article>
+
+        </section>
+
+
+
+        <!-- =================================================
+             MENSAJE FINAL
+        ================================================== -->
+
+        <section class="encouragement-banner">
+
+
+            <div class="encouragement-icon">
+
+                <i class="fa-solid fa-seedling"></i>
+
+            </div>
+
+
+            <div class="encouragement-copy">
+
+                <span>
+                    Recuerda...
+                </span>
+
+                <h3>
+                    Estás haciendo un gran trabajo.
+                </h3>
+
+                <p>
+                    No tienes que avanzar rápido.
+                    Lo importante es seguir cuidándote.
+                </p>
+
+            </div>
+
+
+            <div class="encouragement-decoration">
+
+                <div class="heart-circle">
+
+                    <i class="fa-solid fa-heart"></i>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+
+<!-- =========================================================
+     DROPDOWN PERFIL
+========================================================= -->
+
+<div
+    class="profile-dropdown"
+    id="profileDropdown"
+>
+
+    <a href="StudentProfile.html">
+
+        <i class="fa-regular fa-user"></i>
+
+        Mi perfil
+
+    </a>
+
+
+    <a href="#">
+
+        <i class="fa-solid fa-gear"></i>
+
+        Configuración
+
+    </a>
+
+</div>
+
+
+
+<!-- =========================================================
+     NOTIFICACIÓN
+========================================================= -->
+
+<div
+    class="notification-toast"
+    id="notificationToast"
+>
+
+    <div class="toast-icon">
+
+        <i class="fa-solid fa-heart"></i>
+
+    </div>
+
+
+    <div>
+
+        <strong>
+            ¡Vas muy bien!
+        </strong>
+
+        <p>
+            Tienes nuevos avances en tu seguimiento.
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<script src="FollowUp.js"></script>
+
+</body>
+</html>

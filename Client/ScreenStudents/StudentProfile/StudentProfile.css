@@ -177,50 +177,6 @@ button{border:0;background:none;cursor:pointer;color:inherit;}
 .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}.stat-box{min-height:118px;padding:13px 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:17px;background:linear-gradient(145deg,#faf8ff,#f7f4ff);text-align:center;}.stat-emoji{font-size:32px;line-height:1;}.stat-icon{width:37px;height:37px;display:grid;place-items:center;margin-bottom:4px;border-radius:11px;font-size:18px;}.stat-icon.purple{background:#e8dcff;color:#7349ef;}.stat-icon.yellow{background:#fff4bf;color:#f3aa1c;}.stat-box small{margin-top:5px;color:#78728f;font-size:9px;}.stat-box strong{margin-top:3px;color:#2e1f89;font-size:18px;line-height:1.1;}.stat-box em{margin-top:2px;color:#9a95ad;font-size:8px;font-style:normal;}
 .security-card{display:flex;flex-direction:column;}.security-option{width:100%;min-height:65px;display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:10px;margin-top:8px;padding:10px 11px;border:1px solid rgba(108,77,246,.08);border-radius:16px;background:#fbfaff;text-align:left;transition:.2s ease;}.security-option:hover{transform:translateX(2px);background:#f7f3ff;border-color:rgba(108,77,246,.16);}.security-option-icon{width:39px;height:39px;display:grid;place-items:center;border-radius:12px;background:#ece6ff;color:var(--morado);}.security-option span strong{display:block;font-size:11px;}.security-option span small{display:block;margin-top:2px;color:var(--texto-soft);font-size:9px;}.security-option>i{color:var(--morado);font-size:12px;}
 
-/* Solo la carita de «Tu última emoción». Mantiene intactas las demás tarjetas. */
-#lastEmotionEmoji{display:block;width:40px;height:40px;flex:none;font-size:initial;line-height:normal;--normal:#414052;--normal-shadow:#313140;--normal-shadow-top:#4c4b60;--normal-mouth:#2e2e3d;--normal-eye:#282734;--active:#f8da69;--active-shadow:#f4b555;--active-shadow-top:#fff6d3;--active-mouth:#f05136;--active-eye:#313036;--active-tear:#76b5e7;--active-shadow-angry:#e94f1d;--hover:#454456;--hover-shadow-top:#59586b}
-#lastEmotionEmoji .emoji{position:relative;display:block;width:40px;height:40px;animation:profileEmojiBob 3s ease-in-out infinite}
-#lastEmotionEmoji .emoji-face{position:absolute;inset:0;border-radius:50%;background:var(--active);box-shadow:inset 3px -3px 4px var(--active-shadow),inset -1px 1px 2px var(--active-shadow-top)}
-#lastEmotionEmoji .emoji-features{position:relative;display:block;width:40px;height:40px;transform:perspective(240px) translateZ(4px);animation:profileEmojiShake 3s linear infinite;--m:var(--active-mouth);--e:var(--active-eye)}
-#lastEmotionEmoji .emoji-features svg,#lastEmotionEmoji .emoji-features:before,#lastEmotionEmoji .emoji-features:after{position:absolute;display:block;left:var(--l,9px);top:var(--t,13px);width:var(--w,8px);height:var(--h,1px);transform:rotate(var(--r,0deg)) scale(var(--sc,1)) translateZ(0)}
-#lastEmotionEmoji .emoji-features svg{fill:none;stroke:var(--s);stroke-width:1.5px;stroke-linecap:round;stroke-linejoin:round}
-#lastEmotionEmoji .emoji-features svg.eye{--s:var(--e);--t:17px;--w:7px;--h:4px}
-#lastEmotionEmoji .emoji-features svg.eye.right{--l:23px}
-#lastEmotionEmoji .emoji-features svg.mouth{--s:var(--m);--l:11px;--t:23px;--w:18px;--h:7px}
-#lastEmotionEmoji .emoji-features:before,#lastEmotionEmoji .emoji-features:after{content:"";z-index:var(--zi,1);border-radius:var(--br,1px);background:var(--b,var(--e))}
-#lastEmotionEmoji .angry{--step-1-rx:-24deg;--step-1-ry:20deg;--step-2-rx:-24deg;--step-2-ry:-20deg}
-#lastEmotionEmoji .angry .emoji-features:before{--r:20deg}
-#lastEmotionEmoji .angry .emoji-features:after{--l:23px;--r:-20deg}
-#lastEmotionEmoji .angry svg.eye{stroke-dasharray:4.55;stroke-dashoffset:8.15}
-#lastEmotionEmoji .angry .emoji-face{animation:profileAngry 3s linear infinite}
-#lastEmotionEmoji .angry .emoji-features:before{animation:profileAngryBrowLeft 3s linear infinite}
-#lastEmotionEmoji .angry .emoji-features:after{animation:profileAngryBrowRight 3s linear infinite}
-#lastEmotionEmoji .sad{--step-1-rx:20deg;--step-1-ry:-12deg;--step-2-rx:-18deg;--step-2-ry:14deg}
-#lastEmotionEmoji .sad .emoji-features:before,#lastEmotionEmoji .sad .emoji-features:after{--b:var(--active-tear);--w:5px;--h:5px;--t:15px;--br:50%;animation:profileTear 3s linear infinite}
-#lastEmotionEmoji .sad .emoji-features:after{--l:25px;animation-delay:.2s}
-#lastEmotionEmoji .sad svg.eye{--t:16px}
-#lastEmotionEmoji .sad svg.mouth{--t:24px;stroke-dasharray:9.5;stroke-dashoffset:33.25}
-#lastEmotionEmoji .ok{--step-1-rx:4deg;--step-1-ry:-22deg;--step-1-rz:6deg;--step-2-rx:4deg;--step-2-ry:22deg;--step-2-rz:-6deg}
-#lastEmotionEmoji .ok .emoji-features:before{--l:12px;--t:17px;--h:4px;--w:4px;--br:50%;box-shadow:12px 0 0 var(--e);animation:profileBlink 3s linear infinite}
-#lastEmotionEmoji .ok .emoji-features:after{--l:13px;--t:26px;--w:14px;--h:2px;--br:1px;--b:var(--m)}
-#lastEmotionEmoji .good{--step-1-rx:-14deg;--step-1-rz:10deg;--step-2-rx:10deg;--step-2-rz:-8deg}
-#lastEmotionEmoji .good .emoji-features:before{--b:var(--m);--w:5px;--h:5px;--br:50%;--t:22px;--zi:0;opacity:.5;box-shadow:16px 0 0 var(--b);filter:blur(2px)}
-#lastEmotionEmoji .good .emoji-features:after{--sc:0}
-#lastEmotionEmoji .good svg.eye{--t:15px;--sc:-1;stroke-dasharray:4.55;stroke-dashoffset:8.15}
-#lastEmotionEmoji .good svg.mouth{--t:22px;--sc:-1;stroke-dasharray:13.3;stroke-dashoffset:23.75}
-#lastEmotionEmoji .happy{--step-1-rx:18deg;--step-1-ry:24deg;--step-2-rx:18deg;--step-2-ry:-24deg}
-#lastEmotionEmoji .happy .emoji-features:before{--sc:0}
-#lastEmotionEmoji .happy .emoji-features:after{--b:var(--m);--l:11px;--t:23px;--w:18px;--h:8px;--br:0 0 8px 8px}
-#lastEmotionEmoji .happy svg.eye{--t:14px;--sc:-1}
-@keyframes profileEmojiBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
-@keyframes profileEmojiShake{0%,15%,35%,100%{transform:perspective(240px) translateZ(4px)}21%{transform:perspective(240px) rotateX(var(--step-1-rx,0deg)) rotateY(var(--step-1-ry,0deg)) rotateZ(var(--step-1-rz,0deg)) translateZ(10px)}28%{transform:perspective(240px) rotateX(var(--step-2-rx,0deg)) rotateY(var(--step-2-ry,0deg)) rotateZ(var(--step-2-rz,0deg)) translateZ(10px)}}
-@keyframes profileAngry{20%{box-shadow:inset 3px -3px 4px var(--active-shadow),inset 0 8px 10px var(--active-shadow-angry)}40%,100%{box-shadow:inset 3px -3px 4px var(--active-shadow),inset -1px 1px 2px var(--active-shadow-top)}}
-@keyframes profileAngryBrowLeft{20%{transform:translateY(-2px) rotate(22deg)}40%,100%{transform:rotate(20deg)}}
-@keyframes profileAngryBrowRight{20%{transform:translateY(1px) rotate(-18deg)}40%,100%{transform:rotate(-20deg)}}
-@keyframes profileTear{0%,12%,100%{opacity:0;transform:translateY(-2px) scale(0)}22%{opacity:1}30%{opacity:1;transform:translateY(12px) scale(.6,1.2)}40%{opacity:0;transform:translateY(24px) translateX(4px) rotate(-30deg) scale(.7,1.1)}}
-@keyframes profileBlink{0%,20%,27%,100%{transform:scaleY(1)}23%{transform:scaleY(.35)}}
-@media (prefers-reduced-motion:reduce){#lastEmotionEmoji .emoji,#lastEmotionEmoji .emoji-features,#lastEmotionEmoji .emoji-face,#lastEmotionEmoji .emoji-features:before,#lastEmotionEmoji .emoji-features:after{animation:none}}
-
 /* QUICK ACCESS */
 .quick-section{max-width:1400px;margin:0 auto;padding:23px;border:1px solid rgba(108,77,246,.10);border-radius:24px;background:rgba(255,255,255,.92);box-shadow:var(--sombra);}.quick-heading{display:flex;align-items:end;justify-content:space-between;margin-bottom:15px;}.quick-heading h2{margin-top:9px;font-size:21px;}.quick-heading p{margin-top:3px;color:var(--texto-soft);font-size:11px;}.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}.quick-card{min-height:86px;display:grid;grid-template-columns:48px 1fr auto;align-items:center;gap:12px;padding:14px;border-radius:18px;background:linear-gradient(145deg,#faf8ff,#f5f3ff);border:1px solid rgba(108,77,246,.08);transition:.22s ease;}.quick-card:hover{transform:translateY(-3px);border-color:rgba(108,77,246,.18);box-shadow:0 10px 24px rgba(72,52,150,.08);}.quick-card-icon{width:47px;height:47px;display:grid;place-items:center;border-radius:14px;background:#eae3ff;color:var(--morado);font-size:17px;}.quick-card strong{display:block;font-size:12px;}.quick-card small{display:block;margin-top:3px;color:var(--texto-soft);font-size:9px;line-height:1.35;}.quick-card>i{color:var(--morado);font-size:12px;}
 

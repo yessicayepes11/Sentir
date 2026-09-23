@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Mis insignias | SENTIR</title>
+
+    <!-- GOOGLE FONT -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- FONT AWESOME -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="Badges.css"
+    >
+</head>
+
+
+<body>
+
+<div class="app">
+
+    <!-- FONDO OSCURO DEL SIDEBAR MÓVIL -->
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <!-- CABECERA MÓVIL -->
+
+        <div class="mobile-sidebar-header">
+
+            <span>Menú</span>
+
+            <button
+                class="close-sidebar"
+                id="closeSidebar"
+                aria-label="Cerrar menú"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <div class="sidebar-top">
+
+            <!-- LOGO -->
+
+            <a
+                href="Student.html"
+                class="logo-container"
+            >
+
+                <img
+                    src="/Sentir/Shared/StudentResources/Logo-nombrelado.png"
+                    alt="Logo SENTIR"
+                    class="logo-img"
+                    id="logoSentir"
+                >
+
+
+                <div
+                    class="logo-fallback"
+                    id="logoFallback"
+                >
+
+                    <div class="logo-symbol">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+
+                    <div>
+                        <strong>sentir</strong>
+
+                        <small>
+                            Tu bienestar<br>
+                            te acompaña
+                        </small>
+                    </div>
+
+                </div>
+
+            </a>
+
+
+            <!-- =================================================
+                 MENÚ
+
+                 Ya NO tiene Mi seguimiento ni Insignias.
+            ================================================== -->
+
+            <nav class="sidebar-menu">
+
+                <a
+                    href="Student.html"
+                    class="menu-item"
+                >
+                    <i class="fa-solid fa-house"></i>
+                    <span>Inicio</span>
+                </a>
+
+
+                <a
+                    href="Resources.html"
+                    class="menu-item"
+                >
+                    <i class="fa-solid fa-leaf"></i>
+                    <span>Recursos</span>
+                </a>
+
+
+                <a
+                    href="EmotionalDiary.html"
+                    class="menu-item"
+                >
+                    <i class="fa-solid fa-book"></i>
+                    <span>Diario emocional</span>
+                </a>
+
+
+                <a
+                    href="Help.html"
+                    class="menu-item"
+                >
+                    <i class="fa-solid fa-life-ring"></i>
+                    <span>Pedir ayuda</span>
+                </a>
+
+            </nav>
+
+        </div>
+
+
+        <!-- PARTE INFERIOR -->
+
+        <div class="sidebar-bottom">
+
+            <div class="wellness-message">
+
+                <div class="wellness-icon">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+
+
+                <div>
+
+                    <h4>
+                        Tu bienestar importa
+                    </h4>
+
+                    <p>
+                        Aquí siempre encontrarás
+                        un espacio seguro.
+                    </p>
+
+                </div>
+
+
+                <i class="fa-solid fa-heart sidebar-heart"></i>
+
+            </div>
+
+
+            <button
+                class="logout-button"
+                id="logoutButton"
+            >
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                <span>
+                    Cerrar sesión
+                </span>
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         CONTENIDO
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <header class="topbar">
+
+
+            <!-- HAMBURGUESA -->
+
+            <button
+                class="hamburger-button"
+                id="hamburgerButton"
+                aria-label="Abrir menú"
+            >
+
+                <i class="fa-solid fa-bars"></i>
+
+            </button>
+
+
+            <!-- LOGO MÓVIL -->
+
+            <a
+                href="Student.html"
+                class="mobile-logo"
+            >
+
+                <img
+                    src="assets/logo-sentir.png"
+                    alt="SENTIR"
+                    id="mobileLogoImage"
+                >
+
+                <span
+                    id="mobileLogoFallback"
+                    class="mobile-logo-fallback"
+                >
+                    <i class="fa-solid fa-heart"></i>
+                    sentir
+                </span>
+
+            </a>
+
+
+            <!-- BUSCADOR -->
+
+            <div class="search-box">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="text"
+                    id="badgeSearch"
+                    placeholder="Buscar insignias, logros..."
+                >
+
+            </div>
+
+
+            <!-- DERECHA -->
+
+            <div class="topbar-actions">
+
+
+                <button
+                    class="notification-button"
+                    id="notificationButton"
+                    aria-label="Notificaciones"
+                >
+
+                    <i class="fa-regular fa-bell"></i>
+
+                    <span class="notification-dot"></span>
+
+                </button>
+
+
+                <div
+                    class="student-profile"
+                    id="studentProfile"
+                >
+
+                    <div class="profile-avatar">
+
+                        <img
+                            id="headerProfileImage"
+                            src=""
+                            alt="Foto del estudiante"
+                        >
+
+                        <span id="profileInitial">
+                            A
+                        </span>
+
+                    </div>
+
+
+                    <div class="student-data">
+
+                        <strong id="studentName">
+                            Ana
+                        </strong>
+
+                        <span>
+                            Estudiante
+                        </span>
+
+                    </div>
+
+
+                    <i class="fa-solid fa-chevron-down profile-chevron"></i>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <section class="badges-hero">
+
+
+            <div class="hero-information">
+
+                <span class="hero-label">
+                    Tus logros cuentan
+                </span>
+
+
+                <h1>
+                    Mis insignias
+                </h1>
+
+
+                <h2>
+                    Pequeños pasos, grandes cambios
+
+                    <i class="fa-solid fa-heart"></i>
+                </h2>
+
+
+                <p>
+                    Cada acción por tu bienestar también cuenta.
+                    Aquí puedes ver tus insignias, celebrar tus
+                    logros y seguir avanzando.
+                </p>
+
+
+                <div class="hero-buttons">
+
+                    <a
+                        href="/Sentir/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.html"
+                        class="hero-button primary"
+                    >
+
+                        <i class="fa-regular fa-calendar-days"></i>
+
+                        <span>
+                            Ir a diario emocional
+                        </span>
+
+                        <i class="fa-solid fa-chevron-right"></i>
+
+                    </a>
+
+
+                    <a
+                        href="/Sentir/Client/ScreenStudents/EmotionalDiary/FollowUp/FollowUp.html"
+                        class="hero-button secondary"
+                    >
+
+                        <i class="fa-solid fa-chart-line"></i>
+
+                        <span>
+                            Ir a seguimiento
+                        </span>
+
+                        <i class="fa-solid fa-chevron-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 ILUSTRACIÓN
+
+                 GUARDA TU PNG COMO:
+
+                 assets/badges-girl.png
+            ================================================== -->
+
+            <div class="hero-character">
+
+                <div class="hero-message">
+                    ¡Estás haciendo un gran trabajo!
+                </div>
+
+
+                <span class="floating-heart heart-one">
+                    <i class="fa-solid fa-heart"></i>
+                </span>
+
+                <span class="floating-heart heart-two">
+                    <i class="fa-solid fa-heart"></i>
+                </span>
+
+
+                <img
+                    src="/Sentir/Shared/StudentResources/CaInsignias.png"
+                    alt="Estudiante con trofeo"
+                    class="badges-girl"
+                    id="badgesGirl"
+                >
+
+
+                <div
+                    class="girl-placeholder"
+                    id="girlPlaceholder"
+                >
+
+                    <i class="fa-regular fa-image"></i>
+
+                    <span>
+                        Aquí va tu muñequita<br>
+                        con el trofeo
+                    </span>
+
+                </div>
+
+
+                <div class="achievement-cloud">
+
+                    <span>
+                        Tu bienestar
+                    </span>
+
+                    <strong>
+                        también es
+                        un logro
+                    </strong>
+
+                    <i class="fa-solid fa-heart"></i>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PRÓXIMA INSIGNIA
+        ================================================== -->
+
+        <section class="next-badge-card">
+
+
+            <div class="featured-badge">
+
+
+                <div class="featured-badge-shape">
+
+                    <div class="featured-inner">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="next-badge-content">
+
+                <span class="featured-label">
+                    INSIGNIA DESTACADA
+                </span>
+
+                <h2>
+                    Próxima por desbloquear
+                </h2>
+
+                <p>
+                    ¡Te falta muy poco! Sigue registrando
+                    cómo te sientes en tu diario para obtener
+                    esta insignia.
+                </p>
+
+
+                <div class="progress-row">
+
+                    <div class="progress-track">
+
+                        <div
+                            class="progress-fill"
+                            style="width: 80%;"
+                        ></div>
+
+                    </div>
+
+                    <strong>
+                        4/5
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="featured-description">
+
+                <h3>
+                    Explorador de emociones
+                </h3>
+
+                <p>
+                    Has registrado tu estado de ánimo durante 5 días.
+                </p>
+
+
+                <span class="encouragement-pill">
+                    ¡Tú puedes!
+
+                    <i class="fa-solid fa-star"></i>
+                </span>
+
+            </div>
+
+
+
+            <div class="featured-decoration">
+
+                <span>
+                    Cada día<br>
+                    cuenta
+                </span>
+
+                <i class="fa-solid fa-heart"></i>
+
+
+                <div class="decorative-leaves">
+
+                    <i class="fa-solid fa-leaf leaf-one"></i>
+
+                    <i class="fa-solid fa-leaf leaf-two"></i>
+
+                    <i class="fa-solid fa-leaf leaf-three"></i>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             TODAS LAS INSIGNIAS
+        ================================================== -->
+
+        <section class="badges-section">
+
+
+            <div class="section-heading">
+
+                <h2>
+                    Todas las insignias
+                </h2>
+
+                <p>
+                    Explora tus logros por categoría.
+                    Cada insignia representa un paso en tu bienestar.
+                </p>
+
+            </div>
+
+
+
+            <!-- FILTROS -->
+
+            <div
+                class="badge-filters"
+                id="badgeFilters"
+            >
+
+                <button
+                    class="filter-button active"
+                    data-filter="all"
+                >
+
+                    <i class="fa-solid fa-star"></i>
+
+                    Todas
+
+                </button>
+
+
+                <button
+                    class="filter-button"
+                    data-filter="constancia"
+                >
+
+                    <i class="fa-solid fa-medal"></i>
+
+                    Constancia
+
+                </button>
+
+
+                <button
+                    class="filter-button"
+                    data-filter="autocuidado"
+                >
+
+                    <i class="fa-solid fa-heart"></i>
+
+                    Autocuidado
+
+                </button>
+
+
+                <button
+                    class="filter-button"
+                    data-filter="reflexion"
+                >
+
+                    <i class="fa-solid fa-lightbulb"></i>
+
+                    Reflexión
+
+                </button>
+
+
+                <button
+                    class="filter-button"
+                    data-filter="calma"
+                >
+
+                    <i class="fa-solid fa-spa"></i>
+
+                    Calma
+
+                </button>
+
+
+                <button
+                    class="filter-button"
+                    data-filter="apoyo"
+                >
+
+                    <i class="fa-solid fa-user-group"></i>
+
+                    Apoyo
+
+                </button>
+
+            </div>
+
+
+
+            <!-- GRID DE INSIGNIAS -->
+
+            <div
+                class="badges-grid"
+                id="badgesGrid"
+            >
+
+
+                <!-- PRIMER PASO -->
+
+                <article
+                    class="badge-card"
+                    data-category="constancia"
+                    data-name="Primer paso"
+                >
+
+                    <span class="badge-category green">
+
+                        <i class="fa-solid fa-stopwatch"></i>
+
+                        Constancia
+
+                    </span>
+
+
+                    <div class="badge-icon calendar">
+
+                        <i class="fa-regular fa-calendar-check"></i>
+
+                    </div>
+
+
+                    <h3>
+                        Primer paso
+                    </h3>
+
+
+                    <p>
+                        Registra tu estado de ánimo
+                        por primera vez.
+                    </p>
+
+
+                    <div class="badge-status unlocked">
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        Desbloqueada
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- TIEMPO PARA MÍ -->
+
+                <article
+                    class="badge-card"
+                    data-category="autocuidado"
+                    data-name="Tiempo para mí"
+                >
+
+                    <span class="badge-category blue">
+
+                        <i class="fa-solid fa-heart"></i>
+
+                        Autocuidado
+
+                    </span>
+
+
+                    <div class="badge-icon heart">
+
+                        <i class="fa-solid fa-heart"></i>
+
+                    </div>
+
+
+                    <h3>
+                        Tiempo para mí
+                    </h3>
+
+
+                    <p>
+                        Completa 3 ejercicios
+                        de autocuidado.
+                    </p>
+
+
+                    <div class="small-progress">
+
+                        <div class="small-progress-track">
+
+                            <div
+                                class="small-progress-fill"
+                                style="width: 66%;"
+                            ></div>
+
+                        </div>
+
+                        <span>
+                            2/3
+                        </span>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- MENTE CURIOSA -->
+
+                <article
+                    class="badge-card"
+                    data-category="reflexion"
+                    data-name="Mente curiosa"
+                >
+
+                    <span class="badge-category purple">
+
+                        <i class="fa-solid fa-lightbulb"></i>
+
+                        Reflexión
+
+                    </span>
+
+
+                    <div class="badge-icon journal">
+
+                        <i class="fa-solid fa-book-open"></i>
+
+                    </div>
+
+
+                    <h3>
+                        Mente curiosa
+                    </h3>
+
+
+                    <p>
+                        Escribe 5 entradas
+                        en tu diario emocional.
+                    </p>
+
+
+                    <div class="small-progress">
+
+                        <div class="small-progress-track">
+
+                            <div
+                                class="small-progress-fill"
+                                style="width: 60%;"
+                            ></div>
+
+                        </div>
+
+                        <span>
+                            3/5
+                        </span>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- RESPIRO PROFUNDO -->
+
+                <article
+                    class="badge-card locked"
+                    data-category="calma"
+                    data-name="Respiro profundo"
+                >
+
+                    <span class="badge-category lavender">
+
+                        <i class="fa-solid fa-spa"></i>
+
+                        Calma
+
+                    </span>
+
+
+                    <div class="badge-icon lotus">
+
+                        <i class="fa-solid fa-spa"></i>
+
+                    </div>
+
+
+                    <h3>
+                        Respiro profundo
+                    </h3>
+
+
+                    <p>
+                        Practica 5 ejercicios
+                        de respiración.
+                    </p>
+
+
+                    <div class="badge-status locked-status">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        Aún bloqueada
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- BUENA COMPAÑÍA -->
+
+                <article
+                    class="badge-card locked"
+                    data-category="apoyo"
+                    data-name="Buena compañía"
+                >
+
+                    <span class="badge-category cyan">
+
+                        <i class="fa-solid fa-user-group"></i>
+
+                        Apoyo
+
+                    </span>
+
+
+                    <div class="badge-icon people">
+
+                        <i class="fa-solid fa-user-group"></i>
+
+                    </div>
+
+
+                    <h3>
+                        Buena compañía
+                    </h3>
+
+
+                    <p>
+                        Explora recursos sobre
+                        apoyo y redes.
+                    </p>
+
+
+                    <div class="badge-status locked-status">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        Aún bloqueada
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             MENSAJES INFERIORES
+        ================================================== -->
+
+        <section class="bottom-messages">
+
+
+            <div class="motivation-card">
+
+                <div class="quote-icon">
+
+                    <i class="fa-solid fa-quote-left"></i>
+
+                </div>
+
+
+                <p>
+                    Reconocer tus esfuerzos también
+                    es parte del progreso.
+                </p>
+
+
+                <i class="fa-solid fa-heart"></i>
+
+            </div>
+
+
+
+            <div class="discover-card">
+
+
+                <div class="discover-plant">
+
+                    <i class="fa-solid fa-seedling"></i>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Sigue explorando,
+                    </span>
+
+                    <strong>
+                        ¡hay más insignias por descubrir!
+                    </strong>
+
+                </div>
+
+
+                <button
+                    class="discover-button"
+                    id="discoverButton"
+                >
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+            </div>
+
+
+
+            <div class="wellbeing-card">
+
+                <span>
+                    Un bienestar
+                </span>
+
+                <strong>
+                    más feliz
+                </strong>
+
+                <span>
+                    también es posible
+                </span>
+
+
+                <i class="fa-solid fa-heart"></i>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+
+<!-- =========================================================
+     PERFIL
+========================================================= -->
+
+<div
+    class="profile-dropdown"
+    id="profileDropdown"
+>
+
+    <a href="StudentProfile.html">
+
+        <i class="fa-regular fa-user"></i>
+
+        Mi perfil
+
+    </a>
+
+
+    <a href="#">
+
+        <i class="fa-solid fa-gear"></i>
+
+        Configuración
+
+    </a>
+
+</div>
+
+
+
+<!-- =========================================================
+     NOTIFICACIÓN
+========================================================= -->
+
+<div
+    class="notification-toast"
+    id="notificationToast"
+>
+
+    <div class="notification-icon">
+
+        <i class="fa-solid fa-medal"></i>
+
+    </div>
+
+
+    <div>
+
+        <strong>
+            ¡Cada vez falta menos!
+        </strong>
+
+        <p>
+            Estás cerca de conseguir una nueva insignia.
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     MODAL DE INSIGNIA
+========================================================= -->
+
+<div
+    class="badge-modal-overlay"
+    id="badgeModalOverlay"
+>
+
+    <div
+        class="badge-modal"
+        id="badgeModal"
+    >
+
+        <button
+            class="close-modal"
+            id="closeBadgeModal"
+        >
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+
+        <div
+            class="modal-badge-icon"
+            id="modalBadgeIcon"
+        >
+
+            <i class="fa-solid fa-star"></i>
+
+        </div>
+
+
+        <span id="modalCategory">
+            Insignia
+        </span>
+
+
+        <h2 id="modalBadgeTitle">
+            Nombre de insignia
+        </h2>
+
+
+        <p id="modalBadgeDescription">
+            Descripción de la insignia.
+        </p>
+
+
+        <div
+            class="modal-status"
+            id="modalBadgeStatus"
+        ></div>
+
+    </div>
+
+</div>
+
+
+
+<script src="Badges.js"></script>
+
+</body>
+
+</html>

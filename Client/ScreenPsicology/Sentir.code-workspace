@@ -1,0 +1,49 @@
+{
+	// Este archivo NO cambia ningún nombre de carpeta real ni ninguna ruta que use la web
+	// (index.html, los enlaces entre módulos, etc. siguen funcionando exactamente igual).
+	// Solo le dice a Visual Studio Code cómo llamar a cada carpeta en el panel del Explorador,
+	// para que ahí se vea en inglés mientras el proyecto en disco sigue en español.
+	//
+	// Cómo usarlo: en VS Code → File > Open Workspace from File... → selecciona este archivo.
+	"folders": [
+		{
+			"name": "🏠 Home",
+			"path": "inicio"
+		},
+		{
+			"name": "🎓 Students",
+			"path": "estudiantes"
+		},
+		{
+			"name": "🚨 Alerts",
+			"path": "alertas"
+		},
+		{
+			"name": "📅 Agenda",
+			"path": "agenda"
+		},
+		{
+			"name": "🧘 Activities",
+			"path": "actividades"
+		},
+		{
+			"name": "👤 Profile",
+			"path": "perfil"
+		},
+		{
+			"name": "🧩 Shared",
+			"path": "shared"
+		},
+		{
+			"name": "🖼️ Assets",
+			"path": "assets"
+		},
+		{
+			"name": "📦 Sentir (root files: index.html, README)",
+			"path": "."
+		}
+	],
+	"settings": {
+		"explorer.compactFolders": false
+	}
+}

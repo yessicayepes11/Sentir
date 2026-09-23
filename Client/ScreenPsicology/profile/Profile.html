@@ -27,7 +27,18 @@
                 <a href="../activities/Activities.html" class="nav-item" data-view="actividades"><i class="fa-solid fa-spa"></i><span>Control de Actividades</span></a>
                 <a href="../profile/Profile.html" class="nav-item" data-view="perfil"><i class="fa-solid fa-user"></i><span>Perfil</span></a>
             </nav>
-            <div class="sidebar-footer"><p class="quote">"El bienestar emocional es el primer paso para el éxito académico."</p></div>
+            <div class="sidebar-footer">
+                <div class="sidebar-care-box">
+                    <div class="sidebar-care-icon"><i class="fa-solid fa-heart-circle-check"></i></div>
+                    <h5>Cuidar también es cuidarte</h5>
+                    <p>Gracias por acompañar el bienestar de tu comunidad, un registro a la vez.</p>
+                </div>
+
+                <button class="sidebar-logout-btn" type="button" data-action="logout">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Cerrar sesión</span>
+                </button>
+            </div>
         </aside>
 
         <main class="main-content">
@@ -77,7 +88,7 @@
 
                 <div class="profile-columns">
                     <div class="sidebar-box profile-box">
-                        <h3><i class="fa-solid fa-id-badge"></i> Información Profesional</h3>
+                        <h3><span class="profile-section-icon icon-purple"><i class="fa-solid fa-id-badge"></i></span> Información Profesional</h3>
                         <ul class="profile-info-list">
                             <li><span>Correo institucional</span><strong id="infoEmail"></strong></li>
                             <li><span>Especialidad</span><strong id="infoEspecialidad"></strong></li>
@@ -87,7 +98,7 @@
                     </div>
 
                     <div class="sidebar-box profile-box">
-                        <h3><i class="fa-solid fa-sliders"></i> Preferencias de Notificación</h3>
+                        <h3><span class="profile-section-icon icon-blue"><i class="fa-solid fa-sliders"></i></span> Preferencias de Notificación</h3>
                         <div class="toggle-row"><div><strong>Alertas de estudiantes</strong><p>Notificación inmediata ante alertas activadas</p></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
                         <div class="toggle-row"><div><strong>Resumen diario por correo</strong><p>Recibe un resumen del ecosistema emocional</p></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
                         <div class="toggle-row"><div><strong>Sugerencias de Sentir AI</strong><p>Recomendaciones proactivas de intervención</p></div><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
@@ -96,40 +107,6 @@
                             <div><strong>Notificaciones del navegador</strong><p>Sonido + aviso del sistema cuando llegue una alerta nueva</p></div>
                             <button class="btn-secondary" id="enableNotifBtn">Activar</button>
                         </div>
-                    </div>
-                </div>
-
-                <div class="profile-columns" style="margin-top:20px;">
-                    <div class="sidebar-box profile-box backup-box">
-                        <div class="profile-box-header">
-                            <span class="profile-box-icon icon-purple"><i class="fa-solid fa-database"></i></span>
-                            <div>
-                                <h3>Respaldo de Datos</h3>
-                                <p class="profile-box-desc">Toda la información vive en este navegador. Descarga una copia por seguridad o restáurala si cambias de computador.</p>
-                            </div>
-                        </div>
-                        <div class="backup-actions">
-                            <button class="btn-secondary" id="exportBackupBtn"><i class="fa-solid fa-download"></i> Exportar Respaldo (.json)</button>
-                            <div class="file-upload-box" id="importUploadBox">
-                                <input type="file" id="importBackupInput" accept="application/json" class="file-upload-input">
-                                <label for="importBackupInput" class="file-upload-label">
-                                    <i class="fa-solid fa-upload"></i>
-                                    <span class="file-upload-text">Importar Respaldo (.json)</span>
-                                    <span class="file-upload-btn">Elegir archivo</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="sidebar-box profile-box reset-box">
-                        <div class="profile-box-header">
-                            <span class="profile-box-icon icon-danger"><i class="fa-solid fa-rotate-left"></i></span>
-                            <div>
-                                <h3>Restablecer Valores</h3>
-                                <p class="profile-box-desc">Borra estudiantes, alertas, agenda y actividades agregadas, y vuelve todo a los datos de ejemplo originales. Esta acción no se puede deshacer.</p>
-                            </div>
-                        </div>
-                        <button class="btn-danger-outline" id="resetDefaultsBtn"><i class="fa-solid fa-triangle-exclamation"></i> Restablecer valores por defecto</button>
                     </div>
                 </div>
 

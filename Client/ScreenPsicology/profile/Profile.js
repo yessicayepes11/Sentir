@@ -5,8 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initEditProfileModal();
     initAvatarEdit();
     initNotificationButton();
-    initBackupActions();
-    initResetDefaults();
 });
 
 function initNotificationButton() {
@@ -24,83 +22,6 @@ function initNotificationButton() {
     btn.addEventListener('click', () => {
         requestBrowserNotificationPermission();
         setTimeout(refreshLabel, 300);
-    });
-}
-
-function initBackupActions() {
-    const exportBtn = document.getElementById('exportBackupBtn');
-    const importInput = document.getElementById('importBackupInput');
-    const importBox = document.getElementById('importUploadBox');
-
-    if (exportBtn) {
-        exportBtn.addEventListener('click', () => {
-            exportSentirBackup();
-            showToast({ title: 'Respaldo descargado', message: 'Se generó el archivo .json con toda la información de Sentir.', icon: 'fa-download', type: 'success' });
-        });
-    }
-
-    if (importInput) {
-        importInput.addEventListener('change', () => {
-            const file = importInput.files[0];
-            if (!file) return;
-
-            const overlay = openSentirModal(`
-                <div class="sentir-modal-header">
-                    <div class="sentir-modal-icon" style="background:#FEF2F2; color:var(--riesgo-alto);"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                    <div><h3>¿Importar este respaldo?</h3><p>Reemplazará los datos actuales de este navegador</p></div>
-                </div>
-                <div class="sentir-modal-body">
-                    <p class="activity-detail-text">Vas a restaurar el archivo <strong>${file.name}</strong>. Estudiantes, alertas, agenda, actividades y perfil actuales serán reemplazados por los del respaldo. Esta acción no se puede deshacer.</p>
-                </div>
-                <div class="sentir-modal-actions">
-                    <button class="modal-btn-cancel" id="cancelImport">Cancelar</button>
-                    <button class="modal-btn-confirm" id="confirmImport" style="background:var(--riesgo-alto);"><i class="fa-solid fa-upload"></i> Sí, Importar</button>
-                </div>
-            `);
-
-            overlay.querySelector('#cancelImport').addEventListener('click', () => { closeSentirModal(overlay); importInput.value = ''; });
-            overlay.querySelector('#confirmImport').addEventListener('click', () => {
-                importSentirBackup(file, (success) => {
-                    closeSentirModal(overlay);
-                    if (success) {
-                        showToast({ title: 'Respaldo importado', message: 'Recargando la página con la información restaurada...', icon: 'fa-circle-check', type: 'success' });
-                        setTimeout(() => window.location.reload(), 1200);
-                    } else {
-                        showToast({ title: 'No se pudo importar', message: 'El archivo no tiene un formato válido de respaldo de Sentir.', icon: 'fa-circle-exclamation', type: 'info' });
-                        importInput.value = '';
-                    }
-                });
-            });
-        });
-    }
-}
-
-function initResetDefaults() {
-    const btn = document.getElementById('resetDefaultsBtn');
-    if (!btn) return;
-
-    btn.addEventListener('click', () => {
-        const overlay = openSentirModal(`
-            <div class="sentir-modal-header">
-                <div class="sentir-modal-icon" style="background:#FEF2F2; color:var(--riesgo-alto);"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                <div><h3>¿Restablecer todo?</h3><p>Esta acción no se puede deshacer</p></div>
-            </div>
-            <div class="sentir-modal-body">
-                <p class="activity-detail-text">Se eliminarán los estudiantes, alertas, citas y actividades que hayas agregado, y el perfil volverá a los datos de ejemplo originales de Sentir.</p>
-            </div>
-            <div class="sentir-modal-actions">
-                <button class="modal-btn-cancel" id="cancelReset">Cancelar</button>
-                <button class="modal-btn-confirm" id="confirmReset" style="background:var(--riesgo-alto);"><i class="fa-solid fa-rotate-left"></i> Sí, Restablecer</button>
-            </div>
-        `);
-
-        overlay.querySelector('#cancelReset').addEventListener('click', () => closeSentirModal(overlay));
-        overlay.querySelector('#confirmReset').addEventListener('click', () => {
-            resetSentirDefaults();
-            closeSentirModal(overlay);
-            showToast({ title: 'Valores restablecidos', message: 'Recargando con los datos originales de Sentir...', icon: 'fa-rotate-left', type: 'success' });
-            setTimeout(() => window.location.reload(), 1000);
-        });
     });
 }
 

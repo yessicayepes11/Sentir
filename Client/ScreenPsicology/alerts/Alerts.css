@@ -49,3 +49,8 @@
 .alerts-empty { text-align: center; padding: 30px; color: var(--text-muted); font-size: 13px; background: var(--white); border-radius: 20px; border: 1px dashed #E5E7EB; }
 
 .cases-container { display: flex; flex-direction: column; gap: 16px; }
+
+@media (max-width: 560px) {
+    .alert-card { flex-direction: column; align-items: stretch; padding: 20px; }
+    .alert-card-actions { width: 100%; justify-content: flex-start; }
+}

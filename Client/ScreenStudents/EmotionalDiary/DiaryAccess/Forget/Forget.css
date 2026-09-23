@@ -1,0 +1,763 @@
+
+:root{
+
+    --morado:#6C4DF6;
+    --moradoOscuro:#4E2FC7;
+    --lavanda:#B8A8FF;
+
+    --azul:#65B8FF;
+    --celeste:#A7D8FF;
+
+    --plateado:#D9DCE7;
+
+    --blanco:#FFFFFF;
+
+    --gris:#666666;
+
+    --grisClaro:#F4F6FA;
+
+    --rojo:#FF5C73;
+
+    --verde:#30C67C;
+
+}
+
+/*=============== RESET ===============*/
+
+*{
+
+    margin:0;
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:'Poppins',sans-serif;
+
+}
+
+body{
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+
+    background-image:url("/Sentir/Shared/ForgetResources/Fondo.png");
+
+    background-size:cover;
+
+    background-position:center;
+
+    background-repeat:no-repeat;
+
+}
+
+/*=============== CONTENEDOR GENERAL ===============*/
+
+.contenedor{
+
+    width:100%;
+
+    min-height:100vh;
+
+    display:flex;
+
+}
+
+/*=============== PANEL IZQUIERDO ===============*/
+
+.panel-informacion{
+
+    width:50%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:50px;
+
+}
+
+/*=============== LOGO ===============*/
+
+.logo-contenedor{
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:flex-start;
+
+}
+
+.logo{
+
+    width:190px;
+
+    transition:.35s;
+
+}
+
+.logo:hover{
+
+    transform:scale(1.04);
+
+}
+
+/*=============== TEXTO ===============*/
+
+.texto-principal{
+
+    width:100%;
+
+    max-width:500px;
+
+    text-align:left;
+
+}
+
+.texto-principal h1{
+
+    font-size:3rem;
+
+    color:var(--moradoOscuro);
+
+    font-weight:700;
+
+    margin-bottom:20px;
+
+}
+
+.corazon{
+
+    font-size:40px;
+
+    color:var(--morado);
+
+    margin-bottom:20px;
+
+}
+
+.texto-principal p{
+
+    color:var(--gris);
+
+    line-height:1.8;
+
+    font-size:18px;
+
+}
+
+/*=============== PERSONAJES ===============*/
+
+.personajes{
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:flex-end;
+
+}
+
+.img-personajes{
+
+    width:100%;
+
+    max-width:430px;
+
+    animation:flotar 5s ease-in-out infinite;
+
+}
+
+/*=============== PANEL DERECHO ===============*/
+
+.panel-formulario{
+
+    width:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:40px;
+
+}
+
+/*=============== TARJETA ===============*/
+
+.tarjeta{
+
+    width:100%;
+
+    max-width:520px;
+
+    background:rgba(255,255,255,.95);
+
+    backdrop-filter:blur(18px);
+
+    border-radius:35px;
+
+    padding:45px;
+
+    box-shadow:
+
+        0 25px 55px rgba(108,77,246,.15);
+
+}
+
+/*=============== ANIMACIÓN PERSONAJES ===============*/
+
+@keyframes flotar{
+
+    0%{
+
+        transform:translateY(0px);
+
+    }
+
+    50%{
+
+        transform:translateY(-10px);
+
+    }
+
+    100%{
+
+        transform:translateY(0px);
+
+    }
+
+}
+
+/*=============== RESPONSIVE TABLET ===============*/
+
+@media(max-width:1024px){
+
+    body{
+
+        background-image:url("/Sentir/Shared/ForgetResources/FondoTablet.png");
+
+    }
+
+    .contenedor{
+
+        flex-direction:column;
+
+    }
+
+    .panel-informacion{
+
+        width:100%;
+
+        padding:40px;
+
+    }
+
+    .panel-formulario{
+
+        width:100%;
+
+        padding:30px;
+
+    }
+
+    .texto-principal{
+
+        text-align:center;
+
+    }
+
+    .logo-contenedor{
+
+        justify-content:center;
+
+    }
+
+}
+
+/*=============== RESPONSIVE CELULAR ===============*/
+
+@media(max-width:768px){
+
+    body{
+
+        background-image:url("/Sentir/Shared/ForgetResources/Fondocel.png");
+
+    }
+
+    .panel-informacion{
+
+        padding:30px 20px;
+
+    }
+
+    .panel-formulario{
+
+        padding:20px;
+
+    }
+
+    .logo{
+
+        width:150px;
+
+    }
+
+    .texto-principal h1{
+
+        font-size:2rem;
+
+    }
+
+    .texto-principal p{
+
+        font-size:16px;
+
+    }
+
+    .img-personajes{
+
+        max-width:260px;
+
+    }
+
+    .tarjeta{
+
+        padding:30px;
+
+        border-radius:25px;
+
+    }
+
+}
+/* =======================================================
+   FORMULARIO
+======================================================= */
+
+/* Icono superior */
+
+.icono-correo{
+
+    width:90px;
+    height:90px;
+
+    margin:0 auto 25px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:linear-gradient(
+        135deg,
+        var(--lavanda),
+        var(--celeste)
+    );
+
+    border-radius:50%;
+
+    box-shadow:0 12px 30px rgba(108,77,246,.18);
+
+}
+
+.icono-correo img{
+
+    width:85px;
+
+}
+
+/* Título */
+
+.tarjeta h2{
+
+    text-align:center;
+
+    color:var(--moradoOscuro);
+
+    font-size:2rem;
+
+    margin-bottom:12px;
+
+}
+
+.descripcion{
+
+    text-align:center;
+
+    color:var(--gris);
+
+    margin-bottom:35px;
+
+    line-height:1.7;
+
+}
+
+/* Label */
+
+label{
+
+    display:block;
+
+    color:var(--moradoOscuro);
+
+    font-weight:600;
+
+    margin-bottom:12px;
+
+}
+
+/* Caja del input */
+
+.input-contenedor{
+
+    display:flex;
+
+    align-items:center;
+
+    background:white;
+
+    border:2px solid #E5E8EF;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    transition:.35s;
+
+}
+
+.input-contenedor:hover{
+
+    border-color:var(--morado);
+
+}
+
+.input-contenedor:focus-within{
+
+    border-color:var(--morado);
+
+    box-shadow:0 0 0 5px rgba(108,77,246,.15);
+
+}
+
+.input-contenedor img{
+
+    width:26px;
+
+    margin-left:18px;
+
+}
+
+.input-contenedor input{
+
+    flex:1;
+
+    border:none;
+
+    outline:none;
+
+    padding:18px;
+
+    font-size:16px;
+
+    background:transparent;
+
+}
+
+.input-contenedor input::placeholder{
+
+    color:#999;
+
+}
+
+/* Error */
+
+.mensaje-error{
+
+    display:block;
+
+    margin-top:10px;
+
+    color:var(--rojo);
+
+    font-size:14px;
+
+    min-height:20px;
+
+}
+
+/* =======================================================
+   BOTÓN PRINCIPAL
+======================================================= */
+
+.btn-principal{
+
+    width:100%;
+
+    margin-top:30px;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:18px;
+
+    background:linear-gradient(
+        135deg,
+        var(--morado),
+        var(--azul)
+    );
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
+    transition:.35s;
+
+}
+
+.btn-principal:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 18px 35px rgba(108,77,246,.30);
+
+}
+
+.btn-principal:active{
+
+    transform:scale(.98);
+
+}
+
+.flecha{
+
+    font-size:22px;
+
+}
+
+/* =======================================================
+   DIVISOR
+======================================================= */
+
+.separador{
+
+    margin:35px 0;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.separador span{
+
+    flex:1;
+
+    height:1px;
+
+    background:#DDD;
+
+}
+
+.separador p{
+
+    color:#888;
+
+}
+
+/* =======================================================
+   BOTÓN SECUNDARIO
+======================================================= */
+
+.btn-secundario{
+
+    display:block;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    padding:15px;
+
+    border-radius:16px;
+
+    border:2px solid var(--lavanda);
+
+    color:var(--moradoOscuro);
+
+    font-weight:600;
+
+    transition:.35s;
+
+}
+
+.btn-secundario:hover{
+
+    background:var(--lavanda);
+
+    color:white;
+
+}
+
+/* =======================================================
+   SEGURIDAD
+======================================================= */
+
+.seguridad{
+
+    display:flex;
+
+    gap:12px;
+
+    margin-top:30px;
+
+    padding:18px;
+
+    border-radius:16px;
+
+    background:#F8F8FF;
+
+}
+
+.seguridad span{
+
+    font-size:22px;
+
+}
+
+.seguridad p{
+
+    color:#666;
+
+    font-size:14px;
+
+    line-height:1.6;
+
+}
+
+/* =======================================================
+   MENSAJE ÉXITO
+======================================================= */
+
+.mensaje-exito{
+
+    margin-top:25px;
+
+    padding:18px;
+
+    border-radius:15px;
+
+    background:#E9FFF3;
+
+    color:var(--verde);
+
+    text-align:center;
+
+    font-weight:600;
+
+}
+
+/* =======================================================
+   LOADER
+======================================================= */
+
+.loader{
+
+    width:45px;
+    height:45px;
+
+    margin:25px auto;
+
+    border-radius:50%;
+
+    border:5px solid #DDD;
+
+    border-top:5px solid var(--morado);
+
+    animation:girar .8s linear infinite;
+
+}
+
+@keyframes girar{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+/* =======================================================
+   CLASES AUXILIARES
+======================================================= */
+
+.oculto{
+
+    display:none;
+
+}
+
+/* =======================================================
+   RESPONSIVE EXTRA
+======================================================= */
+
+@media(max-width:768px){
+
+    .tarjeta h2{
+
+        font-size:1.6rem;
+
+    }
+
+    .descripcion{
+
+        font-size:15px;
+
+    }
+
+    .btn-principal{
+
+        font-size:15px;
+
+        padding:16px;
+
+    }
+
+    .btn-secundario{
+
+        font-size:15px;
+
+    }
+
+    .input-contenedor input{
+
+        font-size:15px;
+
+        padding:16px;
+
+    }
+
+}

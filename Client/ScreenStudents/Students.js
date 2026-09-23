@@ -584,134 +584,134 @@ function loadStudentName() {
    EMOCIONES
 ========================================================= */
 
+/* =========================================================
+   EMOCIONES
+========================================================= */
+
 function initEmotions() {
 
     const emotions =
-        document.querySelectorAll(
-            ".emotion"
-        );
-
+        document.querySelectorAll(".emotion");
 
     const question =
-        document.getElementById(
-            "emotionQuestion"
-        );
-
+        document.getElementById("emotionQuestion");
 
     const selected =
-        document.getElementById(
-            "selectedEmotion"
-        );
-
+        document.getElementById("selectedEmotion");
 
     const close =
-        document.getElementById(
-            "closeQuestion"
-        );
+        document.getElementById("closeQuestion");
 
 
-    emotions.forEach(
-        function (emotion) {
+    emotions.forEach(function (emotion) {
 
-            emotion.addEventListener(
-                "click",
-                function () {
+        emotion.addEventListener("click", function () {
 
-                    emotions.forEach(
-                        function (item) {
+            /* Quitar selección visual anterior */
+            emotions.forEach(function (item) {
 
-                            item.classList.remove(
-                                "selected"
-                            );
+                item.classList.remove("selected");
 
-                        }
-                    );
+            });
 
 
-                    emotion.classList.add(
-                        "selected"
-                    );
+            /* Marcar emoción seleccionada */
+            emotion.classList.add("selected");
 
 
-                    const radio =
-                        emotion.querySelector(
-                            'input[type="radio"]'
-                        );
+            /* Buscar el radio del emoji */
+            const radio =
+                emotion.querySelector(
+                    '.emoji input[type="radio"]'
+                );
 
 
-                    /*
-                    Reinicia la animación
-                    si vuelves a pulsar
-                    el mismo emoji.
-                    */
+            if (radio) {
 
-                    if (radio) {
+                /*
+                Desmarcamos los demás radios.
+                Esto permite que solamente un emoji
+                permanezca seleccionado.
+                */
+                document
+                    .querySelectorAll(
+                        '.emoji input[name="feedback"]'
+                    )
+                    .forEach(function (input) {
 
-                        if (radio.checked) {
+                        if (input !== radio) {
 
-                            radio.checked =
-                                false;
-
-                            void radio.offsetWidth;
+                            input.checked = false;
 
                         }
 
-
-                        radio.checked =
-                            true;
-
-                    }
+                    });
 
 
-                    const value =
-                        emotion.dataset.emotion;
+                /*
+                Si se vuelve a pulsar el mismo emoji,
+                reiniciamos su animación.
+                */
+                if (radio.checked) {
 
+                    radio.checked = false;
 
-                    localStorage.setItem(
-
-                        "sentirLastEmotion",
-
-                        value
-
-                    );
-
-
-                    if (selected) {
-
-                        selected.textContent =
-                            "Hoy te sientes: " +
-                            value;
-
-                    }
-
-
-                    if (question) {
-
-                        question.classList.add(
-                            "show"
-                        );
-
-                    }
+                    void radio.offsetWidth;
 
                 }
-            );
-
-        }
-    );
 
 
-    if (
-        close &&
-        question
-    ) {
+                /* Activar emoji */
+                radio.checked = true;
+
+            }
+
+
+            /* Obtener nombre de la emoción */
+            const value =
+                emotion.dataset.emotion;
+
+
+            /* Guardar última emoción */
+            if (value) {
+
+                localStorage.setItem(
+                    "sentirLastEmotion",
+                    value
+                );
+
+            }
+
+
+            /* Mostrar emoción seleccionada */
+            if (selected && value) {
+
+                selected.textContent =
+                    "Hoy te sientes: " + value;
+
+            }
+
+
+            /* Mostrar pregunta */
+            if (question) {
+
+                question.classList.add("show");
+
+            }
+
+        });
+
+    });
+
+
+    /* Cerrar pregunta */
+    if (close && question) {
 
         close.addEventListener(
             "click",
             function () {
 
-                question.classList.remove(
-                    "show"
-                );
+                question.classList.remove("show");
 
             }
         );
@@ -719,7 +719,6 @@ function initEmotions() {
     }
 
 }
-
 
 /* =========================================================
    PEDIR AYUDA

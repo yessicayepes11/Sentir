@@ -234,7 +234,7 @@ function initDiaryAccess() {
 
         setTimeout(function () {
             window.location.href =
-                "/Sentir/Client/ScreenStudents/EmotionalDiary/Daily.html";
+                "/Sentir/Client/ScreenStudents/EmotionalDiary/EmotionalDiary.html";
         }, 700);
     });
 }

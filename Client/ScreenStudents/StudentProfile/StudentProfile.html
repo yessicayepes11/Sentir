@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sentir | Mi perfil</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="/Sentir/Client/ScreenStudents/StudentProfile/StudentProfile.css" />
+</head>
+<body>
+<div class="app">
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <a href="/Sentir/Client/ScreenStudents/Students.html">
+                <img src="/Sentir/Shared/LoginResources/logos.png.png" alt="Sentir" />
+            </a>
+        </div>
+
+        <nav class="menu">
+            <a href="/Sentir/Client/ScreenStudents/Students.html" class="menu-item" data-page="inicio">
+                <i class="fa-solid fa-house"></i>
+                <span>Inicio</span>
+            </a>
+
+            <a href="/Sentir/Client/ScreenStudents/Relaxation/Relaxation.html" class="menu-item" data-page="recursos">
+                <i class="fa-solid fa-leaf"></i>
+                <span>Recursos</span>
+            </a>
+
+            <a href="/Sentir/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.html" class="menu-item" data-page="diario">
+                <i class="fa-solid fa-book-open"></i>
+                <span>Diario emocional</span>
+            </a>
+
+            <a href="/Sentir/Client/ScreenStudents/AskForHelp/AskForHelp.html" class="menu-item" data-page="ayuda">
+                <i class="fa-solid fa-life-ring"></i>
+                <span>Pedir ayuda</span>
+            </a>
+
+            <a href="/Sentir/Client/ScreenStudents/StudentProfile/StudentProfile.html" class="menu-item active" data-page="perfil" aria-current="page">
+                <i class="fa-solid fa-user"></i>
+                <span>Mi perfil</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="privacy-box">
+                <div class="privacy-icon"><i class="fa-solid fa-seedling"></i></div>
+                <div>
+                    <strong>Tu bienestar importa</strong>
+                    <span>Aquí siempre encontrarás un espacio seguro.</span>
+                </div>
+                <i class="fa-solid fa-heart privacy-heart"></i>
+            </div>
+
+            <a href="/Sentir/Client/index.html" class="logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Cerrar sesión</span>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div class="header-left">
+                <button class="mobile-menu" id="mobileMenu" type="button" aria-label="Abrir menú" aria-expanded="false">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="mobile-logo">
+                    <img src="/Sentir/Shared/LoginResources/logos.png.png" alt="Sentir" />
+                </div>
+
+                <label class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input id="profileSearch" type="search" placeholder="Buscar recursos, ejercicios, temas..." autocomplete="off" />
+                </label>
+            </div>
+
+            <div class="top-actions">
+                <div class="notification-wrapper">
+                    <button class="notification" id="notificationButton" type="button" aria-label="Notificaciones">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+
+                    <div class="notification-panel" id="notificationPanel">
+                        <div class="notification-panel-head">
+                            <div>
+                                <strong>Notificaciones</strong>
+                                <span>Tu espacio está al día</span>
+                            </div>
+                            <i class="fa-solid fa-sparkles"></i>
+                        </div>
+                        <div class="notification-empty">
+                            <span class="notification-empty-icon"><i class="fa-regular fa-heart"></i></span>
+                            <p>No tienes notificaciones nuevas.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-wrapper">
+                    <button class="profile" id="profileButton" type="button">
+                        <div class="profile-avatar" data-profile-avatar>
+                            <img class="profile-avatar-image" alt="Foto de perfil" hidden />
+                            <span class="profile-avatar-fallback">A</span>
+                        </div>
+
+                        <div class="profile-info">
+                            <strong data-student-name>Ana</strong>
+                            <span>Estudiante</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down profile-arrow"></i>
+                    </button>
+
+                    <div class="profile-menu" id="profileMenu">
+                        <a href="/Sentir/Client/ScreenStudents/StudentProfile/StudentProfile.html">
+                            <i class="fa-regular fa-user"></i>
+                            Mi perfil
+                        </a>
+                        <a href="/Sentir/Client/index.html">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            Cerrar sesión
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="profile-hero">
+            <div class="hero-copy">
+                <span class="hero-pill"><i class="fa-solid fa-user-pen"></i> Mi cuenta</span>
+                <h1>Mi perfil <span>♡</span></h1>
+                <p>Conoce tu información, personaliza tu cuenta y cuida tu bienestar.</p>
+            </div>
+
+            <div class="hero-art" aria-hidden="true">
+                <span class="hero-note note-one">Tu bienestar<br>también vive aquí</span>
+                <span class="hero-heart heart-one">♥</span>
+                <span class="hero-heart heart-two">♥</span>
+                <div class="hero-avatar-wrap">
+                    <div class="hero-avatar" data-profile-avatar>
+                        <img class="profile-avatar-image" alt="" hidden />
+                        <span class="profile-avatar-fallback">A</span>
+                    </div>
+                    <div class="hero-leaf leaf-left"><i class="fa-solid fa-leaf"></i></div>
+                    <div class="hero-leaf leaf-right"><i class="fa-solid fa-leaf"></i></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="profile-main-card">
+            <div class="photo-column">
+                <div class="photo-frame">
+                    <div class="main-photo" data-profile-avatar>
+                        <img class="profile-avatar-image" alt="Foto del estudiante" hidden />
+                        <span class="profile-avatar-fallback">A</span>
+                    </div>
+                    <button class="camera-fab" id="cameraButton" type="button" aria-label="Cambiar foto">
+                        <i class="fa-solid fa-camera"></i>
+                    </button>
+                    <span class="spark spark-1">✦</span>
+                    <span class="spark spark-2">♥</span>
+                    <span class="spark spark-3">✦</span>
+                </div>
+
+                <button class="outline-action" id="changePhotoButton" type="button">
+                    <i class="fa-solid fa-camera"></i>
+                    Cambiar foto
+                </button>
+                <input id="photoInput" type="file" accept="image/png,image/jpeg,image/webp" hidden />
+
+                <p class="photo-message">Cuidarte también<br>es conocerte <span>♡</span></p>
+            </div>
+
+            <div class="info-column">
+                <div class="section-title-row">
+                    <div class="section-title">
+                        <span class="section-icon"><i class="fa-solid fa-user"></i></span>
+                        <div>
+                            <h2>Información personal</h2>
+                            <p>Estos son los datos principales de tu cuenta.</p>
+                        </div>
+                    </div>
+
+                    <button class="edit-button" id="editProfileButton" type="button">
+                        <i class="fa-solid fa-pen"></i>
+                        Editar perfil
+                    </button>
+                </div>
+
+                <div class="info-grid">
+                    <article class="info-item">
+                        <span class="info-icon"><i class="fa-solid fa-user"></i></span>
+                        <div><small>Nombre completo</small><strong id="displayName">Ana Sofía Ramírez Torres</strong></div>
+                    </article>
+                    <article class="info-item">
+                        <span class="info-icon"><i class="fa-solid fa-calendar-days"></i></span>
+                        <div><small>Fecha de nacimiento</small><strong id="displayBirthdate">12 de marzo de 2007</strong></div>
+                    </article>
+                    <article class="info-item">
+                        <span class="info-icon"><i class="fa-solid fa-id-card"></i></span>
+                        <div><small>Documento</small><strong id="displayDocument">1.234.567.890</strong></div>
+                    </article>
+                    <article class="info-item">
+                        <span class="info-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+                        <div><small>Grado</small><strong id="displayGrade">11° grado</strong></div>
+                    </article>
+                    <article class="info-item">
+                        <span class="info-icon"><i class="fa-solid fa-envelope"></i></span>
+                        <div><small>Correo electrónico</small><strong id="displayEmail">ana.ramirez@estudiante.edu.co</strong></div>
+                    </article>
+                    <article class="info-item">
+                        <span class="info-icon"><i class="fa-solid fa-book-open"></i></span>
+                        <div><small>Curso / Programa</small><strong id="displayProgram">Ciencias Sociales</strong></div>
+                    </article>
+                    <article class="info-item">
+                        <span class="info-icon"><i class="fa-solid fa-mobile-screen-button"></i></span>
+                        <div><small>Celular</small><strong id="displayPhone">+57 300 123 4567</strong></div>
+                    </article>
+                    <article class="info-item">
+                        <span class="info-icon"><i class="fa-solid fa-user-check"></i></span>
+                        <div><small>Rol en Sentir</small><strong id="displayRole">Estudiante</strong></div>
+                    </article>
+                </div>
+
+                <div class="primary-actions">
+                    <button class="primary-button" id="saveMainButton" type="button">
+                        <i class="fa-solid fa-check"></i>
+                        Guardar cambios
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                    <button class="secondary-button" id="settingsButton" type="button">
+                        <i class="fa-solid fa-gear"></i>
+                        Configuración
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="bottom-grid">
+            <article class="dashboard-card wellbeing-card">
+                <div class="card-heading">
+                    <div class="heading-left">
+                        <span class="heading-icon"><i class="fa-solid fa-chart-simple"></i></span>
+                        <div>
+                            <h3>Resumen de bienestar</h3>
+                            <p>Un vistazo a tu camino. ¡Vas muy bien!</p>
+                        </div>
+                    </div>
+                    <span class="month-chip">Este mes <i class="fa-solid fa-chevron-down"></i></span>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <span class="stat-emoji" id="lastEmotionEmoji" aria-hidden="true"></span>
+                        <small>Tu última emoción</small>
+                        <strong id="lastEmotionText">Sin registrar</strong>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-icon purple"><i class="fa-solid fa-book"></i></span>
+                        <small>Entradas de diario</small>
+                        <strong id="diaryCount">0</strong>
+                        <em>este mes</em>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-icon yellow"><i class="fa-solid fa-star"></i></span>
+                        <small>Insignias logradas</small>
+                        <strong id="badgeCount">0</strong>
+                        <em>en total</em>
+                    </div>
+                </div>
+            </article>
+
+            <article class="dashboard-card security-card">
+                <div class="card-heading">
+                    <div class="heading-left">
+                        <span class="heading-icon shield"><i class="fa-solid fa-shield-heart"></i></span>
+                        <div>
+                            <h3>Privacidad y seguridad</h3>
+                            <p>Tu información está protegida, siempre.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="security-option" id="changePasswordButton" type="button">
+                    <span class="security-option-icon"><i class="fa-solid fa-lock"></i></span>
+                    <span><strong>Cambiar mi clave</strong><small>Mantén tu cuenta segura</small></span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+
+                <button class="security-option" id="safeSpaceButton" type="button">
+                    <span class="security-option-icon"><i class="fa-solid fa-shield-heart"></i></span>
+                    <span><strong>Mi espacio seguro</strong><small>Personaliza tu experiencia</small></span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </article>
+        </section>
+
+        <section class="quick-section">
+            <div class="quick-heading">
+                <div>
+                    <span class="hero-pill"><i class="fa-solid fa-wand-magic-sparkles"></i> Accesos rápidos</span>
+                    <h2>Todo tu bienestar, a un toque</h2>
+                    <p>Continúa tu recorrido sin perder el ritmo.</p>
+                </div>
+            </div>
+
+            <div class="quick-grid">
+                <a class="quick-card" href="/Sentir/Client/ScreenStudents/EmotionalDiary/EmotionalDiary.html">
+                    <span class="quick-card-icon"><i class="fa-solid fa-book-open"></i></span>
+                    <div><strong>Diario emocional</strong><small>Escribe cómo te sientes hoy</small></div>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+                <a class="quick-card" href="/Sentir/Client/ScreenStudents/Follow-up/Follow-up.html">
+                    <span class="quick-card-icon"><i class="fa-solid fa-chart-line"></i></span>
+                    <div><strong>Seguimiento</strong><small>Mira tu evolución emocional</small></div>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+                <a class="quick-card" href="/Sentir/Client/ScreenStudents/Badges/Badges.html">
+                    <span class="quick-card-icon"><i class="fa-solid fa-star"></i></span>
+                    <div><strong>Insignias</strong><small>Descubre tus logros</small></div>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- EDITAR PERFIL -->
+<div class="modal-overlay" id="editProfileModal" aria-hidden="true">
+    <section class="modal-card modal-large" role="dialog" aria-modal="true" aria-labelledby="editProfileTitle">
+        <button class="modal-close" type="button" data-close-modal="editProfileModal" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+        <div class="modal-head">
+            <span class="modal-icon"><i class="fa-solid fa-user-pen"></i></span>
+            <div>
+                <span class="modal-pill">MI INFORMACIÓN</span>
+                <h2 id="editProfileTitle">Editar perfil</h2>
+                <p>Actualiza tus datos y guarda los cambios cuando termines.</p>
+            </div>
+        </div>
+
+        <form id="editProfileForm" class="profile-form">
+            <label class="field field-wide">
+                <span>Nombre completo</span>
+                <div class="input-wrap"><i class="fa-solid fa-user"></i><input id="nameInput" type="text" maxlength="80" required /></div>
+            </label>
+            <label class="field">
+                <span>Documento</span>
+                <div class="input-wrap"><i class="fa-solid fa-id-card"></i><input id="documentInput" type="text" maxlength="25" required /></div>
+            </label>
+            <label class="field">
+                <span>Fecha de nacimiento</span>
+                <div class="input-wrap"><i class="fa-solid fa-calendar-days"></i><input id="birthdateInput" type="date" required /></div>
+            </label>
+            <label class="field field-wide">
+                <span>Correo electrónico</span>
+                <div class="input-wrap"><i class="fa-solid fa-envelope"></i><input id="emailInput" type="email" maxlength="100" required /></div>
+            </label>
+            <label class="field">
+                <span>Celular</span>
+                <div class="input-wrap"><i class="fa-solid fa-mobile-screen-button"></i><input id="phoneInput" type="tel" maxlength="25" /></div>
+            </label>
+            <label class="field">
+                <span>Grado</span>
+                <div class="input-wrap"><i class="fa-solid fa-graduation-cap"></i><input id="gradeInput" type="text" maxlength="30" /></div>
+            </label>
+            <label class="field field-wide">
+                <span>Curso / Programa</span>
+                <div class="input-wrap"><i class="fa-solid fa-book-open"></i><input id="programInput" type="text" maxlength="60" /></div>
+            </label>
+
+            <div class="modal-actions field-wide">
+                <button class="button-ghost" type="button" data-close-modal="editProfileModal">Cancelar</button>
+                <button class="button-main" type="submit"><i class="fa-solid fa-check"></i> Guardar cambios</button>
+            </div>
+        </form>
+    </section>
+</div>
+
+<!-- CONFIGURACIÓN -->
+<div class="modal-overlay" id="settingsModal" aria-hidden="true">
+    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+        <button class="modal-close" type="button" data-close-modal="settingsModal" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+        <div class="modal-head">
+            <span class="modal-icon"><i class="fa-solid fa-gear"></i></span>
+            <div><span class="modal-pill">PREFERENCIAS</span><h2 id="settingsTitle">Configuración</h2><p>Personaliza cómo quieres vivir tu experiencia en Sentir.</p></div>
+        </div>
+
+        <div class="settings-list">
+            <label class="setting-row">
+                <span><strong>Recordatorios suaves</strong><small>Recibe avisos para registrar cómo te sientes.</small></span>
+                <input id="remindersToggle" type="checkbox" class="switch-input" />
+                <span class="switch"></span>
+            </label>
+            <label class="setting-row">
+                <span><strong>Animaciones</strong><small>Mantén las transiciones visuales de la interfaz.</small></span>
+                <input id="animationsToggle" type="checkbox" class="switch-input" />
+                <span class="switch"></span>
+            </label>
+            <label class="setting-row">
+                <span><strong>Perfil más privado</strong><small>Oculta datos secundarios en vistas compactas.</small></span>
+                <input id="privacyToggle" type="checkbox" class="switch-input" />
+                <span class="switch"></span>
+            </label>
+        </div>
+
+        <div class="modal-actions">
+            <button class="button-ghost" type="button" data-close-modal="settingsModal">Cancelar</button>
+            <button class="button-main" id="saveSettingsButton" type="button"><i class="fa-solid fa-check"></i> Guardar configuración</button>
+        </div>
+    </section>
+</div>
+
+<!-- CAMBIAR CLAVE -->
+<div class="modal-overlay" id="passwordModal" aria-hidden="true">
+    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="passwordTitle">
+        <button class="modal-close" type="button" data-close-modal="passwordModal" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+        <div class="modal-head">
+            <span class="modal-icon"><i class="fa-solid fa-lock"></i></span>
+            <div><span class="modal-pill">SEGURIDAD</span><h2 id="passwordTitle">Cambiar mi clave</h2><p>Crea una clave nueva de al menos 8 caracteres.</p></div>
+        </div>
+
+        <form id="passwordForm" class="password-form">
+            <label class="field field-wide">
+                <span>Nueva clave</span>
+                <div class="input-wrap"><i class="fa-solid fa-lock"></i><input id="newPassword" type="password" minlength="8" autocomplete="new-password" required /><button class="toggle-password" type="button" data-password-target="newPassword"><i class="fa-regular fa-eye"></i></button></div>
+            </label>
+            <label class="field field-wide">
+                <span>Confirmar nueva clave</span>
+                <div class="input-wrap"><i class="fa-solid fa-shield"></i><input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" required /><button class="toggle-password" type="button" data-password-target="confirmPassword"><i class="fa-regular fa-eye"></i></button></div>
+            </label>
+            <div class="password-note"><i class="fa-solid fa-circle-info"></i><span>Esta pantalla valida el cambio en el frontend. Cuando conectes tu backend, aquí debes enviar la nueva clave de forma segura al servidor.</span></div>
+            <div class="modal-actions field-wide">
+                <button class="button-ghost" type="button" data-close-modal="passwordModal">Cancelar</button>
+                <button class="button-main" type="submit"><i class="fa-solid fa-shield-check"></i> Actualizar clave</button>
+            </div>
+        </form>
+    </section>
+</div>
+
+<!-- ESPACIO SEGURO -->
+<div class="modal-overlay" id="safeSpaceModal" aria-hidden="true">
+    <section class="modal-card safe-modal" role="dialog" aria-modal="true" aria-labelledby="safeSpaceTitle">
+        <button class="modal-close" type="button" data-close-modal="safeSpaceModal" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+        <div class="safe-visual"><i class="fa-solid fa-heart"></i><span>♡</span><span>✦</span></div>
+        <span class="modal-pill">TU ESPACIO SEGURO</span>
+        <h2 id="safeSpaceTitle">Aquí también puedes pedir apoyo</h2>
+        <p>Elige lo que necesitas en este momento. Puedes ir a una actividad de relajación o comunicar que necesitas ayuda.</p>
+        <div class="safe-actions">
+            <a class="safe-link" href="/Sentir/Client/ScreenStudents/Relaxation/Relaxation.html"><i class="fa-solid fa-leaf"></i><span><strong>Quiero relajarme</strong><small>Respira y encuentra un momento de calma</small></span><i class="fa-solid fa-arrow-right"></i></a>
+            <a class="safe-link urgent" href="/Sentir/Client/ScreenStudents/AskForHelp/AskForHelp.html"><i class="fa-solid fa-life-ring"></i><span><strong>Necesito pedir ayuda</strong><small>Comunícate desde tu espacio de apoyo</small></span><i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+    </section>
+</div>
+
+<!-- BÚSQUEDA -->
+<div class="modal-overlay" id="searchModal" aria-hidden="true">
+    <section class="modal-card search-modal-card" role="dialog" aria-modal="true" aria-labelledby="searchTitle">
+        <button class="modal-close" type="button" data-close-modal="searchModal" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+        <span class="modal-pill">RESULTADOS</span>
+        <h2 id="searchTitle">Encontramos estas opciones</h2>
+        <p id="searchText">Puedes continuar desde uno de estos espacios.</p>
+        <div class="search-results" id="searchResults"></div>
+    </section>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="/Sentir/Client/ScreenStudents/StudentProfile/StudentProfile.js"></script>
+</body>
+</html>

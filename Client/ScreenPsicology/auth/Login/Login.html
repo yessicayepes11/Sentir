@@ -47,13 +47,15 @@
 
                     <div class="input-group">
                         <label><span style="color:#000000">Correo electrónico </span></label>
-                        <input type="email" required>
+                        <input type="email" id="loginEmail" autocomplete="username" required>
                     </div>
 
                     <div class="input-group">
                         <label><span style="color:#000000">Contraseña </span></label>
-                        <input type="password" required>
+                        <input type="password" id="loginPassword" autocomplete="current-password" minlength="6" required>
                     </div>
+
+                    <p class="login-error" id="loginError" role="alert" aria-live="polite"></p>
 
                     <button type="submit" class="btn">
                         Ingresar

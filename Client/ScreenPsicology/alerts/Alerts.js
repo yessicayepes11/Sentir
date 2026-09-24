@@ -25,12 +25,13 @@ function renderAlerts() {
     const sorted = [...alerts].sort((a, b) => order[a.estado] - order[b.estado]);
 
     list.innerHTML = sorted.map(a => `
-        <div class="alert-card ${ALERT_STATUS_CLASS[a.estado]}" data-id="${a.id}">
+        <div class="alert-card ${ALERT_STATUS_CLASS[a.estado]}" data-id="${a.id}" role="group" tabindex="0" aria-label="Alerta de ${a.estudiante}">
             <div class="alert-card-main">
                 <span class="alert-pulse-dot"></span>
                 <div class="alert-card-info">
                     <h4>${a.estudiante}</h4>
                     <p class="alert-meta">Grado ${a.grado} · ${a.hora}</p>
+                    ${renderSignalSourceBadge(a.estudiante, a.source || 'student')}
                     <p class="alert-reason">${a.motivo}</p>
                 </div>
             </div>
@@ -87,7 +88,7 @@ function renderRiskCases() {
     }
 
     container.innerHTML = filtered.map(s => `
-        <div class="student-case-card" data-name="${s.name}">
+        <div class="student-case-card" data-name="${s.name}" role="button" tabindex="0">
             <div class="card-header">
                 <div class="student-profile">
                     <img src="${s.avatar}" alt="${s.name}" class="student-case-avatar">
@@ -95,6 +96,7 @@ function renderRiskCases() {
                 </div>
             </div>
             <div class="case-body">
+                ${renderSignalSourceBadge(s.name, 'ai')}
                 <p class="emotional-state">Estado Emocional: <span class="${s.risk === 'high' ? 'high-risk-text' : 'medium-risk-text'}">${s.moodText}</span></p>
                 <p class="detection-reason"><strong>Motivo de seguimiento:</strong> Sentir AI identificó patrones sostenidos que requieren acompañamiento del área de psicología.</p>
             </div>
@@ -106,7 +108,14 @@ function renderRiskCases() {
     `).join('');
 
     container.querySelectorAll('.student-case-card').forEach(card => {
-        card.addEventListener('click', () => openStudentPanel(card.dataset.name));
+        const openCase = () => openStudentPanel(card.dataset.name);
+        card.addEventListener('click', openCase);
+        card.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                openCase();
+            }
+        });
     });
 }
 

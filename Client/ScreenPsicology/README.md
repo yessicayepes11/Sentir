@@ -1,18 +1,19 @@
 # SENTIR — Interfaz de Psicología (modularizada)
 
 ## Cómo abrir
-Abre `index.html` (o directamente `home/Home.html`) con Live Server. Cada módulo es una página independiente que comparte estilos y lógica desde `/shared`.
+Abre `index.html` con Live Server. El acceso inicia en `auth/Welcome.html`; los módulos privados de Psicología requieren una sesión activa y comparten estilos y lógica desde `/shared`.
 
 Las carpetas están nombradas en inglés (convención de proyecto), pero todo el contenido visible en la web —menús, textos, botones— sigue en español.
 
 ## Estructura
 ```
 Sentir/
-├── index.html              → redirige a home/Home.html
+├── index.html              → redirige a auth/Welcome.html
 ├── assets/
 │   ├── psicologa.png       → ilustración de bienvenida (Inicio)
 │   ├── psicologa-avatar.png→ foto de perfil/header
 │   └── logos.png.png       → logo de Sentir
+├── auth/                    → bienvenida, login, registro, recuperación y guardia de sesión
 ├── shared/                 → CSS y JS comunes a todos los módulos
 │   ├── sentir-shared.css   → variables, sidebar, header, modales, toasts, tarjetas
 │   └── sentir-shared.js    → configuración de la psicóloga, "base de datos" local,
@@ -34,7 +35,23 @@ Abre `shared/sentir-shared.js` y edita el objeto `SENTIR_DEFAULT_PROFILE` (arrib
 - **Notificaciones del navegador**: sonido + aviso del sistema cuando aparece una alerta nueva (se activa desde Perfil).
 - **Actividades vinculadas a estudiantes**: sugerir una actividad de relajación queda registrado en el historial de intervenciones del estudiante elegido.
 - **Respaldo de datos**: exportar/importar toda la información como `.json` desde Perfil, y "Restablecer valores por defecto" si algo sale mal.
-- **Reportes imprimibles**: tanto el expediente de un estudiante como el reporte clínico general (Accesos Rápidos en Inicio) se abren en una pestaña lista para "Guardar como PDF" desde el diálogo de impresión del navegador.
+- **Reportes imprimibles**: tanto el expediente de un estudiante como el reporte de seguimiento institucional (Accesos Rápidos en Inicio) se abren en una pestaña lista para "Guardar como PDF" desde el diálogo de impresión del navegador.
 
 ## Datos y "base de datos" local
 Mientras se construye el backend real, todo (estudiantes, alertas, agenda, intervenciones, actividades, perfil) se guarda en `localStorage` del navegador (funciones `getStudents()`, `getAlerts()`, `getAgenda()`, `getActivities()`, etc. en `sentir-shared.js`). Cuando el backend esté listo, solo hay que reemplazar esas funciones por llamadas `fetch()` a la API — el resto del código de las páginas no cambia.
+
+
+## Seguridad de sesión
+
+- Los módulos privados de Psicología incluyen `auth/session-guard.js` y no pueden abrirse desde una URL directa sin una sesión temporal activa.
+- La sesión se cierra por inactividad con aviso y cuenta regresiva antes de volver a `auth/Welcome.html`.
+- El frontend está preparado para sustituir el bloque de demostración de `auth/Login/Login.js` por una llamada al backend. En producción, la validación de credenciales y permisos debe realizarse obligatoriamente en el servidor.
+
+## Accesibilidad
+
+- Menú, campana de notificaciones, perfil, tarjetas y acciones principales tienen foco visible y navegación por teclado.
+- Los controles del encabezado usan etiquetas ARIA y estados `aria-expanded` cuando corresponde.
+
+## SENTIR AI
+
+- La tarjeta de recomendación muestra la base comparativa del indicador y aclara que la tendencia es un apoyo para priorización, no un diagnóstico.

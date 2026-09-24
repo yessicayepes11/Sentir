@@ -4,7 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
     renderKpis();
     renderCasesPreview();
     renderAgendaWidget();
+    renderPendingFollowups();
     initQuickActions();
+    renderAiInsight();
     initCreateGroupWorkshop();
     initHeaderSearch();
     initMoodStats();
@@ -119,7 +121,7 @@ function renderKpis() {
 
     const grid = document.getElementById('homeKpiGrid');
     grid.innerHTML = kpis.map((k, i) => `
-        <div class="kpi-card ${k.cls}" data-index="${i}">
+        <div class="kpi-card ${k.cls}" data-index="${i}" role="button" tabindex="0">
             <i class="fa-solid ${k.icon} kpi-icon"></i>
             <h3 class="counter-number">${k.value}</h3>
             <p>${k.label}</p>
@@ -127,8 +129,14 @@ function renderKpis() {
     `).join('');
 
     grid.querySelectorAll('.kpi-card').forEach((card, i) => {
-        if (kpis[i].goto) card.addEventListener('click', kpis[i].goto);
-        else card.addEventListener('click', () => showToast({ title: kpis[i].label, message: 'Cifra acumulada del período actual.', icon: 'fa-chart-line', type: 'info' }));
+        const activate = kpis[i].goto || (() => showToast({ title: kpis[i].label, message: 'Cifra acumulada del período actual.', icon: 'fa-chart-line', type: 'info' }));
+        card.addEventListener('click', activate);
+        card.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                activate();
+            }
+        });
     });
 
     animateCounters(grid);
@@ -160,7 +168,7 @@ function renderCasesPreview() {
     }
 
     container.innerHTML = priority.map(s => `
-        <div class="student-case-card" data-name="${s.name}">
+        <div class="student-case-card" data-name="${s.name}" role="button" tabindex="0">
             <div class="card-header">
                 <div class="student-profile">
                     <img src="${s.avatar}" alt="${s.name}" class="student-case-avatar">
@@ -169,8 +177,9 @@ function renderCasesPreview() {
                 <span class="time-tag">Activo</span>
             </div>
             <div class="case-body">
+                ${renderSignalSourceBadge(s.name)}
                 <p class="emotional-state">Estado Emocional: <span class="high-risk-text">${s.moodText}</span></p>
-                <p class="detection-reason"><strong>Motivo de alerta:</strong> Sentir AI detectó un patrón sostenido de riesgo que requiere seguimiento cercano.</p>
+                <p class="detection-reason"><strong>Motivo de alerta:</strong> ${getCaseSignalReason(s.name)}</p>
             </div>
             <div class="card-footer">
                 <span class="badge-risk high">RIESGO ALTO</span>
@@ -180,7 +189,69 @@ function renderCasesPreview() {
     `).join('');
 
     container.querySelectorAll('.student-case-card').forEach(card => {
-        card.addEventListener('click', () => openStudentPanel(card.dataset.name));
+        const openCase = () => openStudentPanel(card.dataset.name);
+        card.addEventListener('click', openCase);
+        card.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                openCase();
+            }
+        });
+    });
+}
+
+
+function renderPendingFollowups() {
+    const list = document.getElementById('homeFollowupsList');
+    const count = document.getElementById('homeFollowupsCount');
+    if (!list || !count) return;
+
+    const riskWeight = { high: 0, medium: 1, stable: 2 };
+    const pending = getStudents()
+        .filter(s => s.risk === 'high' || s.risk === 'medium')
+        .map(student => ({ student, next: getNextStudentAgenda(student.name) }))
+        .sort((a, b) => {
+            const riskDiff = riskWeight[a.student.risk] - riskWeight[b.student.risk];
+            if (riskDiff !== 0) return riskDiff;
+            if (a.next && !b.next) return -1;
+            if (!a.next && b.next) return 1;
+            return a.student.name.localeCompare(b.student.name);
+        })
+        .slice(0, 3);
+
+    count.textContent = pending.length;
+    if (!pending.length) {
+        list.innerHTML = `<div class="followups-empty"><i class="fa-solid fa-circle-check"></i> No hay seguimientos pendientes.</div>`;
+        return;
+    }
+
+    list.innerHTML = pending.map(({ student, next }) => `
+        <div class="followup-item" data-name="${student.name}" role="button" tabindex="0">
+            <div class="followup-avatar-wrap"><img src="${student.avatar}" alt="${student.name}"></div>
+            <div class="followup-info">
+                <strong>${student.name}</strong>
+                <span><i class="fa-solid ${next ? 'fa-calendar-check' : 'fa-clock'}"></i>${next ? `${formatCaseDate(next.fecha)} · ${next.hora} · ${next.titulo}` : 'Seguimiento pendiente por agendar'}</span>
+            </div>
+            ${next ? '<i class="fa-solid fa-chevron-right followup-arrow" aria-hidden="true"></i>' : `<button class="followup-mini-action" data-schedule="${student.name}" title="Agendar seguimiento"><i class="fa-solid fa-calendar-plus"></i><span>Agendar</span></button>`}
+        </div>
+    `).join('');
+
+    list.querySelectorAll('.followup-item').forEach(item => {
+        const openFollowup = () => openStudentPanel(item.dataset.name);
+        item.addEventListener('click', openFollowup);
+        item.addEventListener('keydown', (event) => {
+            if (event.target !== item) return;
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                openFollowup();
+            }
+        });
+    });
+    list.querySelectorAll('[data-schedule]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            goToAgendaForStudent(btn.dataset.schedule);
+        });
     });
 }
 
@@ -298,6 +369,28 @@ function initQuickActions() {
     });
 }
 
+function renderAiInsight() {
+    const trend = getAiTrend();
+    const text = document.getElementById('aiInsightText');
+    const trace = document.getElementById('aiTraceabilityBody');
+    if (!trend || !text || !trace) return;
+
+    const previous = Number(trend.previousCount) || 0;
+    const current = Number(trend.currentCount) || 0;
+    const variation = previous > 0 ? Math.round(((current - previous) / previous) * 100) : 0;
+    const direction = variation > 0 ? 'incremento' : variation < 0 ? 'disminución' : 'estabilidad';
+    const variationText = variation === 0 ? 'sin variación porcentual' : `${Math.abs(variation)}% de ${direction}`;
+
+    text.innerHTML = `Se observa un <strong>${variationText}</strong> en registros asociados con ${trend.topic} en el grado <strong>${trend.group}</strong>, coincidiendo con la proximidad de los exámenes de estado.`;
+
+    trace.innerHTML = `
+        <div><strong>${current}</strong><span>${trend.currentPeriod}</span></div>
+        <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        <div><strong>${previous}</strong><span>${trend.previousPeriod}</span></div>
+        <p><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Tendencia agregada de apoyo a la priorización. Requiere revisión de la psicóloga y no constituye un diagnóstico.</p>
+    `;
+}
+
 function initCreateGroupWorkshop() {
     document.getElementById('createWorkshopBtn').addEventListener('click', () => {
         const overlay = openSentirModal(`
@@ -328,7 +421,7 @@ function initCreateGroupWorkshop() {
 }
 
 /* ==========================================================================
-   REPORTE CLÍNICO GENERAL (real, imprimible / descargable como PDF)
+   REPORTE DE SEGUIMIENTO INSTITUCIONAL (real, imprimible / descargable como PDF)
    ========================================================================== */
 function openReportPreviewModal() {
     const students = getStudents();
@@ -361,8 +454,8 @@ function openReportPreviewModal() {
 
     overlay.querySelector('#downloadReportBtn').addEventListener('click', () => {
         closeSentirModal(overlay);
-        showToast({ title: 'Generando reporte clínico', message: 'Armando el documento con la información actual...', icon: 'fa-file-export', type: 'info' });
-        setTimeout(generateGeneralClinicalReport, 400);
+        showToast({ title: 'Generando reporte de seguimiento', message: 'Armando el documento con la información actual...', icon: 'fa-file-export', type: 'info' });
+        setTimeout(generateGeneralFollowupReport, 400);
     });
 
     overlay.querySelector('#shareReportBtn').addEventListener('click', async () => {
@@ -376,7 +469,7 @@ function openReportPreviewModal() {
     });
 }
 
-function generateGeneralClinicalReport() {
+function generateGeneralFollowupReport() {
     if (!window.jspdf) {
         showToast({ title: 'No se pudo generar el PDF', message: 'No se cargó la librería de PDF (revisa tu conexión) e intenta de nuevo.', icon: 'fa-circle-exclamation', type: 'info' });
         return;
@@ -413,7 +506,7 @@ function generateGeneralClinicalReport() {
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(18);
     doc.setTextColor(...textPrimary);
-    doc.text('Reporte Clínico General · SENTIR', margin, y);
+    doc.text('Reporte de Seguimiento Institucional · SENTIR', margin, y);
     y += 18;
 
     doc.setFont('helvetica', 'normal');
@@ -509,7 +602,7 @@ function generateGeneralClinicalReport() {
     doc.setTextColor(...textSecondary);
     doc.text('Documento generado por SENTIR. Uso confidencial exclusivo del área de psicología.', margin, y + 10);
 
-    doc.save(`sentir-reporte-general-${todayISO()}.pdf`);
+    doc.save(`sentir-reporte-seguimiento-${todayISO()}.pdf`);
 
     showToast({ title: 'Reporte descargado', message: 'El PDF se guardó en tu carpeta de descargas.', icon: 'fa-circle-check', type: 'success' });
 }

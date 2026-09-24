@@ -35,7 +35,7 @@ function renderStudents() {
     grid.innerHTML = students.map(s => {
         const cfg = RISK_CONFIG[s.risk];
         return `
-        <div class="mini-student-card" data-risk="${s.risk}" data-name="${s.name.toLowerCase()}" data-id="${s.id.toLowerCase()}" data-fullname="${s.name}">
+        <div class="mini-student-card" data-risk="${s.risk}" data-name="${s.name.toLowerCase()}" data-id="${s.id.toLowerCase()}" data-fullname="${s.name}" role="button" tabindex="0">
             <span class="badge-risk ${cfg.badgeClass}">${cfg.label}</span>
             <img src="${s.avatar}" class="mini-avatar" alt="${s.name}">
             <h4>${s.name}</h4>
@@ -45,7 +45,14 @@ function renderStudents() {
     }).join('');
 
     grid.querySelectorAll('.mini-student-card').forEach(card => {
-        card.addEventListener('click', () => openStudentPanel(card.dataset.fullname));
+        const openCard = () => openStudentPanel(card.dataset.fullname);
+        card.addEventListener('click', openCard);
+        card.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                openCard();
+            }
+        });
     });
 
     updateChipCounts(students);

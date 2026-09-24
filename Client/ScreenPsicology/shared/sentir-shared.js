@@ -64,9 +64,22 @@ const DEFAULT_STUDENTS = [
     { name: 'Juan Pablo Díaz', grade: '9°1', id: '#6650', caseNumber: 'CASO-0009', risk: 'medium', mood: 'neutral', moodText: 'Baja concentración', avatar: 'https://ui-avatars.com/api/?name=Juan+Diaz&background=F59E0B&color=1E1B4B&bold=true', riskHistory: [{ fecha: addDaysISO(-35), risk: 'stable' }, { fecha: addDaysISO(0), risk: 'medium' }] }
 ];
 
+const DEFAULT_AI_TREND = {
+    group: '11°1',
+    topic: 'estrés y ansiedad académica',
+    currentCount: 23,
+    previousCount: 20,
+    currentPeriod: 'últimos 7 días',
+    previousPeriod: '7 días anteriores'
+};
+
+function getAiTrend() {
+    return SentirStore.get('ai_trend', DEFAULT_AI_TREND);
+}
+
 const DEFAULT_ALERTS = [
-    { id: 'al1', estudiante: 'Mateo Silva', grado: '11°1', hora: 'Hoy · 10:05 a.m.', motivo: 'Activó el botón de emergencia: dice sentirse muy mal y no quiere estar solo.', estado: 'Nueva' },
-    { id: 'al2', estudiante: 'Daniel Ortiz', grado: '11°2', hora: 'Hoy · 08:40 a.m.', motivo: 'Activó el botón de emergencia por un conflicto grave con compañeros (posible caso de bullying).', estado: 'En atención' }
+    { id: 'al1', estudiante: 'Mateo Silva', grado: '11°1', hora: 'Hoy · 10:05 a.m.', motivo: 'Activó el botón de emergencia: dice sentirse muy mal y no quiere estar solo.', estado: 'Nueva', source: 'student' },
+    { id: 'al2', estudiante: 'Daniel Ortiz', grado: '11°2', hora: 'Hoy · 08:40 a.m.', motivo: 'Activó el botón de emergencia por un conflicto grave con compañeros (posible caso de bullying).', estado: 'En atención', source: 'student' }
 ];
 
 const DEFAULT_INTERVENTIONS = {
@@ -201,7 +214,17 @@ function renderHeaderProfile() {
 
 function initLogoHome() {
     document.querySelectorAll('[data-logo-home]').forEach(logo => {
-        logo.addEventListener('click', () => { window.location.href = logo.dataset.logoHome; });
+        const goHome = () => { window.location.href = logo.dataset.logoHome; };
+        logo.setAttribute('role', 'link');
+        logo.setAttribute('tabindex', '0');
+        logo.setAttribute('aria-label', 'Ir al inicio de Psicología');
+        logo.addEventListener('click', goHome);
+        logo.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                goHome();
+            }
+        });
     });
 }
 
@@ -229,21 +252,32 @@ function initNotificationDropdown() {
     const dropdown = document.getElementById('notifDropdown');
     if (!bell || !dropdown) return;
 
+    const wrap = bell.closest('.notification-wrap') || bell.parentElement;
     const badge = bell.querySelector('.badge');
     const alertas = getAlerts().filter(a => a.estado === 'Nueva');
 
     dropdown.innerHTML = `<div class="notif-header">Alertas Recientes</div>` + (
         alertas.length
-            ? alertas.map(a => `<div class="notif-item is-urgent" data-goto="alertas.html">🚨 ${a.estudiante} requiere atención inmediata</div>`).join('')
-            : `<div class="notif-item">✅ No hay alertas nuevas por ahora</div>`
-    ) + `<div class="notif-item" data-goto="agenda.html">📅 Revisa tu agenda de hoy</div>`;
+            ? alertas.map(a => `<button type="button" class="notif-item is-urgent" role="menuitem" data-goto="alertas.html">🚨 ${a.estudiante} requiere atención inmediata</button>`).join('')
+            : `<div class="notif-item" role="status">✅ No hay alertas nuevas por ahora</div>`
+    ) + `<button type="button" class="notif-item" role="menuitem" data-goto="agenda.html">📅 Revisa tu agenda de hoy</button>`;
 
     if (badge) badge.style.display = alertas.length ? 'flex' : 'none';
 
+    const setOpen = (open) => {
+        dropdown.classList.toggle('show', open);
+        bell.setAttribute('aria-expanded', String(open));
+        if (open) {
+            const firstItem = dropdown.querySelector('[role="menuitem"]');
+            if (firstItem) requestAnimationFrame(() => firstItem.focus());
+        }
+    };
+
     bell.addEventListener('click', (e) => {
         e.stopPropagation();
-        dropdown.classList.toggle('show');
-        bell.style.transform = 'scale(1.15)';
+        const open = !dropdown.classList.contains('show');
+        setOpen(open);
+        bell.style.transform = 'scale(1.08)';
         setTimeout(() => bell.style.transform = 'scale(1)', 180);
     });
 
@@ -254,9 +288,17 @@ function initNotificationDropdown() {
         });
     });
 
-    document.addEventListener('click', (e) => { if (!bell.contains(e.target)) dropdown.classList.remove('show'); });
-}
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && dropdown.classList.contains('show')) {
+            setOpen(false);
+            bell.focus();
+        }
+    });
 
+    document.addEventListener('click', (e) => {
+        if (!wrap || !wrap.contains(e.target)) setOpen(false);
+    });
+}
 // Todas las páginas están a un nivel de profundidad (ej. /agenda/Agenda.html), así que
 // para ir a otro módulo simplemente subimos un nivel y entramos a la carpeta destino.
 function resolveModulePath(target) {
@@ -272,8 +314,9 @@ function resolveModulePath(target) {
 }
 
 function performPsychologistLogout() {
-    sessionStorage.removeItem('sentir_psych_session');
-    window.location.href = '../auth/Welcome.html';
+    ['sentir_psych_session', 'sentir_psych_login_at', 'sentir_psych_last_activity', 'sentir_psych_email', 'sentir_psych_role']
+        .forEach(key => sessionStorage.removeItem(key));
+    window.location.replace('../auth/Welcome.html');
 }
 
 function initLogoutButtons() {
@@ -292,7 +335,11 @@ function initPsychologistProfileMenu() {
     profileContainer.addEventListener('click', (e) => {
         e.stopPropagation();
         const existing = document.getElementById('profileDropdownMenu');
-        if (existing) { existing.remove(); return; }
+        if (existing) {
+            existing.remove();
+            profileContainer.setAttribute('aria-expanded', 'false');
+            return;
+        }
 
         const dropdown = document.createElement('div');
         dropdown.id = 'profileDropdownMenu';
@@ -303,25 +350,46 @@ function initPsychologistProfileMenu() {
         `;
         dropdown.innerHTML = `
             <div style="padding:12px 16px; font-size:11px; font-weight:700; color:var(--text-muted); background:var(--bg-light);">SESIÓN ACTIVA</div>
-            <div class="p-item" data-action="perfil" style="padding:12px 16px; font-size:12px; border-bottom:1px solid #F1F5F9; cursor:pointer;"><i class="fa-solid fa-id-card" style="margin-right:10px; color:var(--morado-sentir)"></i> Mi Licencia Profesional</div>
-            <div class="p-item" data-action="turnos" style="padding:12px 16px; font-size:12px; border-bottom:1px solid #F1F5F9; cursor:pointer;"><i class="fa-solid fa-clock-rotate-left" style="margin-right:10px; color:var(--morado-sentir)"></i> Historial de Turnos</div>
-            <div class="p-item" data-action="salir" style="padding:12px 16px; font-size:12px; color:var(--riesgo-alto); cursor:pointer;"><i class="fa-solid fa-right-from-bracket" style="margin-right:10px;"></i> Cerrar Sesión</div>
+            <div class="p-item" data-action="perfil" role="button" tabindex="0" style="padding:12px 16px; font-size:12px; border-bottom:1px solid #F1F5F9; cursor:pointer;"><i class="fa-solid fa-id-card" style="margin-right:10px; color:var(--morado-sentir)"></i> Mi Licencia Profesional</div>
+            <div class="p-item" data-action="turnos" role="button" tabindex="0" style="padding:12px 16px; font-size:12px; border-bottom:1px solid #F1F5F9; cursor:pointer;"><i class="fa-solid fa-clock-rotate-left" style="margin-right:10px; color:var(--morado-sentir)"></i> Historial de Turnos</div>
+            <div class="p-item" data-action="salir" role="button" tabindex="0" style="padding:12px 16px; font-size:12px; color:var(--riesgo-alto); cursor:pointer;"><i class="fa-solid fa-right-from-bracket" style="margin-right:10px;"></i> Cerrar Sesión</div>
         `;
         document.body.appendChild(dropdown);
+        profileContainer.setAttribute('aria-expanded', 'true');
+        dropdown.setAttribute('role', 'menu');
+        dropdown.setAttribute('aria-label', 'Opciones del perfil');
 
         dropdown.querySelectorAll('.p-item').forEach(item => {
+            item.setAttribute('role', 'menuitem');
             item.addEventListener('mouseenter', () => item.style.background = '#F8FAFC');
             item.addEventListener('mouseleave', () => item.style.background = 'transparent');
-            item.addEventListener('click', () => {
+
+            const activateItem = () => {
                 const action = item.dataset.action;
                 if (action === 'perfil') window.location.href = resolveModulePath('perfil.html');
                 else if (action === 'turnos') openShiftHistoryModal();
-                else if (action === 'salir') { dropdown.remove(); performPsychologistLogout(); return; }
+                else if (action === 'salir') { dropdown.remove(); profileContainer.setAttribute('aria-expanded', 'false'); performPsychologistLogout(); return; }
                 dropdown.remove();
+                profileContainer.setAttribute('aria-expanded', 'false');
+            };
+
+            item.addEventListener('click', activateItem);
+            item.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    activateItem();
+                }
             });
         });
 
-        document.addEventListener('click', () => dropdown.remove(), { once: true });
+        document.addEventListener('click', () => { if (dropdown.isConnected) dropdown.remove(); profileContainer.setAttribute('aria-expanded', 'false'); }, { once: true });
+        dropdown.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                dropdown.remove();
+                profileContainer.setAttribute('aria-expanded', 'false');
+                profileContainer.focus();
+            }
+        });
     });
 }
 
@@ -374,6 +442,88 @@ function goToStudentExpediente(studentName) {
     window.location.href = resolveModulePath('estudiantes.html') + '?open=' + encodeURIComponent(studentName);
 }
 
+
+/* --------------------------------------------------------------------------
+   CONTEXTO DE CASO — origen de señal, próxima acción y acceso
+   -------------------------------------------------------------------------- */
+const SIGNAL_SOURCE_CONFIG = {
+    student: { label: 'Solicitud del estudiante', icon: 'fa-hand-holding-heart', cls: 'student' },
+    teacher: { label: 'Reporte docente', icon: 'fa-chalkboard-user', cls: 'teacher' },
+    ai: { label: 'Detectado por SENTIR AI', icon: 'fa-brain', cls: 'ai' }
+};
+
+function getSignalSource(studentName, explicitSource) {
+    if (explicitSource && SIGNAL_SOURCE_CONFIG[explicitSource]) return SIGNAL_SOURCE_CONFIG[explicitSource];
+    const activeAlert = getAlerts().find(a => a.estudiante === studentName && a.estado !== 'Resuelta');
+    if (activeAlert) return SIGNAL_SOURCE_CONFIG[activeAlert.source] || SIGNAL_SOURCE_CONFIG.student;
+    return SIGNAL_SOURCE_CONFIG.ai;
+}
+
+function renderSignalSourceBadge(studentName, explicitSource) {
+    const source = getSignalSource(studentName, explicitSource);
+    return `<span class="signal-source-badge ${source.cls}"><i class="fa-solid ${source.icon}"></i>${source.label}</span>`;
+}
+
+
+function getCaseSignalReason(studentName) {
+    const activeAlert = getAlerts().find(a => a.estudiante === studentName && a.estado !== 'Resuelta');
+    if (activeAlert) return activeAlert.motivo;
+    return 'SENTIR AI identificó un patrón sostenido de riesgo que requiere seguimiento cercano.';
+}
+
+function getNextStudentAgenda(studentName) {
+    return getAgenda()
+        .filter(a => a.nombre === studentName && a.fecha >= todayISO())
+        .sort((a, b) => (a.fecha + a.hora).localeCompare(b.fecha + b.hora))[0] || null;
+}
+
+function goToAgendaForStudent(studentName) {
+    const student = getStudents().find(s => s.name === studentName);
+    const params = new URLSearchParams({ student: studentName, grade: student ? student.grade : '', followup: '1' });
+    window.location.href = resolveModulePath('agenda.html') + '?' + params.toString();
+}
+
+function formatCaseDate(fechaISO) {
+    if (!fechaISO) return 'Sin registro reciente';
+    if (fechaISO === todayISO()) return 'Hoy';
+    return new Date(fechaISO + 'T00:00:00').toLocaleDateString('es-CO', { day: 'numeric', month: 'short' });
+}
+
+function renderStudentCaseContext(student) {
+    const panel = document.getElementById('detailPanel');
+    if (!panel || !student) return;
+
+    const source = getSignalSource(student.name);
+    const sourceTag = panel.querySelector('.panel-sub-tag');
+    if (sourceTag) sourceTag.innerHTML = `<i class="fa-solid ${source.icon}"></i> ${source.label}`;
+
+    let context = document.getElementById('panelCaseContext');
+    if (!context) {
+        context = document.createElement('div');
+        context.id = 'panelCaseContext';
+        context.className = 'panel-case-context';
+        const timeline = document.getElementById('panelRiskTimeline');
+        if (timeline && timeline.parentNode) timeline.insertAdjacentElement('afterend', context);
+    }
+
+    const lastRisk = student.riskHistory && student.riskHistory.length ? student.riskHistory[student.riskHistory.length - 1] : null;
+    const next = getNextStudentAgenda(student.name);
+    const nextText = next ? `${formatCaseDate(next.fecha)} · ${next.hora} · ${next.titulo}` : 'Sin seguimiento programado';
+
+    context.innerHTML = `
+        <div class="case-context-grid">
+            <div class="case-context-item">
+                <span><i class="fa-solid fa-clock-rotate-left"></i> Última actualización</span>
+                <strong>${lastRisk ? formatCaseDate(lastRisk.fecha) : 'Sin registro reciente'}</strong>
+            </div>
+            <div class="case-context-item">
+                <span><i class="fa-solid fa-calendar-check"></i> Próxima acción</span>
+                <strong>${nextText}</strong>
+            </div>
+        </div>
+    `;
+}
+
 function initMobileSidebar() {
     const toggleBtn = document.getElementById('menuToggleBtn');
     const container = document.querySelector('.dashboard-container');
@@ -396,6 +546,7 @@ function initMobileSidebar() {
     function setToggled(toggled) {
         container.classList.toggle('sidebar-toggled', toggled);
         backdrop.classList.toggle('show', toggled && isMobile());
+        toggleBtn.setAttribute('aria-expanded', String(isMobile() ? toggled : !toggled));
         if (!isMobile()) {
             try { localStorage.setItem(STORAGE_KEY, toggled ? '1' : '0'); } catch (e) { /* almacenamiento no disponible */ }
         }
@@ -444,6 +595,7 @@ function openStudentPanel(name) {
     panel.dataset.currentStudent = name;
 
     renderRiskTimeline(student);
+    renderStudentCaseContext(student);
 
     document.body.style.overflow = 'hidden';
     overlay.classList.add('show');
@@ -512,11 +664,26 @@ function initStudentPanelActions() {
     const contactBtn = document.getElementById('panelContactBtn');
     const deriveBtn = document.getElementById('panelDeriveBtn');
     const printBtn = document.getElementById('printPanelBtn');
+    let scheduleBtn = document.getElementById('panelScheduleBtn');
+
+    if (!scheduleBtn) {
+        const actions = panel.querySelector('.panel-actions');
+        if (actions) {
+            scheduleBtn = document.createElement('button');
+            scheduleBtn.type = 'button';
+            scheduleBtn.id = 'panelScheduleBtn';
+            scheduleBtn.className = 'btn-action-trigger followup-btn';
+            scheduleBtn.innerHTML = '<i class="fa-solid fa-calendar-plus"></i> Agendar Seguimiento';
+            const history = document.getElementById('viewInterventionHistoryBtn');
+            if (history) actions.insertBefore(scheduleBtn, history); else actions.appendChild(scheduleBtn);
+        }
+    }
 
     if (registerBtn) registerBtn.addEventListener('click', () => openRegisterInterventionModal(currentName()));
     if (historyBtn) historyBtn.addEventListener('click', () => openInterventionHistoryModal(currentName()));
     if (contactBtn) contactBtn.addEventListener('click', () => openContactGuardianModal(currentName()));
     if (deriveBtn) deriveBtn.addEventListener('click', () => openMedicalReferralModal(currentName()));
+    if (scheduleBtn) scheduleBtn.addEventListener('click', () => goToAgendaForStudent(currentName()));
     if (printBtn) printBtn.addEventListener('click', () => printStudentExpediente(currentName()));
 }
 
@@ -859,7 +1026,154 @@ function initAlertWatcher() {
 }
 
 /* --------------------------------------------------------------------------
-   7. ARRANQUE COMÚN — cada página llama a esto en su DOMContentLoaded
+   7. SEGURIDAD — CIERRE AUTOMÁTICO POR INACTIVIDAD
+   -------------------------------------------------------------------------- */
+// Ajustes fáciles de modificar si la institución define otra política de sesión.
+const SENTIR_INACTIVITY_TOTAL_MS = 15 * 60 * 1000; // 15 minutos sin actividad
+const SENTIR_INACTIVITY_WARNING_MS = 45 * 1000;    // aviso 45 segundos antes
+
+function initInactivityLogout() {
+    // Evita inicializar más de una vez si algún módulo vuelve a llamar al núcleo.
+    if (window.__sentirInactivityInitialized) return;
+    window.__sentirInactivityInitialized = true;
+
+    let warningTimer = null;
+    let logoutTimer = null;
+    let countdownTimer = null;
+    let warningOpen = false;
+    let remainingSeconds = Math.ceil(SENTIR_INACTIVITY_WARNING_MS / 1000);
+
+    const clearTimers = () => {
+        clearTimeout(warningTimer);
+        clearTimeout(logoutTimer);
+        clearInterval(countdownTimer);
+    };
+
+    const removeWarning = () => {
+        const overlay = document.getElementById('inactivitySessionOverlay');
+        if (overlay) overlay.remove();
+        warningOpen = false;
+        document.body.classList.remove('session-warning-open');
+    };
+
+    const startTimers = () => {
+        clearTimers();
+        warningTimer = setTimeout(showWarning, Math.max(0, SENTIR_INACTIVITY_TOTAL_MS - SENTIR_INACTIVITY_WARNING_MS));
+        logoutTimer = setTimeout(() => {
+            removeWarning();
+            performPsychologistLogout();
+        }, SENTIR_INACTIVITY_TOTAL_MS);
+    };
+
+    const continueSession = () => {
+        removeWarning();
+        remainingSeconds = Math.ceil(SENTIR_INACTIVITY_WARNING_MS / 1000);
+        startTimers();
+        showToast({
+            title: 'Sesión protegida',
+            message: 'Tu sesión continúa activa.',
+            icon: 'fa-shield-heart',
+            type: 'success'
+        });
+    };
+
+    function showWarning() {
+        if (warningOpen) return;
+        warningOpen = true;
+        remainingSeconds = Math.ceil(SENTIR_INACTIVITY_WARNING_MS / 1000);
+
+        const overlay = document.createElement('div');
+        overlay.id = 'inactivitySessionOverlay';
+        overlay.className = 'session-timeout-overlay';
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-modal', 'true');
+        overlay.setAttribute('aria-labelledby', 'sessionTimeoutTitle');
+        overlay.innerHTML = `
+            <div class="session-timeout-card">
+                <div class="session-timeout-heading">
+                    <div class="session-timeout-icon"><i class="fa-solid fa-clock"></i></div>
+                    <div>
+                        <h3 id="sessionTimeoutTitle">¿Sigues ahí?</h3>
+                        <p>Por seguridad, tu sesión se cerrará automáticamente si no confirmas que sigues trabajando.</p>
+                    </div>
+                </div>
+
+                <div class="session-countdown-wrap" aria-live="polite" aria-atomic="true">
+                    <div class="session-countdown-ring">
+                        <span class="session-countdown-number" id="sessionCountdown">${remainingSeconds}</span>
+                        <span class="session-countdown-label">segundos</span>
+                    </div>
+                    <p class="session-countdown-help">Al llegar a <strong>0</strong>, volverás automáticamente al acceso de SENTIR.</p>
+                </div>
+
+                <div class="session-timeout-actions">
+                    <button type="button" class="session-logout-now" id="sessionLogoutNow">
+                        <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión ahora
+                    </button>
+                    <button type="button" class="session-continue-btn" id="sessionContinueBtn">
+                        <i class="fa-solid fa-check"></i> Seguir trabajando
+                    </button>
+                </div>
+            </div>`;
+
+        document.body.appendChild(overlay);
+        document.body.classList.add('session-warning-open');
+
+        const countdown = overlay.querySelector('#sessionCountdown');
+        const continueBtn = overlay.querySelector('#sessionContinueBtn');
+        const logoutBtn = overlay.querySelector('#sessionLogoutNow');
+
+        const endSession = () => {
+            clearTimers();
+            removeWarning();
+            performPsychologistLogout();
+        };
+
+        continueBtn.addEventListener('click', continueSession);
+        logoutBtn.addEventListener('click', endSession);
+
+        countdownTimer = setInterval(() => {
+            remainingSeconds -= 1;
+            if (countdown) countdown.textContent = String(Math.max(0, remainingSeconds));
+
+            if (remainingSeconds <= 0) {
+                // El 0 se muestra visualmente y el cierre ocurre inmediatamente después.
+                clearInterval(countdownTimer);
+                countdownTimer = null;
+                setTimeout(endSession, 180);
+            }
+        }, 1000);
+
+        // La acción principal recibe el foco para que el aviso también sea usable con teclado.
+        requestAnimationFrame(() => continueBtn.focus());
+    }
+
+    const registerActivity = () => {
+        // Cuando el aviso ya está abierto, la persona debe confirmar explícitamente que sigue trabajando.
+        if (warningOpen) return;
+        sessionStorage.setItem('sentir_psych_last_activity', String(Date.now()));
+        startTimers();
+    };
+
+    // Eventos deliberados de actividad. mousemove se limita para evitar reinicios excesivos.
+    let lastMouseReset = 0;
+    document.addEventListener('mousemove', () => {
+        const now = Date.now();
+        if (now - lastMouseReset > 1000) {
+            lastMouseReset = now;
+            registerActivity();
+        }
+    }, { passive: true });
+
+    ['mousedown', 'keydown', 'touchstart', 'scroll', 'wheel'].forEach(eventName => {
+        document.addEventListener(eventName, registerActivity, { passive: true });
+    });
+
+    startTimers();
+}
+
+/* --------------------------------------------------------------------------
+   8. ARRANQUE COMÚN — cada página llama a esto en su DOMContentLoaded
    -------------------------------------------------------------------------- */
 function initSentirCore() {
     renderHeaderProfile();
@@ -871,4 +1185,5 @@ function initSentirCore() {
     initMobileSidebar();
     initStudentPanelActions();
     initAlertWatcher();
+    initInactivityLogout();
 }

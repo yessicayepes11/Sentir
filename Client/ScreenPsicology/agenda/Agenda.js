@@ -5,7 +5,26 @@ document.addEventListener('DOMContentLoaded', () => {
     renderAgenda();
     initAgendaFilters();
     initAddAppointment();
+    applyAgendaPrefill();
 });
+
+
+function applyAgendaPrefill() {
+    const params = new URLSearchParams(window.location.search);
+    const student = params.get('student');
+    if (!student || params.get('followup') !== '1') return;
+
+    const grade = params.get('grade') || '';
+    setTimeout(() => openAppointmentModal(null, {
+        titulo: 'Seguimiento de Caso',
+        nombre: student,
+        grado: grade,
+        descripcion: 'Seguimiento psicológico programado desde el expediente del estudiante.'
+    }), 120);
+
+    // Limpiar los parámetros para que el formulario no vuelva a abrirse al refrescar.
+    window.history.replaceState({}, document.title, window.location.pathname);
+}
 
 let agendaViewMode = 'list';
 let calendarCursor = new Date();
@@ -130,7 +149,7 @@ function initAddAppointment() {
     document.getElementById('addAppointmentBtn').addEventListener('click', () => openAppointmentModal(null));
 }
 
-function openAppointmentModal(id) {
+function openAppointmentModal(id, prefill = {}) {
     const isEdit = !!id;
     const agenda = getAgenda();
     const existing = isEdit ? agenda.find(a => a.id === id) : null;
@@ -142,15 +161,15 @@ function openAppointmentModal(id) {
         </div>
         <div class="sentir-modal-body">
             <div class="modal-field-row">
-                <div class="modal-field"><label>FECHA</label><input type="date" id="apFecha" value="${existing ? existing.fecha : todayISO()}"></div>
-                <div class="modal-field"><label>HORA</label><input type="time" id="apHora" value="${existing ? existing.hora : '09:00'}"></div>
+                <div class="modal-field"><label>FECHA</label><input type="date" id="apFecha" value="${existing ? existing.fecha : (prefill.fecha || todayISO())}"></div>
+                <div class="modal-field"><label>HORA</label><input type="time" id="apHora" value="${existing ? existing.hora : (prefill.hora || '09:00')}"></div>
             </div>
-            <div class="modal-field"><label>TÍTULO</label><input type="text" id="apTitulo" placeholder="Ej. Sesión Individual, Reunión de Acudientes..." value="${existing ? existing.titulo : ''}"></div>
+            <div class="modal-field"><label>TÍTULO</label><input type="text" id="apTitulo" placeholder="Ej. Sesión Individual, Reunión de Acudientes..." value="${existing ? existing.titulo : (prefill.titulo || '')}"></div>
             <div class="modal-field-row">
-                <div class="modal-field"><label>NOMBRE (ESTUDIANTE O GRUPO)</label><input type="text" id="apNombre" placeholder="Ej. Mateo Silva" value="${existing ? existing.nombre : ''}"></div>
-                <div class="modal-field"><label>GRADO</label><input type="text" id="apGrado" placeholder="Ej. 11°1" value="${existing ? existing.grado : ''}"></div>
+                <div class="modal-field"><label>NOMBRE (ESTUDIANTE O GRUPO)</label><input type="text" id="apNombre" placeholder="Ej. Mateo Silva" value="${existing ? existing.nombre : (prefill.nombre || '')}"></div>
+                <div class="modal-field"><label>GRADO</label><input type="text" id="apGrado" placeholder="Ej. 11°1" value="${existing ? existing.grado : (prefill.grado || '')}"></div>
             </div>
-            <div class="modal-field"><label>DESCRIPCIÓN</label><textarea id="apDescripcion" rows="3" placeholder="Detalles de la cita...">${existing ? existing.descripcion : ''}</textarea></div>
+            <div class="modal-field"><label>DESCRIPCIÓN</label><textarea id="apDescripcion" rows="3" placeholder="Detalles de la cita...">${existing ? existing.descripcion : (prefill.descripcion || '')}</textarea></div>
             <p class="modal-error" id="apError"><i class="fa-solid fa-circle-exclamation"></i> Completa al menos título, nombre y grado.</p>
         </div>
         <div class="sentir-modal-actions">

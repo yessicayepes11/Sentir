@@ -1269,27 +1269,31 @@ button {
 
 
 .students-dot {
-    background: #4195F5;
+    background: #1677FF;
 }
 
 .teachers-dot {
-    background: #668DF0;
+    background: #F97316;
 }
 
 .uai-dot {
-    background: #9A5BF3;
+    background: #16A34A;
 }
 
 .psychologist-dot {
-    background: #CC72EE;
+    background: #DB2777;
 }
 
 .directors-dot {
-    background: #5D70E3;
+    background: #E11D48;
 }
 
 .committee-dot {
-    background: #AA60D4;
+    background: #06B6D4;
+}
+
+.other-dot {
+    background: #8991A8;
 }
 
 

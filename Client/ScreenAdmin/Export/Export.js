@@ -7,200 +7,7 @@
 // DATOS TEMPORALES
 // =====================================================
 
-const users = [
-
-    {
-        name:
-            "Valentina García",
-
-        document:
-            "1023456789",
-
-        email:
-            "valentina.garcia@est.edu",
-
-        phone:
-            "3001234567",
-
-        role:
-            "Estudiante",
-
-        grade:
-            "9°",
-
-        status:
-            "Activo"
-    },
-
-
-    {
-        name:
-            "Mateo Rodríguez",
-
-        document:
-            "1008765432",
-
-        email:
-            "mateo.rodriguez@est.edu",
-
-        phone:
-            "3014567890",
-
-        role:
-            "Estudiante",
-
-        grade:
-            "10°",
-
-        status:
-            "Activo"
-    },
-
-
-    {
-        name:
-            "Daniela Castro",
-
-        document:
-            "43765432",
-
-        email:
-            "daniela.castro@sentir.edu",
-
-        phone:
-            "3024546712",
-
-        role:
-            "Docente",
-
-        grade:
-            "",
-
-        status:
-            "Activo"
-    },
-
-
-    {
-        name:
-            "Camila López",
-
-        document:
-            "1098765432",
-
-        email:
-            "camila.lopez@sentir.edu",
-
-        phone:
-            "3103422190",
-
-        role:
-            "Psicóloga",
-
-        grade:
-            "",
-
-        status:
-            "Activo"
-    },
-
-
-    {
-        name:
-            "María González",
-
-        document:
-            "52678901",
-
-        email:
-            "maria.gonzalez@sentir.edu",
-
-        phone:
-            "3151112233",
-
-        role:
-            "UAI",
-
-        grade:
-            "",
-
-        status:
-            "Activo"
-    },
-
-
-    {
-        name:
-            "Laura Méndez",
-
-        document:
-            "43567890",
-
-        email:
-            "laura.mendez@sentir.edu",
-
-        phone:
-            "3127659087",
-
-        role:
-            "Directivo",
-
-        grade:
-            "",
-
-        status:
-            "Inactivo"
-    },
-
-
-    {
-        name:
-            "Sofía Pérez",
-
-        document:
-            "1002233445",
-
-        email:
-            "sofia.perez@est.edu",
-
-        phone:
-            "3004455667",
-
-        role:
-            "Estudiante",
-
-        grade:
-            "8°",
-
-        status:
-            "Pendiente"
-    },
-
-
-    {
-        name:
-            "Ana Torres",
-
-        document:
-            "52123456",
-
-        email:
-            "ana.torres@sentir.edu",
-
-        phone:
-            "3112223344",
-
-        role:
-            "Comité de convivencia",
-
-        grade:
-            "",
-
-        status:
-            "Activo"
-    }
-
-];
+let users = [];
 
 
 // =====================================================
@@ -273,7 +80,7 @@ const toastText =
 
 
 let selectedFormat =
-    "csv";
+    "xlsx";
 
 
 // =====================================================
@@ -320,6 +127,102 @@ function showToast(message) {
         2400
     );
 
+}
+
+function normalizeRoleName(role) {
+    return String(role || '')
+        .trim()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+}
+
+function isCommitteeMember(value) {
+    if (value === true || value === 1) {
+        return true;
+    }
+
+    const normalizedValue = String(value ?? '')
+        .trim()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+
+    return normalizedValue === '1'
+        || normalizedValue === 'true'
+        || normalizedValue === 'si';
+}
+
+function populateRoleFilter() {
+    roleFilter.replaceChildren(new Option('Todos los roles', ''));
+
+    const groupedOptions = [
+        ['Estudiante', 'Estudiantes'],
+        ['Docente', 'Docentes'],
+        ['UAI / Entorno protector', 'UAI / Entorno protector'],
+        ['Psicólogo/a', 'Psicólogo/a'],
+        ['Directivo', 'Directivos'],
+        ['Comité de convivencia', 'Comité de convivencia']
+    ];
+
+    groupedOptions.forEach(([value, label]) => {
+        roleFilter.add(new Option(label, value));
+    });
+
+    const groupedRoleNames = new Set([
+        'estudiante',
+        'docente',
+        'entorno protector',
+        'uai',
+        'psicologo/a',
+        'psicologo',
+        'psicologa',
+        'rectora',
+        'rector',
+        'coordinador convivencia',
+        'coordinadora convivencia',
+        'coordinador de convivencia',
+        'coordinadora de convivencia',
+        'coordinador academico',
+        'coordinadora academica'
+    ]);
+
+    const otherRoles = [...new Set(users
+        .map((user) => user.role)
+        .filter((role) => role && !groupedRoleNames.has(normalizeRoleName(role))))]
+        .sort((first, second) => first.localeCompare(second, 'es'));
+
+    otherRoles.forEach((role) => roleFilter.add(new Option(role, `role:${normalizeRoleName(role)}`)));
+}
+
+async function loadUsers() {
+    const response = await fetch('http://localhost:3000/api/CrearUsuario/listar');
+    if (!response.ok) {
+        throw new Error('No se pudieron cargar los usuarios desde la base de datos');
+    }
+
+    const result = await response.json();
+    const records = Array.isArray(result.usuarios) ? result.usuarios : [];
+
+    users = records.map((user) => ({
+        id: Number(user.id),
+        document: String(user.document || user.id || ''),
+        firstName: user.firstName || '',
+        lastName: user.lastName || '',
+        name: user.name || '',
+        age: Number(user.age) || 0,
+        email: user.email || '',
+        phone: user.phone || '',
+        documentType: user.documentType || '',
+        roleId: Number(user.roleId) || 0,
+        role: user.role || 'Sin rol',
+        status: user.status || '',
+        birthDate: user.birthDate || '',
+        registrationDate: user.registrationDate || '',
+        committeeMember: isCommitteeMember(user.committeeMember)
+    }));
+
+    populateRoleFilter();
 }
 
 
@@ -396,7 +299,7 @@ byId("inicioNav")
         () => {
 
             window.location.href =
-                "Admin.html";
+                "../Admin.html";
 
         }
     );
@@ -408,7 +311,7 @@ byId("usuariosNav")
         () => {
 
             window.location.href =
-                "Users.html";
+                "../Users/Users.html";
 
         }
     );
@@ -420,7 +323,7 @@ byId("backButton")
         () => {
 
             window.location.href =
-                "Admin.html";
+                "../Admin.html";
 
         }
     );
@@ -434,13 +337,32 @@ function getFilteredUsers() {
 
     return users.filter(
         user => {
+            const selectedRole = roleFilter.value;
+            const normalizedRole = normalizeRoleName(user.role);
+            const isDirector = [
+                'rectora',
+                'rector',
+                'coordinador convivencia',
+                'coordinadora convivencia',
+                'coordinador de convivencia',
+                'coordinadora de convivencia',
+                'coordinador academico',
+                'coordinadora academica'
+            ].includes(normalizedRole);
 
-            const roleMatch =
+            const isStudent = normalizedRole === 'estudiante';
+            const isTeacher = normalizedRole === 'docente';
+            const isProtector = ['entorno protector', 'uai'].includes(normalizedRole);
+            const isPsychologist = ['psicologo/a', 'psicologo', 'psicologa'].includes(normalizedRole);
 
-                !roleFilter.value
-                ||
-                user.role ===
-                    roleFilter.value;
+            const roleMatch = !selectedRole
+                || (selectedRole === 'Estudiante' && isStudent)
+                || (selectedRole === 'Docente' && isTeacher)
+                || (selectedRole === 'UAI / Entorno protector' && isProtector)
+                || (selectedRole === 'Psicólogo/a' && isPsychologist)
+                || (selectedRole === 'Directivo' && isDirector)
+                || (selectedRole === 'Comité de convivencia' && user.committeeMember)
+                || (selectedRole.startsWith('role:') && normalizedRole === selectedRole.slice(5));
 
 
             const statusMatch =
@@ -622,12 +544,7 @@ document
 
                     selectedFormatText.textContent =
 
-                        selectedFormat ===
-                        "csv"
-
-                            ? "CSV"
-
-                            : "JSON";
+                        selectedFormat === "xlsx" ? "Excel (.xlsx)" : "JSON";
 
                 }
             );
@@ -638,90 +555,43 @@ document
 
 // =====================================================
 // EXPORTAR CSV
+// EXPORTAR EXCEL
 // =====================================================
 
-function exportCSV(data) {
+function exportExcel(data) {
+    if (typeof XLSX === "undefined") {
+        throw new Error("No se pudo cargar el generador de archivos Excel");
+    }
 
-    const headers = [
+    const rows = data.map((user) => ({
+        "ID usuario": user.id,
+        "Número de identificación": user.document,
+        "Nombre": user.firstName,
+        "Apellido": user.lastName,
+        "Edad": user.age,
+        "Correo": user.email,
+        "Fecha de nacimiento": user.birthDate,
+        "Fecha de registro": user.registrationDate,
+        "Estado": user.status,
+        "Tipo de identificación": user.documentType,
+        "Celular": user.phone,
+        "ID de rol": user.roleId,
+        "Rol": user.role,
+        "Pertenece al comité de convivencia": user.committeeMember ? "Sí" : "No"
+    }));
 
-        "Nombre",
-        "Documento",
-        "Correo",
-        "Celular",
-        "Rol",
-        "Grado",
-        "Estado"
-
+    const worksheet = XLSX.utils.json_to_sheet(rows);
+    worksheet['!cols'] = [
+        { wch: 14 }, { wch: 24 }, { wch: 22 }, { wch: 22 },
+        { wch: 10 }, { wch: 32 }, { wch: 18 }, { wch: 18 },
+        { wch: 14 }, { wch: 24 }, { wch: 18 }, { wch: 12 },
+        { wch: 32 }, { wch: 36 }
     ];
+    worksheet['!autofilter'] = { ref: worksheet['!ref'] };
 
-
-    const rows =
-        data.map(
-            user => [
-
-                user.name,
-                user.document,
-                user.email,
-                user.phone,
-                user.role,
-                user.grade,
-                user.status
-
-            ]
-        );
-
-
-    const csv =
-        [
-
-            headers,
-            ...rows
-
-        ]
-        .map(
-            row =>
-
-                row
-                    .map(
-                        value => {
-
-                            const clean =
-                                String(
-                                    value ?? ""
-                                )
-                                .replaceAll(
-                                    '"',
-                                    '""'
-                                );
-
-
-                            return `"${clean}"`;
-
-                        }
-                    )
-                    .join(";")
-
-        )
-        .join("\n");
-
-
-    const blob =
-        new Blob(
-            [
-                "\uFEFF" + csv
-            ],
-            {
-                type:
-                    "text/csv;charset=utf-8;"
-            }
-        );
-
-
-    downloadBlob(
-        blob,
-        "usuarios-sentir.csv"
-    );
-
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Usuarios");
+    XLSX.writeFile(workbook, "usuarios-sentir.xlsx");
 }
 
 
@@ -829,29 +699,18 @@ exportButton.addEventListener(
         }
 
 
-        if (
-            selectedFormat ===
-            "csv"
-        ) {
+        try {
+            if (selectedFormat === 'xlsx') {
+                exportExcel(filtered);
+            } else {
+                exportJSON(filtered);
+            }
 
-            exportCSV(
-                filtered
-            );
-
+            showToast(`${filtered.length} usuarios exportados correctamente`);
+        } catch (error) {
+            console.error('Error al exportar usuarios:', error);
+            showToast(error.message || 'No se pudo generar el archivo');
         }
-
-        else {
-
-            exportJSON(
-                filtered
-            );
-
-        }
-
-
-        showToast(
-            `${filtered.length} usuarios exportados correctamente`
-        );
 
     }
 );
@@ -946,16 +805,20 @@ document.addEventListener(
 // INIT
 // =====================================================
 
-function init() {
+async function init() {
+    exportButton.disabled = true;
 
-    renderPreview();
-
-
-    setTimeout(
-        refreshIcons,
-        200
-    );
-
+    try {
+        await loadUsers();
+        renderPreview();
+    } catch (error) {
+        console.error('Error al cargar usuarios para exportar:', error);
+        showToast(error.message || 'No se pudieron cargar los usuarios');
+        renderPreview();
+    } finally {
+        exportButton.disabled = false;
+        setTimeout(refreshIcons, 200);
+    }
 }
 
 

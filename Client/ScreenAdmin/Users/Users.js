@@ -4,298 +4,10 @@
 
 
 // ======================================================
-// DATOS TEMPORALES
+// DATOS DESDE LA BASE DE DATOS
 // ======================================================
 
-let users = [
-
-    {
-        id: 1,
-
-        name:
-            "Valentina García",
-
-        document:
-            "1023456789",
-
-        email:
-            "valentina.garcia@est.edu",
-
-        phone:
-            "+57 300 123 4567",
-
-        password:
-            "123456",
-
-        photo:
-            null,
-
-        role:
-            "Estudiante",
-
-        grade:
-            "9°",
-
-        groupDirector:
-            "",
-
-        directorGroup:
-            "",
-
-        status:
-            "Activo",
-
-        registrationDate:
-            "12 mar. 2026"
-    },
-
-
-    {
-        id: 2,
-
-        name:
-            "Mateo Rodríguez",
-
-        document:
-            "1008765432",
-
-        email:
-            "mateo.rodriguez@est.edu",
-
-        phone:
-            "+57 301 456 7890",
-
-        password:
-            "123456",
-
-        photo:
-            null,
-
-        role:
-            "Estudiante",
-
-        grade:
-            "10°",
-
-        groupDirector:
-            "",
-
-        directorGroup:
-            "",
-
-        status:
-            "Activo",
-
-        registrationDate:
-            "08 abr. 2026"
-    },
-
-
-    {
-        id: 3,
-
-        name:
-            "Daniela Castro",
-
-        document:
-            "43765432",
-
-        email:
-            "daniela.castro@sentir.edu",
-
-        phone:
-            "+57 302 454 6712",
-
-        password:
-            "123456",
-
-        photo:
-            null,
-
-        role:
-            "Docente",
-
-        grade:
-            "",
-
-        groupDirector:
-            "Sí",
-
-        directorGroup:
-            "8°2",
-
-        status:
-            "Activo",
-
-        registrationDate:
-            "15 feb. 2026"
-    },
-
-
-    {
-        id: 4,
-
-        name:
-            "Camila López",
-
-        document:
-            "1098765432",
-
-        email:
-            "camila.lopez@sentir.edu",
-
-        phone:
-            "+57 310 342 2190",
-
-        password:
-            "123456",
-
-        photo:
-            null,
-
-        role:
-            "Psicóloga",
-
-        grade:
-            "",
-
-        groupDirector:
-            "",
-
-        directorGroup:
-            "",
-
-        status:
-            "Activo",
-
-        registrationDate:
-            "20 ene. 2026"
-    },
-
-
-    {
-        id: 5,
-
-        name:
-            "María González",
-
-        document:
-            "52678901",
-
-        email:
-            "maria.gonzalez@sentir.edu",
-
-        phone:
-            "+57 315 111 2233",
-
-        password:
-            "123456",
-
-        photo:
-            null,
-
-        role:
-            "UAI",
-
-        grade:
-            "",
-
-        groupDirector:
-            "",
-
-        directorGroup:
-            "",
-
-        status:
-            "Activo",
-
-        registrationDate:
-            "12 may. 2026"
-    },
-
-
-    {
-        id: 6,
-
-        name:
-            "Laura Méndez",
-
-        document:
-            "43567890",
-
-        email:
-            "laura.mendez@sentir.edu",
-
-        phone:
-            "+57 312 765 9087",
-
-        password:
-            "123456",
-
-        photo:
-            null,
-
-        role:
-            "Directivo",
-
-        grade:
-            "",
-
-        groupDirector:
-            "",
-
-        directorGroup:
-            "",
-
-        status:
-            "Activo",
-
-        registrationDate:
-            "10 ene. 2026"
-    },
-
-
-    {
-        id: 7,
-
-        name:
-            "Carlos Ramírez",
-
-        document:
-            "79876543",
-
-        email:
-            "carlos.ramirez@sentir.edu",
-
-        phone:
-            "+57 300 777 8822",
-
-        password:
-            "123456",
-
-        photo:
-            null,
-
-        role:
-            "Comité de convivencia",
-
-        grade:
-            "",
-
-        groupDirector:
-            "",
-
-        directorGroup:
-            "",
-
-        status:
-            "Pendiente",
-
-        registrationDate:
-            "02 sep. 2026"
-    }
-
-];
+let users = [];
 
 
 
@@ -303,13 +15,7 @@ let users = [
 // ESTADO
 // ======================================================
 
-let selectedUserId =
-
-    users.length
-
-        ? users[0].id
-
-        : null;
+let selectedUserId = null;
 
 
 
@@ -400,11 +106,35 @@ const teacherCount =
     byId("teacherCount");
 
 
+const committeeCount =
+    byId("committeeCount");
+
+
 
 // FORMULARIO
 
 const userModal =
     byId("userModal");
+
+
+const roleSelectionModal =
+    byId("roleSelectionModal");
+
+
+const roleSelectionInput =
+    byId("roleSelectionInput");
+
+
+const continueRoleSelection =
+    byId("continueRoleSelection");
+
+
+const cancelRoleSelection =
+    byId("cancelRoleSelection");
+
+
+const cancelRoleSelectionBtn =
+    byId("cancelRoleSelectionBtn");
 
 
 const openAddUser =
@@ -431,12 +161,40 @@ const editingId =
     byId("editingId");
 
 
-const nameInput =
-    byId("nameInput");
+const firstNameInput =
+    byId("firstNameInput");
+
+
+const secondNameInput =
+    byId("secondNameInput");
+
+
+const firstSurnameInput =
+    byId("firstSurnameInput");
+
+
+const secondSurnameInput =
+    byId("secondSurnameInput");
 
 
 const documentInput =
     byId("documentInput");
+
+
+const documentTypeInput =
+    byId("documentTypeInput");
+
+
+const otherDocumentTypeWrapper =
+    byId("otherDocumentTypeWrapper");
+
+
+const otherDocumentTypeInput =
+    byId("otherDocumentTypeInput");
+
+
+const ageInput =
+    byId("ageInput");
 
 
 const emailInput =
@@ -451,12 +209,110 @@ const passwordInput =
     byId("passwordInput");
 
 
+const birthDateInput =
+    byId("birthDateInput");
+
+
+const registrationDateInput =
+    byId("registrationDateInput");
+
+
+const selectedRoleDisplay =
+    byId("selectedRoleDisplay");
+
+
+const selectedRoleDisplayWrapper =
+    byId("selectedRoleDisplayWrapper");
+
+
+const roleEditSelectWrapper =
+    byId("roleEditSelectWrapper");
+
+
+const roleEditSelect =
+    byId("roleEditSelect");
+
+
 const roleInput =
     byId("roleInput");
 
 
+function updateSelectedRoleDisplay() {
+    if (selectedRoleDisplay) {
+        const value = roleInput?.value || roleSelectionInput?.value || "Sin rol";
+        selectedRoleDisplay.value = value;
+    }
+}
+
+
+function toggleDocumentTypeFields() {
+    if (!documentTypeInput || !otherDocumentTypeWrapper || !otherDocumentTypeInput) {
+        return;
+    }
+
+    const isOther = documentTypeInput.value === "Otro";
+    otherDocumentTypeWrapper.classList.toggle("hidden", !isOther);
+    otherDocumentTypeInput.required = isOther && !editingId.value;
+
+    if (!isOther) {
+        otherDocumentTypeInput.value = "";
+    }
+}
+
+function calculateAgeFromBirthDate(dateString) {
+    if (!dateString) {
+        return "";
+    }
+
+    const birthDate = new Date(dateString);
+
+    if (Number.isNaN(birthDate.getTime())) {
+        return "";
+    }
+
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+
+    if (
+        monthDifference < 0 ||
+        (monthDifference === 0 && today.getDate() < birthDate.getDate())
+    ) {
+        age -= 1;
+    }
+
+    return String(age);
+}
+
+function updateAgeFromBirthDate() {
+    if (!ageInput || !birthDateInput) {
+        return;
+    }
+
+    ageInput.value = calculateAgeFromBirthDate(birthDateInput.value);
+}
+
+function isStrongPassword(password) {
+    return /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z\d\s]).{8,}$/.test(password);
+}
+
+
+const roleOptions = [
+    "Estudiante",
+    "Docente",
+    "UAI",
+    "Psicóloga",
+    "Directivo",
+    "Comité de convivencia"
+];
+
+
 const statusInput =
     byId("statusInput");
+
+
+const committeeInput =
+    byId("committeeInput");
 
 
 
@@ -635,6 +491,34 @@ function showToast(message) {
 
 }
 
+function recordUserActivity(type, user) {
+    const titles = {
+        register: "Nuevo usuario registrado",
+        edit: "Usuario actualizado",
+        delete: "Usuario eliminado"
+    };
+
+    const entry = {
+        type,
+        title: titles[type] || "Actividad de usuario",
+        description: user?.name
+            ? `${user.name} · ${user.role || "Sin rol"}`
+            : "Registro de usuario",
+        timestamp: new Date().toISOString()
+    };
+
+    try {
+        const stored = JSON.parse(localStorage.getItem("sentir.admin.recentActivity") || "[]");
+        const history = Array.isArray(stored) ? stored : [];
+        localStorage.setItem(
+            "sentir.admin.recentActivity",
+            JSON.stringify([entry, ...history].slice(0, 8))
+        );
+    } catch (error) {
+        console.error("No se pudo guardar el movimiento reciente:", error);
+    }
+}
+
 
 
 // ======================================================
@@ -734,12 +618,6 @@ inicioNav.addEventListener(
     "click",
 
     () => {
-
-        showToast(
-            "La página de Inicio será la siguiente 💜"
-        );
-
-
         if (
             window.innerWidth <=
             900
@@ -748,6 +626,8 @@ inicioNav.addEventListener(
             closeSidebar();
 
         }
+
+        window.location.href = "../Admin.html";
 
     }
 
@@ -846,6 +726,30 @@ function getRoleClass(role) {
 
     );
 
+}
+
+function normalizeRoleName(role) {
+    return String(role || '')
+        .trim()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+}
+
+function isCommitteeMember(value) {
+    if (value === true || value === 1) {
+        return true;
+    }
+
+    const normalizedValue = String(value ?? '')
+        .trim()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+
+    return normalizedValue === '1'
+        || normalizedValue === 'true'
+        || normalizedValue === 'si';
 }
 
 
@@ -947,6 +851,10 @@ function updateStats() {
 
         ).length;
 
+    committeeCount.textContent = users.filter(
+        user => isCommitteeMember(user.committeeMember)
+    ).length;
+
 }
 
 
@@ -1001,14 +909,17 @@ function renderUsers() {
                         .includes(search);
 
 
-                const matchRole =
-
-                    !selectedRole
-
-                    ||
-
-                    user.role ===
-                    selectedRole;
+                const normalizedRole = normalizeRoleName(user.role);
+                const matchRole = !selectedRole
+                    || (selectedRole === 'Directivo' && [
+                        'rectora',
+                        'coordinador convivencia',
+                        'coordinador academico'
+                    ].includes(normalizedRole))
+                    || (selectedRole === 'Comité de convivencia' && isCommitteeMember(user.committeeMember))
+                    || (selectedRole !== 'Directivo'
+                        && selectedRole !== 'Comité de convivencia'
+                        && normalizedRole === normalizeRoleName(selectedRole));
 
 
                 const matchStatus =
@@ -1446,29 +1357,26 @@ function updateConditionalFields() {
         "Estudiante"
     ) {
 
-        gradeField.classList.remove(
-            "hidden"
-        );
+        if (gradeField) {
+            gradeField.classList.remove("hidden");
+        }
 
-
-        gradeInput.required =
-            true;
+        if (gradeInput) {
+            gradeInput.required = true;
+        }
 
     }
 
     else {
 
-        gradeField.classList.add(
-            "hidden"
-        );
+        if (gradeField) {
+            gradeField.classList.add("hidden");
+        }
 
-
-        gradeInput.required =
-            false;
-
-
-        gradeInput.value =
-            "";
+        if (gradeInput) {
+            gradeInput.required = false;
+            gradeInput.value = "";
+        }
 
     }
 
@@ -1481,42 +1389,35 @@ function updateConditionalFields() {
         "Docente"
     ) {
 
-        groupDirectorField.classList.remove(
-            "hidden"
-        );
+        if (groupDirectorField) {
+            groupDirectorField.classList.remove("hidden");
+        }
 
-
-        groupDirectorInput.required =
-            true;
+        if (groupDirectorInput) {
+            groupDirectorInput.required = true;
+        }
 
     }
 
     else {
 
-        groupDirectorField.classList.add(
-            "hidden"
-        );
+        if (groupDirectorField) {
+            groupDirectorField.classList.add("hidden");
+        }
 
+        if (groupDirectorInput) {
+            groupDirectorInput.required = false;
+            groupDirectorInput.value = "";
+        }
 
-        groupDirectorInput.required =
-            false;
+        if (directorGroupField) {
+            directorGroupField.classList.add("hidden");
+        }
 
-
-        groupDirectorInput.value =
-            "";
-
-
-        directorGroupField.classList.add(
-            "hidden"
-        );
-
-
-        directorGroupInput.required =
-            false;
-
-
-        directorGroupInput.value =
-            "";
+        if (directorGroupInput) {
+            directorGroupInput.required = false;
+            directorGroupInput.value = "";
+        }
 
     }
 
@@ -1525,6 +1426,15 @@ function updateConditionalFields() {
 
 
 function updateDirectorField() {
+
+    if (
+        !roleInput ||
+        !groupDirectorInput ||
+        !directorGroupField ||
+        !directorGroupInput
+    ) {
+        return;
+    }
 
     if (
 
@@ -1568,30 +1478,71 @@ function updateDirectorField() {
 
 
 
-roleInput.addEventListener(
+if (roleInput) {
+    roleInput.addEventListener(
 
-    "change",
+        "change",
 
-    () => {
+        () => {
 
+            updateSelectedRoleDisplay();
+            updateConditionalFields();
+            updateDirectorField();
+
+        }
+
+    );
+}
+
+if (roleEditSelect) {
+    roleEditSelect.addEventListener("change", () => {
+        roleInput.value = roleEditSelect.value;
+        updateSelectedRoleDisplay();
         updateConditionalFields();
-
         updateDirectorField();
-
-    }
-
-);
+    });
+}
 
 
+if (groupDirectorInput) {
+    groupDirectorInput.addEventListener(
 
-groupDirectorInput.addEventListener(
+        "change",
 
-    "change",
+        updateDirectorField
 
-    updateDirectorField
+    );
+}
 
-);
 
+if (documentTypeInput) {
+    documentTypeInput.addEventListener("change", toggleDocumentTypeFields);
+}
+
+if (otherDocumentTypeInput) {
+    otherDocumentTypeInput.addEventListener("input", () => {
+        if (documentTypeInput.value === "Otro" && !otherDocumentTypeInput.value.trim()) {
+            otherDocumentTypeInput.setCustomValidity("Especifica el tipo de documento");
+        } else {
+            otherDocumentTypeInput.setCustomValidity("");
+        }
+    });
+}
+
+if (birthDateInput) {
+    birthDateInput.addEventListener("input", updateAgeFromBirthDate);
+    birthDateInput.addEventListener("change", updateAgeFromBirthDate);
+}
+
+if (passwordInput) {
+    passwordInput.addEventListener("input", () => {
+        if (passwordInput.value && !isStrongPassword(passwordInput.value)) {
+            passwordInput.setCustomValidity("La contraseña debe tener mínimo 8 caracteres, incluir mayúsculas, minúsculas, números y un carácter especial");
+        } else {
+            passwordInput.setCustomValidity("");
+        }
+    });
+}
 
 
 // ======================================================
@@ -1638,21 +1589,19 @@ photoInput.addEventListener(
         }
 
 
+        selectedPhoto = file;
+
+
         const reader =
             new FileReader();
 
 
         reader.onload =
             event => {
-
-                selectedPhoto =
-                    event.target.result;
-
-
                 photoPreview.innerHTML = `
 
                     <img
-                        src="${selectedPhoto}"
+                        src="${event.target.result}"
                         alt="Vista previa"
                     >
 
@@ -1683,6 +1632,13 @@ function openCreateModal() {
     editingId.value =
         "";
 
+    documentInput.readOnly = false;
+    documentTypeInput.required = true;
+    birthDateInput.required = true;
+    roleEditSelect.required = false;
+    selectedRoleDisplayWrapper.classList.remove("hidden");
+    roleEditSelectWrapper.classList.add("hidden");
+
 
     modalTitle.textContent =
         "Registrar usuario";
@@ -1690,6 +1646,45 @@ function openCreateModal() {
 
     statusInput.value =
         "Activo";
+    committeeInput.value = "0";
+
+
+    const selectedRole =
+        roleSelectionInput.value || roleInput.value;
+
+
+    if (selectedRole) {
+        roleInput.value =
+            selectedRole;
+        updateSelectedRoleDisplay();
+    }
+
+
+    if (registrationDateInput) {
+        const today = new Date().toISOString().split("T")[0];
+        registrationDateInput.value = today;
+    }
+
+    if (birthDateInput) {
+        birthDateInput.value = "";
+        updateAgeFromBirthDate();
+    }
+
+    if (documentTypeInput) {
+        documentTypeInput.value = "";
+        toggleDocumentTypeFields();
+    }
+
+
+    if (otherDocumentTypeWrapper) {
+        otherDocumentTypeWrapper.classList.add("hidden");
+    }
+
+
+    if (otherDocumentTypeInput) {
+        otherDocumentTypeInput.value = "";
+        otherDocumentTypeInput.required = false;
+    }
 
 
     resetPhoto();
@@ -1741,9 +1736,18 @@ function openEditModal(id) {
     editingId.value =
         user.id;
 
+    documentInput.readOnly = true;
+    documentTypeInput.required = false;
+    birthDateInput.required = false;
+    roleEditSelect.required = true;
+    selectedRoleDisplayWrapper.classList.add("hidden");
+    roleEditSelectWrapper.classList.remove("hidden");
 
-    nameInput.value =
-        user.name;
+
+    firstNameInput.value = user.firstName || "";
+    secondNameInput.value = user.secondName || "";
+    firstSurnameInput.value = user.firstSurname || "";
+    secondSurnameInput.value = user.secondSurname || "";
 
 
     documentInput.value =
@@ -1761,13 +1765,35 @@ function openEditModal(id) {
     passwordInput.value =
         user.password;
 
+    if (birthDateInput && user.birthDate) {
+        birthDateInput.value = user.birthDate;
+        updateAgeFromBirthDate();
+    }
+
+    if (registrationDateInput) {
+        registrationDateInput.value = user.registrationDate || "";
+    }
+
+    if (documentTypeInput) {
+        const knownDocumentType = [...documentTypeInput.options]
+            .some(option => option.value === user.documentType);
+        documentTypeInput.value = knownDocumentType ? user.documentType : "Otro";
+        toggleDocumentTypeFields();
+        if (!knownDocumentType && otherDocumentTypeInput) {
+            otherDocumentTypeInput.value = user.documentType || "";
+        }
+    }
 
     roleInput.value =
-        user.role;
+        user.role.trim();
+
+    roleEditSelect.value = user.role.trim();
 
 
     statusInput.value =
         user.status;
+
+    committeeInput.value = user.committeeMember ? "1" : "0";
 
 
     selectedPhoto =
@@ -1872,7 +1898,7 @@ userForm.addEventListener(
 
     "submit",
 
-    event => {
+    async event => {
 
 
         event.preventDefault();
@@ -1887,92 +1913,61 @@ userForm.addEventListener(
 
 
 
-        if (
+        const selectedDocumentType = documentTypeInput.value === "Otro"
+            ? (otherDocumentTypeInput.value.trim() || "Otro")
+            : documentTypeInput.value;
 
-            roleInput.value ===
-            "Estudiante"
+        const nameParts = {
+            firstName: firstNameInput.value.trim(),
+            secondName: secondNameInput.value.trim(),
+            firstSurname: firstSurnameInput.value.trim(),
+            secondSurname: secondSurnameInput.value.trim()
+        };
 
-            &&
-
-            !gradeInput.value
-
-        ) {
-
-            showToast(
-                "Selecciona el grado del estudiante"
-            );
-
-
+        if (!nameParts.firstName || !nameParts.firstSurname) {
+            showToast("Ingresa el primer nombre y el primer apellido");
             return;
-
         }
 
-
-
-        if (
-
-            roleInput.value ===
-            "Docente"
-
-            &&
-
-            !groupDirectorInput.value
-
-        ) {
-
-            showToast(
-                "Indica si el docente es director de grupo"
-            );
-
-
+        if (!isStrongPassword(passwordInput.value)) {
+            showToast("La contraseña debe tener mínimo 8 caracteres, incluir mayúsculas, minúsculas, números y un carácter especial");
+            passwordInput.focus();
             return;
-
         }
 
-
-
-        if (
-
-            roleInput.value ===
-            "Docente"
-
-            &&
-
-            groupDirectorInput.value ===
-            "Sí"
-
-            &&
-
-            !directorGroupInput
-                .value
-                .trim()
-
-        ) {
-
-            showToast(
-                "Indica de qué grupo es director"
-            );
-
-
+        if (!roleInput.value) {
+            showToast("Selecciona un rol antes de guardar");
             return;
-
         }
 
-
+        if (birthDateInput && birthDateInput.value) {
+            ageInput.value = calculateAgeFromBirthDate(birthDateInput.value);
+        }
 
         const data = {
 
 
-            name:
+            documentType:
+                selectedDocumentType,
 
-                nameInput
-                    .value
-                    .trim(),
+
+            ...nameParts,
+
+            name: [nameParts.firstName, nameParts.secondName].filter(Boolean).join(" "),
+
+            surname: [nameParts.firstSurname, nameParts.secondSurname].filter(Boolean).join(" "),
 
 
             document:
 
                 documentInput
+                    .value
+                    .trim(),
+
+
+            age:
+
+                ageInput
                     .value
                     .trim(),
 
@@ -1996,6 +1991,16 @@ userForm.addEventListener(
                 passwordInput.value,
 
 
+            birthDate:
+
+                birthDateInput.value,
+
+
+            registrationDate:
+
+                registrationDateInput.value,
+
+
             photo:
 
                 selectedPhoto,
@@ -2013,7 +2018,7 @@ userForm.addEventListener(
 
                     ?
 
-                    gradeInput.value
+                    gradeInput?.value || ""
 
                     :
 
@@ -2027,7 +2032,7 @@ userForm.addEventListener(
 
                     ?
 
-                    groupDirectorInput.value
+                    groupDirectorInput?.value || ""
 
                     :
 
@@ -2041,14 +2046,12 @@ userForm.addEventListener(
 
                 &&
 
-                groupDirectorInput.value ===
+                groupDirectorInput?.value ===
                 "Sí"
 
                     ?
 
-                    directorGroupInput
-                        .value
-                        .trim()
+                    directorGroupInput?.value.trim() || ""
 
                     :
 
@@ -2057,7 +2060,11 @@ userForm.addEventListener(
 
             status:
 
-                statusInput.value
+                statusInput.value,
+
+            committeeMember:
+
+                committeeInput.value === "1"
 
         };
 
@@ -2137,41 +2144,46 @@ userForm.addEventListener(
         // EDITAR
 
         if (id) {
-
-            const index =
-
-                users.findIndex(
-
-                    user =>
-                        user.id === id
-
-                );
-
-
-
-            if (
-                index !== -1
-            ) {
-
-                users[index] = {
-
-                    ...users[index],
-
-                    ...data
-
-                };
-
-
-                selectedUserId =
-                    id;
-
+            const payload = {
+                documentType: data.documentType,
+                ...nameParts,
+                age: Number(data.age),
+                email: data.email,
+                phone: data.phone,
+                password: data.password,
+                birthDate: data.birthDate,
+                registrationDate: data.registrationDate,
+                role: data.role,
+                status: data.status,
+                committeeMember: data.committeeMember
+            };
+            const formData = new FormData();
+            Object.entries(payload).forEach(([key, value]) => {
+                formData.append(key, String(value ?? ""));
+            });
+            if (selectedPhoto instanceof File) {
+                formData.append("foto", selectedPhoto);
             }
 
+            try {
+                const response = await fetch(`http://localhost:3000/api/CrearUsuario/actualizar/${id}`, {
+                    method: "PUT",
+                    body: formData
+                });
+                const result = await response.json();
+                if (!response.ok) {
+                    throw new Error(result?.message || "No se pudo actualizar el usuario");
+                }
 
-
-            showToast(
-                "Usuario actualizado correctamente"
-            );
+                selectedUserId = id;
+                recordUserActivity("edit", data);
+                await cargarUsuariosDesdeBD();
+                showToast(result?.message || "Usuario actualizado correctamente");
+            } catch (error) {
+                console.error("Actualizar usuario:", error);
+                showToast(error.message || "No se pudo actualizar el usuario");
+                return;
+            }
 
         }
 
@@ -2180,62 +2192,88 @@ userForm.addEventListener(
         // CREAR
 
         else {
+            const payload = {
+                documentType: data.documentType,
+                ...nameParts,
+                document: data.document,
+                age: Number(data.age),
+                email: data.email,
+                phone: data.phone,
+                password: data.password,
+                birthDate: data.birthDate,
+                registrationDate: data.registrationDate,
+                role: data.role,
+                status: data.status,
+                committeeMember: data.committeeMember,
+            };
+
+            const formData = new FormData();
+            Object.entries(payload).forEach(([key, value]) => {
+                formData.append(key, String(value ?? ""));
+            });
+
+            if (selectedPhoto instanceof File) {
+                formData.append("foto", selectedPhoto);
+            }
+
+            let createdUser = null;
+
+            try {
+                const response = await fetch("http://localhost:3000/api/CrearUsuario/crear", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result?.message || "No se pudo guardar el usuario");
+                }
+
+                createdUser = result?.usuario || null;
+
+                if (result?.message) {
+                    showToast(result.message);
+                }
+            } catch (error) {
+                console.error("Guardar usuario:", error);
+                showToast(error.message || "No se pudo guardar el usuario");
+                return;
+            }
 
             const newId =
 
-                users.length
+                Number(
+                    createdUser?.id_usuario ??
+                    (
+                        users.length
 
-                    ?
+                            ?
 
-                    Math.max(
+                            Math.max(
 
-                        ...users.map(
+                                ...users.map(
 
-                            user =>
-                                user.id
+                                    user =>
+                                        user.id
 
-                        )
+                                )
 
-                    ) + 1
+                            ) + 1
 
-                    :
+                            :
 
-                    1;
+                            1
+                    )
+                );
 
+            const codigoRegistro =
+                createdUser?.codigo_registro ||
+                `USR-${String(newId).padStart(6, "0")}`;
 
-
-            const newUser = {
-
-                id:
-                    newId,
-
-                ...data,
-
-                registrationDate:
-
-                    new Date()
-                        .toLocaleDateString(
-                            "es-CO"
-                        )
-
-            };
-
-
-
-            users.unshift(
-                newUser
-            );
-
-
-
-            selectedUserId =
-                newId;
-
-
-
-            showToast(
-                "Usuario registrado correctamente"
-            );
+            selectedUserId = newId;
+            recordUserActivity("register", data);
+            await cargarUsuariosDesdeBD();
 
         }
 
@@ -2282,76 +2320,36 @@ confirmDelete.addEventListener(
 
     "click",
 
-    () => {
-
-
+    async () => {
         if (!pendingDeleteId) {
-
             return;
-
         }
 
+        const idToDelete = pendingDeleteId;
+        const deletedUser = users.find((user) => user.id === idToDelete);
+        confirmDelete.disabled = true;
 
+        try {
+            const response = await fetch(`http://localhost:3000/api/CrearUsuario/${idToDelete}`, {
+                method: "DELETE"
+            });
+            const result = await response.json().catch(() => ({}));
 
-        users =
+            if (!response.ok) {
+                throw new Error(result?.message || "No se pudo eliminar el usuario");
+            }
 
-            users.filter(
-
-                user =>
-
-                    user.id !==
-                    pendingDeleteId
-
-            );
-
-
-
-        selectedUserId =
-
-            users.length
-
-                ?
-
-                users[0].id
-
-                :
-
-                null;
-
-
-
-        pendingDeleteId =
-            null;
-
-
-
-        deleteModal.classList.remove(
-            "show"
-        );
-
-
-
-        updateStats();
-
-
-        renderUsers();
-
-
-
-        if (selectedUserId) {
-
-            showUserDetails(
-                selectedUserId
-            );
-
+            pendingDeleteId = null;
+            deleteModal.classList.remove("show");
+            recordUserActivity("delete", deletedUser);
+            await cargarUsuariosDesdeBD();
+            showToast(result?.message || "Usuario eliminado correctamente");
+        } catch (error) {
+            console.error("Eliminar usuario:", error);
+            showToast(error.message || "No se pudo eliminar el usuario");
+        } finally {
+            confirmDelete.disabled = false;
         }
-
-
-
-        showToast(
-            "Usuario eliminado correctamente"
-        );
-
     }
 
 );
@@ -2492,15 +2490,223 @@ deleteSelected.addEventListener(
 
 
 // ======================================================
+// USUARIOS DESDE BASE DE DATOS
+// ======================================================
+
+async function cargarUsuariosDesdeBD() {
+    try {
+        const respuesta = await fetch('http://localhost:3000/api/CrearUsuario/listar');
+
+        if (!respuesta.ok) {
+            throw new Error('No se pudieron cargar los usuarios');
+        }
+
+        const data = await respuesta.json();
+        const usuarios = Array.isArray(data.usuarios) ? data.usuarios : [];
+        const previousSelectedUserId = selectedUserId;
+
+        users = usuarios.map((usuario) => ({
+            id: Number(usuario.id),
+            name: usuario.name || 'Sin nombre',
+            firstName: usuario.firstName || '',
+            secondName: usuario.secondName || '',
+            firstSurname: usuario.firstSurname || '',
+            secondSurname: usuario.secondSurname || '',
+            document: usuario.document || 'No disponible',
+            email: usuario.email || '',
+            phone: usuario.phone || 'No disponible',
+            password: usuario.password || '',
+            documentType: usuario.documentType || 'Cédula',
+            photo: usuario.photo || '',
+            role: usuario.role || 'Sin rol',
+            roleId: Number(usuario.roleId) || null,
+            committeeMember: isCommitteeMember(usuario.committeeMember),
+            grade: usuario.grade || '',
+            groupDirector: usuario.groupDirector || '',
+            directorGroup: usuario.directorGroup || '',
+            status: usuario.status || 'Activo',
+            registrationDate: usuario.registrationDate || '',
+            birthDate: usuario.birthDate || ''
+        }));
+
+        selectedUserId = users.some((user) => user.id === previousSelectedUserId)
+            ? previousSelectedUserId
+            : (users.length ? users[0].id : null);
+        updateStats();
+        renderUsers();
+
+        if (selectedUserId) {
+            showUserDetails(selectedUserId);
+        }
+    } catch (error) {
+        console.error('Error al cargar usuarios:', error);
+        users = [];
+        selectedUserId = null;
+        updateStats();
+        renderUsers();
+    }
+}
+
+
+// ======================================================
+// ROLES DESDE BASE DE DATOS
+// ======================================================
+
+async function cargarRolesDesdeBD() {
+    try {
+        const respuesta = await fetch('http://localhost:3000/api/CrearUsuario/roles');
+
+        if (!respuesta.ok) {
+            throw new Error('No se pudieron cargar los roles');
+        }
+
+        const data = await respuesta.json();
+        const roles = data.roles || [];
+
+        const opciones = roles.length
+            ? roles.map((rol) => ({
+                value: rol.nombre.trim(),
+                label: rol.nombre.trim()
+            }))
+            : roleOptions.map((rol) => ({
+                value: rol,
+                label: rol
+            }));
+
+        [roleSelectionInput, roleEditSelect].forEach((select) => {
+            if (!select) return;
+
+            const actualValue = select.value;
+            select.innerHTML = '<option value="">Seleccionar rol</option>';
+            const optionValores = new Set();
+
+            opciones.forEach((rol) => {
+                if (optionValores.has(rol.value)) {
+                    return;
+                }
+
+                optionValores.add(rol.value);
+                const option = document.createElement('option');
+                option.value = rol.value;
+                option.textContent = rol.label;
+                select.appendChild(option);
+            });
+
+            if (actualValue && [...select.options].some((option) => option.value === actualValue)) {
+                select.value = actualValue;
+            }
+        });
+
+        return opciones;
+    } catch (error) {
+        console.error('Error al cargar roles:', error);
+
+        [roleSelectionInput, roleEditSelect].forEach((select) => {
+            if (!select) return;
+
+            const actualValue = select.value;
+            select.innerHTML = '<option value="">Seleccionar rol</option>';
+
+            roleOptions.forEach((rol) => {
+                const option = document.createElement('option');
+                option.value = rol;
+                option.textContent = rol;
+                select.appendChild(option);
+            });
+
+            if (actualValue && [...select.options].some((option) => option.value === actualValue)) {
+                select.value = actualValue;
+            }
+        });
+    }
+}
+
+
+// ======================================================
 // MODALES
 // ======================================================
+
+function openRoleSelectionModal() {
+
+    roleSelectionInput.value =
+        "";
+
+
+    roleSelectionModal.classList.add(
+        "show"
+    );
+
+
+    refreshIcons();
+
+}
+
+
+function closeRoleSelectionModal() {
+
+    roleSelectionModal.classList.remove(
+        "show"
+    );
+
+}
+
 
 openAddUser.addEventListener(
 
     "click",
 
-    openCreateModal
+    openRoleSelectionModal
 
+);
+
+
+cancelRoleSelection.addEventListener(
+
+    "click",
+
+    closeRoleSelectionModal
+
+);
+
+
+cancelRoleSelectionBtn.addEventListener(
+
+    "click",
+
+    closeRoleSelectionModal
+
+);
+
+
+continueRoleSelection.addEventListener(
+
+    "click",
+
+    () => {
+
+        const selectedRole =
+            roleSelectionInput.value;
+
+
+        if (!selectedRole) {
+
+            showToast(
+                "Selecciona un rol antes de continuar"
+            );
+
+            return;
+
+        }
+
+
+        closeRoleSelectionModal();
+
+        roleInput.value =
+            selectedRole;
+
+        openCreateModal();
+
+    }
 );
 
 
@@ -2738,7 +2944,9 @@ window.addEventListener(
 // INICIO
 // ======================================================
 
-function init() {
+async function init() {
+
+    await cargarRolesDesdeBD();
 
     updateStats();
 
@@ -2777,5 +2985,16 @@ function init() {
 }
 
 
+
+async function init() {
+
+    await cargarRolesDesdeBD();
+    await cargarUsuariosDesdeBD();
+
+    setTimeout(() => {
+        refreshIcons();
+    }, 300);
+
+}
 
 init();

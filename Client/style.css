@@ -1,21 +1,25 @@
 
 body{
-    background-image:url("/Sentir/Shared/LoginResources/Fondo.png");
+    background: radial-gradient(circle at center, rgba(158, 130, 255, 0.42) 0%, rgba(124, 77, 255, 0.12) 28%, rgba(255, 255, 255, 0) 60%),
+                linear-gradient(180deg, #f6f1ff 0%, #efe9ff 100%);
     background-size:cover;
     background-position:center;
 }
 
 @media(max-width:1024px){
     body{
-        background-image:url("/Sentir/Shared/LoginResources/Tablet.png");
+        background: radial-gradient(circle at center, rgba(158, 130, 255, 0.35) 0%, rgba(124, 77, 255, 0.10) 30%, rgba(255, 255, 255, 0) 65%),
+                    linear-gradient(180deg, #f6f1ff 0%, #efe9ff 100%);
     }
 }
 
 @media(max-width:768px){
     body{
-        background-image:url("/Sentir/Shared/LoginResources/Celular.png");
+        background: radial-gradient(circle at center, rgba(158, 130, 255, 0.54) 0%, rgba(124, 77, 255, 0.15) 30%, rgba(255, 255, 255, 0) 65%),
+                    linear-gradient(180deg, #f6f1ff 0%, #efe9ff 100%);
     }
 }
+
 .pantalla-inicio{
     min-height:100vh;
     display:flex;
@@ -23,8 +27,6 @@ body{
     align-items:center;
     padding:20px;
 }
-
-
 
 .logo-container{
     text-align:center;
@@ -39,11 +41,19 @@ body{
 .titulo{
     color:#444;
     font-weight:600;
-
     opacity:0;
 }
 
+.inicio-layout {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:40px;
+    margin-top: 20px;
+}
+
 .personajes-container{
+    flex:1.4;
     text-align:center;
     margin-top:-10px;
 }
@@ -51,13 +61,43 @@ body{
 .personajes{
     opacity:0;
     transform:translateY(30px);
-    font: weight 800%x;
-    width: 100%;     
-    max-width: 888px;     
-    height: auto;          
-    display: block;    
-    margin-left: auto; 
-    margin-right: auto;
+    width:100%;
+    max-width:720px;
+    height:auto;
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.selector-container{
+    flex:0.8;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.admin-selector-stack {
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+}
+
+.select-wrapper {
+    position:relative;
+    width:100%;
+    max-width:380px;
+    margin:0 auto;
+}
+
+.select-wrapper::after {
+    content:"▾";
+    position:absolute;
+    right:22px;
+    top:50%;
+    transform:translateY(-50%);
+    color:white;
+    font-size:1.4rem;
+    pointer-events:none;
 }
 
 .btn-login{
@@ -68,17 +108,30 @@ body{
     padding:10px;
     font-weight:600;
     margin:0 auto;
-    width: 60%;
-    max-width: 380px;
-    height: 60px;
-    border-radius: 30px;
-    font-size: 1.2rem;
-
+    width:100%;
+    max-width:380px;
+    height:60px;
+    font-size:1.2rem;
 }
 
 .btn-login:hover{
     background:#6937ff;
     color:white;
+}
+
+.btn-select {
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    width:100%;
+    text-align-last:center;
+    cursor:pointer;
+    padding-right:40px;
+}
+
+.btn-select option {
+    color:#333;
+    background:white;
 }
 
 .btn-crear{
@@ -90,13 +143,129 @@ body{
     width: 60%;
     max-width: 380px;
     height: 60px;
-    border-radius: 30px;
     font-size: 1.2rem;
 }
 
 .btn-crear:hover{
     background:#7C4DFF;
     color:white;
+}
+
+@media(max-width:900px){
+    .inicio-layout {
+        flex-direction:column;
+        gap:20px;
+    }
+
+    .personajes-container,
+    .selector-container {
+        width:100%;
+        flex:1 1 auto;
+    }
+
+    .select-wrapper,
+    .btn-login {
+        width:100%;
+        max-width:420px;
+    }
+}
+
+.admin-select-wrapper {
+    width: 100%;
+    max-width: 420px;
+}
+
+.admin-select {
+    width: 100%;
+    max-width: 420px;
+    text-align-last: center;
+}
+
+.admin-login-btn {
+    width: 100%;
+    max-width: 420px;
+    display: block;
+    margin: 0 auto;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(56, 35, 100, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal-content {
+    position: relative;
+    background: #fff;
+    width: min(100%, 430px);
+    padding: 28px 24px 22px;
+    border-radius: 26px;
+    box-shadow: 0 18px 50px rgba(73, 45, 141, 0.22);
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    border: none;
+    background: #f3ecff;
+    color:#4E2FC7;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.modal-content h3 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #2f234d;
+    font-weight: 700;
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.modal-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: #4d4662;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.modal-form input {
+    border: 1.5px solid #d9d0f6;
+    border-radius: 14px;
+    padding: 12px 14px;
+    font-size: 1rem;
+    outline: none;
+}
+
+.modal-form input:focus {
+    border-color: #7C4DFF;
+    box-shadow: 0 0 0 3px rgba(124, 77, 255, 0.12);
+}
+
+.modal-submit {
+    margin-top: 8px;
+    width: 100%;
+    max-width: none;
 }
 
 .accesibilidad{

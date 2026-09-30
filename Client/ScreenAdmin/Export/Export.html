@@ -1,3 +1,7 @@
+                                <span><a href="../Admin.html" class="sin-subrayado">
+                                    <span><a href="../Admin.html" class="sin-subrayado">
+                <span><a href="../Admin.html" class="sin-subrayado">
+                    <span><a href="../Admin.html" class="sin-subrayado">
 <!DOCTYPE html>
 <html lang="es">
 
@@ -37,12 +41,19 @@
         defer
     ></script>
 
+    <script
+        src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"
+        defer
+    ></script>
+
     <!-- CSS -->
 
     <link
         rel="stylesheet"
         href="Export.css"
     >
+
+    <link rel="stylesheet" href="../admin-profile.css">
 
 </head>
 
@@ -102,7 +113,7 @@
 
                 </svg>
 
-                <span><a href="/Sentir/Client/ScreenAdmin/Admin.html" class="sin-subrayado">
+                <span><a href="../Admin.html" class="sin-subrayado">
                     Inicio
                 </span></a>
 
@@ -266,7 +277,7 @@
                     type="button"
                 >
 
-                    <span><a href="/Sentir/Client/ScreenAdmin/Admin.html" class="sin-subrayado">
+                    <span><a href="../Admin.html" class="sin-subrayado">
                         Volver al inicio
                     </a></span>
 
@@ -297,43 +308,6 @@
             <!-- PERFIL SUPERIOR DERECHO -->
 
             <div class="header-user-area">
-
-
-                <button
-                    class="notification-button"
-                    type="button"
-                    aria-label="Notificaciones"
-                >
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                    >
-
-                        <path
-                            d="M18 8C18 4.7 15.3 2 12 2C8.7 2 6 4.7 6 8V11.2C6 12.7 5.5 14.2 4.5 15.4L3 17H21L19.5 15.4C18.5 14.2 18 12.7 18 11.2V8Z"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-
-                        <path
-                            d="M9.5 21H14.5"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                        />
-
-                    </svg>
-
-
-                    <span class="notification-badge">
-                        3
-                    </span>
-
-                </button>
-
 
                 <div class="admin-profile">
 
@@ -597,7 +571,7 @@
                     </span>
 
                     <strong id="selectedFormatText">
-                        CSV
+                        Excel (.xlsx)
                     </strong>
 
                 </div>
@@ -753,7 +727,7 @@
 
                         <button
                             class="format-card active"
-                            data-format="csv"
+                            data-format="xlsx"
                             type="button"
                         >
 
@@ -767,11 +741,11 @@
                             <div>
 
                                 <strong>
-                                    Excel / CSV
+                            Excel (.xlsx)
                                 </strong>
 
                                 <span>
-                                    Ideal para hojas de cálculo
+                            Libro con todos los datos de usuarios
                                 </span>
 
                             </div>
@@ -1038,6 +1012,7 @@
 
 
 <script src="Export.js"></script>
+<script src="../admin-profile.js"></script>
 
 
 </body>

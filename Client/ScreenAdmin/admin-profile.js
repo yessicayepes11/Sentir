@@ -1,0 +1,199 @@
+(() => {
+    const apiUrl = 'http://localhost:3000/api/CrearUsuario/perfil-administrador';
+    const modalMarkup = `
+        <div class="admin-profile-overlay" id="adminProfileModal" aria-hidden="true">
+            <section class="admin-profile-dialog" role="dialog" aria-modal="true" aria-labelledby="adminProfileTitle">
+                <header class="admin-profile-heading">
+                    <div>
+                        <span>Cuenta administradora</span>
+                        <h2 id="adminProfileTitle">Editar perfil</h2>
+                    </div>
+                    <button class="admin-profile-close" id="closeAdminProfile" type="button" aria-label="Cerrar">×</button>
+                </header>
+                <form id="adminProfileForm">
+                    <div class="admin-profile-photo-row">
+                        <div class="admin-profile-avatar" id="adminProfileAvatar" aria-label="Vista previa de la foto">A</div>
+                        <label class="admin-profile-upload" for="adminProfilePhoto">Cambiar foto</label>
+                        <input id="adminProfilePhoto" type="file" accept="image/*" hidden>
+                    </div>
+                    <div class="admin-profile-fields">
+                        <label>Nombre completo<input id="adminProfileName" name="name" required maxlength="200"></label>
+                        <label>Correo<input id="adminProfileEmail" name="email" type="email" required maxlength="150"></label>
+                        <label>Celular<input id="adminProfilePhone" name="phone" type="tel" maxlength="30"></label>
+                        <label>Contraseña actual<input id="adminCurrentPassword" name="currentPassword" type="password" required autocomplete="current-password"></label>
+                        <label>Nueva contraseña <span>(opcional)</span><input id="adminNewPassword" name="newPassword" type="password" autocomplete="new-password" aria-describedby="adminPasswordHint"></label>
+                        <label>Confirmar nueva contraseña<input id="adminConfirmPassword" type="password" autocomplete="new-password"></label>
+                    </div>
+                    <p class="admin-profile-hint" id="adminPasswordHint">Si la cambias, usa al menos 8 caracteres, mayúsculas, minúsculas, números y un símbolo.</p>
+                    <div class="admin-profile-actions">
+                        <button class="admin-profile-cancel" id="cancelAdminProfile" type="button">Cancelar</button>
+                        <button class="admin-profile-save" type="submit">Guardar cambios</button>
+                    </div>
+                </form>
+            </section>
+        </div>`;
+
+    document.body.insertAdjacentHTML('beforeend', modalMarkup);
+
+    const modal = document.getElementById('adminProfileModal');
+    const form = document.getElementById('adminProfileForm');
+    const profileTriggers = document.querySelectorAll('.admin-profile');
+    const photoInput = document.getElementById('adminProfilePhoto');
+    const avatar = document.getElementById('adminProfileAvatar');
+    const toast = document.getElementById('toast');
+    const toastText = document.getElementById('toastText');
+    let profile = null;
+    let selectedPhoto = null;
+
+    function notify(message) {
+        if (toast && toastText) {
+            toastText.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2800);
+        } else {
+            window.alert(message);
+        }
+    }
+
+    function setAvatar(source, name) {
+        avatar.replaceChildren();
+        if (source) {
+            const image = document.createElement('img');
+            image.src = source;
+            image.alt = `Foto de ${name || 'administradora'}`;
+            avatar.appendChild(image);
+        } else {
+            avatar.textContent = String(name || 'A').trim().charAt(0).toUpperCase() || 'A';
+        }
+    }
+
+    function updateHeader() {
+        if (!profile) return;
+        profileTriggers.forEach((trigger) => {
+            const name = trigger.querySelector('.admin-info strong');
+            const role = trigger.querySelector('.admin-info p, .admin-info span');
+            if (name) name.textContent = profile.name || 'Administradora';
+            if (role) role.textContent = profile.role || 'Rectora';
+            let image = trigger.querySelector('.admin-profile-photo');
+            if (profile.photo) {
+                if (!image) {
+                    image = document.createElement('img');
+                    image.className = 'admin-profile-photo';
+                    image.alt = '';
+                    trigger.prepend(image);
+                }
+                image.src = profile.photo;
+            } else if (image) {
+                image.remove();
+            }
+        });
+    }
+
+    async function loadProfile() {
+        try {
+            const response = await fetch(apiUrl);
+            const result = await response.json();
+            if (!response.ok) throw new Error(result?.message || 'No se pudo cargar el perfil');
+            profile = result.profile;
+            updateHeader();
+        } catch (error) {
+            console.error('Cargar perfil administrador:', error);
+            notify(error.message || 'No se pudo cargar el perfil administrador');
+        }
+    }
+
+    function openModal() {
+        if (!profile) {
+            notify('No se ha podido cargar el perfil administrador');
+            return;
+        }
+        form.reset();
+        selectedPhoto = null;
+        document.getElementById('adminProfileName').value = profile.name || '';
+        document.getElementById('adminProfileEmail').value = profile.email || '';
+        document.getElementById('adminProfilePhone').value = profile.phone || '';
+        setAvatar(profile.photo, profile.name);
+        modal.classList.add('show');
+        modal.setAttribute('aria-hidden', 'false');
+        document.getElementById('adminProfileName').focus();
+    }
+
+    function closeModal() {
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden', 'true');
+    }
+
+    profileTriggers.forEach((trigger) => {
+        trigger.classList.add('admin-profile-trigger');
+        trigger.setAttribute('role', 'button');
+        trigger.setAttribute('tabindex', '0');
+        trigger.setAttribute('aria-label', 'Editar perfil administrador');
+        trigger.addEventListener('click', openModal);
+        trigger.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                openModal();
+            }
+        });
+    });
+
+    document.getElementById('closeAdminProfile').addEventListener('click', closeModal);
+    document.getElementById('cancelAdminProfile').addEventListener('click', closeModal);
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal) closeModal();
+    });
+
+    photoInput.addEventListener('change', () => {
+        const file = photoInput.files?.[0];
+        if (!file) return;
+        if (!file.type.startsWith('image/')) {
+            notify('Selecciona un archivo de imagen');
+            photoInput.value = '';
+            return;
+        }
+        selectedPhoto = file;
+        setAvatar(URL.createObjectURL(file), document.getElementById('adminProfileName').value);
+    });
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const newPassword = document.getElementById('adminNewPassword').value;
+        const confirmPassword = document.getElementById('adminConfirmPassword').value;
+        if (newPassword && newPassword !== confirmPassword) {
+            notify('La nueva contraseña y su confirmación no coinciden');
+            document.getElementById('adminConfirmPassword').focus();
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('name', document.getElementById('adminProfileName').value.trim());
+        formData.append('email', document.getElementById('adminProfileEmail').value.trim());
+        formData.append('phone', document.getElementById('adminProfilePhone').value.trim());
+        formData.append('currentPassword', document.getElementById('adminCurrentPassword').value);
+        formData.append('newPassword', newPassword);
+        if (selectedPhoto) formData.append('foto', selectedPhoto);
+
+        const submitButton = form.querySelector('[type="submit"]');
+        submitButton.disabled = true;
+        try {
+            const response = await fetch(apiUrl, { method: 'PUT', body: formData });
+            const result = await response.json();
+            if (!response.ok) throw new Error(result?.message || 'No se pudo actualizar el perfil');
+            profile = { ...profile, ...result.profile };
+            updateHeader();
+            closeModal();
+            notify(result.message || 'Perfil actualizado correctamente');
+        } catch (error) {
+            console.error('Actualizar perfil administrador:', error);
+            notify(error.message || 'No se pudo actualizar el perfil');
+        } finally {
+            submitButton.disabled = false;
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal.classList.contains('show')) closeModal();
+    });
+
+    loadProfile();
+})();

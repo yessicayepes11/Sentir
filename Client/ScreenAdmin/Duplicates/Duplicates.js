@@ -344,7 +344,7 @@ byId("usuariosNav")
         () => {
 
             window.location.href =
-                "Users.html";
+                "../Users/Users.html";
 
         }
     );

@@ -47,6 +47,8 @@
         href="Users.css"
     >
 
+    <link rel="stylesheet" href="../admin-profile.css">
+
 </head>
 
 
@@ -92,7 +94,7 @@
 
                 <i data-lucide="house"></i>
 
-                <a href="/Sentir/Client/ScreenAdmin/Admin.html" class="sin-subrayado">
+                <a href="../Admin.html" class="sin-subrayado">
                     <span>
                         Inicio
                     </span>
@@ -258,20 +260,6 @@
                     >
 
                 </div>
-
-
-                <button
-                    class="notification-button"
-                    type="button"
-                >
-
-                    <i data-lucide="bell"></i>
-
-                    <span>
-                        3
-                    </span>
-
-                </button>
 
 
                 <div class="admin-profile">
@@ -496,6 +484,22 @@
                         0
                     </h2>
 
+                </div>
+
+            </article>
+
+
+            <!-- COMITÉ DE CONVIVENCIA -->
+
+            <article class="stat-card">
+
+                <div class="stat-icon committee">
+                    <i data-lucide="users-round"></i>
+                </div>
+
+                <div>
+                    <p>Comité convivencia</p>
+                    <h2 id="committeeCount">0</h2>
                 </div>
 
             </article>
@@ -914,6 +918,97 @@
 
 
 <!-- ================================================= -->
+<!-- MODAL SELECCIÓN DE ROL -->
+<!-- ================================================= -->
+
+<div
+    class="modal-overlay"
+    id="roleSelectionModal"
+>
+
+    <div class="modal role-selection-modal">
+
+        <div class="modal-header">
+
+            <div class="modal-title-group">
+
+                <div class="modal-icon">
+                    <i data-lucide="shield-user"></i>
+                </div>
+
+                <div>
+                    <span class="modal-label">
+                        Comunidad Sentir
+                    </span>
+                    <h2>
+                        Selecciona el rol
+                    </h2>
+                    <p>
+                        Elige el tipo de usuario antes de continuar con el registro.
+                    </p>
+                </div>
+
+            </div>
+
+            <button
+                class="close-modal"
+                id="cancelRoleSelection"
+                type="button"
+            >
+                <i data-lucide="x"></i>
+            </button>
+
+        </div>
+
+        <div class="role-selection-content">
+
+            <label for="roleSelectionInput">
+                Rol
+            </label>
+
+            <div class="modern-input">
+
+                <i data-lucide="shield-user"></i>
+
+                <select id="roleSelectionInput" required>
+                    <option value="">Seleccionar rol</option>
+                    <option value="Estudiante">Estudiante</option>
+                    <option value="Docente">Docente</option>
+                    <option value="UAI">UAI</option>
+                    <option value="Psicóloga">Psicóloga</option>
+                    <option value="Directivo">Directivo</option>
+                    <option value="Comité de convivencia">Comité de convivencia</option>
+                </select>
+
+            </div>
+
+            <div class="modal-actions">
+                <button
+                    class="cancel-button"
+                    id="cancelRoleSelectionBtn"
+                    type="button"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    class="save-button"
+                    id="continueRoleSelection"
+                    type="button"
+                >
+                    <i data-lucide="arrow-right"></i>
+                    Continuar
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
 <!-- MODAL REGISTRAR / EDITAR -->
 <!-- ================================================= -->
 
@@ -985,6 +1080,10 @@
                 id="editingId"
             >
 
+            <input
+                type="hidden"
+                id="roleInput"
+            >
 
 
             <!-- INFORMACIÓN PERSONAL -->
@@ -1006,7 +1105,7 @@
                     </strong>
 
                     <p>
-                        Datos principales del usuario.
+                        Completa los datos del usuario según el rol seleccionado.
                     </p>
 
                 </div>
@@ -1019,23 +1118,77 @@
             <div class="form-grid">
 
 
-                <!-- NOMBRE -->
+                <div class="form-group full-width">
+
+                    <label>
+                        Tipo de rol
+                    </label>
+
+                    <div class="modern-input" id="selectedRoleDisplayWrapper">
+
+                        <i data-lucide="shield-user"></i>
+
+                        <input
+                            id="selectedRoleDisplay"
+                            type="text"
+                            value="Sin rol"
+                            readonly
+                        >
+
+                    </div>
+
+                    <div class="modern-input hidden" id="roleEditSelectWrapper">
+
+                        <i data-lucide="shield-user"></i>
+
+                        <select id="roleEditSelect" required>
+                            <option value="">Seleccionar rol</option>
+                        </select>
+
+                    </div>
+
+                </div>
+
+
 
                 <div class="form-group">
 
-                    <label for="nameInput">
-                        Nombre
+                    <label for="documentTypeInput">
+                        Tipo de identificación
                     </label>
 
                     <div class="modern-input">
 
-                        <i data-lucide="user-round"></i>
+                        <i data-lucide="id-card"></i>
+
+                        <select id="documentTypeInput" required>
+                            <option value="">Seleccionar tipo</option>
+                            <option value="Cédula">Cédula</option>
+                            <option value="Tarjeta de identidad">Tarjeta de identidad</option>
+                            <option value="PPI">PPI</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="form-group hidden" id="otherDocumentTypeWrapper">
+
+                    <label for="otherDocumentTypeInput">
+                        Especifique otro tipo
+                    </label>
+
+                    <div class="modern-input">
+
+                        <i data-lucide="pencil-line"></i>
 
                         <input
-                            id="nameInput"
+                            id="otherDocumentTypeInput"
                             type="text"
-                            placeholder="Nombre completo"
-                            required
+                            placeholder="Ej. Pasaporte"
                         >
 
                     </div>
@@ -1044,12 +1197,10 @@
 
 
 
-                <!-- DOCUMENTO -->
-
                 <div class="form-group">
 
                     <label for="documentInput">
-                        Documento
+                        Número de identificación
                     </label>
 
                     <div class="modern-input">
@@ -1069,7 +1220,110 @@
 
 
 
-                <!-- CORREO -->
+                <div class="form-group">
+
+                    <label for="firstNameInput">
+                        Primer nombre
+                    </label>
+
+                    <div class="modern-input">
+                        <i data-lucide="user-round"></i>
+                        <input id="firstNameInput" type="text" placeholder="Primer nombre" maxlength="100" required>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="secondNameInput">
+                        Segundo nombre
+                    </label>
+
+                    <div class="modern-input">
+                        <i data-lucide="user-round"></i>
+                        <input id="secondNameInput" type="text" placeholder="Segundo nombre" maxlength="100">
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="firstSurnameInput">
+                        Primer apellido
+                    </label>
+
+                    <div class="modern-input">
+                        <i data-lucide="user-round"></i>
+                        <input id="firstSurnameInput" type="text" placeholder="Primer apellido" maxlength="100" required>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="secondSurnameInput">
+                        Segundo apellido
+                    </label>
+
+                    <div class="modern-input">
+                        <i data-lucide="user-round"></i>
+                        <input id="secondSurnameInput" type="text" placeholder="Segundo apellido" maxlength="100">
+                    </div>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="ageInput">
+                        Edad
+                    </label>
+
+                    <div class="modern-input">
+
+                        <i data-lucide="calendar-days"></i>
+
+                        <input
+                            id="ageInput"
+                            type="number"
+                            min="1"
+                            max="120"
+                            placeholder="Edad calculada"
+                            readonly
+                            tabindex="-1"
+                            aria-readonly="true"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="phoneInput">
+                        Celular
+                    </label>
+
+                    <div class="modern-input">
+
+                        <i data-lucide="phone"></i>
+
+                        <input
+                            id="phoneInput"
+                            type="tel"
+                            placeholder="+57 300 000 0000"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
 
                 <div class="form-group">
 
@@ -1094,24 +1348,123 @@
 
 
 
-                <!-- CELULAR -->
-
                 <div class="form-group">
 
-                    <label for="phoneInput">
-                        Celular
+                    <label for="passwordInput">
+                        Contraseña
                     </label>
 
                     <div class="modern-input">
 
-                        <i data-lucide="phone"></i>
+                        <i data-lucide="lock-keyhole"></i>
 
                         <input
-                            id="phoneInput"
-                            type="tel"
-                            placeholder="+57 300 000 0000"
+                            id="passwordInput"
+                            type="password"
+                            placeholder="Crear contraseña"
+                            aria-describedby="passwordHint"
                             required
                         >
+
+                    </div>
+
+                    <p class="field-hint" id="passwordHint">
+                        Mínimo 8 caracteres, con una mayúscula, una minúscula, un número y un carácter especial.
+                    </p>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="birthDateInput">
+                        Fecha de nacimiento
+                    </label>
+
+                    <div class="modern-input">
+
+                        <i data-lucide="calendar"></i>
+
+                        <input
+                            id="birthDateInput"
+                            type="date"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="registrationDateInput">
+                        Fecha de registro
+                    </label>
+
+                    <div class="modern-input">
+
+                        <i data-lucide="calendar-check-2"></i>
+
+                        <input
+                            id="registrationDateInput"
+                            type="date"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="statusInput">
+                        Estado
+                    </label>
+
+                    <div class="modern-input">
+
+                        <i data-lucide="circle-check-big"></i>
+
+                        <select
+                            id="statusInput"
+                            required
+                        >
+
+                            <option value="Activo">
+                                Activo
+                            </option>
+
+                            <option value="Inactivo">
+                                Inactivo
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="committeeInput">
+                        ¿Pertenece al comité de convivencia?
+                    </label>
+
+                    <div class="modern-input">
+
+                        <i data-lucide="users-round"></i>
+
+                        <select id="committeeInput" required>
+                            <option value="0">No</option>
+                            <option value="1">Sí</option>
+                        </select>
 
                     </div>
 
@@ -1196,292 +1549,6 @@
 
                     </div>
 
-
-                </div>
-
-
-            </div>
-
-
-
-            <!-- ACCESO -->
-
-            <div class="form-section-heading second-section">
-
-
-                <div class="heading-icon lavender-heading">
-
-                    <i data-lucide="shield-check"></i>
-
-                </div>
-
-
-                <div>
-
-                    <strong>
-                        Acceso y rol
-                    </strong>
-
-                    <p>
-                        Define cómo ingresará y qué función tendrá en Sentir.
-                    </p>
-
-                </div>
-
-
-            </div>
-
-
-
-            <div class="form-grid">
-
-
-                <!-- CONTRASEÑA -->
-
-                <div class="form-group">
-
-                    <label for="passwordInput">
-                        Contraseña
-                    </label>
-
-                    <div class="modern-input">
-
-                        <i data-lucide="lock-keyhole"></i>
-
-                        <input
-                            id="passwordInput"
-                            type="password"
-                            placeholder="Crear contraseña"
-                            required
-                        >
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- ROL -->
-
-                <div class="form-group">
-
-                    <label for="roleInput">
-                        Rol
-                    </label>
-
-                    <div class="modern-input">
-
-                        <i data-lucide="shield-user"></i>
-
-                        <select
-                            id="roleInput"
-                            required
-                        >
-
-                            <option value="">
-                                Seleccionar rol
-                            </option>
-
-                            <option value="Estudiante">
-                                Estudiante
-                            </option>
-
-                            <option value="Docente">
-                                Docente
-                            </option>
-
-                            <option value="UAI">
-                                UAI
-                            </option>
-
-                            <option value="Psicóloga">
-                                Psicóloga
-                            </option>
-
-                            <option value="Directivo">
-                                Directivo
-                            </option>
-
-                            <option value="Comité de convivencia">
-                                Comité de convivencia
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- GRADO -->
-
-                <div
-                    class="form-group conditional-field hidden"
-                    id="gradeField"
-                >
-
-                    <label for="gradeInput">
-                        Grado
-                    </label>
-
-                    <div class="modern-input">
-
-                        <i data-lucide="graduation-cap"></i>
-
-                        <select id="gradeInput">
-
-                            <option value="">
-                                Seleccionar grupo
-                            </option>
-
-                            <div class="filter-group">
-
-    <label for="groupFilter">
-        Grupo
-    </label>
-
-        <!-- SEXTOS -->
-        <option value="6°1">6°1</option>
-        <option value="6°2">6°2</option>
-        <option value="6°3">6°3</option>
-        <option value="6°4">6°4</option>
-        <option value="6°5">6°5</option>
-
-        <!-- SÉPTIMOS -->
-        <option value="7°1">7°1</option>
-        <option value="7°2">7°2</option>
-        <option value="7°3">7°3</option>
-        <option value="7°4">7°4</option>
-
-        <!-- OCTAVOS -->
-        <option value="8°1">8°1</option>
-        <option value="8°2">8°2</option>
-        <option value="8°3">8°3</option>
-
-        <!-- NOVENOS -->
-        <option value="9°1">9°1</option>
-        <option value="9°2">9°2</option>
-        <option value="9°3">9°3</option>
-
-        <!-- DÉCIMOS -->
-        <option value="10°1">10°1</option>
-        <option value="10°2">10°2</option>
-        <option value="10°3">10°3</option>
-        <option value="10°4">10°4</option>
-
-        <!-- ONCES -->
-        <option value="11°1">11°1</option>
-        <option value="11°2">11°2</option>
-        <option value="11°3">11°3</option>
-        <option value="11°4">11°4</option>
-
-
-</div>
-                        </select>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- DIRECTOR -->
-
-                <div
-                    class="form-group conditional-field hidden"
-                    id="groupDirectorField"
-                >
-
-                    <label for="groupDirectorInput">
-                        ¿Es director de grupo?
-                    </label>
-
-                    <div class="modern-input">
-
-                        <i data-lucide="users-round"></i>
-
-                        <select id="groupDirectorInput">
-
-                            <option value="">
-                                Seleccionar respuesta
-                            </option>
-
-                            <option value="No">
-                                No
-                            </option>
-
-                            <option value="Sí">
-                                Sí
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- GRUPO -->
-
-                <div
-                    class="form-group conditional-field hidden"
-                    id="directorGroupField"
-                >
-
-                    <label for="directorGroupInput">
-                        ¿De qué grupo es director?
-                    </label>
-
-                    <div class="modern-input">
-
-                        <i data-lucide="school"></i>
-
-                        <input
-                            id="directorGroupInput"
-                            type="text"
-                            placeholder="Ej. 8°2"
-                        >
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- ESTADO -->
-
-                <div class="form-group">
-
-                    <label for="statusInput">
-                        Estado
-                    </label>
-
-                    <div class="modern-input">
-
-                        <i data-lucide="circle-check-big"></i>
-
-                        <select
-                            id="statusInput"
-                            required
-                        >
-
-                            <option value="Activo">
-                                Activo
-                            </option>
-
-                            <option value="Inactivo">
-                                Inactivo
-                            </option>
-
-                            <option value="Pendiente">
-                                Pendiente
-                            </option>
-
-                        </select>
-
-                    </div>
 
                 </div>
 
@@ -1616,6 +1683,7 @@
 <!-- JAVASCRIPT -->
 
 <script src="Users.js"></script>
+<script src="../admin-profile.js"></script>
 
 
 </body>

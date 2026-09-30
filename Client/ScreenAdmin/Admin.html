@@ -43,6 +43,8 @@
         href="Admin.css"
     >
 
+    <link rel="stylesheet" href="admin-profile.css">
+
 </head>
 
 
@@ -86,17 +88,17 @@
             </button>
 
 
-            <button
+            <a
                 class="nav-item"
                 id="usuariosNav"
-                type="button"
+                href="./Users/Users.html"
             >
 
                 <i data-lucide="users"></i>
 
-                <span><a href="/Sentir/Client/ScreenAdmin/Users/Users.html" class="sin-subrayado">Usuarios</a></span>
+                <span>Usuarios</span>
 
-            </button>
+            </a>
 
         </nav>
 
@@ -200,20 +202,6 @@
                     >
 
                 </div>
-
-
-                <button
-                    class="notification-button"
-                    type="button"
-                >
-
-                    <i data-lucide="bell"></i>
-
-                    <span>
-                        3
-                    </span>
-
-                </button>
 
 
                 <div class="admin-profile">
@@ -417,7 +405,7 @@
                     </p>
 
                     <h3 id="totalUsers">
-                        128
+                        0
                     </h3>
 
                     <span>
@@ -464,7 +452,7 @@
                     </p>
 
                     <h3 id="studentsCount">
-                        86
+                        0
                     </h3>
 
                     <span>
@@ -522,7 +510,7 @@
                     </p>
 
                     <h3 id="teachersCount">
-                        18
+                        0
                     </h3>
 
                     <span>
@@ -562,11 +550,11 @@
                     </p>
 
                     <h3 id="supportCount">
-                        14
+                        0
                     </h3>
 
                     <span>
-                        UAI y psicología
+                        Entorno protector y psicología
                     </span>
 
                 </div>
@@ -612,9 +600,7 @@
 
                         <div class="chart-center">
 
-                            <strong>
-                                128
-                            </strong>
+                            <strong id="chartTotal">0</strong>
 
                             <span>
                                 usuarios
@@ -626,48 +612,6 @@
 
 
                     <div class="roles-list">
-
-                        <div class="role-row">
-                            <span class="role-dot students-dot"></span>
-                            <p>Estudiantes</p>
-                            <strong>86</strong>
-                        </div>
-
-
-                        <div class="role-row">
-                            <span class="role-dot teachers-dot"></span>
-                            <p>Docentes</p>
-                            <strong>18</strong>
-                        </div>
-
-
-                        <div class="role-row">
-                            <span class="role-dot uai-dot"></span>
-                            <p>UAI</p>
-                            <strong>6</strong>
-                        </div>
-
-
-                        <div class="role-row">
-                            <span class="role-dot psychologist-dot"></span>
-                            <p>Psicóloga</p>
-                            <strong>5</strong>
-                        </div>
-
-
-                        <div class="role-row">
-                            <span class="role-dot directors-dot"></span>
-                            <p>Directivos</p>
-                            <strong>7</strong>
-                        </div>
-
-
-                        <div class="role-row">
-                            <span class="role-dot committee-dot"></span>
-                            <p>Comité</p>
-                            <strong>6</strong>
-                        </div>
-
                     </div>
 
                 </div>
@@ -954,6 +898,7 @@
 
 
 <script src="Admin.js"></script>
+<script src="admin-profile.js"></script>
 
 </body>
 

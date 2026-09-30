@@ -18,10 +18,10 @@
 
 <div class="container-fluid pantalla-inicio">
 
-    <div class="container"
+    <div class="container">
         <!-- Logo -->
         <div class="logo-container">
-            <img src="/Sentir/Shared/LoginResources/logo-sentir.png" alt="Logo Sentir" class="logo">
+            <img src="/Client/img/logo-sentir.png" alt="Logo Sentir" class="logo">
         </div>
 
         <!-- Texto -->
@@ -31,31 +31,28 @@
             </h4>
         </div>
 
-        <!-- Personajes -->
-        <div class="personajes-container">
-            <img src="/Sentir/Shared/LoginResources/personajes.png" alt="Personajes" class="personajes">
-        </div>
+        <div class="inicio-layout">
+            <!-- Personajes -->
+            <div class="personajes-container">
+                <img src="/Client/img/personajes.png" alt="Personajes" class="personajes">
+            </div>
 
-        <!-- Botones -->
-        <div class="d-grid gap-3 mt-4">
-
-            <button class="btn btn-login"  onclick="window.location.href='/Sentir/Client/Auth/Login/Login.html'">
-                Iniciar sesión
-            </button>
-
-            <button class="btn btn-crear" onclick="window.location.href='/Sentir/Client/Auth/Registro/registro.html'">
-                Crear cuenta
-            </button>
-            
-            
-
+            <!-- Selector de perfil -->
+            <div class="selector-container">
+                <div class="select-wrapper">
+                    <select class="btn btn-login btn-select" aria-label="Selecciona tu perfil">
+                        <option value="" selected disabled>Selecciona tu perfil</option>
+                        <option value="estudiante">Estudiante</option>
+                        <option value="administrativo">Administrativo</option>
+                    </select>
+                </div>
+            </div>
         </div>
 
         <!-- Accesibilidad -->
         <div class="text-center mt-4 accesibilidad">
             <i class="fi fi-rr-universal-access"></i> Accesible para todos
         </div>
-        
     </div>
 
 </div>

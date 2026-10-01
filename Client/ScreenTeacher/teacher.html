@@ -53,6 +53,44 @@
 
 
 
+            <div class="teacher-profile-overlay" id="teacherProfileModal" aria-hidden="true">
+                <section class="teacher-profile-modal" role="dialog" aria-modal="true" aria-labelledby="teacherProfileTitle">
+                    <button class="teacher-profile-close" id="closeTeacherProfile" type="button" aria-label="Cerrar perfil">×</button>
+                    <div class="teacher-profile-heading">
+                        <div>
+                            <span class="teacher-profile-kicker">Perfil docente</span>
+                            <h2 id="teacherProfileTitle">Mi información</h2>
+                            <p>Consulta tus datos y actualiza tu correo, celular o foto.</p>
+                        </div>
+                        <div class="teacher-profile-photo">
+                            <img id="teacherModalPhoto" src="" alt="Foto de perfil docente" hidden>
+                            <span id="teacherModalPhotoPlaceholder" aria-hidden="true">D</span>
+                        </div>
+                    </div>
+
+                    <form id="teacherProfileForm">
+                        <div class="teacher-profile-grid">
+                            <label class="teacher-profile-field"><span>Nombre</span><input id="teacherProfileFirstName" type="text" readonly></label>
+                            <label class="teacher-profile-field"><span>Apellidos</span><input id="teacherProfileLastName" type="text" readonly></label>
+                            <label class="teacher-profile-field"><span>Identificación</span><input id="teacherProfileIdNumber" type="text" readonly></label>
+                            <label class="teacher-profile-field"><span>Correo electrónico</span><input id="teacherProfileEmail" type="email" maxlength="150" autocomplete="email" required></label>
+                            <label class="teacher-profile-field"><span>Celular</span><input id="teacherProfilePhone" type="tel" inputmode="numeric" maxlength="15" autocomplete="tel" required></label>
+                            <label class="teacher-profile-field"><span>Año cursado</span><input id="teacherProfileYear" type="text" readonly></label>
+                            <label class="teacher-profile-field"><span>Director de grupo</span><input id="teacherProfileDirector" type="text" readonly></label>
+                            <label class="teacher-profile-field"><span>Grupo dirigido</span><input id="teacherProfileAssignedGrade" type="text" readonly></label>
+                            <label class="teacher-profile-field teacher-profile-wide"><span>Grados que enseña</span><input id="teacherProfileTeachingGrades" type="text" readonly></label>
+                            <label class="teacher-profile-field"><span>Foto de perfil</span><input id="profilePhotoInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
+                        </div>
+                        <p class="teacher-profile-message" id="teacherProfileMessage" role="status" aria-live="polite"></p>
+                        <div class="teacher-profile-actions">
+                            <button class="teacher-profile-cancel" id="cancelTeacherProfile" type="button">Cancelar</button>
+                            <button class="teacher-profile-save" id="saveTeacherProfile" type="submit">Guardar cambios</button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+
+
         <!-- =================================================
              MENÚ
              NO SON LINKS
@@ -307,102 +345,26 @@
                          PERFIL DOCENTE
                     ========================================== -->
 
-                    <div class="header-user">
-
-
-                        <!-- FOTO DE PERFIL DEL DOCENTE -->
-
-                        <div class="profile-photo-wrapper">
-
-                            <label
-                                for="profilePhotoInput"
-                                class="header-avatar"
-                                title="Cambiar foto de perfil"
-                            >
-
-                                <!-- Imagen seleccionada -->
-                                <img
-                                    id="profilePhoto"
-                                    src=""
-                                    alt="Foto de perfil del docente"
-                                >
-
-
-                                <!-- Icono que aparece cuando todavía no hay foto -->
-                                <div
-                                    class="profile-placeholder"
-                                    id="profilePlaceholder"
-                                >
-
+                    <button class="header-user" id="openTeacherProfile" type="button" aria-label="Abrir perfil docente">
+                        <span class="profile-photo-wrapper">
+                            <span class="header-avatar">
+                                <img id="profilePhoto" src="" alt="Foto de perfil del docente">
+                                <span class="profile-placeholder" id="profilePlaceholder" aria-hidden="true">
                                     <svg viewBox="0 0 24 24">
-
-                                        <circle
-                                            cx="12"
-                                            cy="8"
-                                            r="4"
-                                        />
-
-                                        <path
-                                            d="M4 21c.5-5 3.6-7 8-7s7.5 2 8 7"
-                                        />
-
+                                        <circle cx="12" cy="8" r="4" />
+                                        <path d="M4 21c.5-5 3.6-7 8-7s7.5 2 8 7" />
                                     </svg>
-
-                                </div>
-
-
-                                <!-- Cámara al pasar el mouse -->
-
-                                <div class="camera-overlay">
-
-                                    <svg viewBox="0 0 24 24">
-
-                                        <path
-                                            d="M4 7h4l1.5-2h5L16 7h4
-                                            a2 2 0 0 1 2 2v9
-                                            a2 2 0 0 1-2 2H4
-                                            a2 2 0 0 1-2-2V9
-                                            a2 2 0 0 1 2-2z"
-                                        />
-
-                                        <circle
-                                            cx="12"
-                                            cy="13"
-                                            r="4"
-                                        />
-
-                                    </svg>
-
-                                </div>
-
-                            </label>
-
-
-                            <!-- INPUT OCULTO -->
-
-                            <input
-                                type="file"
-                                id="profilePhotoInput"
-                                accept="image/png, image/jpeg, image/webp"
-                                hidden
-                            >
-
-                        </div>
-
-
-                        <div class="header-user-data">
-
-                            <strong>
-                                Prof. Ana Torres
-                            </strong>
-
-                            <span>
-                                Docente
+                                </span>
                             </span>
-
-                        </div>
-
-                    </div>
+                        </span>
+                        <span class="header-user-data">
+                            <strong id="teacherHeaderName">Docente</strong>
+                            <span>Docente</span>
+                        </span>
+                        <span class="dropdown-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" /></svg>
+                        </span>
+                    </button>
 
 
 

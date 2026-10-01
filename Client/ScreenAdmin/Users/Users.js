@@ -1487,11 +1487,11 @@ function updateConditionalFields() {
 
 function splitAssignedGrade(grade) {
     const value = String(grade || "").trim();
-    const match = value.match(/^(\d+)[°º]?\s*-\s*([A-Za-zÁÉÍÓÚÜÑ]+)$/i)
-        || value.match(/^(\d+)[°º]?\s*([A-Za-zÁÉÍÓÚÜÑ]+)$/i);
+    const match = value.match(/^(\d{1,2})[°º]?\s*-\s*(\d{1,2})$/)
+        || value.match(/^(\d{1,2})[°º]?\s+(\d{1,2})$/);
 
     if (match) {
-        return { number: match[1], letter: match[2].toLocaleUpperCase("es") };
+        return { number: match[1], letter: match[2] };
     }
 
     const numberOnly = value.match(/^(\d+)[°º]?$/);
@@ -1499,9 +1499,9 @@ function splitAssignedGrade(grade) {
 }
 
 function splitStudentGrade(grade) {
-    const match = String(grade || "").trim().match(/^(\d{1,2})\s*-\s*([A-Za-zÁÉÍÓÚÜÑ])$/i);
+    const match = String(grade || "").trim().match(/^(\d{1,2})\s*-\s*(\d{1,2})$/);
     return match
-        ? { number: match[1], letter: match[2].toLocaleUpperCase("es") }
+        ? { number: match[1], letter: match[2] }
         : { number: "", letter: "" };
 }
 
@@ -1550,7 +1550,8 @@ function validateStep(container) {
     const invalidInput = [...container.querySelectorAll("input, select, textarea")]
         .find((input) => !input.disabled && input.getClientRects().length > 0 && !input.checkValidity());
     if (!invalidInput) return true;
-    const label = invalidInput.closest(".form-group")?.querySelector("label")?.textContent.trim();
+    const label = invalidInput.getAttribute("aria-label")
+        || invalidInput.closest(".form-group")?.querySelector("label")?.textContent.trim();
     showToast(label ? `Revisa el campo: ${label}` : "Revisa los datos ingresados");
     invalidInput.focus();
     return false;
@@ -1602,8 +1603,8 @@ function addTeacherGradeRow(grade = "") {
         <label>Año / grado
             <input class="teacher-grade-year" type="number" min="0" max="99" step="1" placeholder="Ej. 10" aria-label="Año o número del grado que enseña">
         </label>
-        <label>Letra
-            <input class="teacher-grade-letter" type="text" maxlength="1" pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]" placeholder="A" aria-label="Letra del grado que enseña">
+        <label>Número
+            <input class="teacher-grade-letter" type="number" min="0" max="99" step="1" inputmode="numeric" placeholder="Ej. 1" aria-label="Segundo número del grado que enseña">
         </label>
         <button class="remove-teacher-grade" type="button" aria-label="Quitar grado"><i data-lucide="x"></i></button>
     `;
@@ -1627,13 +1628,13 @@ function collectTeacherGrades() {
 
     for (const row of teacherGradesList.querySelectorAll(".teacher-grade-row")) {
         const year = row.querySelector(".teacher-grade-year").value.trim();
-        const letter = row.querySelector(".teacher-grade-letter").value.trim().toLocaleUpperCase("es");
-        if (!year && !letter) continue;
-        if (!/^\d{1,2}$/.test(year) || !/^[A-ZÁÉÍÓÚÜÑ]$/.test(letter)) {
-            return { grades: [], error: "Completa el número y la letra de cada grado que enseña" };
+        const secondNumber = row.querySelector(".teacher-grade-letter").value.trim();
+        if (!year && !secondNumber) continue;
+        if (!/^\d{1,2}$/.test(year) || !/^\d{1,2}$/.test(secondNumber)) {
+            return { grades: [], error: "Completa los dos números de cada grado que enseña" };
         }
 
-        const grade = `${year}-${letter}`;
+        const grade = `${year}-${secondNumber}`;
         if (seenGrades.has(grade)) {
             return { grades: [], error: `El grado ${grade} está repetido` };
         }
@@ -2039,8 +2040,9 @@ function openEditModal(id) {
         "Estudiante"
     ) {
 
-        gradeInput.value =
-            user.grade || "";
+        if (gradeInput) {
+            gradeInput.value = user.grade || "";
+        }
 
     }
 
@@ -2141,7 +2143,8 @@ userForm.addEventListener(
             const invalidInput = [...userForm.querySelectorAll("input, select, textarea")]
                 .find((input) => !input.disabled && input.getClientRects().length > 0 && !input.checkValidity());
             if (invalidInput) {
-                const label = invalidInput.closest(".form-group")?.querySelector("label")?.textContent.trim();
+                const label = invalidInput.getAttribute("aria-label")
+                    || invalidInput.closest(".form-group")?.querySelector("label")?.textContent.trim();
                 showToast(label ? `Revisa el campo: ${label}` : "Revisa los datos ingresados");
                 invalidInput.focus();
                 return;

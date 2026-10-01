@@ -88,11 +88,11 @@
 
                 <!-- TITULO -->
 
-                <h2>
+                <h2 id="recoveryTitle">
                     Verifica tu correo
                 </h2>
 
-                <p class="descripcion">
+                <p class="descripcion" id="recoveryDescription">
 
                     Ingresa el correo electrónico de Google asociado
                     a tu cuenta de Sentir.
@@ -147,9 +147,30 @@
 
                 </form>
 
+                <form id="formRestablecer" hidden>
+                    <label for="nuevaContrasena">Nueva contraseña</label>
+                    <div class="input-contenedor">
+                        <input id="nuevaContrasena" type="password" minlength="8" autocomplete="new-password" aria-describedby="passwordRequirements" required>
+                    </div>
+                    <p class="descripcion" id="passwordRequirements">
+                        Mínimo 8 caracteres, con mayúscula, minúscula, número y carácter especial.
+                    </p>
+
+                    <label for="confirmarContrasena">Confirmar nueva contraseña</label>
+                    <div class="input-contenedor">
+                        <input id="confirmarContrasena" type="password" minlength="8" autocomplete="new-password" required>
+                    </div>
+
+                    <span id="errorRestablecer" class="mensaje-error" role="alert" aria-live="polite"></span>
+                    <button type="submit" class="btn-principal">
+                        <span>Guardar nueva contraseña</span>
+                        <span class="flecha">→</span>
+                    </button>
+                </form>
+
                 <!-- DIVISOR -->
 
-                <div class="separador">
+                <div class="separador" id="recoverySeparator">
 
                     <span></span>
 
@@ -161,7 +182,7 @@
 
                 <!-- VOLVER -->
 
-                <a href="/Client/ScreenStudents/Students.html"
+                <a href="/Client/ScreenStudents/Students.html" id="backToLogin"
                     class="btn-secundario">
 
                     ← Volver al inicio de sesión
@@ -170,7 +191,7 @@
 
                 <!-- SEGURIDAD -->
 
-                <div class="seguridad">
+                <div class="seguridad" id="recoverySecurity">
 
                     <span>
                         🔒
@@ -210,7 +231,7 @@
 
     <!-- JS -->
 
-    <script src="/Client/Auth/Forget/Forget.js"></script>
+    <script src="/Client/ScreenStudents/EmotionalDiary/DiaryAccess/Forget/Forget.js"></script>
 
 </body>
 

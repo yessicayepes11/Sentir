@@ -19,6 +19,13 @@ const mensajeExito = document.getElementById("mensajeExito");
 const loader = document.getElementById("loader");
 
 const boton = document.querySelector(".btn-principal");
+const API_RECUPERAR = "http://localhost:3001/api/CrearUsuario/recuperar";
+const recoveryToken = new URLSearchParams(window.location.search).get("token");
+
+if (recoveryToken) {
+    const resetPage = "/Client/ScreenStudents/EmotionalDiary/DiaryAccess/Forget/Forget.html";
+    window.location.replace(`${resetPage}?token=${encodeURIComponent(recoveryToken)}`);
+}
 
 // =============================
 // VALIDAR GMAIL
@@ -121,7 +128,7 @@ correo.addEventListener("input",()=>{
 // ENVIAR FORMULARIO
 // =============================
 
-formulario.addEventListener("submit",(e)=>{
+formulario.addEventListener("submit", async (e)=>{
 
     e.preventDefault();
 
@@ -151,21 +158,26 @@ formulario.addEventListener("submit",(e)=>{
 
     }
 
-    // Mostrar animación
-
     mostrarLoader();
-
-    // Simulación servidor
-
-    setTimeout(()=>{
-
+    try {
+        const response = await fetch(`${API_RECUPERAR}/enviar-enlace`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ correo: email })
+        });
+        const result = await response.json().catch(() => ({}));
         ocultarLoader();
-
+        if (!response.ok) {
+            mostrarError(result.message || "No se pudo enviar el enlace de recuperación.");
+            return;
+        }
+        mensajeExito.textContent = result.message || "Si el correo está registrado, recibirás un enlace para cambiar tu contraseña.";
         mostrarExito();
-
         formulario.reset();
-
-    },2500);
+    } catch {
+        ocultarLoader();
+        mostrarError("No se pudo conectar con el servidor. Inténtalo de nuevo.");
+    }
 
 });
 

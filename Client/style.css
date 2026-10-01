@@ -188,6 +188,26 @@ body{
     margin: 0 auto;
 }
 
+.admin-home-btn {
+    width: 100%;
+    max-width: 420px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #7C4DFF;
+    border-radius: 30px;
+    color: #6937ff;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.admin-home-btn:hover,
+.admin-home-btn:focus-visible {
+    background: #7C4DFF;
+    color: white;
+}
+
 .modal-overlay {
     position: fixed;
     inset: 0;

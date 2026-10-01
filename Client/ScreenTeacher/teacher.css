@@ -704,6 +704,243 @@ svg {
 
     gap: 10px;
 
+    padding: 0;
+
+    border: 0;
+
+    color: inherit;
+
+    background: transparent;
+
+    text-align: left;
+
+    font: inherit;
+
+    cursor: pointer;
+
+}
+
+.header-user:focus-visible {
+    outline: 3px solid rgba(108, 77, 246, .35);
+    outline-offset: 4px;
+    border-radius: 12px;
+}
+
+.header-user-data {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.header-user-data strong {
+    max-width: 190px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.teacher-profile-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: rgba(22, 19, 48, .55);
+    backdrop-filter: blur(7px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .2s ease, visibility .2s ease;
+}
+
+.teacher-profile-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.teacher-profile-modal {
+    position: relative;
+    width: min(100%, 680px);
+    max-height: min(90vh, 820px);
+    overflow-y: auto;
+    padding: 30px;
+    border: 1px solid #e9e5f5;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 24px 70px rgba(20, 16, 48, .25);
+}
+
+.teacher-profile-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    width: 38px;
+    height: 38px;
+    border: 0;
+    border-radius: 50%;
+    color: #514c67;
+    background: #f3f1f8;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.teacher-profile-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding-right: 42px;
+    margin-bottom: 24px;
+}
+
+.teacher-profile-kicker {
+    color: #6951bb;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.teacher-profile-heading h2 {
+    margin: 5px 0;
+    color: #25213a;
+    font-size: 25px;
+}
+
+.teacher-profile-heading p {
+    margin: 0;
+    color: #716d82;
+    font-size: 13px;
+}
+
+.teacher-profile-photo {
+    display: grid;
+    place-items: center;
+    width: 76px;
+    height: 76px;
+    flex: 0 0 76px;
+    overflow: hidden;
+    border-radius: 50%;
+    color: #5540a5;
+    background: #eeeaff;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.teacher-profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.teacher-profile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.teacher-profile-field {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 6px;
+    color: #48445e;
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.teacher-profile-field input {
+    width: 100%;
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1px solid #dcd9e8;
+    border-radius: 9px;
+    color: #28243b;
+    background: #fff;
+    font: inherit;
+    font-weight: 400;
+}
+
+.teacher-profile-field input:focus {
+    border-color: #7561c5;
+    outline: 3px solid rgba(117, 97, 197, .13);
+}
+
+.teacher-profile-field input[readonly] {
+    color: #5c5870;
+    background: #f6f5f9;
+}
+
+.teacher-profile-field input[type="file"] {
+    padding: 7px;
+    font-size: 11px;
+}
+
+.teacher-profile-wide {
+    grid-column: 1 / -1;
+}
+
+.teacher-profile-message {
+    min-height: 20px;
+    margin: 12px 0 0;
+    color: #a32945;
+    font-size: 13px;
+}
+
+.teacher-profile-message.success {
+    color: #24754e;
+}
+
+.teacher-profile-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.teacher-profile-actions button {
+    min-height: 42px;
+    padding: 0 17px;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 650;
+    cursor: pointer;
+}
+
+.teacher-profile-cancel {
+    border-color: #dedbe8 !important;
+    color: #504b64;
+    background: white;
+}
+
+.teacher-profile-save {
+    color: white;
+    background: #654cc2;
+}
+
+.teacher-profile-save:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+
+@media (max-width: 600px) {
+    .teacher-profile-modal {
+        padding: 24px 18px;
+    }
+
+    .teacher-profile-heading h2 {
+        font-size: 21px;
+    }
+
+    .teacher-profile-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .teacher-profile-wide {
+        grid-column: auto;
+    }
 }
 
 

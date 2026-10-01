@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { connection } from '../../config/mysql/dbmysql.js';
-import { crearTokenEstudiante } from '../../config/studentToken.js';
+import { crearTokenDocente, crearTokenEstudiante } from '../../config/studentToken.js';
 
 const router = Router();
 
@@ -19,29 +19,38 @@ router.post('/login', async (req, res) => {
     try {
         const rol = Number(req.body.rol);
         const correo = String(req.body.correo || '').trim();
+        const identificacion = String(req.body.identificacion || '').trim();
         const contrasena = String(req.body.contrasena || '');
+        const loginIdentifier = rol === 1 ? identificacion : correo;
 
-        if (!rol || !correo || !contrasena) {
-            return res.status(400).json({ message: 'Debe seleccionar un rol e ingresar correo y contraseña' });
+        if (!rol || !loginIdentifier || !contrasena) {
+            return res.status(400).json({ message: 'Debe seleccionar un rol e ingresar su identificador y contraseña' });
+        }
+
+        if (rol === 1 && !/^\d+$/.test(identificacion)) {
+            return res.status(400).json({ message: 'La identificación debe contener solo números' });
         }
 
         if (!redirectByRole[rol]) {
             return res.status(400).json({ message: 'El rol seleccionado no tiene acceso por este medio' });
         }
 
+        const loginColumn = rol === 1 ? 'u.id_usuario' : 'u.correo';
         const [rows] = await connection.promise().query(
             `SELECT u.id_usuario, u.nombre, u.apellido, u.contrasena, u.estadi, u.id_rol, r.nombre AS rol
              FROM usuario u
              INNER JOIN rol r ON r.id_rol = u.id_rol
-             WHERE u.correo = ?
+             WHERE ${loginColumn} = ?
              LIMIT 1`,
-            [correo]
+            [loginIdentifier]
         );
 
         const usuario = rows[0];
 
         if (!usuario || usuario.contrasena !== contrasena) {
-            return res.status(401).json({ message: 'Correo o contraseña incorrectos' });
+            return res.status(401).json({
+                message: rol === 1 ? 'Identificación o contraseña incorrectas' : 'Correo o contraseña incorrectos'
+            });
         }
 
         if (Number(usuario.id_rol) !== rol) {
@@ -52,15 +61,20 @@ router.post('/login', async (req, res) => {
             return res.status(403).json({ message: 'El usuario no está activo' });
         }
 
+        const usuarioResponse = {
+            id_usuario: usuario.id_usuario,
+            nombre: usuario.nombre,
+            apellido: usuario.apellido,
+            id_rol: usuario.id_rol,
+            rol: usuario.rol
+        };
+        if (rol === 5) {
+            usuarioResponse.token = crearTokenDocente(usuario.id_usuario);
+        }
+
         return res.json({
             message: 'Inicio de sesión exitoso',
-            usuario: {
-                id_usuario: usuario.id_usuario,
-                nombre: usuario.nombre,
-                apellido: usuario.apellido,
-                id_rol: usuario.id_rol,
-                rol: usuario.rol
-            },
+            usuario: usuarioResponse,
             redirect: redirectByRole[rol]
         });
     } catch (error) {

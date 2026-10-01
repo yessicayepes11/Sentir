@@ -6,6 +6,7 @@ import multer from 'multer';
 import nodemailer from 'nodemailer';
 import { Router } from 'express';
 import { connection } from '../../../config/mysql/dbmysql.js';
+import { leerTokenDocente } from '../../../config/studentToken.js';
 
 const router = Router();
 const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z\d\s]).{8,}$/;
@@ -94,7 +95,7 @@ function getTeacherData(role, payload) {
     const anoCursado = anoCursadoValue ? Number(anoCursadoValue) : null;
     const directorGrupo = String(payload.directorGrupo ?? '');
     const gradoNumero = String(payload.gradoNumero ?? '').trim();
-    const gradoLetra = String(payload.gradoLetra ?? '').trim().toLocaleUpperCase('es');
+    const gradoLetra = String(payload.gradoLetra ?? '').trim();
     let teachingGrades = [];
 
     try {
@@ -116,18 +117,18 @@ function getTeacherData(role, payload) {
         throw new Error('Selecciona una opción válida para director de grupo');
     }
 
-    if ((gradoNumero || gradoLetra) && (!/^\d{1,2}$/.test(gradoNumero) || !/^[A-ZÁÉÍÓÚÜÑ]$/.test(gradoLetra))) {
-        throw new Error('Completa el número y la letra del grado, o deja ambos vacíos');
+    if ((gradoNumero || gradoLetra) && (!/^\d{1,2}$/.test(gradoNumero) || !/^\d{1,2}$/.test(gradoLetra))) {
+        throw new Error('Completa los dos números del grado, o deja ambos vacíos');
     }
 
     const gradoAsignado = gradoNumero && gradoLetra ? `${gradoNumero}-${gradoLetra}` : null;
     if (!['0', '1'].includes(directorGrupo)) {
         throw new Error('Indica si es director de grupo');
     }
-    if (directorGrupo === '1' && (!/^\d{1,2}$/.test(gradoNumero) || !/^[A-ZÁÉÍÓÚÜÑ]$/.test(gradoLetra))) {
-        throw new Error('Completa el número y la letra del grupo que dirige');
+    if (directorGrupo === '1' && (!/^\d{1,2}$/.test(gradoNumero) || !/^\d{1,2}$/.test(gradoLetra))) {
+        throw new Error('Completa los dos números del grupo que dirige');
     }
-    if (!teachingGrades.length || teachingGrades.some((grade) => !/^\d{1,2}-[A-ZÁÉÍÓÚÜÑ]$/.test(grade))) {
+    if (!teachingGrades.length || teachingGrades.some((grade) => !/^\d{1,2}-\d{1,2}$/.test(grade))) {
         throw new Error('Añade al menos un grado válido que enseñe el docente');
     }
     if (new Set(teachingGrades).size !== teachingGrades.length) {
@@ -186,7 +187,7 @@ function getStudentData(role, payload) {
     }
 
     const gradeNumber = String(payload.studentGradeNumber || '').trim();
-    const gradeLetter = String(payload.studentGradeLetter || '').trim().toLocaleUpperCase('es');
+    const gradeLetter = String(payload.studentGradeLetter || '').trim();
     const guardianDocument = String(payload.guardianDocument || '').trim();
     const guardianDocumentType = String(payload.guardianDocumentType || '').trim();
     const guardianFirstName = String(payload.guardianFirstName || '').trim();
@@ -203,8 +204,8 @@ function getStudentData(role, payload) {
     const diagnosisName = hasDiagnosis ? String(payload.diagnosisName || '').trim() : '';
     const diagnosisDescription = hasDiagnosis ? String(payload.diagnosisDescription || '').trim() : '';
 
-    if (!/^\d{1,2}$/.test(gradeNumber) || !/^[A-ZÁÉÍÓÚÜÑ]$/.test(gradeLetter)) {
-        throw new Error('Ingresa el número y la letra del grado del estudiante');
+    if (!/^\d{1,2}$/.test(gradeNumber) || !/^\d{1,2}$/.test(gradeLetter)) {
+        throw new Error('Ingresa los dos números del grado del estudiante');
     }
     if (!/^\d+$/.test(guardianDocument) || !Number.isSafeInteger(Number(guardianDocument))) {
         throw new Error('Ingresa un número de identificación válido para el acudiente');
@@ -440,6 +441,120 @@ router.get('/listar', async (req, res) => {
             message: 'No se pudieron consultar los usuarios',
             error: error.message
         });
+    }
+});
+
+async function getTeacherProfile(usuarioId) {
+    const [rows] = await connection.promise().query(`
+        SELECT u.id_usuario AS id, u.nombre, u.apellido, u.correo AS email,
+               u.celular AS phone, u.foto AS photo, u.tipo_id AS documentType,
+               r.nombre AS role, d.ano_cursado AS anoCursado,
+               d.director_grupo AS directorGrupo, d.grado_asignado AS gradoAsignado,
+               (SELECT GROUP_CONCAT(dg.grado ORDER BY dg.id_docente_grado SEPARATOR ',')
+                FROM docente_grado dg WHERE dg.id_docente = d.id_docente) AS teachingGrades
+        FROM usuario u
+        INNER JOIN rol r ON r.id_rol = u.id_rol
+        LEFT JOIN docente d ON d.id_usuario = u.id_usuario
+        WHERE u.id_usuario = ? AND u.id_rol = 5
+        LIMIT 1
+    `, [usuarioId]);
+
+    if (!rows.length) return null;
+    const teacher = rows[0];
+    const [firstName = '', ...secondNames] = String(teacher.nombre || '').trim().split(/\s+/).filter(Boolean);
+    const [firstSurname = '', ...secondSurnames] = String(teacher.apellido || '').trim().split(/\s+/).filter(Boolean);
+    return {
+        id: Number(teacher.id),
+        firstName,
+        secondName: secondNames.join(' '),
+        firstSurname,
+        secondSurname: secondSurnames.join(' '),
+        email: teacher.email || '',
+        phone: teacher.phone ? String(teacher.phone) : '',
+        photo: toPublicPhotoUrl(teacher.photo),
+        documentType: teacher.documentType || '',
+        role: teacher.role || 'Docente',
+        anoCursado: teacher.anoCursado === null ? '' : Number(teacher.anoCursado),
+        directorGrupo: teacher.directorGrupo === null ? null : Number(teacher.directorGrupo),
+        gradoAsignado: teacher.gradoAsignado || '',
+        teachingGrades: teacher.teachingGrades ? teacher.teachingGrades.split(',') : []
+    };
+}
+
+function teacherIdFromRequest(req) {
+    const token = String(req.headers.authorization || '').replace(/^Bearer\s+/i, '');
+    return leerTokenDocente(token);
+}
+
+function requireTeacherSession(req, res, next) {
+    const usuarioId = teacherIdFromRequest(req);
+    if (!usuarioId) {
+        return res.status(401).json({ message: 'Tu sesión venció. Vuelve a iniciar sesión.' });
+    }
+    req.teacherUserId = usuarioId;
+    return next();
+}
+
+router.get('/perfil-docente', requireTeacherSession, async (req, res) => {
+    try {
+        const usuarioId = req.teacherUserId;
+
+        const profile = await getTeacherProfile(usuarioId);
+        if (!profile) {
+            return res.status(404).json({ message: 'No se encontró el perfil del docente' });
+        }
+        return res.json({ profile });
+    } catch (error) {
+        console.error('Error al consultar perfil docente:', error.message);
+        return res.status(500).json({ message: 'No se pudo consultar el perfil docente' });
+    }
+});
+
+router.put('/perfil-docente', requireTeacherSession, upload.single('foto'), async (req, res) => {
+    try {
+        const usuarioId = req.teacherUserId;
+        const email = String(req.body?.email || '').trim();
+        const phone = String(req.body?.phone || '').replace(/\D/g, '');
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 150) {
+            return res.status(400).json({ message: 'Ingresa un correo electrónico válido' });
+        }
+        if (!/^\d{7,15}$/.test(phone)) {
+            return res.status(400).json({ message: 'El celular debe contener entre 7 y 15 números' });
+        }
+        if (req.file && !['image/jpeg', 'image/png', 'image/webp'].includes(req.file.mimetype)) {
+            fs.unlink(req.file.path, () => {});
+            return res.status(400).json({ message: 'La foto debe estar en formato JPG, PNG o WEBP' });
+        }
+
+        const currentProfile = await getTeacherProfile(usuarioId);
+        if (!currentProfile) {
+            return res.status(404).json({ message: 'No se encontró el perfil del docente' });
+        }
+
+        const [duplicateEmails] = await connection.promise().query(
+            'SELECT id_usuario FROM usuario WHERE LOWER(TRIM(correo)) = LOWER(?) AND id_usuario <> ? LIMIT 1',
+            [email, usuarioId]
+        );
+        if (duplicateEmails.length) {
+            return res.status(409).json({ message: 'Ese correo ya está asociado a otro usuario' });
+        }
+
+        const photo = req.file ? `/uploads/${req.file.filename}` : currentProfile.photo;
+        const storedPhoto = req.file ? `/uploads/${req.file.filename}` : null;
+        if (storedPhoto && storedPhoto.length > 400) {
+            return res.status(400).json({ message: 'La ruta de la foto supera el límite permitido' });
+        }
+
+        await connection.promise().query(
+            'UPDATE usuario SET correo = ?, celular = ?, foto = COALESCE(?, foto) WHERE id_usuario = ? AND id_rol = 5',
+            [email, phone, storedPhoto, usuarioId]
+        );
+
+        const profile = await getTeacherProfile(usuarioId);
+        return res.json({ message: 'Perfil actualizado correctamente', profile: { ...profile, photo } });
+    } catch (error) {
+        console.error('Error al actualizar perfil docente:', error.message);
+        return res.status(500).json({ message: 'No se pudo actualizar el perfil docente' });
     }
 });
 
@@ -1018,9 +1133,11 @@ router.post('/crear', upload.single('foto'), async (req, res) => {
 
 const PIN_TTL_MS = 10 * 60 * 1000;   // el PIN vence a los 10 minutos
 const PIN_MAX_ATTEMPTS = 5;          // intentos permitidos antes de invalidar el PIN
+const RESET_LINK_TTL_MS = 30 * 60 * 1000;
 
 // correo -> { pin, expiresAt, attempts, resetToken, resetExpiresAt }
 const passwordResets = new Map();
+const passwordResetLinks = new Map();
 
 // La contraseña de aplicación de Google se copia con espacios ("abcd efgh ijkl mnop"); se quitan aquí
 const smtpUser = String(process.env.SMTP_USER || '').trim();
@@ -1037,6 +1154,109 @@ const mailTransporter = nodemailer.createTransport({
 function normalizeEmail(email) {
     return String(email || '').trim().toLowerCase();
 }
+
+router.post('/recuperar/enviar-enlace', async (req, res) => {
+    try {
+        const correo = normalizeEmail(req.body.correo);
+        if (!correo) {
+            return res.status(400).json({ message: 'Ingresa tu correo electrónico' });
+        }
+
+        const [rows] = await connection.promise().query(
+            'SELECT id_usuario FROM usuario WHERE LOWER(TRIM(correo)) = ? LIMIT 1',
+            [correo]
+        );
+        const genericMessage = 'Si el correo está registrado, recibirás un enlace para cambiar tu contraseña.';
+        if (!rows.length) {
+            return res.json({ message: genericMessage });
+        }
+
+        if (!smtpUser || !smtpPass) {
+            console.error('Faltan SMTP_USER / SMTP_PASS en el archivo .env');
+            return res.status(500).json({ message: 'El servidor de correo no está configurado' });
+        }
+
+        const origin = process.env.FRONTEND_URL || req.get('origin') || 'http://localhost:5502';
+        const resetPageUrl = new URL(
+            '/Client/ScreenStudents/EmotionalDiary/DiaryAccess/Forget/Forget.html',
+            origin
+        );
+        if (!['http:', 'https:'].includes(resetPageUrl.protocol)) {
+            return res.status(500).json({ message: 'La dirección del sitio no está configurada correctamente' });
+        }
+
+        const token = crypto.randomBytes(32).toString('hex');
+        const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+        const resetUrl = new URL(resetPageUrl);
+        resetUrl.searchParams.set('token', token);
+
+        for (const [storedHash, reset] of passwordResetLinks) {
+            if (reset.correo === correo || Date.now() > reset.expiresAt) {
+                passwordResetLinks.delete(storedHash);
+            }
+        }
+        passwordResetLinks.set(tokenHash, {
+            correo,
+            expiresAt: Date.now() + RESET_LINK_TTL_MS
+        });
+
+        try {
+            await mailTransporter.sendMail({
+                from: `"Sentir" <${smtpUser}>`,
+                to: correo,
+                subject: 'Sentir - Enlace para cambiar tu contraseña',
+                text: `Solicitaste cambiar tu contraseña de Sentir. Abre este enlace antes de 30 minutos: ${resetUrl.href}. Si no hiciste esta solicitud, ignora este correo.`,
+                html: `<div style="font-family:Arial,sans-serif;max-width:480px;margin:auto;text-align:center"><h2 style="color:#4E2FC7">Sentir</h2><p>Recibimos una solicitud para cambiar la contraseña de tu cuenta.</p><p><a href="${resetUrl.href}" style="display:inline-block;padding:14px 22px;background:#6C4DF6;color:#fff;text-decoration:none;border-radius:8px">Crear nueva contraseña</a></p><p>El enlace vence en 30 minutos y solo puede usarse una vez.</p><p style="color:#666;font-size:13px">Si no solicitaste este cambio, ignora este correo.</p></div>`
+            });
+        } catch (error) {
+            passwordResetLinks.delete(tokenHash);
+            throw error;
+        }
+
+        return res.json({ message: genericMessage });
+    } catch (error) {
+        console.error('Error al enviar enlace de recuperación:', error.message);
+        return res.status(500).json({ message: 'No se pudo enviar el enlace de recuperación' });
+    }
+});
+
+router.post('/recuperar/restablecer-enlace', async (req, res) => {
+    try {
+        const token = String(req.body.token || '').trim();
+        const nuevaContrasena = String(req.body.nuevaContrasena || '');
+        const confirmarContrasena = String(req.body.confirmarContrasena || '');
+        const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+        const reset = passwordResetLinks.get(tokenHash);
+
+        if (!reset || Date.now() > reset.expiresAt) {
+            passwordResetLinks.delete(tokenHash);
+            return res.status(401).json({ message: 'El enlace venció o ya fue utilizado. Solicita uno nuevo.' });
+        }
+        if (nuevaContrasena !== confirmarContrasena) {
+            return res.status(400).json({ message: 'Las contraseñas no coinciden' });
+        }
+        if (!passwordRegex.test(nuevaContrasena)) {
+            return res.status(400).json({
+                message: 'La contraseña debe tener 8+ caracteres, mayúsculas, minúsculas, números y un símbolo.'
+            });
+        }
+
+        const [result] = await connection.promise().query(
+            'UPDATE usuario SET contrasena = ? WHERE LOWER(TRIM(correo)) = ?',
+            [nuevaContrasena, reset.correo]
+        );
+        if (!result.affectedRows) {
+            passwordResetLinks.delete(tokenHash);
+            return res.status(404).json({ message: 'No se encontró el usuario asociado al enlace' });
+        }
+
+        passwordResetLinks.delete(tokenHash);
+        return res.json({ message: 'Contraseña actualizada correctamente' });
+    } catch (error) {
+        console.error('Error al cambiar contraseña desde enlace:', error.message);
+        return res.status(500).json({ message: 'No se pudo cambiar la contraseña' });
+    }
+});
 
 router.post('/recuperar/enviar-pin', async (req, res) => {
     try {

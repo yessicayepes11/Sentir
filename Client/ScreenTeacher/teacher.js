@@ -416,128 +416,216 @@ window.addEventListener(
    SIN LÍMITE DE TAMAÑO EN FRONTEND
 ========================================================= */
 
-const profilePhotoInput =
-    document.getElementById("profilePhotoInput");
+const profilePhotoInput = document.getElementById("profilePhotoInput");
+const profilePhoto = document.getElementById("profilePhoto");
+const profilePlaceholder = document.getElementById("profilePlaceholder");
+const teacherProfileModal = document.getElementById("teacherProfileModal");
+const teacherProfileForm = document.getElementById("teacherProfileForm");
+const teacherProfileMessage = document.getElementById("teacherProfileMessage");
+const saveTeacherProfileButton = document.getElementById("saveTeacherProfile");
+const teacherHeaderName = document.getElementById("teacherHeaderName");
+const teacherModalPhoto = document.getElementById("teacherModalPhoto");
+const teacherModalPhotoPlaceholder = document.getElementById("teacherModalPhotoPlaceholder");
+const TEACHER_PROFILE_API = "http://localhost:3001/api/CrearUsuario/perfil-docente";
 
-const profilePhoto =
-    document.getElementById("profilePhoto");
+document.body.append(teacherProfileModal);
 
-const profilePlaceholder =
-    document.getElementById("profilePlaceholder");
-
-
+let teacherProfile = null;
+let selectedProfilePhoto = null;
 let currentProfilePhotoURL = null;
 
-
-/* =========================================================
-   SELECCIONAR FOTO
-========================================================= */
-
-if (profilePhotoInput) {
-
-    profilePhotoInput.addEventListener(
-        "change",
-        function (event) {
-
-            const file =
-                event.target.files[0];
-
-
-            if (!file) {
-                return;
-            }
-
-
-            /* =================================================
-               VALIDAR FORMATO
-            ================================================= */
-
-            const allowedTypes = [
-
-                "image/jpeg",
-                "image/png",
-                "image/webp"
-
-            ];
-
-
-            if (!allowedTypes.includes(file.type)) {
-
-                alert(
-                    "Selecciona una imagen JPG, PNG o WEBP."
-                );
-
-                profilePhotoInput.value = "";
-
-                return;
-            }
-
-
-            /* =================================================
-               ELIMINAR URL ANTERIOR
-            ================================================= */
-
-            if (currentProfilePhotoURL) {
-
-                URL.revokeObjectURL(
-                    currentProfilePhotoURL
-                );
-
-            }
-
-
-            /* =================================================
-               CREAR VISTA PREVIA SIN BASE64
-            ================================================= */
-
-            currentProfilePhotoURL =
-                URL.createObjectURL(file);
-
-
-            profilePhoto.src =
-                currentProfilePhotoURL;
-
-
-            profilePhoto.classList.add(
-                "has-photo"
-            );
-
-
-            profilePlaceholder.classList.add(
-                "hidden"
-            );
-
-
-            /* =================================================
-               AQUÍ QUEDA DISPONIBLE EL ARCHIVO ORIGINAL
-               PARA ENVIARLO AL BACKEND
-            ================================================= */
-
-            console.log(
-                "Foto seleccionada:",
-                file
-            );
-
-
-            console.log(
-                "Nombre:",
-                file.name
-            );
-
-
-            console.log(
-                "Tamaño:",
-                file.size,
-                "bytes"
-            );
-
-
-            console.log(
-                "Tipo:",
-                file.type
-            );
-
-        }
-    );
-
+let teacherSession = null;
+try {
+    teacherSession = JSON.parse(sessionStorage.getItem("usuarioSentir") || "null");
+} catch {
+    teacherSession = null;
 }
+
+const teacherToken = String(teacherSession?.token || "");
+
+function teacherAuthHeaders() {
+    return { Authorization: `Bearer ${teacherToken}` };
+}
+
+function displayTeacherPhoto(photo) {
+    const hasPhoto = Boolean(photo);
+    profilePhoto.classList.toggle("has-photo", hasPhoto);
+    profilePlaceholder.classList.toggle("hidden", hasPhoto);
+    teacherModalPhoto.hidden = !hasPhoto;
+    teacherModalPhotoPlaceholder.hidden = hasPhoto;
+
+    if (hasPhoto) {
+        profilePhoto.src = photo;
+        teacherModalPhoto.src = photo;
+    } else {
+        profilePhoto.removeAttribute("src");
+        teacherModalPhoto.removeAttribute("src");
+        teacherModalPhotoPlaceholder.textContent =
+            teacherProfile?.firstName?.charAt(0)?.toUpperCase() || "D";
+    }
+}
+
+function renderTeacherProfile(profile) {
+    teacherProfile = profile;
+    const fullName = [profile.firstName, profile.secondName, profile.firstSurname, profile.secondSurname]
+        .filter(Boolean)
+        .join(" ");
+    teacherHeaderName.textContent = fullName || "Docente";
+    document.getElementById("teacherProfileFirstName").value = [profile.firstName, profile.secondName].filter(Boolean).join(" ");
+    document.getElementById("teacherProfileLastName").value = [profile.firstSurname, profile.secondSurname].filter(Boolean).join(" ");
+    document.getElementById("teacherProfileIdNumber").value = profile.id || "";
+    document.getElementById("teacherProfileEmail").value = profile.email || "";
+    document.getElementById("teacherProfilePhone").value = profile.phone || "";
+    document.getElementById("teacherProfileYear").value = profile.anoCursado || "No registrado";
+    document.getElementById("teacherProfileDirector").value = profile.directorGrupo === null
+        ? "No registrado"
+        : (Number(profile.directorGrupo) === 1 ? "Sí" : "No");
+    document.getElementById("teacherProfileAssignedGrade").value = profile.gradoAsignado || "No registrado";
+    document.getElementById("teacherProfileTeachingGrades").value = profile.teachingGrades?.length
+        ? profile.teachingGrades.join(", ")
+        : "No registrados";
+    displayTeacherPhoto(profile.photo);
+}
+
+async function loadTeacherProfile() {
+    if (!teacherToken) {
+        throw new Error("No se encontró la sesión del docente. Inicia sesión nuevamente.");
+    }
+
+    const response = await fetch(TEACHER_PROFILE_API, { headers: teacherAuthHeaders() });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) {
+        throw new Error(result.message || "No se pudo cargar el perfil docente.");
+    }
+
+    renderTeacherProfile(result.profile);
+    return result.profile;
+}
+
+function openTeacherProfileModal() {
+    teacherProfileMessage.textContent = "";
+    teacherProfileMessage.classList.remove("success");
+    selectedProfilePhoto = null;
+    profilePhotoInput.value = "";
+    teacherProfileModal.classList.add("show");
+    teacherProfileModal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+
+    loadTeacherProfile().catch((error) => {
+        teacherProfileMessage.textContent = error.message;
+    });
+}
+
+function closeTeacherProfileModal() {
+    teacherProfileModal.classList.remove("show");
+    teacherProfileModal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    selectedProfilePhoto = null;
+    profilePhotoInput.value = "";
+
+    if (currentProfilePhotoURL) {
+        URL.revokeObjectURL(currentProfilePhotoURL);
+        currentProfilePhotoURL = null;
+    }
+    if (teacherProfile) displayTeacherPhoto(teacherProfile.photo);
+}
+
+document.getElementById("openTeacherProfile").addEventListener("click", openTeacherProfileModal);
+document.getElementById("closeTeacherProfile").addEventListener("click", closeTeacherProfileModal);
+document.getElementById("cancelTeacherProfile").addEventListener("click", closeTeacherProfileModal);
+teacherProfileModal.addEventListener("click", (event) => {
+    if (event.target === teacherProfileModal) closeTeacherProfileModal();
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && teacherProfileModal.classList.contains("show")) {
+        closeTeacherProfileModal();
+    }
+});
+
+profilePhotoInput.addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    if (!new Set(["image/jpeg", "image/png", "image/webp"]).has(file.type)) {
+        teacherProfileMessage.textContent = "Selecciona una imagen JPG, PNG o WEBP.";
+        profilePhotoInput.value = "";
+        return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+        teacherProfileMessage.textContent = "La foto no puede superar 5 MB.";
+        profilePhotoInput.value = "";
+        return;
+    }
+
+    teacherProfileMessage.textContent = "";
+    selectedProfilePhoto = file;
+    if (currentProfilePhotoURL) URL.revokeObjectURL(currentProfilePhotoURL);
+    currentProfilePhotoURL = URL.createObjectURL(file);
+    displayTeacherPhoto(currentProfilePhotoURL);
+});
+
+document.getElementById("teacherProfilePhone").addEventListener("input", (event) => {
+    event.target.value = event.target.value.replace(/\D/g, "").slice(0, 15);
+});
+
+teacherProfileForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    teacherProfileMessage.textContent = "";
+    teacherProfileMessage.classList.remove("success");
+
+    const email = document.getElementById("teacherProfileEmail").value.trim();
+    const phone = document.getElementById("teacherProfilePhone").value.trim();
+    if (!email || !phone) {
+        teacherProfileMessage.textContent = "Ingresa el correo y el celular.";
+        return;
+    }
+    if (!/^\d{7,15}$/.test(phone)) {
+        teacherProfileMessage.textContent = "El celular debe contener entre 7 y 15 números.";
+        return;
+    }
+
+    const payload = new FormData();
+    payload.append("email", email);
+    payload.append("phone", phone);
+    if (selectedProfilePhoto) payload.append("foto", selectedProfilePhoto);
+
+    saveTeacherProfileButton.disabled = true;
+    saveTeacherProfileButton.textContent = "Guardando...";
+    try {
+        const response = await fetch(TEACHER_PROFILE_API, {
+            method: "PUT",
+            headers: teacherAuthHeaders(),
+            body: payload
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result.message || "No se pudo guardar el perfil.");
+
+        renderTeacherProfile(result.profile);
+        const updatedSession = {
+            ...teacherSession,
+            nombre: [result.profile.firstName, result.profile.secondName].filter(Boolean).join(" "),
+            apellido: [result.profile.firstSurname, result.profile.secondSurname].filter(Boolean).join(" ")
+        };
+        sessionStorage.setItem("usuarioSentir", JSON.stringify(updatedSession));
+        teacherSession = updatedSession;
+        selectedProfilePhoto = null;
+        profilePhotoInput.value = "";
+        if (currentProfilePhotoURL) {
+            URL.revokeObjectURL(currentProfilePhotoURL);
+            currentProfilePhotoURL = null;
+        }
+        teacherProfileMessage.textContent = "Los cambios se guardaron correctamente.";
+        teacherProfileMessage.classList.add("success");
+    } catch (error) {
+        teacherProfileMessage.textContent = error.message;
+    } finally {
+        saveTeacherProfileButton.disabled = false;
+        saveTeacherProfileButton.textContent = "Guardar cambios";
+    }
+});
+
+if (teacherSession) {
+    teacherHeaderName.textContent = [teacherSession.nombre, teacherSession.apellido].filter(Boolean).join(" ") || "Docente";
+}
+loadTeacherProfile().catch((error) => console.warn("No se pudo cargar el perfil docente:", error.message));

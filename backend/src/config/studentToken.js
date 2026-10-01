@@ -40,3 +40,31 @@ export function leerTokenEstudiante(token) {
         return null;
     }
 }
+
+export function crearTokenDocente(idUsuario) {
+    const payload = Buffer.from(JSON.stringify({
+        id: String(idUsuario),
+        rol: 'docente',
+        exp: Date.now() + DURACION_MS
+    })).toString('base64url');
+
+    return `${payload}.${firmar(payload)}`;
+}
+
+export function leerTokenDocente(token) {
+    const [payload, firma] = String(token || '').split('.');
+    if (!payload || !firma) return null;
+
+    const esperada = firmar(payload);
+    if (firma.length !== esperada.length ||
+        !crypto.timingSafeEqual(Buffer.from(firma), Buffer.from(esperada))) {
+        return null;
+    }
+
+    try {
+        const datos = JSON.parse(Buffer.from(payload, 'base64url').toString());
+        return datos.rol === 'docente' && datos.exp > Date.now() ? datos.id : null;
+    } catch {
+        return null;
+    }
+}

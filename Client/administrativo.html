@@ -15,7 +15,9 @@
 <div class="container-fluid pantalla-inicio">
     <div class="container">
         <div class="logo-container">
-            <img src="/Client/img/logo-sentir.png" alt="Logo Sentir" class="logo">
+            <a href="./index.html" aria-label="Ir al inicio" title="Ir al inicio">
+                <img src="/Client/img/logo-sentir.png" alt="Logo Sentir" class="logo">
+            </a>
         </div>
 
         <div class="text-center mt-3">
@@ -46,6 +48,7 @@
                 <button class="btn btn-login admin-login-btn" id="openLoginModal">
                     Inicio de sesión
                 </button>
+                <a class="btn admin-home-btn" href="./index.html">Inicio</a>
             </div>
         </div>
 
@@ -62,8 +65,8 @@
 
         <!-- Paso 0: inicio de sesión -->
         <div class="modal-form" id="stepLogin">
-            <label>
-                Correo
+            <label id="loginIdentifierLabel">
+                <span id="loginIdentifierText">Correo</span>
                 <input type="email" id="loginCorreo" placeholder="Ingrese su correo" autocomplete="username">
             </label>
 
@@ -140,16 +143,28 @@
 
     const rolSelect = document.getElementById('rolSelect');
     const correoInput = document.getElementById('loginCorreo');
+    const loginIdentifierText = document.getElementById('loginIdentifierText');
     const contrasenaInput = document.getElementById('loginContrasena');
     const loginError = document.getElementById('loginError');
     const adminLoginSubmitBtn = document.getElementById('adminLoginSubmitBtn');
+
+    function actualizarCampoIdentificador() {
+        const isSecretaria = rolSelect.value === '1';
+        loginIdentifierText.textContent = isSecretaria ? 'Identificación' : 'Correo';
+        correoInput.type = isSecretaria ? 'text' : 'email';
+        correoInput.inputMode = isSecretaria ? 'numeric' : 'email';
+        correoInput.placeholder = isSecretaria ? 'Ingrese su número de identificación' : 'Ingrese su correo';
+        correoInput.value = '';
+    }
+
+    rolSelect.addEventListener('change', actualizarCampoIdentificador);
 
     async function iniciarSesion() {
         loginError.textContent = '';
         loginSuccess.textContent = '';
 
         const rol = rolSelect.value;
-        const correo = correoInput.value.trim();
+        const identificador = correoInput.value.trim();
         const contrasena = contrasenaInput.value;
 
         if (!rol) {
@@ -157,8 +172,15 @@
             return;
         }
 
-        if (!correo || !contrasena) {
-            loginError.textContent = 'Ingresa tu correo y contraseña.';
+        if (!identificador || !contrasena) {
+            loginError.textContent = rol === '1'
+                ? 'Ingresa tu identificación y contraseña.'
+                : 'Ingresa tu correo y contraseña.';
+            return;
+        }
+
+        if (rol === '1' && !/^\d+$/.test(identificador)) {
+            loginError.textContent = 'La identificación debe contener solo números.';
             return;
         }
 
@@ -168,7 +190,11 @@
             const response = await fetch(API_LOGIN, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ rol, correo, contrasena })
+                body: JSON.stringify({
+                    rol,
+                    ...(rol === '1' ? { identificacion: identificador } : { correo: identificador }),
+                    contrasena
+                })
             });
 
             const data = await response.json();

@@ -1500,7 +1500,7 @@
                         <div class="grade-pair">
                             <div class="modern-input"><i data-lucide="school"></i><input id="gradeNumberInput" type="number" min="0" max="99" step="1" placeholder="Año / grado"></div>
                             <span class="grade-separator" aria-hidden="true">-</span>
-                            <div class="modern-input"><input id="gradeLetterInput" type="text" maxlength="1" pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]" placeholder="Letra" aria-label="Letra del grupo dirigido"></div>
+                            <div class="modern-input"><input id="gradeLetterInput" type="number" min="0" max="99" step="1" inputmode="numeric" placeholder="Número" aria-label="Segundo número del grupo dirigido"></div>
                         </div>
                     </div>
                     <div class="form-group full-width">
@@ -1520,9 +1520,9 @@
                     <div class="form-group full-width">
                         <label for="studentGradeYear">Grado</label>
                         <div class="grade-pair">
-                            <div class="modern-input"><input id="studentGradeYear" type="number" min="0" max="99" step="1" placeholder="Número"></div>
+                            <div class="modern-input"><input id="studentGradeYear" type="number" min="0" max="99" step="1" inputmode="numeric" placeholder="Primer número" aria-label="Primer número del grado"></div>
                             <span class="grade-separator" aria-hidden="true">-</span>
-                            <div class="modern-input"><input id="studentGradeLetter" type="text" maxlength="1" pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]" placeholder="Letra" aria-label="Letra del grado"></div>
+                            <div class="modern-input"><input id="studentGradeLetter" type="number" min="0" max="99" step="1" inputmode="numeric" placeholder="Número" aria-label="Segundo número del grado"></div>
                         </div>
                     </div>
                     <div class="form-group full-width">

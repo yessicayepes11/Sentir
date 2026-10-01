@@ -83,12 +83,235 @@ function getSubmittedNameParts(payload) {
     };
 }
 
+function getTeacherData(role, payload) {
+    if (String(role || '').trim().toLowerCase() !== 'docente') {
+        return null;
+    }
+
+    const anoCursadoValue = String(payload.anoCursado ?? '').trim();
+    const anoCursado = anoCursadoValue ? Number(anoCursadoValue) : null;
+    const directorGrupo = String(payload.directorGrupo ?? '');
+    const gradoNumero = String(payload.gradoNumero ?? '').trim();
+    const gradoLetra = String(payload.gradoLetra ?? '').trim().toLocaleUpperCase('es');
+    let teachingGrades = [];
+
+    try {
+        const submittedGrades = typeof payload.teachingGrades === 'string'
+            ? JSON.parse(payload.teachingGrades)
+            : payload.teachingGrades;
+        teachingGrades = Array.isArray(submittedGrades)
+            ? submittedGrades.map((grade) => String(grade).trim().toLocaleUpperCase('es'))
+            : [];
+    } catch {
+        throw new Error('La lista de grados que enseña no tiene un formato válido');
+    }
+
+    if (anoCursado !== null && (!Number.isInteger(anoCursado) || anoCursado < 1900 || anoCursado > 2200)) {
+        throw new Error('Ingresa un año cursado válido');
+    }
+
+    if (directorGrupo && !['0', '1'].includes(directorGrupo)) {
+        throw new Error('Selecciona una opción válida para director de grupo');
+    }
+
+    if ((gradoNumero || gradoLetra) && (!/^\d{1,2}$/.test(gradoNumero) || !/^[A-ZÁÉÍÓÚÜÑ]$/.test(gradoLetra))) {
+        throw new Error('Completa el número y la letra del grado, o deja ambos vacíos');
+    }
+
+    const gradoAsignado = gradoNumero && gradoLetra ? `${gradoNumero}-${gradoLetra}` : null;
+    if (!['0', '1'].includes(directorGrupo)) {
+        throw new Error('Indica si es director de grupo');
+    }
+    if (directorGrupo === '1' && (!/^\d{1,2}$/.test(gradoNumero) || !/^[A-ZÁÉÍÓÚÜÑ]$/.test(gradoLetra))) {
+        throw new Error('Completa el número y la letra del grupo que dirige');
+    }
+    if (!teachingGrades.length || teachingGrades.some((grade) => !/^\d{1,2}-[A-ZÁÉÍÓÚÜÑ]$/.test(grade))) {
+        throw new Error('Añade al menos un grado válido que enseñe el docente');
+    }
+    if (new Set(teachingGrades).size !== teachingGrades.length) {
+        throw new Error('No repitas grados en la lista');
+    }
+
+    return {
+        anoCursado,
+        directorGrupo: directorGrupo ? Number(directorGrupo) : null,
+        gradoAsignado: directorGrupo === '1' ? gradoAsignado : null,
+        teachingGrades
+    };
+}
+
+async function saveTeacherData(userId, teacherData) {
+    if (!teacherData) {
+        await connection.promise().query('DELETE FROM docente WHERE id_usuario = ?', [userId]);
+        return;
+    }
+
+    const [existingRows] = await connection.promise().query(
+        'SELECT id_docente FROM docente WHERE id_usuario = ? LIMIT 1',
+        [userId]
+    );
+
+    let teacherId;
+    if (existingRows.length) {
+        teacherId = existingRows[0].id_docente;
+        await connection.promise().query(
+            'UPDATE docente SET ano_cursado = ?, director_grupo = ?, grado_asignado = ? WHERE id_usuario = ?',
+            [teacherData.anoCursado, teacherData.directorGrupo, teacherData.gradoAsignado, userId]
+        );
+    } else {
+        const [idRows] = await connection.promise().query(
+            'SELECT COALESCE(MAX(id_docente), 0) + 1 AS nextId FROM docente'
+        );
+        teacherId = idRows[0].nextId;
+        await connection.promise().query(
+            'INSERT INTO docente (id_docente, id_usuario, ano_cursado, director_grupo, grado_asignado) VALUES (?, ?, ?, ?, ?)',
+            [teacherId, userId, teacherData.anoCursado, teacherData.directorGrupo, teacherData.gradoAsignado]
+        );
+    }
+
+    await connection.promise().query('DELETE FROM docente_grado WHERE id_docente = ?', [teacherId]);
+    for (const grade of teacherData.teachingGrades) {
+        await connection.promise().query(
+            'INSERT INTO docente_grado (id_docente, grado) VALUES (?, ?)',
+            [teacherId, grade]
+        );
+    }
+}
+
+function getStudentData(role, payload) {
+    if (String(role || '').trim().toLowerCase() !== 'estudiante') {
+        return null;
+    }
+
+    const gradeNumber = String(payload.studentGradeNumber || '').trim();
+    const gradeLetter = String(payload.studentGradeLetter || '').trim().toLocaleUpperCase('es');
+    const guardianDocument = String(payload.guardianDocument || '').trim();
+    const guardianDocumentType = String(payload.guardianDocumentType || '').trim();
+    const guardianFirstName = String(payload.guardianFirstName || '').trim();
+    const guardianSecondName = String(payload.guardianSecondName || '').trim();
+    const guardianFirstSurname = String(payload.guardianFirstSurname || '').trim();
+    const guardianSecondSurname = String(payload.guardianSecondSurname || '').trim();
+    const guardianName = [guardianFirstName, guardianSecondName].filter(Boolean).join(' ');
+    const guardianSurname = [guardianFirstSurname, guardianSecondSurname].filter(Boolean).join(' ');
+    const guardianEmail = String(payload.guardianEmail || '').trim();
+    const guardianPhone = Number(String(payload.guardianPhone || '').replace(/\D/g, '')) || 0;
+    const relationship = String(payload.guardianRelationship || '').trim();
+    const occupation = String(payload.guardianOccupation || '').trim();
+    const hasDiagnosis = payload.hasDiagnosis === '1' || payload.hasDiagnosis === 'true';
+    const diagnosisName = hasDiagnosis ? String(payload.diagnosisName || '').trim() : '';
+    const diagnosisDescription = hasDiagnosis ? String(payload.diagnosisDescription || '').trim() : '';
+
+    if (!/^\d{1,2}$/.test(gradeNumber) || !/^[A-ZÁÉÍÓÚÜÑ]$/.test(gradeLetter)) {
+        throw new Error('Ingresa el número y la letra del grado del estudiante');
+    }
+    if (!/^\d+$/.test(guardianDocument) || !Number.isSafeInteger(Number(guardianDocument))) {
+        throw new Error('Ingresa un número de identificación válido para el acudiente');
+    }
+    if (!guardianDocumentType || guardianDocumentType.length > 20) {
+        throw new Error('Selecciona un tipo de identificación válido para el acudiente');
+    }
+    if (!guardianFirstName || !guardianFirstSurname || guardianName.length > 20 || guardianSurname.length > 20) {
+        throw new Error('El nombre y apellido del acudiente son obligatorios y no pueden superar 20 caracteres');
+    }
+    if (!guardianEmail || guardianEmail.length > 100 || !Number.isSafeInteger(guardianPhone) || guardianPhone < 1) {
+        throw new Error('Ingresa un correo y celular válidos para el acudiente');
+    }
+    if (!relationship || relationship.length > 200 || !occupation || occupation.length > 200) {
+        throw new Error('Parentesco y ocupación son obligatorios');
+    }
+    if (hasDiagnosis && (!diagnosisName || diagnosisName.length > 300 || !diagnosisDescription)) {
+        throw new Error('Completa el nombre y la descripción del diagnóstico');
+    }
+
+    return {
+        grade: `${gradeNumber}-${gradeLetter}`,
+        hasDiagnosis: hasDiagnosis ? 1 : 0,
+        diagnosisName,
+        diagnosisDescription,
+        guardian: {
+            id: Number(guardianDocument),
+            documentType: guardianDocumentType,
+            name: guardianName,
+            surname: guardianSurname,
+            email: guardianEmail,
+            phone: guardianPhone,
+            relationship,
+            occupation
+        }
+    };
+}
+
+async function saveStudentData(userId, studentData) {
+    if (!studentData) {
+        await connection.promise().query('DELETE FROM estudiante WHERE id_usuario = ?', [userId]);
+        return;
+    }
+
+    const guardian = studentData.guardian;
+    await connection.promise().query(
+        `INSERT INTO acudiente
+            (id_acudiente, parentesco, ocupacion, nombre, apellido, correo, celular, tipo_documento)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+         ON DUPLICATE KEY UPDATE parentesco = VALUES(parentesco), ocupacion = VALUES(ocupacion),
+            nombre = VALUES(nombre), apellido = VALUES(apellido), correo = VALUES(correo),
+            celular = VALUES(celular), tipo_documento = VALUES(tipo_documento)`,
+        [guardian.id, guardian.relationship, guardian.occupation, guardian.name, guardian.surname,
+            guardian.email, guardian.phone, guardian.documentType]
+    );
+
+    const [existingRows] = await connection.promise().query(
+        'SELECT id_estudiante FROM estudiante WHERE id_usuario = ? LIMIT 1',
+        [userId]
+    );
+
+    if (existingRows.length) {
+        await connection.promise().query(
+            `UPDATE estudiante SET grado = ?, diagnostico = ?, nombre_diagnostico = ?,
+                id_acudiente = ?, descripcion_diagnostico = ? WHERE id_usuario = ?`,
+            [studentData.grade, studentData.hasDiagnosis, studentData.diagnosisName, guardian.id,
+                studentData.diagnosisDescription, userId]
+        );
+        return;
+    }
+
+    const [idRows] = await connection.promise().query(
+        'SELECT COALESCE(MAX(id_estudiante), 0) + 1 AS nextId FROM estudiante'
+    );
+    await connection.promise().query(
+        `INSERT INTO estudiante
+            (id_estudiante, id_usuario, grado, diagnostico, nombre_diagnostico, id_acudiente, descripcion_diagnostico)
+         VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        [idRows[0].nextId, userId, studentData.grade, studentData.hasDiagnosis,
+            studentData.diagnosisName, guardian.id, studentData.diagnosisDescription]
+    );
+}
+
 function toDateInputValue(value) {
     if (value instanceof Date) {
         return value.toISOString().slice(0, 10);
     }
 
     return String(value || '').slice(0, 10);
+}
+
+function toPublicPhotoUrl(photo) {
+    const storedPhoto = String(photo || '').trim();
+    if (!storedPhoto) {
+        return '';
+    }
+
+    if (/^https?:\/\//i.test(storedPhoto)) {
+        return storedPhoto;
+    }
+
+    const normalizedPath = storedPhoto.replace(/\\/g, '/');
+    const uploadPath = normalizedPath.startsWith('/uploads/')
+        ? normalizedPath
+        : normalizedPath.startsWith('uploads/')
+            ? `/${normalizedPath}`
+            : `/uploads/${path.basename(normalizedPath)}`;
+
+    return `http://localhost:3001${uploadPath}`;
 }
 
 async function getColumnNames() {
@@ -139,9 +362,29 @@ router.get('/listar', async (req, res) => {
                 u.celular AS phone,
                 u.id_rol AS roleId,
                 u.comite_convivencia AS committeeMember,
-                r.nombre AS role
+                r.nombre AS role,
+                d.ano_cursado AS anoCursado,
+                d.director_grupo AS directorGrupo,
+                d.grado_asignado AS gradoAsignado,
+                (SELECT GROUP_CONCAT(dg.grado ORDER BY dg.id_docente_grado SEPARATOR ',')
+                 FROM docente_grado dg WHERE dg.id_docente = d.id_docente) AS teachingGrades,
+                e.grado AS studentGrade,
+                e.diagnostico AS hasDiagnosis,
+                e.nombre_diagnostico AS diagnosisName,
+                e.descripcion_diagnostico AS diagnosisDescription,
+                e.id_acudiente AS guardianDocument,
+                a.tipo_documento AS guardianDocumentType,
+                a.nombre AS guardianName,
+                a.apellido AS guardianSurname,
+                a.correo AS guardianEmail,
+                a.celular AS guardianPhone,
+                a.parentesco AS guardianRelationship,
+                a.ocupacion AS guardianOccupation
             FROM usuario u
             LEFT JOIN rol r ON r.id_rol = u.id_rol
+            LEFT JOIN docente d ON d.id_usuario = u.id_usuario
+            LEFT JOIN estudiante e ON e.id_usuario = u.id_usuario
+            LEFT JOIN acudiente a ON a.id_acudiente = e.id_acudiente
             ORDER BY u.id_usuario DESC
         `);
 
@@ -160,11 +403,27 @@ router.get('/listar', async (req, res) => {
             documentType: usuario.documentType || 'Cédula',
             roleId: Number(usuario.roleId),
             committeeMember: Number(usuario.committeeMember) === 1,
-            photo: usuario.foto ? (usuario.foto.startsWith('http') ? usuario.foto : `http://localhost:3000${usuario.foto}`) : '',
+            photo: usuario.foto ? (usuario.foto.startsWith('http') ? usuario.foto : `http://localhost:3001${usuario.foto}`) : '',
             role: usuario.role?.trim() || 'Sin rol',
-            grade: '',
-            groupDirector: '',
-            directorGroup: '',
+            grade: usuario.studentGrade || '',
+            groupDirector: usuario.directorGrupo === null ? '' : (Number(usuario.directorGrupo) === 1 ? 'Sí' : 'No'),
+            directorGroup: usuario.gradoAsignado || '',
+            directorGrupo: usuario.directorGrupo === null ? '' : Number(usuario.directorGrupo),
+            anoCursado: usuario.anoCursado === null ? '' : Number(usuario.anoCursado),
+            gradoAsignado: usuario.gradoAsignado || '',
+            teachingGrades: usuario.teachingGrades ? usuario.teachingGrades.split(',') : [],
+            studentGrade: usuario.studentGrade || '',
+            hasDiagnosis: Number(usuario.hasDiagnosis) === 1,
+            diagnosisName: usuario.diagnosisName || '',
+            diagnosisDescription: usuario.diagnosisDescription || '',
+            guardianDocument: usuario.guardianDocument ? String(usuario.guardianDocument) : '',
+            guardianDocumentType: usuario.guardianDocumentType || '',
+            guardianName: usuario.guardianName || '',
+            guardianSurname: usuario.guardianSurname || '',
+            guardianEmail: usuario.guardianEmail || '',
+            guardianPhone: usuario.guardianPhone ? String(usuario.guardianPhone) : '',
+            guardianRelationship: usuario.guardianRelationship || '',
+            guardianOccupation: usuario.guardianOccupation || '',
             status: usuario.status || 'Activo',
             registrationDate: usuario.registrationDate
                 ? new Date(usuario.registrationDate).toISOString().slice(0, 10)
@@ -189,25 +448,29 @@ router.get('/perfil-administrador', async (_req, res) => {
                    u.celular AS phone, u.foto AS photo, r.nombre AS role
             FROM usuario u
             INNER JOIN rol r ON r.id_rol = u.id_rol
-            WHERE LOWER(TRIM(r.nombre)) IN ('rectora', 'rector')
+            WHERE LOWER(TRIM(r.nombre)) = 'secretaria'
             ORDER BY u.id_usuario ASC
             LIMIT 1
         `);
 
         if (!rows.length) {
-            return res.status(404).json({ message: 'No se encontró el perfil administrador de Rectoría' });
+            return res.status(404).json({ message: 'No se encontró el perfil de la secretaria' });
         }
 
         const administrator = rows[0];
+        const [firstName = '', ...secondNames] = String(administrator.nombre || '').trim().split(/\s+/).filter(Boolean);
+        const [firstSurname = '', ...secondSurnames] = String(administrator.apellido || '').trim().split(/\s+/).filter(Boolean);
         return res.json({
             profile: {
                 id: Number(administrator.id),
                 name: `${administrator.nombre || ''} ${administrator.apellido || ''}`.trim(),
+            firstName,
+            secondName: secondNames.join(' '),
+            firstSurname,
+            secondSurname: secondSurnames.join(' '),
                 email: administrator.email || '',
                 phone: administrator.phone ? String(administrator.phone) : '',
-                photo: administrator.photo
-                    ? (administrator.photo.startsWith('http') ? administrator.photo : `http://localhost:3000${administrator.photo}`)
-                    : '',
+                photo: toPublicPhotoUrl(administrator.photo),
                 role: administrator.role
             }
         });
@@ -220,40 +483,33 @@ router.get('/perfil-administrador', async (_req, res) => {
 router.put('/perfil-administrador', upload.single('foto'), async (req, res) => {
     try {
         const payload = req.body || {};
-        const currentPassword = String(payload.currentPassword || '');
-        const newPassword = String(payload.newPassword || '');
         const email = String(payload.email || '').trim();
         const phone = Number(String(payload.phone || '').replace(/\D/g, '')) || 0;
-        const { nombre, apellido } = normalizeFullName(payload.name || '');
+        const nameParts = getSubmittedNameParts(payload);
+        const { nombre, apellido } = nameParts;
 
-        if (!currentPassword || !email || nombre === 'Sin') {
-            return res.status(400).json({ message: 'Nombre, correo y contraseña actual son obligatorios' });
+        if (!email || !nameParts.firstName || !nameParts.firstSurname) {
+            return res.status(400).json({ message: 'El primer nombre, el primer apellido y el correo son obligatorios' });
+        }
+
+        if (nombre.length > 100 || apellido.length > 100) {
+            return res.status(400).json({ message: 'Los nombres y apellidos completos no pueden superar 100 caracteres cada uno' });
         }
 
         const [adminRows] = await connection.promise().query(`
-            SELECT u.id_usuario, u.contrasena, u.foto
+            SELECT u.id_usuario, u.foto, r.nombre AS role
             FROM usuario u
             INNER JOIN rol r ON r.id_rol = u.id_rol
-            WHERE LOWER(TRIM(r.nombre)) IN ('rectora', 'rector')
+            WHERE LOWER(TRIM(r.nombre)) = 'secretaria'
             ORDER BY u.id_usuario ASC
             LIMIT 1
         `);
 
         if (!adminRows.length) {
-            return res.status(404).json({ message: 'No se encontró el perfil administrador de Rectoría' });
+            return res.status(404).json({ message: 'No se encontró el perfil de la secretaria' });
         }
 
         const administrator = adminRows[0];
-        if (administrator.contrasena !== currentPassword) {
-            return res.status(401).json({ message: 'La contraseña actual no es correcta' });
-        }
-
-        if (newPassword && !passwordRegex.test(newPassword)) {
-            return res.status(400).json({
-                message: 'La nueva contraseña debe tener 8+ caracteres, mayúsculas, números y un símbolo.'
-            });
-        }
-
         const [emailRows] = await connection.promise().query(
             'SELECT id_usuario FROM usuario WHERE correo = ? AND id_usuario <> ? LIMIT 1',
             [email, administrator.id_usuario]
@@ -269,15 +525,10 @@ router.put('/perfil-administrador', upload.single('foto'), async (req, res) => {
         }
 
         const values = [nombre, apellido, email, phone, photo || ''];
-        let passwordSql = '';
-        if (newPassword) {
-            passwordSql = ', contrasena = ?';
-            values.push(newPassword);
-        }
         values.push(administrator.id_usuario);
 
         await connection.promise().query(
-            `UPDATE usuario SET nombre = ?, apellido = ?, correo = ?, celular = ?, foto = ?${passwordSql} WHERE id_usuario = ?`,
+            'UPDATE usuario SET nombre = ?, apellido = ?, correo = ?, celular = ?, foto = ? WHERE id_usuario = ?',
             values
         );
 
@@ -286,11 +537,14 @@ router.put('/perfil-administrador', upload.single('foto'), async (req, res) => {
             profile: {
                 id: Number(administrator.id_usuario),
                 name: `${nombre} ${apellido}`.trim(),
+                firstName: nameParts.firstName,
+                secondName: nameParts.secondName,
+                firstSurname: nameParts.firstSurname,
+                secondSurname: nameParts.secondSurname,
                 email,
                 phone: phone ? String(phone) : '',
-                photo: photo
-                    ? (photo.startsWith('http') ? photo : `http://localhost:3000${photo}`)
-                    : ''
+                photo: toPublicPhotoUrl(photo),
+                role: administrator.role
             }
         });
     } catch (error) {
@@ -300,6 +554,7 @@ router.put('/perfil-administrador', upload.single('foto'), async (req, res) => {
 });
 
 router.put('/actualizar/:id', upload.single('foto'), async (req, res) => {
+    let transactionStarted = false;
     try {
         const usuarioId = Number(req.params.id);
         const payload = req.body || {};
@@ -317,6 +572,15 @@ router.put('/actualizar/:id', upload.single('foto'), async (req, res) => {
 
         if (!selectedRole || !email || !password) {
             return res.status(400).json({ message: 'Faltan datos obligatorios para actualizar el usuario' });
+        }
+
+        let teacherData;
+        let studentData;
+        try {
+            teacherData = getTeacherData(selectedRole, payload);
+            studentData = getStudentData(selectedRole, payload);
+        } catch (error) {
+            return res.status(400).json({ message: error.message });
         }
 
         if (!passwordRegex.test(password)) {
@@ -383,6 +647,9 @@ router.put('/actualizar/:id', upload.single('foto'), async (req, res) => {
         const phone = Number(String(payload.phone || '').replace(/\D/g, '')) || 0;
         const status = String(payload.status || 'Activo').trim();
 
+        await connection.promise().beginTransaction();
+        transactionStarted = true;
+
         await connection.promise().query(
             `UPDATE usuario
              SET nombre = ?, apellido = ?, edad = ?, correo = ?, contrasena = ?, fecha_nac = ?,
@@ -406,6 +673,11 @@ router.put('/actualizar/:id', upload.single('foto'), async (req, res) => {
             ]
         );
 
+        await saveTeacherData(usuarioId, teacherData);
+        await saveStudentData(usuarioId, studentData);
+        await connection.promise().commit();
+        transactionStarted = false;
+
         return res.json({
             message: 'Usuario actualizado correctamente',
             usuario: {
@@ -418,6 +690,9 @@ router.put('/actualizar/:id', upload.single('foto'), async (req, res) => {
             }
         });
     } catch (error) {
+        if (transactionStarted) {
+            await connection.promise().rollback().catch(() => {});
+        }
         console.error('Error al actualizar usuario:', error.message);
         return res.status(500).json({
             message: 'No se pudo actualizar el usuario',
@@ -433,18 +708,31 @@ router.delete('/:id', async (req, res) => {
         return res.status(400).json({ message: 'El identificador del usuario no es válido' });
     }
 
+    let transactionStarted = false;
     try {
+        await connection.promise().beginTransaction();
+        transactionStarted = true;
+        await connection.promise().query('DELETE FROM docente WHERE id_usuario = ?', [usuarioId]);
+        await connection.promise().query('DELETE FROM estudiante WHERE id_usuario = ?', [usuarioId]);
         const [result] = await connection.promise().query(
             'DELETE FROM usuario WHERE id_usuario = ?',
             [usuarioId]
         );
 
         if (!result.affectedRows) {
+            await connection.promise().rollback();
+            transactionStarted = false;
             return res.status(404).json({ message: 'No se encontró el usuario que deseas eliminar' });
         }
 
+        await connection.promise().commit();
+        transactionStarted = false;
+
         return res.json({ message: 'Usuario eliminado correctamente', id_usuario: usuarioId });
     } catch (error) {
+        if (transactionStarted) {
+            await connection.promise().rollback().catch(() => {});
+        }
         if (error.code === 'ER_ROW_IS_REFERENCED_2' || error.code === 'ER_ROW_IS_REFERENCED') {
             return res.status(409).json({
                 message: 'No se puede eliminar este usuario porque tiene registros relacionados en el sistema'
@@ -460,6 +748,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 router.post('/crear', upload.single('foto'), async (req, res) => {
+    let transactionStarted = false;
     try {
         const payload = req.body || {};
         const documents = String(payload.document || '').trim();
@@ -476,9 +765,18 @@ router.post('/crear', upload.single('foto'), async (req, res) => {
             });
         }
 
-        if (!/^\d+$/.test(documents) || Number(documents) > 2147483647) {
+        let teacherData;
+        let studentData;
+        try {
+            teacherData = getTeacherData(selectedRole, payload);
+            studentData = getStudentData(selectedRole, payload);
+        } catch (error) {
+            return res.status(400).json({ message: error.message });
+        }
+
+        if (!/^\d+$/.test(documents) || !Number.isSafeInteger(Number(documents))) {
             return res.status(400).json({
-                message: 'El número de identificación debe ser numérico y no superar 2147483647'
+                message: 'El número de identificación debe ser numérico y válido'
             });
         }
 
@@ -608,10 +906,17 @@ router.post('/crear', upload.single('foto'), async (req, res) => {
             insertValues.push(codigoRegistro);
         }
 
+        await connection.promise().beginTransaction();
+        transactionStarted = true;
         await connection.promise().query(
             `INSERT INTO usuario (${insertColumns.join(', ')}) VALUES (${insertColumns.map(() => '?').join(', ')})`,
             insertValues
         );
+
+        await saveTeacherData(usuarioId, teacherData);
+        await saveStudentData(usuarioId, studentData);
+        await connection.promise().commit();
+        transactionStarted = false;
 
         return res.status(201).json({
             message: 'Usuario registrado correctamente',
@@ -627,6 +932,9 @@ router.post('/crear', upload.single('foto'), async (req, res) => {
             }
         });
     } catch (error) {
+        if (transactionStarted) {
+            await connection.promise().rollback().catch(() => {});
+        }
         console.error('Error al crear usuario:', error.message);
         return res.status(500).json({
             message: 'No se pudo crear el usuario',

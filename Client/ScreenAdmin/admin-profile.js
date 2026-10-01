@@ -1,5 +1,5 @@
 (() => {
-    const apiUrl = 'http://localhost:3000/api/CrearUsuario/perfil-administrador';
+    const apiUrl = 'http://localhost:3001/api/CrearUsuario/perfil-administrador';
     const modalMarkup = `
         <div class="admin-profile-overlay" id="adminProfileModal" aria-hidden="true">
             <section class="admin-profile-dialog" role="dialog" aria-modal="true" aria-labelledby="adminProfileTitle">
@@ -7,6 +7,7 @@
                     <div>
                         <span>Cuenta administradora</span>
                         <h2 id="adminProfileTitle">Editar perfil</h2>
+                        <p class="admin-profile-role" id="adminProfileRole">Secretaria</p>
                     </div>
                     <button class="admin-profile-close" id="closeAdminProfile" type="button" aria-label="Cerrar">×</button>
                 </header>
@@ -17,14 +18,13 @@
                         <input id="adminProfilePhoto" type="file" accept="image/*" hidden>
                     </div>
                     <div class="admin-profile-fields">
-                        <label>Nombre completo<input id="adminProfileName" name="name" required maxlength="200"></label>
+                        <label>Primer nombre<input id="adminProfileFirstName" name="firstName" required maxlength="100"></label>
+                        <label>Segundo nombre<input id="adminProfileSecondName" name="secondName" maxlength="100"></label>
+                        <label>Primer apellido<input id="adminProfileFirstSurname" name="firstSurname" required maxlength="100"></label>
+                        <label>Segundo apellido<input id="adminProfileSecondSurname" name="secondSurname" maxlength="100"></label>
                         <label>Correo<input id="adminProfileEmail" name="email" type="email" required maxlength="150"></label>
                         <label>Celular<input id="adminProfilePhone" name="phone" type="tel" maxlength="30"></label>
-                        <label>Contraseña actual<input id="adminCurrentPassword" name="currentPassword" type="password" required autocomplete="current-password"></label>
-                        <label>Nueva contraseña <span>(opcional)</span><input id="adminNewPassword" name="newPassword" type="password" autocomplete="new-password" aria-describedby="adminPasswordHint"></label>
-                        <label>Confirmar nueva contraseña<input id="adminConfirmPassword" type="password" autocomplete="new-password"></label>
                     </div>
-                    <p class="admin-profile-hint" id="adminPasswordHint">Si la cambias, usa al menos 8 caracteres, mayúsculas, minúsculas, números y un símbolo.</p>
                     <div class="admin-profile-actions">
                         <button class="admin-profile-cancel" id="cancelAdminProfile" type="button">Cancelar</button>
                         <button class="admin-profile-save" type="submit">Guardar cambios</button>
@@ -61,10 +61,19 @@
             const image = document.createElement('img');
             image.src = source;
             image.alt = `Foto de ${name || 'administradora'}`;
+            image.addEventListener('error', () => setAvatar('', name), { once: true });
             avatar.appendChild(image);
         } else {
             avatar.textContent = String(name || 'A').trim().charAt(0).toUpperCase() || 'A';
         }
+    }
+
+    function setHeaderInitials(target, name) {
+        const initials = document.createElement('span');
+        initials.className = 'admin-profile-initials';
+        initials.textContent = String(name || 'A').trim().charAt(0).toUpperCase() || 'A';
+        initials.setAttribute('aria-hidden', 'true');
+        target.replaceWith(initials);
     }
 
     function updateHeader() {
@@ -73,18 +82,27 @@
             const name = trigger.querySelector('.admin-info strong');
             const role = trigger.querySelector('.admin-info p, .admin-info span');
             if (name) name.textContent = profile.name || 'Administradora';
-            if (role) role.textContent = profile.role || 'Rectora';
-            let image = trigger.querySelector('.admin-profile-photo');
+            if (role) role.textContent = profile.role || 'Secretaria';
+            const currentAvatar = trigger.querySelector('.admin-profile-photo, .admin-profile-initials');
+            const avatar = profile.photo
+                ? document.createElement('img')
+                : document.createElement('span');
+
             if (profile.photo) {
-                if (!image) {
-                    image = document.createElement('img');
-                    image.className = 'admin-profile-photo';
-                    image.alt = '';
-                    trigger.prepend(image);
-                }
-                image.src = profile.photo;
-            } else if (image) {
-                image.remove();
+                avatar.className = 'admin-profile-photo';
+                avatar.alt = '';
+                avatar.src = profile.photo;
+                avatar.addEventListener('error', () => setHeaderInitials(avatar, profile.name), { once: true });
+            } else {
+                avatar.className = 'admin-profile-initials';
+                avatar.textContent = String(profile.name || 'A').trim().charAt(0).toUpperCase() || 'A';
+                avatar.setAttribute('aria-hidden', 'true');
+            }
+
+            if (currentAvatar) {
+                currentAvatar.replaceWith(avatar);
+            } else {
+                trigger.prepend(avatar);
             }
         });
     }
@@ -109,13 +127,17 @@
         }
         form.reset();
         selectedPhoto = null;
-        document.getElementById('adminProfileName').value = profile.name || '';
+        document.getElementById('adminProfileFirstName').value = profile.firstName || '';
+        document.getElementById('adminProfileSecondName').value = profile.secondName || '';
+        document.getElementById('adminProfileFirstSurname').value = profile.firstSurname || '';
+        document.getElementById('adminProfileSecondSurname').value = profile.secondSurname || '';
         document.getElementById('adminProfileEmail').value = profile.email || '';
         document.getElementById('adminProfilePhone').value = profile.phone || '';
+        document.getElementById('adminProfileRole').textContent = profile.role || 'Secretaria';
         setAvatar(profile.photo, profile.name);
         modal.classList.add('show');
         modal.setAttribute('aria-hidden', 'false');
-        document.getElementById('adminProfileName').focus();
+        document.getElementById('adminProfileFirstName').focus();
     }
 
     function closeModal() {
@@ -152,25 +174,18 @@
             return;
         }
         selectedPhoto = file;
-        setAvatar(URL.createObjectURL(file), document.getElementById('adminProfileName').value);
+        setAvatar(URL.createObjectURL(file), profile?.name);
     });
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
-        const newPassword = document.getElementById('adminNewPassword').value;
-        const confirmPassword = document.getElementById('adminConfirmPassword').value;
-        if (newPassword && newPassword !== confirmPassword) {
-            notify('La nueva contraseña y su confirmación no coinciden');
-            document.getElementById('adminConfirmPassword').focus();
-            return;
-        }
-
         const formData = new FormData();
-        formData.append('name', document.getElementById('adminProfileName').value.trim());
+        formData.append('firstName', document.getElementById('adminProfileFirstName').value.trim());
+        formData.append('secondName', document.getElementById('adminProfileSecondName').value.trim());
+        formData.append('firstSurname', document.getElementById('adminProfileFirstSurname').value.trim());
+        formData.append('secondSurname', document.getElementById('adminProfileSecondSurname').value.trim());
         formData.append('email', document.getElementById('adminProfileEmail').value.trim());
         formData.append('phone', document.getElementById('adminProfilePhone').value.trim());
-        formData.append('currentPassword', document.getElementById('adminCurrentPassword').value);
-        formData.append('newPassword', newPassword);
         if (selectedPhoto) formData.append('foto', selectedPhoto);
 
         const submitButton = form.querySelector('[type="submit"]');

@@ -18,6 +18,21 @@
     box-shadow: 0 2px 9px rgba(23, 19, 90, .16);
 }
 
+.admin-profile-initials {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    display: grid;
+    place-items: center;
+    border: 2px solid #FFFFFF;
+    border-radius: 50%;
+    color: #FFFFFF;
+    background: #1677D2;
+    box-shadow: 0 2px 9px rgba(23, 19, 90, .16);
+    font-size: 16px;
+    font-weight: 700;
+}
+
 .admin-profile-overlay {
     position: fixed;
     inset: 0;
@@ -62,6 +77,13 @@
     margin-top: 3px;
     color: #17263B;
     font-size: 23px;
+}
+
+.admin-profile-role {
+    margin-top: 3px;
+    color: #1677D2;
+    font-size: 12px;
+    font-weight: 600;
 }
 
 .admin-profile-close {
@@ -155,6 +177,10 @@
     color: #68758A;
     font-size: 11px;
     line-height: 1.5;
+}
+
+.admin-profile-hint + .admin-profile-hint {
+    margin-top: 5px;
 }
 
 .admin-profile-actions {

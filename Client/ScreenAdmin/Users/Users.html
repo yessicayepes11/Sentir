@@ -4,177 +4,49 @@
 <head>
 
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sentir | Usuarios</title>
-
-
-    <!-- POPPINS -->
-
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin="anonymous"
-    >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
-
-
-    <!-- LUCIDE -->
-
-    <script
-        src="https://unpkg.com/lucide@latest"
-        defer
-    ></script>
-
-
-    <!-- CSS -->
-
-    <link
-        rel="stylesheet"
-        href="Users.css"
-    >
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <link rel="stylesheet" href="Users.css">
     <link rel="stylesheet" href="../admin-profile.css">
-
 </head>
 
-
 <body>
-
-
 <div class="app">
-
-
-    <!-- ================================================= -->
-    <!-- SIDEBAR -->
-    <!-- ================================================= -->
-
-    <aside
-        class="sidebar"
-        id="sidebar"
-    >
-
-
-        <!-- LOGO -->
-
-        <div class="brand">
-
-            <img
-                src="/Sentir/Shared/AdminResources/Logo-nombrelado.png"
-                alt="Logo Sentir"
-                class="official-logo"
-            >
-
-        </div>
-
-
-        <!-- NAVEGACIÓN -->
-
+    <aside class="sidebar" id="sidebar">
+        <a class="brand" href="/Client/ScreenAdmin/Admin.html" aria-label="Sentir, ir al inicio">
+            <img src="/Client/img/logo-sentir.png" alt="Logo Sentir" class="official-logo">
+        </a>
         <nav class="nav-menu">
-
-
-            <button
-                class="nav-item"
-                id="inicioNav"
-                type="button"
-            >
-
+            <button class="nav-item" id="inicioNav" type="button">
                 <i data-lucide="house"></i>
-
-                <a href="../Admin.html" class="sin-subrayado">
-                    <span>
-                        Inicio
-                    </span>
-                </a>
+                Inicio
             </button>
-
-
-            <button
-                class="nav-item active"
-                id="usuariosNav"
-                type="button"
-            >
-
+            <button class="nav-item active" id="usuariosNav" type="button">
                 <i data-lucide="users"></i>
-
-                <span>
-                    Usuarios
-                </span>
-
+                <span>Usuarios</span>
             </button>
-
-
+            <a class="nav-item nav-logout" href="../../index.html">
+                <i data-lucide="log-out"></i>
+                <span>Cerrar sesión</span>
+            </a>
         </nav>
-
-
-        <!-- PARTE INFERIOR -->
-
         <div class="sidebar-bottom">
-
-
             <div class="community-message">
-
                 <i data-lucide="heart"></i>
-
-                <p>
-                    Un entorno más humano,
-                    <br>
-                    una comunidad más fuerte.
-                </p>
-
+                <p>Un entorno más humano,<br>una comunidad más fuerte.</p>
             </div>
-
-
             <div class="sidebar-characters">
-
-                <img
-                    src="/Sentir/Shared/AdminResources/MuñEsquina.png"
-                    alt="Personajes Sentir"
-                    class="characters-image"
-                >
-
+                <img src="/Sentir/Shared/AdminResources/MuñEsquina.png" alt="Personajes Sentir" class="characters-image">
             </div>
-
-
-            <p class="copyright">
-
-                © 2026 Sentir
-                <br>
-                Todos los derechos reservados.
-
-            </p>
-
-
+            <p class="copyright">© 2026 Sentir<br>Todos los derechos reservados.</p>
         </div>
-
-
     </aside>
 
-
-
-    <!-- ================================================= -->
-    <!-- OVERLAY -->
-    <!-- ================================================= -->
-
-    <div
-        class="sidebar-overlay"
-        id="sidebarOverlay"
-    ></div>
-
-
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <!-- ================================================= -->
     <!-- HAMBURGUESA -->
@@ -587,12 +459,12 @@
                             Docente
                         </option>
 
-                        <option value="UAI">
-                            UAI
+                        <option value="Entorno protector">
+                            Entorno protector
                         </option>
 
-                        <option value="Psicóloga">
-                            Psicóloga
+                        <option value="Psicologo/a">
+                            Psicologo/a
                         </option>
 
                         <option value="Directivo">
@@ -749,7 +621,6 @@
                 </h2>
 
 
-
                 <span
                     class="role-badge student"
                     id="detailRole"
@@ -809,6 +680,24 @@
                     </div>
 
 
+                    <div id="detailStudentDiagnosisRow" class="hidden">
+                        <i data-lucide="clipboard-check"></i>
+                        <span id="detailStudentDiagnosis">—</span>
+                    </div>
+
+
+                    <div id="detailGuardianRow" class="hidden">
+                        <i data-lucide="users-round"></i>
+                        <span id="detailGuardian">—</span>
+                    </div>
+
+
+                    <div id="detailGuardianContactRow" class="hidden">
+                        <i data-lucide="contact-round"></i>
+                        <span id="detailGuardianContact">—</span>
+                    </div>
+
+
                     <div
                         id="detailDirectorRow"
                         class="hidden"
@@ -817,6 +706,20 @@
                         <i data-lucide="users-round"></i>
 
                         <span id="detailDirector">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="detailTeacherYearRow"
+                        class="hidden"
+                    >
+
+                        <i data-lucide="calendar-range"></i>
+
+                        <span id="detailTeacherYear">
                             —
                         </span>
 
@@ -1072,7 +975,11 @@
 
 
 
-        <form id="userForm">
+        <form id="userForm" novalidate>
+
+            <input type="hidden" id="studentGradeValue">
+
+            <div id="userStepOne">
 
 
             <input
@@ -1572,9 +1479,94 @@
 
 
 
+            </div>
+
+            <section class="student-wizard-step hidden" id="teacherStepTwo" aria-labelledby="teacherStepTwoTitle">
+                <div class="form-section-heading">
+                    <div class="heading-icon blue-heading"><i data-lucide="briefcase-business"></i></div>
+                    <div><strong id="teacherStepTwoTitle">Información docente</strong><p>Indica el año, la dirección de grupo y los grados que enseña.</p></div>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="anoCursadoInput">Año cursado</label>
+                        <div class="modern-input"><i data-lucide="calendar-days"></i><input id="anoCursadoInput" type="number" min="1900" max="2200" step="1" placeholder="Ej. 2026"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="teacherDirectorInput">¿Es director de grupo?</label>
+                        <div class="modern-input"><i data-lucide="users-round"></i><select id="teacherDirectorInput"><option value="">Seleccionar</option><option value="1">Sí</option><option value="0">No</option></select></div>
+                    </div>
+                    <div class="form-group full-width hidden" id="directorGradeFields">
+                        <label>Grupo del que es director</label>
+                        <div class="grade-pair">
+                            <div class="modern-input"><i data-lucide="school"></i><input id="gradeNumberInput" type="number" min="0" max="99" step="1" placeholder="Año / grado"></div>
+                            <span class="grade-separator" aria-hidden="true">-</span>
+                            <div class="modern-input"><input id="gradeLetterInput" type="text" maxlength="1" pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]" placeholder="Letra" aria-label="Letra del grupo dirigido"></div>
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Grados que enseña</label>
+                        <div id="teacherGradesList" class="teacher-grades-list"></div>
+                        <button class="add-grade-button" id="addTeacherGrade" type="button"><i data-lucide="plus"></i> Añadir grado</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="student-wizard-step hidden" id="studentStepTwo" aria-labelledby="studentStepTwoTitle">
+                <div class="form-section-heading">
+                    <div class="heading-icon blue-heading"><i data-lucide="graduation-cap"></i></div>
+                    <div><strong id="studentStepTwoTitle">Información del estudiante</strong><p>Registra el grado y los datos de diagnóstico.</p></div>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label for="studentGradeYear">Grado</label>
+                        <div class="grade-pair">
+                            <div class="modern-input"><input id="studentGradeYear" type="number" min="0" max="99" step="1" placeholder="Número"></div>
+                            <span class="grade-separator" aria-hidden="true">-</span>
+                            <div class="modern-input"><input id="studentGradeLetter" type="text" maxlength="1" pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]" placeholder="Letra" aria-label="Letra del grado"></div>
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="studentHasDiagnosis">¿Tiene diagnóstico?</label>
+                        <div class="modern-input"><i data-lucide="clipboard-check"></i><select id="studentHasDiagnosis"><option value="0">No</option><option value="1">Sí</option></select></div>
+                    </div>
+                    <div class="form-group full-width hidden" id="studentDiagnosisFields">
+                        <div class="form-grid">
+                            <div class="form-group full-width"><label for="studentDiagnosisName">Nombre del diagnóstico</label><div class="modern-input"><input id="studentDiagnosisName" type="text" maxlength="300"></div></div>
+                            <div class="form-group full-width"><label for="studentDiagnosisDescription">Descripción del diagnóstico</label><div class="modern-input"><textarea id="studentDiagnosisDescription" rows="4"></textarea></div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="student-wizard-step hidden" id="studentStepThree" aria-labelledby="studentStepThreeTitle">
+                <div class="form-section-heading">
+                    <div class="heading-icon purple-heading"><i data-lucide="users-round"></i></div>
+                    <div><strong id="studentStepThreeTitle">Información del acudiente</strong><p>Completa la identificación y los datos de contacto.</p></div>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group"><label for="guardianDocumentType">Tipo de identificación</label><div class="modern-input"><i data-lucide="id-card"></i><select id="guardianDocumentType"><option value="">Seleccionar tipo</option><option value="Cédula">Cédula</option><option value="Tarjeta identidad">Tarjeta de identidad</option><option value="PPI">PPI</option><option value="Pasaporte">Pasaporte</option><option value="Otro">Otro</option></select></div></div>
+                    <div class="form-group"><label for="guardianDocument">Número de identificación</label><div class="modern-input"><i data-lucide="badge"></i><input id="guardianDocument" type="text" inputmode="numeric"></div></div>
+                    <div class="form-group"><label for="guardianFirstName">Primer nombre</label><div class="modern-input"><input id="guardianFirstName" type="text" maxlength="20"></div></div>
+                    <div class="form-group"><label for="guardianSecondName">Segundo nombre</label><div class="modern-input"><input id="guardianSecondName" type="text" maxlength="20"></div></div>
+                    <div class="form-group"><label for="guardianFirstSurname">Primer apellido</label><div class="modern-input"><input id="guardianFirstSurname" type="text" maxlength="20"></div></div>
+                    <div class="form-group"><label for="guardianSecondSurname">Segundo apellido</label><div class="modern-input"><input id="guardianSecondSurname" type="text" maxlength="20"></div></div>
+                    <div class="form-group"><label for="guardianEmail">Correo electrónico</label><div class="modern-input"><i data-lucide="mail"></i><input id="guardianEmail" type="email" maxlength="100"></div></div>
+                    <div class="form-group"><label for="guardianPhone">Celular</label><div class="modern-input"><i data-lucide="phone"></i><input id="guardianPhone" type="tel" inputmode="numeric"></div></div>
+                    <div class="form-group"><label for="guardianRelationship">Parentesco</label><div class="modern-input"><input id="guardianRelationship" type="text" maxlength="200"></div></div>
+                    <div class="form-group"><label for="guardianOccupation">Ocupación</label><div class="modern-input"><input id="guardianOccupation" type="text" maxlength="200"></div></div>
+                </div>
+            </section>
+
             <!-- BOTONES -->
 
             <div class="modal-actions">
+
+                <button class="cancel-button hidden" id="studentStepBack" type="button">Anterior</button>
+
+                <button class="save-button hidden" id="studentStepNext" type="button">
+                    <i data-lucide="arrow-right"></i>
+                    Siguiente
+                </button>
 
                 <button
                     class="cancel-button"
@@ -1587,6 +1579,7 @@
 
                 <button
                     class="save-button"
+                    id="saveUserButton"
                     type="submit"
                 >
 
@@ -1672,9 +1665,12 @@
 <div
     class="toast"
     id="toast"
+    role="status"
+    aria-live="polite"
 >
 
     <span id="toastText"></span>
+    <button class="toast-close" id="closeToast" type="button" aria-label="Cerrar mensaje">×</button>
 
 </div>
 

@@ -101,6 +101,79 @@ button {
     display: none !important;
 }
 
+.grade-pair {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 8px;
+}
+
+.grade-pair .modern-input {
+    min-width: 0;
+}
+
+.grade-separator {
+    color: var(--text-soft);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.teacher-grades-list {
+    display: grid;
+    gap: 9px;
+}
+
+.teacher-grade-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 42px;
+    align-items: end;
+    gap: 10px;
+}
+
+.teacher-grade-row label {
+    display: grid;
+    gap: 6px;
+    color: var(--text-dark);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.teacher-grade-row input {
+    width: 100%;
+    min-width: 0;
+    height: 42px;
+    padding: 0 12px;
+    border: 1px solid rgba(108, 77, 246, .18);
+    border-radius: 9px;
+    color: var(--text-dark);
+    background: #FFFFFF;
+}
+
+.remove-teacher-grade,
+.add-grade-button {
+    min-height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border-radius: 9px;
+}
+
+.remove-teacher-grade {
+    width: 42px;
+    color: #B84259;
+    background: #FFF0F2;
+}
+
+.add-grade-button {
+    margin-top: 10px;
+    padding: 0 14px;
+    color: #4E2EC7;
+    background: #F2EEFF;
+    font-size: 12px;
+    font-weight: 600;
+}
+
 
 
 /* =========================================================
@@ -143,6 +216,8 @@ button {
 
     transition:
         transform .3s ease;
+
+    overflow-y: auto;
 }
 
 
@@ -184,6 +259,8 @@ button {
     flex-direction: column;
 
     gap: 15px;
+
+    margin-bottom: 22px;
 }
 
 
@@ -255,6 +332,16 @@ button {
     color: white;
 }
 
+.nav-logout {
+    margin-top: 18px;
+    color: #9B3B52;
+    text-decoration: none;
+}
+
+.nav-logout svg {
+    color: #9B3B52;
+}
+
 
 
 /* =========================================================
@@ -295,7 +382,7 @@ button {
 
 .sidebar-characters {
 
-    height: 250px;
+    height: 205px;
 
     display: flex;
 
@@ -2112,6 +2199,40 @@ tbody tr.selected {
     line-height: 1.4;
 }
 
+.field-error {
+    display: none;
+    margin: 0;
+    padding-left: 2px;
+    color: #C62845;
+    font-size: 11px;
+    line-height: 1.35;
+}
+
+.field-error.visible {
+    display: block;
+}
+
+.form-group input[aria-invalid="true"] {
+    border-color: #D9445C;
+}
+
+.field-error {
+    display: none;
+    margin: 0;
+    padding-left: 2px;
+    color: #C62845;
+    font-size: 11px;
+    line-height: 1.35;
+}
+
+.field-error.visible {
+    display: block;
+}
+
+.form-group input[aria-invalid="true"] {
+    border-color: #D9445C;
+}
+
 
 
 /* =========================================================
@@ -2634,11 +2755,12 @@ tbody tr.selected {
 
     bottom: 22px;
 
-    z-index: 2000;
+    z-index: 3000;
 
-    padding:
-        12px
-        16px;
+    max-width: min(520px, calc(100vw - 32px));
+    padding: 13px 42px 13px 16px;
+    display: flex;
+    align-items: flex-start;
 
     border-radius: 11px;
 
@@ -2650,7 +2772,8 @@ tbody tr.selected {
     box-shadow:
         var(--shadow);
 
-    font-size: 10px;
+    font-size: 12px;
+    line-height: 1.5;
 
     opacity: 0;
 
@@ -2669,6 +2792,29 @@ tbody tr.selected {
 
     transform:
         translateY(0);
+
+    pointer-events: auto;
+}
+
+.toast-close {
+    position: absolute;
+    top: 7px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 6px;
+    color: #FFFFFF;
+    background: transparent;
+    font-size: 20px;
+    line-height: 1;
+}
+
+.toast-close:hover,
+.toast-close:focus-visible {
+    background: rgba(255, 255, 255, .16);
+    outline: none;
 }
 
 
@@ -2768,6 +2914,15 @@ tbody tr.selected {
 
 
 @media (max-width: 650px) {
+
+    .teacher-grade-row {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 38px;
+        gap: 7px;
+    }
+
+    .remove-teacher-grade {
+        width: 38px;
+    }
 
     .sidebar {
 

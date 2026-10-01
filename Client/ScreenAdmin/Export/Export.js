@@ -196,7 +196,7 @@ function populateRoleFilter() {
 }
 
 async function loadUsers() {
-    const response = await fetch('http://localhost:3000/api/CrearUsuario/listar');
+    const response = await fetch('http://localhost:3001/api/CrearUsuario/listar');
     if (!response.ok) {
         throw new Error('No se pudieron cargar los usuarios desde la base de datos');
     }

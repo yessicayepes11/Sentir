@@ -1,0 +1,5 @@
+ALTER TABLE usuario
+    MODIFY celular BIGINT NOT NULL;
+
+ALTER TABLE acudiente
+    MODIFY celular BIGINT NOT NULL;

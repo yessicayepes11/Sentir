@@ -9,7 +9,7 @@ const uploadsDir = path.join(path.dirname(fileURLToPath(import.meta.url)), '../.
 class Server {
     constructor() {
         this.app = express();
-        this.port = 3000;
+        this.port = 3001;
         this.middleware();
         this.routes();
         this.handleErrors();

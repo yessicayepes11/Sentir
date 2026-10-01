@@ -42,7 +42,6 @@ const byId =
 const sidebar =
     byId("sidebar");
 
-
 const sidebarOverlay =
     byId("sidebarOverlay");
 
@@ -61,7 +60,6 @@ const inicioNav =
 
 const usuariosNav =
     byId("usuariosNav");
-
 
 
 const searchInput =
@@ -237,6 +235,36 @@ const roleInput =
     byId("roleInput");
 
 
+const userStepOne = byId("userStepOne");
+const teacherStepTwo = byId("teacherStepTwo");
+const studentStepTwo = byId("studentStepTwo");
+const studentStepThree = byId("studentStepThree");
+const studentStepBack = byId("studentStepBack");
+const studentStepNext = byId("studentStepNext");
+const saveUserButton = byId("saveUserButton");
+const studentGradeYear = byId("studentGradeYear");
+const studentGradeLetter = byId("studentGradeLetter");
+const studentGradeValue = byId("studentGradeValue");
+const studentHasDiagnosis = byId("studentHasDiagnosis");
+const studentDiagnosisFields = byId("studentDiagnosisFields");
+const studentDiagnosisName = byId("studentDiagnosisName");
+const studentDiagnosisDescription = byId("studentDiagnosisDescription");
+const guardianInputs = {
+    documentType: byId("guardianDocumentType"),
+    document: byId("guardianDocument"),
+    firstName: byId("guardianFirstName"),
+    secondName: byId("guardianSecondName"),
+    firstSurname: byId("guardianFirstSurname"),
+    secondSurname: byId("guardianSecondSurname"),
+    email: byId("guardianEmail"),
+    phone: byId("guardianPhone"),
+    relationship: byId("guardianRelationship"),
+    occupation: byId("guardianOccupation")
+};
+let studentWizardStep = 1;
+let teacherWizardStep = 1;
+
+
 function updateSelectedRoleDisplay() {
     if (selectedRoleDisplay) {
         const value = roleInput?.value || roleSelectionInput?.value || "Sin rol";
@@ -401,6 +429,14 @@ const detailGrade =
     byId("detailGrade");
 
 
+const detailStudentDiagnosisRow = byId("detailStudentDiagnosisRow");
+const detailStudentDiagnosis = byId("detailStudentDiagnosis");
+const detailGuardianRow = byId("detailGuardianRow");
+const detailGuardian = byId("detailGuardian");
+const detailGuardianContactRow = byId("detailGuardianContactRow");
+const detailGuardianContact = byId("detailGuardianContact");
+
+
 const detailDirectorRow =
     byId("detailDirectorRow");
 
@@ -417,6 +453,14 @@ const detailDirectorGroup =
     byId("detailDirectorGroup");
 
 
+const detailTeacherYearRow =
+    byId("detailTeacherYearRow");
+
+
+const detailTeacherYear =
+    byId("detailTeacherYear");
+
+
 const detailDate =
     byId("detailDate");
 
@@ -429,6 +473,26 @@ const deleteSelected =
     byId("deleteSelected");
 
 
+const anoCursadoInput =
+    byId("anoCursadoInput");
+
+
+const teacherDirectorInput =
+    byId("teacherDirectorInput");
+
+
+const gradeNumberInput =
+    byId("gradeNumberInput");
+
+
+const gradeLetterInput =
+    byId("gradeLetterInput");
+
+const directorGradeFields = byId("directorGradeFields");
+const teacherGradesList = byId("teacherGradesList");
+const addTeacherGradeButton = byId("addTeacherGrade");
+
+
 
 // TOAST
 
@@ -438,6 +502,12 @@ const toast =
 
 const toastText =
     byId("toastText");
+
+
+const closeToastButton =
+    byId("closeToast");
+
+let toastTimeout;
 
 
 
@@ -466,6 +536,7 @@ function refreshIcons() {
 
 function showToast(message) {
 
+    clearTimeout(toastTimeout);
     toastText.textContent =
         message;
 
@@ -474,22 +545,60 @@ function showToast(message) {
         "show"
     );
 
-
-    setTimeout(
-
-        () => {
-
-            toast.classList.remove(
-                "show"
-            );
-
-        },
-
-        2400
-
+    toastTimeout = setTimeout(
+        () => toast.classList.remove("show"),
+        180000
     );
 
 }
+
+
+closeToastButton.addEventListener(
+    "click",
+    () => {
+        clearTimeout(toastTimeout);
+        toast.classList.remove("show");
+    }
+);
+
+function setFieldError(input, message) {
+    const field = input.closest(".form-group");
+    let error = field.querySelector(".field-error");
+
+    if (!error) {
+        error = document.createElement("p");
+        error.className = "field-error";
+        error.setAttribute("aria-live", "polite");
+        field.appendChild(error);
+    }
+
+    error.textContent = message;
+    error.classList.toggle("visible", Boolean(message));
+    input.setCustomValidity(message);
+    input.setAttribute("aria-invalid", String(Boolean(message)));
+}
+
+function validateUniqueUserFields() {
+    const currentId = Number(editingId.value);
+    const document = documentInput.value.trim().toLowerCase();
+    const email = emailInput.value.trim().toLowerCase();
+    const duplicateDocument = document && users.some((user) =>
+        String(user.document).trim().toLowerCase() === document && user.id !== currentId
+    );
+    const duplicateEmail = email && users.some((user) =>
+        String(user.email).trim().toLowerCase() === email && user.id !== currentId
+    );
+
+    setFieldError(documentInput, duplicateDocument ? "Este número de identificación ya está registrado." : "");
+    setFieldError(emailInput, duplicateEmail ? "Este correo electrónico ya está registrado." : "");
+
+    return !duplicateDocument && !duplicateEmail;
+}
+
+documentInput.addEventListener("input", validateUniqueUserFields);
+documentInput.addEventListener("blur", validateUniqueUserFields);
+emailInput.addEventListener("input", validateUniqueUserFields);
+emailInput.addEventListener("blur", validateUniqueUserFields);
 
 function recordUserActivity(type, user) {
     const titles = {
@@ -867,10 +976,7 @@ function renderUsers() {
 
     const search =
 
-        searchInput
-            .value
-            .trim()
-            .toLowerCase();
+        normalizeRoleName(searchInput.value);
 
 
 
@@ -892,20 +998,22 @@ function renderUsers() {
 
                 const matchSearch =
 
-                    user.name
-                        .toLowerCase()
+                    normalizeRoleName(user.name)
                         .includes(search)
 
                     ||
 
-                    user.email
-                        .toLowerCase()
+                    normalizeRoleName(user.email)
                         .includes(search)
 
                     ||
 
-                    user.document
-                        .toLowerCase()
+                    normalizeRoleName(user.document)
+                        .includes(search)
+
+                    ||
+
+                    normalizeRoleName(user.role)
                         .includes(search);
 
 
@@ -1263,6 +1371,19 @@ function showUserDetails(id) {
 
             `Grado: ${user.grade}`;
 
+        detailStudentDiagnosisRow.classList.remove("hidden");
+        detailStudentDiagnosis.textContent = user.hasDiagnosis
+            ? `Diagnóstico: ${[user.diagnosisName, user.diagnosisDescription].filter(Boolean).join(" · ")}`
+            : "Sin diagnóstico";
+
+        const guardianFullName = [user.guardianName, user.guardianSurname].filter(Boolean).join(" ");
+        detailGuardianRow.classList.toggle("hidden", !guardianFullName);
+        detailGuardian.textContent = `Acudiente: ${guardianFullName}${user.guardianRelationship ? ` · ${user.guardianRelationship}` : ""}${user.guardianDocument ? ` · ID ${user.guardianDocument}` : ""}`;
+
+        const guardianContactInfo = [user.guardianEmail, user.guardianPhone].filter(Boolean).join(" · ");
+        detailGuardianContactRow.classList.toggle("hidden", !guardianContactInfo);
+        detailGuardianContact.textContent = guardianContactInfo;
+
     }
 
     else {
@@ -1270,6 +1391,10 @@ function showUserDetails(id) {
         detailGradeRow.classList.add(
             "hidden"
         );
+
+        detailStudentDiagnosisRow.classList.add("hidden");
+        detailGuardianRow.classList.add("hidden");
+        detailGuardianContactRow.classList.add("hidden");
 
     }
 
@@ -1288,33 +1413,18 @@ function showUserDetails(id) {
 
 
         detailDirector.textContent =
-
-            `Director de grupo: ${user.groupDirector || "No"}`;
-
-
-        if (
-            user.groupDirector ===
-            "Sí"
-        ) {
-
-            detailDirectorGroupRow.classList.remove(
-                "hidden"
-            );
+            `Director de grupo: ${user.directorGrupo === null || user.directorGrupo === "" ? "No registrado" : (Number(user.directorGrupo) === 1 ? "Sí" : "No")}`;
 
 
-            detailDirectorGroup.textContent =
+        detailTeacherYearRow.classList.remove("hidden");
+        detailTeacherYear.textContent = `Año cursado: ${user.anoCursado || "No registrado"}`;
 
-                `Grupo: ${user.directorGroup}`;
 
-        }
-
-        else {
-
-            detailDirectorGroupRow.classList.add(
-                "hidden"
-            );
-
-        }
+        detailDirectorGroupRow.classList.remove("hidden");
+        const teacherGradeSummary = (user.teachingGrades || []).join(", ") || "No registrado";
+        detailDirectorGroup.textContent = Number(user.directorGrupo) === 1
+            ? `Grupo dirigido: ${user.gradoAsignado || "No registrado"} · Enseña: ${teacherGradeSummary}`
+            : `Grados que enseña: ${teacherGradeSummary}`;
 
     }
 
@@ -1323,6 +1433,9 @@ function showUserDetails(id) {
         detailDirectorRow.classList.add(
             "hidden"
         );
+
+
+        detailTeacherYearRow.classList.add("hidden");
 
 
         detailDirectorGroupRow.classList.add(
@@ -1344,137 +1457,216 @@ function showUserDetails(id) {
 // ======================================================
 
 function updateConditionalFields() {
+    const normalizedRole = normalizeRoleName(roleInput.value);
+    const isStudent = normalizedRole === "estudiante";
 
-    const role =
-        roleInput.value;
+    anoCursadoInput.required = false;
+    teacherDirectorInput.required = false;
+    gradeNumberInput.required = false;
+    gradeLetterInput.required = false;
 
+    if (gradeField) gradeField.classList.add("hidden");
+    if (gradeInput) gradeInput.required = false;
+    if (groupDirectorField) groupDirectorField.classList.add("hidden");
+    if (groupDirectorInput) groupDirectorInput.required = false;
+    if (directorGroupField) directorGroupField.classList.add("hidden");
+    if (directorGroupInput) directorGroupInput.required = false;
 
-
-    // ESTUDIANTE
-
-    if (
-        role ===
-        "Estudiante"
-    ) {
-
-        if (gradeField) {
-            gradeField.classList.remove("hidden");
-        }
-
-        if (gradeInput) {
-            gradeInput.required = true;
-        }
-
-    }
-
-    else {
-
-        if (gradeField) {
-            gradeField.classList.add("hidden");
-        }
-
-        if (gradeInput) {
-            gradeInput.required = false;
-            gradeInput.value = "";
-        }
-
-    }
-
-
-
-    // DOCENTE
-
-    if (
-        role ===
-        "Docente"
-    ) {
-
-        if (groupDirectorField) {
-            groupDirectorField.classList.remove("hidden");
-        }
-
-        if (groupDirectorInput) {
-            groupDirectorInput.required = true;
-        }
-
-    }
-
-    else {
-
-        if (groupDirectorField) {
-            groupDirectorField.classList.add("hidden");
-        }
-
-        if (groupDirectorInput) {
-            groupDirectorInput.required = false;
-            groupDirectorInput.value = "";
-        }
-
-        if (directorGroupField) {
-            directorGroupField.classList.add("hidden");
-        }
-
-        if (directorGroupInput) {
-            directorGroupInput.required = false;
-            directorGroupInput.value = "";
-        }
-
-    }
-
+    studentGradeYear.required = isStudent && studentWizardStep === 2;
+    studentGradeLetter.required = isStudent && studentWizardStep === 2;
+    updateDirectorField();
+    configureStudentWizard();
 }
 
+function splitAssignedGrade(grade) {
+    const value = String(grade || "").trim();
+    const match = value.match(/^(\d+)[°º]?\s*-\s*([A-Za-zÁÉÍÓÚÜÑ]+)$/i)
+        || value.match(/^(\d+)[°º]?\s*([A-Za-zÁÉÍÓÚÜÑ]+)$/i);
 
+    if (match) {
+        return { number: match[1], letter: match[2].toLocaleUpperCase("es") };
+    }
+
+    const numberOnly = value.match(/^(\d+)[°º]?$/);
+    return { number: numberOnly?.[1] || "", letter: "" };
+}
+
+function splitStudentGrade(grade) {
+    const match = String(grade || "").trim().match(/^(\d{1,2})\s*-\s*([A-Za-zÁÉÍÓÚÜÑ])$/i);
+    return match
+        ? { number: match[1], letter: match[2].toLocaleUpperCase("es") }
+        : { number: "", letter: "" };
+}
+
+function splitPersonName(name) {
+    const [first = "", ...remaining] = String(name || "").trim().split(/\s+/).filter(Boolean);
+    return { first, second: remaining.join(" ") };
+}
+
+function configureStudentWizard() {
+    const isStudentWizard = normalizeRoleName(roleInput.value) === "estudiante";
+    const isTeacherWizard = normalizeRoleName(roleInput.value) === "docente";
+    const activeStep = isStudentWizard
+        ? (studentWizardStep === 1 ? userStepOne : studentWizardStep === 2 ? studentStepTwo : studentStepThree)
+        : (isTeacherWizard && teacherWizardStep === 2 ? teacherStepTwo : userStepOne);
+
+    userStepOne.classList.toggle("hidden", (isStudentWizard && studentWizardStep !== 1) || (isTeacherWizard && teacherWizardStep !== 1));
+    teacherStepTwo.classList.toggle("hidden", !isTeacherWizard || teacherWizardStep !== 2);
+    studentStepTwo.classList.toggle("hidden", !isStudentWizard || studentWizardStep !== 2);
+    studentStepThree.classList.toggle("hidden", !isStudentWizard || studentWizardStep !== 3);
+    const wizardStep = isTeacherWizard ? teacherWizardStep : studentWizardStep;
+    studentStepBack.classList.toggle("hidden", (!isStudentWizard && !isTeacherWizard) || wizardStep === 1);
+    studentStepNext.classList.toggle("hidden", !(isStudentWizard && studentWizardStep < 3) && !(isTeacherWizard && teacherWizardStep === 1));
+    saveUserButton.classList.toggle("hidden", (isStudentWizard && studentWizardStep !== 3) || (isTeacherWizard && teacherWizardStep !== 2));
+    saveUserButton.textContent = isStudentWizard && !editingId.value ? "Crear usuario" : "Guardar usuario";
+
+    Object.values(guardianInputs).forEach((input) => {
+        input.required = isStudentWizard && studentWizardStep === 3 && input.id !== "guardianSecondName" && input.id !== "guardianSecondSurname";
+    });
+
+    studentGradeYear.required = isStudentWizard && studentWizardStep === 2;
+    studentGradeLetter.required = isStudentWizard && studentWizardStep === 2;
+    studentHasDiagnosis.required = isStudentWizard && studentWizardStep === 2;
+
+    const hasDiagnosis = studentHasDiagnosis.value === "1";
+    studentDiagnosisFields.classList.toggle("hidden", !hasDiagnosis || !isStudentWizard || studentWizardStep !== 2);
+    studentDiagnosisName.required = hasDiagnosis && isStudentWizard && studentWizardStep === 2;
+    studentDiagnosisDescription.required = hasDiagnosis && isStudentWizard && studentWizardStep === 2;
+
+    teacherDirectorInput.required = isTeacherWizard && teacherWizardStep === 2;
+    if (activeStep) {
+        activeStep.setAttribute("aria-current", "step");
+    }
+}
+
+function validateStep(container) {
+    const invalidInput = [...container.querySelectorAll("input, select, textarea")]
+        .find((input) => !input.disabled && input.getClientRects().length > 0 && !input.checkValidity());
+    if (!invalidInput) return true;
+    const label = invalidInput.closest(".form-group")?.querySelector("label")?.textContent.trim();
+    showToast(label ? `Revisa el campo: ${label}` : "Revisa los datos ingresados");
+    invalidInput.focus();
+    return false;
+}
+
+function goToStudentStep(step) {
+    studentWizardStep = Math.min(3, Math.max(1, step));
+    configureStudentWizard();
+    refreshIcons();
+}
+
+studentStepNext.addEventListener("click", () => {
+    const isTeacherWizard = normalizeRoleName(roleInput.value) === "docente";
+    const activeStep = isTeacherWizard
+        ? (teacherWizardStep === 1 ? userStepOne : teacherStepTwo)
+        : (studentWizardStep === 1 ? userStepOne : studentStepTwo);
+    if (!validateStep(activeStep)) return;
+
+    if (isTeacherWizard) {
+        teacherWizardStep = 2;
+    } else if (studentWizardStep === 2) {
+        studentGradeValue.value = `${studentGradeYear.value.trim()}-${studentGradeLetter.value.trim().toLocaleUpperCase("es")}`;
+        studentWizardStep = 3;
+    } else {
+        studentWizardStep += 1;
+    }
+
+    configureStudentWizard();
+    refreshIcons();
+});
+
+studentStepBack.addEventListener("click", () => {
+    if (normalizeRoleName(roleInput.value) === "docente") {
+        teacherWizardStep = 1;
+        configureStudentWizard();
+        refreshIcons();
+    } else {
+        goToStudentStep(studentWizardStep - 1);
+    }
+});
+studentHasDiagnosis.addEventListener("change", configureStudentWizard);
+
+
+
+function addTeacherGradeRow(grade = "") {
+    const row = document.createElement("div");
+    row.className = "teacher-grade-row";
+    row.innerHTML = `
+        <label>Año / grado
+            <input class="teacher-grade-year" type="number" min="0" max="99" step="1" placeholder="Ej. 10" aria-label="Año o número del grado que enseña">
+        </label>
+        <label>Letra
+            <input class="teacher-grade-letter" type="text" maxlength="1" pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]" placeholder="A" aria-label="Letra del grado que enseña">
+        </label>
+        <button class="remove-teacher-grade" type="button" aria-label="Quitar grado"><i data-lucide="x"></i></button>
+    `;
+
+    const parsedGrade = splitAssignedGrade(grade);
+    row.querySelector(".teacher-grade-year").value = parsedGrade.number;
+    row.querySelector(".teacher-grade-letter").value = parsedGrade.letter.slice(0, 1);
+    row.querySelector(".remove-teacher-grade").addEventListener("click", () => row.remove());
+    teacherGradesList.appendChild(row);
+    refreshIcons();
+}
+
+function setTeacherGradeRows(grades = []) {
+    teacherGradesList.replaceChildren();
+    (grades.length ? grades : [""]).forEach(addTeacherGradeRow);
+}
+
+function collectTeacherGrades() {
+    const grades = [];
+    const seenGrades = new Set();
+
+    for (const row of teacherGradesList.querySelectorAll(".teacher-grade-row")) {
+        const year = row.querySelector(".teacher-grade-year").value.trim();
+        const letter = row.querySelector(".teacher-grade-letter").value.trim().toLocaleUpperCase("es");
+        if (!year && !letter) continue;
+        if (!/^\d{1,2}$/.test(year) || !/^[A-ZÁÉÍÓÚÜÑ]$/.test(letter)) {
+            return { grades: [], error: "Completa el número y la letra de cada grado que enseña" };
+        }
+
+        const grade = `${year}-${letter}`;
+        if (seenGrades.has(grade)) {
+            return { grades: [], error: `El grado ${grade} está repetido` };
+        }
+        seenGrades.add(grade);
+        grades.push(grade);
+    }
+
+    if (!grades.length) {
+        return { grades, error: "Añade al menos un grado que enseñe el docente" };
+    }
+
+    return { grades, error: "" };
+}
+
+function validateTeacherStep() {
+    if (!validateStep(teacherStepTwo)) return false;
+    const result = collectTeacherGrades();
+    if (result.error) {
+        showToast(result.error);
+        teacherGradesList.querySelector("input")?.focus();
+        return false;
+    }
+    return true;
+}
 
 function updateDirectorField() {
+    const isTeacher = normalizeRoleName(roleInput.value) === "docente";
+    const isDirector = isTeacher && teacherDirectorInput.value === "1";
+    directorGradeFields.classList.toggle("hidden", !isDirector);
+    gradeNumberInput.required = isDirector;
+    gradeLetterInput.required = isDirector;
 
-    if (
-        !roleInput ||
-        !groupDirectorInput ||
-        !directorGroupField ||
-        !directorGroupInput
-    ) {
-        return;
+    if (!isDirector) {
+        gradeNumberInput.value = "";
+        gradeLetterInput.value = "";
     }
-
-    if (
-
-        roleInput.value ===
-        "Docente"
-
-        &&
-
-        groupDirectorInput.value ===
-        "Sí"
-
-    ) {
-
-        directorGroupField.classList.remove(
-            "hidden"
-        );
-
-
-        directorGroupInput.required =
-            true;
-
-    }
-
-    else {
-
-        directorGroupField.classList.add(
-            "hidden"
-        );
-
-
-        directorGroupInput.required =
-            false;
-
-
-        directorGroupInput.value =
-            "";
-
-    }
-
 }
+
+addTeacherGradeButton.addEventListener("click", () => addTeacherGradeRow());
+teacherDirectorInput.addEventListener("change", updateDirectorField);
 
 
 
@@ -1627,6 +1819,10 @@ photoInput.addEventListener(
 function openCreateModal() {
 
     userForm.reset();
+    studentWizardStep = 1;
+    teacherWizardStep = 1;
+    studentGradeValue.value = "";
+    setTeacherGradeRows();
 
 
     editingId.value =
@@ -1700,9 +1896,7 @@ function openCreateModal() {
         "show"
     );
 
-
     refreshIcons();
-
 }
 
 
@@ -1794,6 +1988,34 @@ function openEditModal(id) {
         user.status;
 
     committeeInput.value = user.committeeMember ? "1" : "0";
+    anoCursadoInput.value = user.anoCursado || "";
+    teacherDirectorInput.value = user.directorGrupo === "" || user.directorGrupo === null ? "" : String(user.directorGrupo);
+    const assignedGrade = splitAssignedGrade(user.gradoAsignado);
+    gradeNumberInput.value = assignedGrade.number;
+    gradeLetterInput.value = assignedGrade.letter;
+    setTeacherGradeRows(user.teachingGrades || []);
+
+    const studentGrade = splitStudentGrade(user.studentGrade);
+    studentGradeYear.value = studentGrade.number;
+    studentGradeLetter.value = studentGrade.letter;
+    studentGradeValue.value = user.studentGrade || "";
+    studentHasDiagnosis.value = user.hasDiagnosis ? "1" : "0";
+    studentDiagnosisName.value = user.diagnosisName || "";
+    studentDiagnosisDescription.value = user.diagnosisDescription || "";
+    guardianInputs.documentType.value = user.guardianDocumentType || "";
+    guardianInputs.document.value = user.guardianDocument || "";
+    const guardianName = splitPersonName(user.guardianName);
+    const guardianSurname = splitPersonName(user.guardianSurname);
+    guardianInputs.firstName.value = guardianName.first;
+    guardianInputs.secondName.value = guardianName.second;
+    guardianInputs.firstSurname.value = guardianSurname.first;
+    guardianInputs.secondSurname.value = guardianSurname.second;
+    guardianInputs.email.value = user.guardianEmail || "";
+    guardianInputs.phone.value = user.guardianPhone || "";
+    guardianInputs.relationship.value = user.guardianRelationship || "";
+    guardianInputs.occupation.value = user.guardianOccupation || "";
+    studentWizardStep = 1;
+    teacherWizardStep = 1;
 
 
     selectedPhoto =
@@ -1821,16 +2043,7 @@ function openEditModal(id) {
         user.role ===
         "Docente"
     ) {
-
-        groupDirectorInput.value =
-            user.groupDirector || "No";
-
-
         updateDirectorField();
-
-
-        directorGroupInput.value =
-            user.directorGroup || "";
 
     }
 
@@ -1902,6 +2115,31 @@ userForm.addEventListener(
 
 
         event.preventDefault();
+
+        if (!validateUniqueUserFields()) {
+            const invalidUniqueInput = documentInput.validity.customError ? documentInput : emailInput;
+            invalidUniqueInput.focus();
+            return;
+        }
+
+        if (normalizeRoleName(roleInput.value) === "estudiante") {
+            if (studentWizardStep !== 3 || !validateStep(studentStepThree)) {
+                return;
+            }
+        } else if (normalizeRoleName(roleInput.value) === "docente") {
+            if (teacherWizardStep !== 2 || !validateTeacherStep()) {
+                return;
+            }
+        } else {
+            const invalidInput = [...userForm.querySelectorAll("input, select, textarea")]
+                .find((input) => !input.disabled && input.getClientRects().length > 0 && !input.checkValidity());
+            if (invalidInput) {
+                const label = invalidInput.closest(".form-group")?.querySelector("label")?.textContent.trim();
+                showToast(label ? `Revisa el campo: ${label}` : "Revisa los datos ingresados");
+                invalidInput.focus();
+                return;
+            }
+        }
 
 
 
@@ -2064,80 +2302,38 @@ userForm.addEventListener(
 
             committeeMember:
 
-                committeeInput.value === "1"
+                committeeInput.value === "1",
+
+            anoCursado: anoCursadoInput.value,
+
+            directorGrupo: teacherDirectorInput.value,
+
+            gradoNumero: gradeNumberInput.value,
+
+            gradoLetra: gradeLetterInput.value.trim().toLocaleUpperCase("es")
 
         };
 
-
-
-        // DOCUMENTO REPETIDO
-
-        const duplicateDocument =
-
-            users.find(
-
-                user =>
-
-                    user.document ===
-                    data.document
-
-                    &&
-
-                    user.id !==
-                    id
-
-            );
-
-
-
-        if (duplicateDocument) {
-
-            showToast(
-                "Ya existe un usuario con ese documento"
-            );
-
-
-            return;
-
-        }
-
-
-
-        // CORREO REPETIDO
-
-        const duplicateEmail =
-
-            users.find(
-
-                user =>
-
-                    user.email
-                        .toLowerCase()
-
-                    ===
-
-                    data.email
-                        .toLowerCase()
-
-                    &&
-
-                    user.id !==
-                    id
-
-            );
-
-
-
-        if (duplicateEmail) {
-
-            showToast(
-                "Ya existe un usuario con ese correo"
-            );
-
-
-            return;
-
-        }
+        const studentPayload = {
+            studentGradeNumber: studentGradeYear.value.trim(),
+            studentGradeLetter: studentGradeLetter.value.trim().toLocaleUpperCase("es"),
+            hasDiagnosis: studentHasDiagnosis.value,
+            diagnosisName: studentDiagnosisName.value.trim(),
+            diagnosisDescription: studentDiagnosisDescription.value.trim(),
+            guardianDocumentType: guardianInputs.documentType.value,
+            guardianDocument: guardianInputs.document.value.trim(),
+            guardianFirstName: guardianInputs.firstName.value.trim(),
+            guardianSecondName: guardianInputs.secondName.value.trim(),
+            guardianFirstSurname: guardianInputs.firstSurname.value.trim(),
+            guardianSecondSurname: guardianInputs.secondSurname.value.trim(),
+            guardianEmail: guardianInputs.email.value.trim(),
+            guardianPhone: guardianInputs.phone.value.trim(),
+            guardianRelationship: guardianInputs.relationship.value.trim(),
+            guardianOccupation: guardianInputs.occupation.value.trim()
+        };
+        const teacherGrades = normalizeRoleName(roleInput.value) === "docente"
+            ? collectTeacherGrades().grades
+            : [];
 
 
 
@@ -2155,7 +2351,13 @@ userForm.addEventListener(
                 registrationDate: data.registrationDate,
                 role: data.role,
                 status: data.status,
-                committeeMember: data.committeeMember
+                committeeMember: data.committeeMember,
+                anoCursado: data.anoCursado,
+                directorGrupo: data.directorGrupo,
+                gradoNumero: data.gradoNumero,
+                gradoLetra: data.gradoLetra,
+                teachingGrades: JSON.stringify(teacherGrades),
+                ...studentPayload
             };
             const formData = new FormData();
             Object.entries(payload).forEach(([key, value]) => {
@@ -2166,7 +2368,7 @@ userForm.addEventListener(
             }
 
             try {
-                const response = await fetch(`http://localhost:3000/api/CrearUsuario/actualizar/${id}`, {
+                const response = await fetch(`http://localhost:3001/api/CrearUsuario/actualizar/${id}`, {
                     method: "PUT",
                     body: formData
                 });
@@ -2205,6 +2407,12 @@ userForm.addEventListener(
                 role: data.role,
                 status: data.status,
                 committeeMember: data.committeeMember,
+                anoCursado: data.anoCursado,
+                directorGrupo: data.directorGrupo,
+                gradoNumero: data.gradoNumero,
+                gradoLetra: data.gradoLetra,
+                teachingGrades: JSON.stringify(teacherGrades),
+                ...studentPayload
             };
 
             const formData = new FormData();
@@ -2219,7 +2427,7 @@ userForm.addEventListener(
             let createdUser = null;
 
             try {
-                const response = await fetch("http://localhost:3000/api/CrearUsuario/crear", {
+                const response = await fetch("http://localhost:3001/api/CrearUsuario/crear", {
                     method: "POST",
                     body: formData
                 });
@@ -2330,7 +2538,7 @@ confirmDelete.addEventListener(
         confirmDelete.disabled = true;
 
         try {
-            const response = await fetch(`http://localhost:3000/api/CrearUsuario/${idToDelete}`, {
+            const response = await fetch(`http://localhost:3001/api/CrearUsuario/${idToDelete}`, {
                 method: "DELETE"
             });
             const result = await response.json().catch(() => ({}));
@@ -2495,7 +2703,7 @@ deleteSelected.addEventListener(
 
 async function cargarUsuariosDesdeBD() {
     try {
-        const respuesta = await fetch('http://localhost:3000/api/CrearUsuario/listar');
+        const respuesta = await fetch('http://localhost:3001/api/CrearUsuario/listar');
 
         if (!respuesta.ok) {
             throw new Error('No se pudieron cargar los usuarios');
@@ -2521,13 +2729,31 @@ async function cargarUsuariosDesdeBD() {
             role: usuario.role || 'Sin rol',
             roleId: Number(usuario.roleId) || null,
             committeeMember: isCommitteeMember(usuario.committeeMember),
-            grade: usuario.grade || '',
+            grade: usuario.grade || usuario.studentGrade || '',
             groupDirector: usuario.groupDirector || '',
             directorGroup: usuario.directorGroup || '',
+            directorGrupo: usuario.directorGrupo === '' ? '' : Number(usuario.directorGrupo),
+            anoCursado: usuario.anoCursado || '',
+            gradoAsignado: usuario.gradoAsignado || '',
+            teachingGrades: Array.isArray(usuario.teachingGrades) ? usuario.teachingGrades : [],
+            studentGrade: usuario.studentGrade || usuario.grade || '',
+            hasDiagnosis: Boolean(usuario.hasDiagnosis),
+            diagnosisName: usuario.diagnosisName || '',
+            diagnosisDescription: usuario.diagnosisDescription || '',
+            guardianDocument: usuario.guardianDocument || '',
+            guardianDocumentType: usuario.guardianDocumentType || '',
+            guardianName: usuario.guardianName || '',
+            guardianSurname: usuario.guardianSurname || '',
+            guardianEmail: usuario.guardianEmail || '',
+            guardianPhone: usuario.guardianPhone || '',
+            guardianRelationship: usuario.guardianRelationship || '',
+            guardianOccupation: usuario.guardianOccupation || '',
             status: usuario.status || 'Activo',
             registrationDate: usuario.registrationDate || '',
             birthDate: usuario.birthDate || ''
         }));
+
+        validateUniqueUserFields();
 
         selectedUserId = users.some((user) => user.id === previousSelectedUserId)
             ? previousSelectedUserId
@@ -2554,7 +2780,7 @@ async function cargarUsuariosDesdeBD() {
 
 async function cargarRolesDesdeBD() {
     try {
-        const respuesta = await fetch('http://localhost:3000/api/CrearUsuario/roles');
+        const respuesta = await fetch('http://localhost:3001/api/CrearUsuario/roles');
 
         if (!respuesta.ok) {
             throw new Error('No se pudieron cargar los roles');

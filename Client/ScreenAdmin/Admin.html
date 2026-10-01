@@ -60,15 +60,9 @@
         id="sidebar"
     >
 
-        <div class="brand">
-
-            <img
-                src="/Sentir/Shared/AdminResources/logo-nombrelado.png"
-                alt="Logo Sentir"
-                class="official-logo"
-            >
-
-        </div>
+        <a class="brand" href="/Client/ScreenAdmin/Admin.html" aria-label="Sentir, ir al inicio">
+            <img src="/Client/img/logo-sentir.png" alt="Logo Sentir" class="official-logo">
+        </a>
 
 
         <nav class="nav-menu">
@@ -98,6 +92,11 @@
 
                 <span>Usuarios</span>
 
+            </a>
+
+            <a class="nav-item nav-logout" href="../index.html">
+                <i data-lucide="log-out"></i>
+                <span>Cerrar sesión</span>
             </a>
 
         </nav>
@@ -265,7 +264,7 @@
 
 
                 <img
-                    src="/Sentir/Shared/AdminResources/PersonajesAdmin.png"
+                    src="/Client/img/PersonajesAdmin.png"
                     alt="Comunidad Sentir"
                     class="hero-characters"
                 >
@@ -684,14 +683,15 @@
 
 
                         <div>
-                            <span><a href="/Sentir/Client/ScreenAdmin/Export/Export.html" class="sin-subrayado">
+                            <span><a href="/Client/ScreenAdmin/Export/Export.html" class="sin-subrayado">
                                     Exportar usuarios
-                                </strong>
+                                </a>
 
                                 <span>
                                     Descarga la información de los usuarios.
                                 </span>
-                            </span></a>
+                            </span>
+                        </a>
                         </div>
 
 
@@ -702,71 +702,6 @@
 
                     </button>
 
-
-                    <button
-                        class="quick-action blue-action"
-                        id="quickDuplicates"
-                        type="button"
-                    >
-
-                        <div class="quick-icon">
-
-                            <svg
-                                viewBox="0 0 24 24"
-                                fill="none"
-                            >
-
-                                <rect
-                                    x="4"
-                                    y="4"
-                                    width="10"
-                                    height="10"
-                                    rx="2"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                />
-
-                                <rect
-                                    x="10"
-                                    y="10"
-                                    width="10"
-                                    height="10"
-                                    rx="2"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                />
-
-                                <path
-                                    d="M17 17L21 21"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                />
-
-                            </svg>
-
-                        </div>
-
-
-                        <div>
-                            <span><a href="/Sentir/Client/ScreenAdmin/Duplicates/Duplicates.html" class="sin-subrayado">
-                                <strong>
-                                    Buscar duplicados
-                                </strong>
-
-                                <span>
-                                    Detecta documentos o correos repetidos.
-                                </span>
-                            </span></a>
-                        </div>
-
-
-                        <i
-                            class="quick-arrow"
-                            data-lucide="arrow-right"
-                        ></i>
-
-                    </button>
 
                 </div>
 

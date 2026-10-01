@@ -32,10 +32,6 @@ const quickExport =
     byId("quickExport");
 
 
-const quickDuplicates =
-    byId("quickDuplicates");
-
-
 const globalSearch =
     byId("globalSearch");
 
@@ -194,17 +190,6 @@ quickExport.addEventListener(
 
         window.location.href =
             "Export/Export.html";
-
-    }
-);
-
-
-quickDuplicates.addEventListener(
-    "click",
-    () => {
-
-        window.location.href =
-            "Duplicates/Duplicates.html";
 
     }
 );
@@ -645,7 +630,7 @@ async function init() {
     renderActivity();
 
     try {
-        const response = await fetch('http://localhost:3000/api/CrearUsuario/listar');
+        const response = await fetch('http://localhost:3001/api/CrearUsuario/listar');
         if (!response.ok) {
             throw new Error('No se pudieron cargar las estadísticas de usuarios');
         }

@@ -887,7 +887,7 @@ function initSearch() {
             title: "Diario emocional",
             description: "Registra cómo te sientes.",
             icon: "fa-book-open",
-            href: "/Sentir/Client/ScreenStudents/EmotionalDiary/EmotionalDiary.html",
+            href: "/Client/ScreenStudents/EmotionalDiary/EmotionalDiary.html",
             terms: [
                 "diario",
                 "emocion",
@@ -900,7 +900,7 @@ function initSearch() {
             title: "Seguimiento",
             description: "Consulta tu evolución emocional.",
             icon: "fa-chart-line",
-            href: "/Sentir/Client/ScreenStudents/Follow-up/Follow-up.html",
+            href: "/Client/ScreenStudents/EmotionalDiary/FollowUp/FollowUp.html",
             terms: [
                 "seguimiento",
                 "grafica",
@@ -913,7 +913,7 @@ function initSearch() {
             title: "Insignias",
             description: "Mira los logros que has conseguido.",
             icon: "fa-star",
-            href: "/Sentir/Client/ScreenStudents/Badges/Badges.html",
+            href: "/Client/ScreenStudents/EmotionalDiary/Badges/Badges.html",
             terms: [
                 "insignia",
                 "insignias",
@@ -926,7 +926,7 @@ function initSearch() {
             title: "Recursos de relajación",
             description: "Respira y encuentra un momento de calma.",
             icon: "fa-leaf",
-            href: "/Sentir/Client/ScreenStudents/Relaxation/Relaxation.html",
+            href: "/Client/ScreenStudents/Resources/Resources.html",
             terms: [
                 "relajacion",
                 "respiracion",
@@ -939,7 +939,7 @@ function initSearch() {
             title: "Pedir ayuda",
             description: "Accede a tu espacio de apoyo.",
             icon: "fa-life-ring",
-            href: "/Sentir/Client/ScreenStudents/AskForHelp/AskForHelp.html",
+            href: "/Client/Auth/StudentScreen/Apartados/Ayuda.html",
             terms: [
                 "ayuda",
                 "apoyo",

@@ -332,7 +332,7 @@ byId("inicioNav")
         () => {
 
             window.location.href =
-                "Admin.html";
+                "/Client/ScreenAdmin/Admin.html";
 
         }
     );
@@ -356,7 +356,7 @@ byId("backButton")
         () => {
 
             window.location.href =
-                "Admin.html";
+                "/Client/ScreenAdmin/Admin.html";
 
         }
     );

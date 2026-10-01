@@ -1863,3 +1863,14 @@ button{border:none;background:none;}
 }
 
 
+
+
+/* En computador la barra superior queda vacía (sin buscador, campana ni perfil);
+   solo se muestra en celular/tablet para el botón de menú y el logo */
+@media (min-width: 921px) {
+
+    .topbar {
+        display: none;
+    }
+
+}

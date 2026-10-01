@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     initEmotions();
 
-    initHelpModal();
 
     initAppointmentModal();
 
@@ -719,123 +718,6 @@ function initEmotions() {
     }
 
 }
-
-/* =========================================================
-   PEDIR AYUDA
-========================================================= */
-
-function initHelpModal() {
-
-    const modal =
-        document.getElementById(
-            "alertModal"
-        );
-
-
-    const heroButton =
-        document.getElementById(
-            "heroHelpButton"
-        );
-
-
-    const cardButton =
-        document.getElementById(
-            "toolHelpButton"
-        );
-
-
-    const close =
-        document.getElementById(
-            "closeAlert"
-        );
-
-
-    const cancel =
-        document.getElementById(
-            "cancelAlert"
-        );
-
-
-    if (!modal) {
-
-        return;
-
-    }
-
-
-    if (heroButton) {
-
-        heroButton.addEventListener(
-            "click",
-            function () {
-
-                openModal(modal);
-
-            }
-        );
-
-    }
-
-
-    if (cardButton) {
-
-        cardButton.addEventListener(
-            "click",
-            function () {
-
-                openModal(modal);
-
-            }
-        );
-
-    }
-
-
-    if (close) {
-
-        close.addEventListener(
-            "click",
-            function () {
-
-                closeModal(modal);
-
-            }
-        );
-
-    }
-
-
-    if (cancel) {
-
-        cancel.addEventListener(
-            "click",
-            function () {
-
-                closeModal(modal);
-
-            }
-        );
-
-    }
-
-
-    modal.addEventListener(
-        "click",
-        function (event) {
-
-            if (
-                event.target === modal
-            ) {
-
-                closeModal(modal);
-
-            }
-
-        }
-    );
-
-}
-
 
 /* =========================================================
    AGENDAR CITA

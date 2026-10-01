@@ -190,6 +190,11 @@ document.addEventListener(
 
         function loadStudentProfile() {
 
+            // El perfil del encabezado se quitó de esta página
+            if (!studentName || !profileInitial || !headerProfileImage) {
+                return;
+            }
+
 
             const savedName =
                 localStorage.getItem(
@@ -277,19 +282,19 @@ document.addEventListener(
            PERFIL DROPDOWN
         ====================================================== */
 
-        studentProfile.addEventListener(
+        studentProfile?.addEventListener(
             "click",
             (event) => {
 
                 event.stopPropagation();
 
 
-                profileDropdown.classList.toggle(
+                profileDropdown?.classList.toggle(
                     "show"
                 );
 
 
-                notificationToast.classList.remove(
+                notificationToast?.classList.remove(
                     "show"
                 );
 
@@ -297,7 +302,7 @@ document.addEventListener(
         );
 
 
-        profileDropdown.addEventListener(
+        profileDropdown?.addEventListener(
             "click",
             (event) => {
 
@@ -311,7 +316,7 @@ document.addEventListener(
             "click",
             () => {
 
-                profileDropdown.classList.remove(
+                profileDropdown?.classList.remove(
                     "show"
                 );
 
@@ -326,14 +331,14 @@ document.addEventListener(
         let notificationTimer;
 
 
-        notificationButton.addEventListener(
+        notificationButton?.addEventListener(
             "click",
             (event) => {
 
                 event.stopPropagation();
 
 
-                profileDropdown.classList.remove(
+                profileDropdown?.classList.remove(
                     "show"
                 );
 
@@ -343,7 +348,7 @@ document.addEventListener(
                 );
 
 
-                notificationToast.classList.add(
+                notificationToast?.classList.add(
                     "show"
                 );
 
@@ -352,7 +357,7 @@ document.addEventListener(
                     setTimeout(
                         () => {
 
-                            notificationToast.classList.remove(
+                            notificationToast?.classList.remove(
                                 "show"
                             );
 
@@ -413,7 +418,7 @@ document.addEventListener(
            BUSCADOR
         ====================================================== */
 
-        badgeSearch.addEventListener(
+        badgeSearch?.addEventListener(
             "input",
             filterBadges
         );
@@ -424,8 +429,7 @@ document.addEventListener(
 
             const searchValue =
 
-                badgeSearch
-                    .value
+                (badgeSearch ? badgeSearch.value : "")
                     .trim()
                     .toLowerCase();
 
@@ -694,7 +698,7 @@ document.addEventListener(
 
                     hideBadgeModal();
 
-                    profileDropdown.classList.remove(
+                    profileDropdown?.classList.remove(
                         "show"
                     );
 
@@ -795,7 +799,7 @@ document.addEventListener(
            CERRAR SESIÓN
         ====================================================== */
 
-        logoutButton.addEventListener(
+        logoutButton?.addEventListener(
             "click",
             () => {
 

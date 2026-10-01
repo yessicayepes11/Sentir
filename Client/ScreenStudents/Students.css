@@ -504,6 +504,19 @@ img {
 }
 
 
+/* En computador la barra queda vacía (sin buscador, alertas ni perfil);
+   solo se muestra en celular/tablet para el botón de menú y el logo */
+@media (min-width: 901px) {
+
+    .topbar {
+
+        display: none;
+
+    }
+
+}
+
+
 .header-left {
 
     min-width: 0;

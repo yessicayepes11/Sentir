@@ -3,6 +3,8 @@ import cors from 'cors';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import CrearUsuarioRouter from '../routes/Secretaria/CrearUsuario/CrearUsuario.js';
+import InicioSesionRouter from '../routes/InicioSesion/InicioSesion.js';
+import AyudaRouter from '../routes/Ayuda/Ayuda.js';
 
 const uploadsDir = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../uploads');
 
@@ -24,6 +26,8 @@ class Server {
 
     routes() {
         this.app.use('/api/CrearUsuario', CrearUsuarioRouter);
+        this.app.use('/api/InicioSesion', InicioSesionRouter);
+        this.app.use('/api/Ayuda', AyudaRouter);
     }
 
     start() {

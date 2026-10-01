@@ -2,6 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <!-- Solo se entra después de ingresar con identificación y clave -->
+    <script src="/Client/ScreenStudents/EmotionalDiary/sessionGuard.js"></script>
 
     <meta
         name="viewport"
@@ -76,12 +78,12 @@
             ============================================== -->
 
             <a
-                href="Student.html"
+                href="/Client/ScreenStudents/Students.html"
                 class="logo-container"
             >
 
                 <img
-                    src="/Sentir/Shared/StudentResources/Logo-nombrelado.png"
+                    src="/Shared/StudentResources/Logo-nombrelado.png"
                     alt="Logo SENTIR"
                     class="logo-img"
                     id="logoSentir"
@@ -120,7 +122,7 @@
             <nav class="sidebar-menu">
 
                 <a
-                    href="/Sentir/Client/ScreenStudents/Students.html"
+                    href="/Client/ScreenStudents/Students.html"
                     class="sin-subrayado menu-item"
                 >
                     <i class="fa-solid fa-house"></i>
@@ -129,7 +131,7 @@
 
 
                 <a
-                    href="Resources.html"
+                    href="/Client/ScreenStudents/Resources/Resources.html"
                     class="menu-item"
                 >
                     <i class="fa-solid fa-leaf"></i>
@@ -138,15 +140,15 @@
 
 
                 <a
-                    href="/Sentir/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.html"
+                    href="/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.html"
                     class="sin-subrayado menu-item"
                 >
-                    <i class="fa-solid fa-book"></i>
-                    <span>Diario emocional</span>
+                    <i class="fa-solid fa-user-lock"></i>
+                    <span>Mi espacio personal</span>
                 </a>
 
                 <a
-                    href="Help.html"
+                    href="/Client/Auth/StudentScreen/Apartados/Ayuda.html"
                     class="menu-item"
                 >
                     <i class="fa-solid fa-life-ring"></i>
@@ -188,18 +190,6 @@
             </div>
 
 
-            <button
-                class="logout-button"
-                id="logoutButton"
-            >
-
-                <i class="fa-solid fa-right-from-bracket"></i>
-
-                <span>
-                    Cerrar sesión
-                </span>
-
-            </button>
 
         </div>
 
@@ -238,12 +228,12 @@
             <!-- LOGO MÓVIL -->
 
             <a
-                href="Student.html"
+                href="/Client/ScreenStudents/Students.html"
                 class="mobile-logo"
             >
 
                 <img
-                    src="/Sentir/Shared/StudentResources/Logo-nombrelado.png"
+                    src="/Shared/StudentResources/Logo-nombrelado.png"
                     alt="SENTIR"
                     id="mobileLogoImage"
                 >
@@ -260,85 +250,11 @@
 
 
 
-            <!-- BUSCADOR -->
-
-            <div class="search-box">
-
-                <i class="fa-solid fa-magnifying-glass"></i>
-
-                <input
-                    type="text"
-                    id="resourceSearch"
-                    placeholder="Buscar recursos, ejercicios, temas..."
-                >
-
-            </div>
 
 
 
-            <!-- ACCIONES DERECHA -->
-
-            <div class="topbar-actions">
 
 
-                <!-- NOTIFICACIONES -->
-
-                <button
-                    class="notification-button"
-                    id="notificationButton"
-                    aria-label="Notificaciones"
-                >
-
-                    <i class="fa-regular fa-bell"></i>
-
-                    <span class="notification-dot"></span>
-
-                </button>
-
-
-
-                <!-- PERFIL -->
-
-                <div
-                    class="student-profile"
-                    id="studentProfile"
-                >
-
-                    <div class="profile-avatar">
-
-                        <img
-                            id="headerProfileImage"
-                            src=""
-                            alt="Foto del estudiante"
-                        >
-
-                        <span id="profileInitial">
-                            A
-                        </span>
-
-                    </div>
-
-
-                    <div class="student-data">
-
-                        <strong id="studentName">
-                            Ana
-                        </strong>
-
-                        <span>
-                            Estudiante
-                        </span>
-
-                    </div>
-
-
-                    <i
-                        class="fa-solid fa-chevron-down profile-chevron"
-                    ></i>
-
-                </div>
-
-            </div>
 
         </header>
 
@@ -375,7 +291,7 @@
 
 
                     <a
-                        href="/Sentir/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.html"
+                        href="/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.html"
                         class="hero-btn primary"
                     >
 
@@ -394,7 +310,7 @@
 
 
                     <a
-                        href="/Sentir/Client/ScreenStudents/EmotionalDiary/Badges/Badges.html"
+                        href="/Client/ScreenStudents/EmotionalDiary/Badges/Badges.html"
                         class="hero-btn secondary"
                     >
 
@@ -443,7 +359,7 @@
 
 
                 <img
-                    src="/Sentir/Shared/StudentResources/CaFollowup.png"
+                    src="/Shared/StudentResources/CaFollowup.png"
                     alt="Estudiante abrazando un corazón"
                     class="girl-image"
                     id="followUpGirl"
@@ -926,7 +842,7 @@
 
 
                     <a
-                        href="Badges.html"
+                        href="/Client/ScreenStudents/EmotionalDiary/Badges/Badges.html"
                         class="small-link"
                     >
 
@@ -1034,7 +950,7 @@
 
 
                 <a
-                    href="EmotionalDiary.html"
+                    href="/Client/ScreenStudents/EmotionalDiary/EmotionalDiary.html"
                     class="reflection-button"
                 >
 
@@ -1108,29 +1024,6 @@
      DROPDOWN PERFIL
 ========================================================= -->
 
-<div
-    class="profile-dropdown"
-    id="profileDropdown"
->
-
-    <a href="StudentProfile.html">
-
-        <i class="fa-regular fa-user"></i>
-
-        Mi perfil
-
-    </a>
-
-
-    <a href="#">
-
-        <i class="fa-solid fa-gear"></i>
-
-        Configuración
-
-    </a>
-
-</div>
 
 
 

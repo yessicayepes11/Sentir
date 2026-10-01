@@ -41,7 +41,7 @@ body{
 
     overflow-x:hidden;
 
-    background-image:url("/Sentir/Shared/ForgetResources/Fondo.png");
+    background-image:url("/Shared/ForgetResources/Fondo.png");
 
     background-size:cover;
 
@@ -243,7 +243,7 @@ body{
 
     body{
 
-        background-image:url("/Sentir/Shared/ForgetResources/FondoTablet.png");
+        background-image:url("/Shared/ForgetResources/FondoTablet.png");
 
     }
 
@@ -289,7 +289,7 @@ body{
 
     body{
 
-        background-image:url("/Sentir/Shared/ForgetResources/Fondocel.png");
+        background-image:url("/Shared/ForgetResources/Fondocel.png");
 
     }
 

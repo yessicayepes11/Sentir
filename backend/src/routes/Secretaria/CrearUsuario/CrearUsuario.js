@@ -1,7 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import multer from 'multer';
+import nodemailer from 'nodemailer';
 import { Router } from 'express';
 import { connection } from '../../../config/mysql/dbmysql.js';
 
@@ -940,6 +942,153 @@ router.post('/crear', upload.single('foto'), async (req, res) => {
             message: 'No se pudo crear el usuario',
             error: error.message
         });
+    }
+});
+
+// ---------------- Recuperación de contraseña por PIN al correo ----------------
+
+const PIN_TTL_MS = 10 * 60 * 1000;   // el PIN vence a los 10 minutos
+const PIN_MAX_ATTEMPTS = 5;          // intentos permitidos antes de invalidar el PIN
+
+// correo -> { pin, expiresAt, attempts, resetToken, resetExpiresAt }
+const passwordResets = new Map();
+
+// La contraseña de aplicación de Google se copia con espacios ("abcd efgh ijkl mnop"); se quitan aquí
+const smtpUser = String(process.env.SMTP_USER || '').trim();
+const smtpPass = String(process.env.SMTP_PASS || '').replace(/\s+/g, '');
+
+const mailTransporter = nodemailer.createTransport({
+    service: String(process.env.SMTP_SERVICE || 'gmail').trim(),
+    auth: {
+        user: smtpUser,
+        pass: smtpPass
+    }
+});
+
+function normalizeEmail(email) {
+    return String(email || '').trim().toLowerCase();
+}
+
+router.post('/recuperar/enviar-pin', async (req, res) => {
+    try {
+        const correo = normalizeEmail(req.body.correo);
+
+        if (!correo) {
+            return res.status(400).json({ message: 'Ingresa tu correo electrónico' });
+        }
+
+        const [rows] = await connection.promise().query(
+            'SELECT id_usuario, nombre FROM usuario WHERE LOWER(TRIM(correo)) = ? LIMIT 1',
+            [correo]
+        );
+
+        if (!rows.length) {
+            return res.status(404).json({ message: 'No existe un usuario registrado con ese correo' });
+        }
+
+        if (!smtpUser || !smtpPass) {
+            console.error('Faltan SMTP_USER / SMTP_PASS en el archivo .env');
+            return res.status(500).json({ message: 'El servidor de correo no está configurado' });
+        }
+
+        const pin = String(crypto.randomInt(0, 1000000)).padStart(6, '0');
+
+        await mailTransporter.sendMail({
+            from: `"Sentir" <${smtpUser}>`,
+            to: correo,
+            subject: 'Sentir - Código para recuperar tu contraseña',
+            text: `Hola ${rows[0].nombre}, tu código de verificación es: ${pin}. Vence en 10 minutos.`,
+            html: `
+                <div style="font-family:Arial,sans-serif;max-width:420px;margin:auto;text-align:center">
+                    <h2 style="color:#4E2FC7">Sentir</h2>
+                    <p>Hola <b>${rows[0].nombre}</b>, usa este código para recuperar tu contraseña:</p>
+                    <p style="font-size:32px;letter-spacing:8px;font-weight:bold;color:#4E2FC7">${pin}</p>
+                    <p style="color:#666;font-size:13px">El código vence en 10 minutos. Si no solicitaste este cambio, ignora este correo.</p>
+                </div>`
+        });
+
+        passwordResets.set(correo, {
+            pin,
+            expiresAt: Date.now() + PIN_TTL_MS,
+            attempts: 0,
+            resetToken: null,
+            resetExpiresAt: 0
+        });
+
+        return res.json({ message: 'Te enviamos un código de 6 dígitos a tu correo' });
+    } catch (error) {
+        console.error('Error al enviar PIN de recuperación:', error.message);
+        return res.status(500).json({ message: 'No se pudo enviar el código al correo' });
+    }
+});
+
+router.post('/recuperar/verificar-pin', (req, res) => {
+    const correo = normalizeEmail(req.body.correo);
+    const pin = String(req.body.pin || '').trim();
+    const reset = passwordResets.get(correo);
+
+    if (!/^\d{6}$/.test(pin)) {
+        return res.status(400).json({ message: 'El código debe tener 6 números' });
+    }
+
+    if (!reset || Date.now() > reset.expiresAt) {
+        passwordResets.delete(correo);
+        return res.status(400).json({ message: 'El código venció o no fue solicitado. Pide uno nuevo.' });
+    }
+
+    if (reset.pin !== pin) {
+        reset.attempts += 1;
+        if (reset.attempts >= PIN_MAX_ATTEMPTS) {
+            passwordResets.delete(correo);
+            return res.status(400).json({ message: 'Demasiados intentos. Solicita un código nuevo.' });
+        }
+        return res.status(400).json({
+            message: `Código incorrecto. Te quedan ${PIN_MAX_ATTEMPTS - reset.attempts} intentos.`
+        });
+    }
+
+    reset.resetToken = crypto.randomUUID();
+    reset.resetExpiresAt = Date.now() + PIN_TTL_MS;
+
+    return res.json({ message: 'Código verificado', resetToken: reset.resetToken });
+});
+
+router.post('/recuperar/cambiar-contrasena', async (req, res) => {
+    try {
+        const correo = normalizeEmail(req.body.correo);
+        const resetToken = String(req.body.resetToken || '');
+        const nuevaContrasena = String(req.body.nuevaContrasena || '');
+        const confirmarContrasena = String(req.body.confirmarContrasena || '');
+        const reset = passwordResets.get(correo);
+
+        if (!reset || !reset.resetToken || reset.resetToken !== resetToken || Date.now() > reset.resetExpiresAt) {
+            return res.status(401).json({ message: 'La verificación venció. Solicita un código nuevo.' });
+        }
+
+        if (nuevaContrasena !== confirmarContrasena) {
+            return res.status(400).json({ message: 'Las contraseñas no coinciden' });
+        }
+
+        if (!passwordRegex.test(nuevaContrasena)) {
+            return res.status(400).json({
+                message: 'La contraseña debe tener 8+ caracteres, mayúsculas, minúsculas, números y un símbolo.'
+            });
+        }
+
+        const [result] = await connection.promise().query(
+            'UPDATE usuario SET contrasena = ? WHERE LOWER(TRIM(correo)) = ?',
+            [nuevaContrasena, correo]
+        );
+
+        if (!result.affectedRows) {
+            return res.status(404).json({ message: 'No se encontró el usuario' });
+        }
+
+        passwordResets.delete(correo);
+        return res.json({ message: 'Contraseña actualizada correctamente' });
+    } catch (error) {
+        console.error('Error al cambiar contraseña:', error.message);
+        return res.status(500).json({ message: 'No se pudo cambiar la contraseña' });
     }
 });
 

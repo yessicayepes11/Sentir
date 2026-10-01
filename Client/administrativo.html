@@ -31,15 +31,15 @@
 
             <div class="selector-container admin-selector-stack">
                 <div class="select-wrapper admin-select-wrapper">
-                    <select class="btn btn-login btn-select admin-select" aria-label="Selecciona tu rol">
+                    <select class="btn btn-login btn-select admin-select" id="rolSelect" aria-label="Selecciona tu rol">
                         <option value="" selected disabled>Selecciona tu rol</option>
-                        <option value="secretaria">Secretaria</option>
-                        <option value="rectora">Rectora</option>
-                        <option value="coordinadora-academica">Coordinadora académica</option>
-                        <option value="coordinadora-convivencia">Coordinadora convivencia</option>
-                        <option value="docente">Docente</option>
-                        <option value="psicologa">Psicóloga</option>
-                        <option value="entorno-protector">Entorno protector</option>
+                        <option value="1">Secretaria</option>
+                        <option value="2">Rectora</option>
+                        <option value="3">Coordinadora académica</option>
+                        <option value="4">Coordinadora convivencia</option>
+                        <option value="5">Docente</option>
+                        <option value="6">Psicóloga</option>
+                        <option value="7">Entorno protector</option>
                     </select>
                 </div>
 
@@ -60,24 +60,326 @@
         <button class="modal-close" id="closeLoginModal" aria-label="Cerrar">×</button>
         <h3 id="loginModalTitle">Iniciar sesión</h3>
 
-        <div class="modal-form">
+        <!-- Paso 0: inicio de sesión -->
+        <div class="modal-form" id="stepLogin">
             <label>
-                Número de identificación
-                <input type="text" placeholder="Ingrese su número de identificación">
+                Correo
+                <input type="email" id="loginCorreo" placeholder="Ingrese su correo" autocomplete="username">
             </label>
 
             <label>
                 Contraseña
-                <input type="password" placeholder="Ingrese su contraseña">
+                <input type="password" id="loginContrasena" placeholder="Ingrese su contraseña" autocomplete="current-password">
             </label>
 
-            <button class="btn btn-login modal-submit" id="loginSubmitBtn">
+            <p id="loginSuccess" class="text-success small mb-0" role="status"></p>
+            <p id="loginError" class="text-danger small mb-0" role="alert"></p>
+
+            <!-- id distinto a "loginSubmitBtn" para que script.js no le asigne su redirección fija -->
+            <button class="btn btn-login modal-submit" id="adminLoginSubmitBtn">
                 Entrar
             </button>
+
+            <a href="#" id="forgotPasswordLink" class="small text-center d-block" style="color:#4E2FC7;">
+                ¿Olvidaste tu contraseña?
+            </a>
+        </div>
+
+        <!-- Paso 1: pedir el correo para enviar el PIN -->
+        <div class="modal-form" id="stepEmail" hidden>
+            <p class="small mb-0">Ingresa tu correo registrado y te enviaremos un código de 6 números.</p>
+            <label>
+                Correo
+                <input type="email" id="resetCorreo" placeholder="Ingrese su correo">
+            </label>
+
+            <p id="resetEmailError" class="text-danger small mb-0" role="alert"></p>
+
+            <button class="btn btn-login modal-submit" id="sendPinBtn">Enviar código</button>
+            <a href="#" class="small text-center d-block back-to-login" style="color:#4E2FC7;">Volver a iniciar sesión</a>
+        </div>
+
+        <!-- Paso 2: ingresar el PIN recibido -->
+        <div class="modal-form" id="stepPin" hidden>
+            <p class="small mb-0" id="pinInfo"></p>
+            <label>
+                Código de verificación
+                <input type="text" id="resetPin" inputmode="numeric" maxlength="6" placeholder="000000" autocomplete="one-time-code">
+            </label>
+
+            <p id="resetPinError" class="text-danger small mb-0" role="alert"></p>
+
+            <button class="btn btn-login modal-submit" id="verifyPinBtn">Verificar código</button>
+            <a href="#" id="resendPinLink" class="small text-center d-block" style="color:#4E2FC7;">Reenviar código</a>
+            <a href="#" class="small text-center d-block back-to-login" style="color:#4E2FC7;">Volver a iniciar sesión</a>
+        </div>
+
+        <!-- Paso 3: nueva contraseña -->
+        <div class="modal-form" id="stepNewPassword" hidden>
+            <label>
+                Nueva contraseña
+                <input type="password" id="newPassword" placeholder="Ingrese la nueva contraseña" autocomplete="new-password">
+            </label>
+
+            <label>
+                Confirmar nueva contraseña
+                <input type="password" id="confirmPassword" placeholder="Confirme la nueva contraseña" autocomplete="new-password">
+            </label>
+
+            <p class="small text-muted mb-0">Mínimo 8 caracteres, con mayúscula, minúscula, número y símbolo.</p>
+            <p id="newPasswordError" class="text-danger small mb-0" role="alert"></p>
+
+            <button class="btn btn-login modal-submit" id="changePasswordBtn">Cambiar contraseña</button>
         </div>
     </div>
 </div>
 
 <script src="script.js"></script>
+<script>
+    const API_LOGIN = 'http://localhost:3000/api/InicioSesion/login';
+
+    const rolSelect = document.getElementById('rolSelect');
+    const correoInput = document.getElementById('loginCorreo');
+    const contrasenaInput = document.getElementById('loginContrasena');
+    const loginError = document.getElementById('loginError');
+    const adminLoginSubmitBtn = document.getElementById('adminLoginSubmitBtn');
+
+    async function iniciarSesion() {
+        loginError.textContent = '';
+        loginSuccess.textContent = '';
+
+        const rol = rolSelect.value;
+        const correo = correoInput.value.trim();
+        const contrasena = contrasenaInput.value;
+
+        if (!rol) {
+            loginError.textContent = 'Selecciona tu rol antes de iniciar sesión.';
+            return;
+        }
+
+        if (!correo || !contrasena) {
+            loginError.textContent = 'Ingresa tu correo y contraseña.';
+            return;
+        }
+
+        adminLoginSubmitBtn.disabled = true;
+
+        try {
+            const response = await fetch(API_LOGIN, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ rol, correo, contrasena })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                loginError.textContent = data.message || 'No se pudo iniciar sesión.';
+                return;
+            }
+
+            sessionStorage.setItem('usuarioSentir', JSON.stringify(data.usuario));
+            window.location.href = data.redirect;
+        } catch (error) {
+            loginError.textContent = 'No se pudo conectar con el servidor.';
+        } finally {
+            adminLoginSubmitBtn.disabled = false;
+        }
+    }
+
+    adminLoginSubmitBtn.addEventListener('click', iniciarSesion);
+    contrasenaInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') iniciarSesion();
+    });
+
+    // ---------------- Recuperación de contraseña ----------------
+    const API_RECUPERAR = 'http://localhost:3000/api/CrearUsuario/recuperar';
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z\d\s]).{8,}$/;
+
+    const modalTitle = document.getElementById('loginModalTitle');
+    const loginSuccess = document.getElementById('loginSuccess');
+    const resetCorreoInput = document.getElementById('resetCorreo');
+    const resetPinInput = document.getElementById('resetPin');
+    const newPasswordInput = document.getElementById('newPassword');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const sendPinBtn = document.getElementById('sendPinBtn');
+    const verifyPinBtn = document.getElementById('verifyPinBtn');
+    const changePasswordBtn = document.getElementById('changePasswordBtn');
+
+    const steps = {
+        stepLogin: 'Iniciar sesión',
+        stepEmail: 'Recuperar contraseña',
+        stepPin: 'Verificar código',
+        stepNewPassword: 'Nueva contraseña'
+    };
+
+    const resetState = { correo: '', resetToken: '' };
+
+    function showStep(stepId) {
+        Object.keys(steps).forEach((id) => {
+            document.getElementById(id).hidden = id !== stepId;
+        });
+        modalTitle.textContent = steps[stepId];
+        document.querySelectorAll('#loginModal [role="alert"]').forEach((el) => { el.textContent = ''; });
+    }
+
+    async function postJson(url, body) {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+        const data = await response.json().catch(() => ({}));
+        return { ok: response.ok, data };
+    }
+
+    async function enviarPin(errorEl, button) {
+        errorEl.textContent = '';
+        button.disabled = true;
+        try {
+            const { ok, data } = await postJson(`${API_RECUPERAR}/enviar-pin`, { correo: resetState.correo });
+            if (!ok) {
+                errorEl.textContent = data.message || 'No se pudo enviar el código.';
+                return false;
+            }
+            return true;
+        } catch (error) {
+            errorEl.textContent = 'No se pudo conectar con el servidor.';
+            return false;
+        } finally {
+            button.disabled = false;
+        }
+    }
+
+    // Siempre que se abra el modal, empieza en el inicio de sesión
+    document.getElementById('openLoginModal').addEventListener('click', () => {
+        showStep('stepLogin');
+        loginSuccess.textContent = '';
+    });
+
+    document.getElementById('forgotPasswordLink').addEventListener('click', (event) => {
+        event.preventDefault();
+        resetCorreoInput.value = correoInput.value.trim();
+        showStep('stepEmail');
+        resetCorreoInput.focus();
+    });
+
+    document.querySelectorAll('.back-to-login').forEach((link) => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            showStep('stepLogin');
+        });
+    });
+
+    sendPinBtn.addEventListener('click', async () => {
+        const errorEl = document.getElementById('resetEmailError');
+        const correo = resetCorreoInput.value.trim();
+
+        if (!correo) {
+            errorEl.textContent = 'Ingresa tu correo electrónico.';
+            return;
+        }
+
+        resetState.correo = correo;
+        sendPinBtn.textContent = 'Enviando...';
+        const sent = await enviarPin(errorEl, sendPinBtn);
+        sendPinBtn.textContent = 'Enviar código';
+
+        if (sent) {
+            showStep('stepPin');
+            document.getElementById('pinInfo').textContent = `Enviamos un código de 6 números a ${correo}. Revisa también la carpeta de spam.`;
+            resetPinInput.value = '';
+            resetPinInput.focus();
+        }
+    });
+
+    // Solo permite números en el PIN
+    resetPinInput.addEventListener('input', () => {
+        resetPinInput.value = resetPinInput.value.replace(/\D/g, '').slice(0, 6);
+    });
+
+    document.getElementById('resendPinLink').addEventListener('click', async (event) => {
+        event.preventDefault();
+        const errorEl = document.getElementById('resetPinError');
+        const sent = await enviarPin(errorEl, verifyPinBtn);
+        if (sent) {
+            document.getElementById('pinInfo').textContent = `Te enviamos un código nuevo a ${resetState.correo}. El anterior ya no sirve.`;
+            resetPinInput.value = '';
+        }
+    });
+
+    verifyPinBtn.addEventListener('click', async () => {
+        const errorEl = document.getElementById('resetPinError');
+        const pin = resetPinInput.value.trim();
+        errorEl.textContent = '';
+
+        if (!/^\d{6}$/.test(pin)) {
+            errorEl.textContent = 'El código debe tener 6 números.';
+            return;
+        }
+
+        verifyPinBtn.disabled = true;
+        try {
+            const { ok, data } = await postJson(`${API_RECUPERAR}/verificar-pin`, { correo: resetState.correo, pin });
+            if (!ok) {
+                errorEl.textContent = data.message || 'Código incorrecto.';
+                return;
+            }
+            resetState.resetToken = data.resetToken;
+            newPasswordInput.value = '';
+            confirmPasswordInput.value = '';
+            showStep('stepNewPassword');
+            newPasswordInput.focus();
+        } catch (error) {
+            errorEl.textContent = 'No se pudo conectar con el servidor.';
+        } finally {
+            verifyPinBtn.disabled = false;
+        }
+    });
+
+    changePasswordBtn.addEventListener('click', async () => {
+        const errorEl = document.getElementById('newPasswordError');
+        const nuevaContrasena = newPasswordInput.value;
+        const confirmarContrasena = confirmPasswordInput.value;
+        errorEl.textContent = '';
+
+        if (!passwordRegex.test(nuevaContrasena)) {
+            errorEl.textContent = 'La contraseña debe tener 8+ caracteres, mayúscula, minúscula, número y símbolo.';
+            return;
+        }
+
+        if (nuevaContrasena !== confirmarContrasena) {
+            errorEl.textContent = 'Las contraseñas no coinciden.';
+            return;
+        }
+
+        changePasswordBtn.disabled = true;
+        try {
+            const { ok, data } = await postJson(`${API_RECUPERAR}/cambiar-contrasena`, {
+                correo: resetState.correo,
+                resetToken: resetState.resetToken,
+                nuevaContrasena,
+                confirmarContrasena
+            });
+
+            if (!ok) {
+                errorEl.textContent = data.message || 'No se pudo cambiar la contraseña.';
+                return;
+            }
+
+            correoInput.value = resetState.correo;
+            contrasenaInput.value = '';
+            resetState.correo = '';
+            resetState.resetToken = '';
+            showStep('stepLogin');
+            loginSuccess.textContent = 'Contraseña actualizada. Ya puedes iniciar sesión con la nueva contraseña.';
+            contrasenaInput.focus();
+        } catch (error) {
+            errorEl.textContent = 'No se pudo conectar con el servidor.';
+        } finally {
+            changePasswordBtn.disabled = false;
+        }
+    });
+</script>
 </body>
 </html>

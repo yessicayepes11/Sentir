@@ -1,0 +1,296 @@
+/* ==========================================================
+   FORMULARIO "PIDE AYUDA AL PSICÓLOGO/A INSTITUCIONAL"
+   Componente compartido (Students.html y Ayuda.html).
+   Todo va dentro de #helpRequestModal para no chocar con
+   los estilos de cada página.
+========================================================== */
+
+#helpRequestModal {
+    --hr-morado: #6c4df6;
+    --hr-morado-profundo: #4e2fc7;
+    --hr-texto: #211c46;
+    --hr-texto-suave: #706c86;
+    --hr-rojo-oscuro: #e83d4c;
+
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 22px;
+    opacity: 0;
+    visibility: hidden;
+    background: rgba(28, 22, 56, 0.44);
+    backdrop-filter: blur(8px);
+    transition: 0.22s ease;
+    font-family: 'Poppins', sans-serif;
+    color: var(--hr-texto);
+    text-align: left;
+}
+
+#helpRequestModal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+#helpRequestModal *,
+#helpRequestModal *::before,
+#helpRequestModal *::after {
+    box-sizing: border-box;
+}
+
+#helpRequestModal button,
+#helpRequestModal input,
+#helpRequestModal select,
+#helpRequestModal textarea {
+    font-family: inherit;
+}
+
+#helpRequestModal button {
+    border: 0;
+}
+
+#helpRequestModal [hidden] {
+    display: none !important;
+}
+
+#helpRequestModal .hr-box {
+    position: relative;
+    width: min(580px, 100%);
+    max-height: calc(100vh - 44px);
+    overflow-y: auto;
+    padding: 43px 42px 35px;
+    border-radius: 27px;
+    background: white;
+    box-shadow: 0 16px 45px rgba(72, 52, 154, 0.09);
+}
+
+#helpRequestModal .hr-close {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: #6f6b7e;
+    background: #f4f1fa;
+    cursor: pointer;
+}
+
+#helpRequestModal .hr-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--hr-morado);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+}
+
+#helpRequestModal h2 {
+    margin: 5px 0;
+    padding-right: 34px;
+    font-size: 25px;
+    line-height: 1.25;
+}
+
+#helpRequestModal .hr-description {
+    margin: 0 0 20px;
+    color: var(--hr-texto-suave);
+    font-size: 14px;
+}
+
+#helpRequestModal .hr-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+#helpRequestModal label {
+    display: block;
+    margin-bottom: 14px;
+}
+
+#helpRequestModal label > span {
+    display: block;
+    margin-bottom: 7px;
+    color: #4d485d;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+#helpRequestModal .hr-input {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 13px;
+    border: 1.5px solid #ece9f4;
+    border-radius: 14px;
+    background: #fcfbff;
+}
+
+#helpRequestModal .hr-input:focus-within {
+    border-color: var(--hr-morado);
+}
+
+#helpRequestModal .hr-input i {
+    color: var(--hr-morado);
+}
+
+#helpRequestModal .hr-input input,
+#helpRequestModal .hr-input select,
+#helpRequestModal .hr-input textarea {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--hr-texto);
+    font-size: 14px;
+}
+
+#helpRequestModal .hr-textarea {
+    align-items: flex-start;
+    padding-top: 14px;
+}
+
+#helpRequestModal .hr-textarea textarea {
+    min-height: 95px;
+    resize: vertical;
+}
+
+#helpRequestModal .hr-grade {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#helpRequestModal .hr-grade .hr-input {
+    flex: 1;
+}
+
+#helpRequestModal .hr-grade input {
+    text-align: center;
+    text-transform: uppercase;
+}
+
+#helpRequestModal .hr-grade strong {
+    color: var(--hr-texto-suave);
+    font-size: 18px;
+}
+
+#helpRequestModal .hr-date {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 12px;
+    color: var(--hr-texto-suave);
+    font-size: 12px;
+}
+
+#helpRequestModal .hr-date i {
+    color: var(--hr-morado);
+}
+
+#helpRequestModal .hr-privacy {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    padding: 11px 13px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    color: #53796b;
+    background: #eff9f5;
+    font-size: 12px;
+}
+
+#helpRequestModal .hr-error {
+    margin: 0 0 10px;
+    color: var(--hr-rojo-oscuro);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+#helpRequestModal .hr-error:empty {
+    display: none;
+}
+
+#helpRequestModal .hr-submit {
+    width: 100%;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    border-radius: 14px;
+    color: white;
+    background: linear-gradient(135deg, var(--hr-morado), #896cff);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#helpRequestModal .hr-submit:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+#helpRequestModal .hr-success {
+    padding: 50px 0 10px;
+    text-align: center;
+}
+
+#helpRequestModal .hr-success-icon {
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 14px;
+    display: grid;
+    place-items: center;
+    border-radius: 20px;
+    background: #5cc898;
+    color: white;
+    font-size: 23px;
+}
+
+#helpRequestModal .hr-success h3 {
+    margin: 0;
+    font-size: 22px;
+}
+
+#helpRequestModal .hr-success p {
+    margin: 5px 0 20px;
+    color: var(--hr-texto-suave);
+    font-size: 14px;
+}
+
+#helpRequestModal .hr-secondary {
+    min-height: 46px;
+    padding: 0 26px;
+    border-radius: 14px;
+    color: #625e72;
+    background: #eeebf4;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+body.hr-modal-open {
+    overflow: hidden;
+}
+
+@media (max-width: 600px) {
+
+    #helpRequestModal .hr-box {
+        padding: 34px 20px 26px;
+    }
+
+    #helpRequestModal .hr-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}

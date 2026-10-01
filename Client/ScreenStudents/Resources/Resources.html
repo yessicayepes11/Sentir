@@ -37,7 +37,7 @@
     <!-- CSS -->
     <link
         rel="stylesheet"
-        href="/Sentir/Client/ScreenStudents/Resources/Resources.css"
+        href="/Client/ScreenStudents/Resources/Resources.css"
     >
 </head>
 
@@ -64,10 +64,10 @@
 
         <div class="sidebar-logo">
 
-            <a href="/Sentir/Client/ScreenStudents/Students.html">
+            <a href="/Client/ScreenStudents/Students.html">
 
                 <img
-                    src="/Sentir/Shared/LoginResources/logos.png.png"
+                    src="/Shared/LoginResources/logos.png.png"
                     alt="Sentir"
                 >
 
@@ -79,7 +79,7 @@
         <nav class="menu">
 
             <a
-                href="/Sentir/Client/ScreenStudents/Students.html"
+                href="/Client/ScreenStudents/Students.html"
                 class="menu-item"
                 data-page="inicio"
             >
@@ -91,7 +91,7 @@
             </a>
 
             <a
-                href="/Sentir/Client/ScreenStudents/Resources/Resources.html"
+                href="/Client/ScreenStudents/Resources/Resources.html"
                 class="menu-item"
                 data-page="recursos"
             >
@@ -104,19 +104,19 @@
 
 
             <a
-                href="/Sentir/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.html"
+                href="/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.html"
                 class="menu-item"
                 data-page="diario"
             >
 
-                <i class="fa-solid fa-book-open"></i>
+                <i class="fa-solid fa-user-lock"></i>
 
-                <span>Diario emocional</span>
+                <span>Mi espacio personal</span>
 
             </a>
 
             <a
-                href="/Sentir/Client/ScreenStudents/AskForHelp/AskForHelp.html"
+                href="/Client/Auth/StudentScreen/Apartados/Ayuda.html"
                 class="menu-item"
                 data-page="ayuda"
             >
@@ -128,17 +128,6 @@
             </a>
 
 
-            <a
-                href="/Sentir/Client/ScreenStudents/StudentProfile/StudentProfile.html"
-                class="menu-item"
-                data-page="perfil"
-            >
-
-                <i class="fa-solid fa-user"></i>
-
-                <span>Mi perfil</span>
-
-            </a>
 
         </nav>
 
@@ -173,16 +162,6 @@
             </div>
 
 
-            <a
-                href="/Sentir/Client/index.html"
-                class="logout"
-            >
-
-                <i class="fa-solid fa-right-from-bracket"></i>
-
-                <span>Cerrar sesión</span>
-
-            </a>
 
         </div>
 
@@ -221,113 +200,13 @@
                 <div class="mobile-logo">
 
                     <img
-                        src="/Sentir/Shared/LoginResources/logos.png.png"
+                        src="/Shared/LoginResources/logos.png.png"
                         alt="Sentir"
                     >
 
                 </div>
 
 
-                <div class="search-box">
-
-                    <i class="fa-solid fa-magnifying-glass"></i>
-
-                    <input
-                        id="resourceSearch"
-                        type="search"
-                        placeholder="Buscar recursos, ejercicios, meditaciones..."
-                    >
-
-                </div>
-
-            </div>
-
-
-            <div class="top-actions">
-
-
-                <button
-                    class="notification"
-                    type="button"
-                    aria-label="Notificaciones"
-                >
-
-                    <i class="fa-regular fa-bell"></i>
-
-                    <span class="notification-dot"></span>
-
-                </button>
-
-
-                <div class="profile-wrapper">
-
-                    <button
-                        class="profile"
-                        id="profileButton"
-                        type="button"
-                    >
-
-                        <div
-                            class="profile-avatar"
-                            data-profile-avatar
-                        >
-
-                            <img
-                                class="profile-avatar-image"
-                                alt="Foto de perfil"
-                                hidden
-                            >
-
-                            <span class="profile-avatar-fallback">
-                                A
-                            </span>
-
-                        </div>
-
-
-                        <div class="profile-info">
-
-                            <strong data-student-name>
-                                Ana
-                            </strong>
-
-                            <span>
-                                Estudiante
-                            </span>
-
-                        </div>
-
-
-                        <i class="fa-solid fa-chevron-down profile-arrow"></i>
-
-                    </button>
-
-
-                    <div
-                        class="profile-menu"
-                        id="profileMenu"
-                    >
-
-                        <a href="/Sentir/Client/ScreenStudents/StudentProfile/StudentProfile.html">
-
-                            <i class="fa-regular fa-user"></i>
-
-                            Mi perfil
-
-                        </a>
-
-
-                        <a href="/Sentir/Client/index.html">
-
-                            <i class="fa-solid fa-right-from-bracket"></i>
-
-                            Cerrar sesión
-
-                        </a>
-
-                    </div>
-
-                </div>
 
             </div>
 
@@ -373,7 +252,7 @@
             <div class="hero-character">
 
                 <img
-                    src="/Sentir/Shared/StudentResources/Resources.png"
+                    src="/Shared/StudentResources/Resources.png"
                     alt="Estudiante relajándose"
                 >
 
@@ -819,41 +698,35 @@
 
                 <div class="activities-grid">
 
-
                     <article class="activity-card">
 
                         <div class="activity-picture picture-1">
 
-                            <i class="fa-solid fa-wind"></i>
+                            <i class="fa-solid fa-vector-square"></i>
 
                             <span class="time-pill">
-                                3 min
+                                2 min
                             </span>
 
                         </div>
 
-
                         <div class="activity-info">
 
                             <h3>
-                                Respiración consciente
+                                Respiración cuadrada
                             </h3>
 
                             <p>
-                                Conecta con tu respiración y vuelve al presente.
+                                Inhala, sostén, exhala y sostén en 4 tiempos. Ideal para concentrarte antes de un examen.
                             </p>
-
 
                             <button
                                 class="start-activity"
                                 type="button"
-                                data-exercise-button="calma"
+                                data-breathing-player="cuadrada"
                             >
-
                                 <i class="fa-solid fa-play"></i>
-
                                 Comenzar
-
                             </button>
 
                         </div>
@@ -865,36 +738,31 @@
 
                         <div class="activity-picture picture-2">
 
-                            <i class="fa-solid fa-cloud"></i>
+                            <i class="fa-solid fa-water"></i>
 
                             <span class="time-pill">
-                                5 min
+                                2 min
                             </span>
 
                         </div>
 
-
                         <div class="activity-info">
 
                             <h3>
-                                Respiración 4-4-6
+                                Olas del mar
                             </h3>
 
                             <p>
-                                Ideal para disminuir tensión y ansiedad.
+                                Respira al ritmo de las olas, 5 segundos entrando y 5 saliendo, sin pausas.
                             </p>
-
 
                             <button
                                 class="start-activity"
                                 type="button"
-                                data-exercise-button="ansiedad"
+                                data-breathing-player="olas"
                             >
-
                                 <i class="fa-solid fa-play"></i>
-
                                 Comenzar
-
                             </button>
 
                         </div>
@@ -906,36 +774,31 @@
 
                         <div class="activity-picture picture-3">
 
-                            <i class="fa-solid fa-moon"></i>
+                            <i class="fa-solid fa-feather"></i>
 
                             <span class="time-pill">
-                                4 min
+                                1 min
                             </span>
 
                         </div>
 
-
                         <div class="activity-info">
 
                             <h3>
-                                Respiración para dormir
+                                Suspiro de alivio
                             </h3>
 
                             <p>
-                                Relájate y prepara tu cuerpo para descansar.
+                                Dos inhalaciones cortas y una exhalación larga por la boca para soltar la tensión rápido.
                             </p>
-
 
                             <button
                                 class="start-activity"
                                 type="button"
-                                data-exercise-button="dormir"
+                                data-breathing-player="suspiro"
                             >
-
                                 <i class="fa-solid fa-play"></i>
-
                                 Comenzar
-
                             </button>
 
                         </div>
@@ -947,42 +810,36 @@
 
                         <div class="activity-picture picture-4">
 
-                            <i class="fa-solid fa-heart"></i>
+                            <i class="fa-solid fa-music"></i>
 
                             <span class="time-pill">
-                                3 min
+                                2 min
                             </span>
 
                         </div>
 
-
                         <div class="activity-info">
 
                             <h3>
-                                Respiración de gratitud
+                                Respiración de la abeja
                             </h3>
 
                             <p>
-                                Respira lentamente y conecta con algo positivo.
+                                Exhala despacio haciendo un zumbido suave "mmm" para calmar la mente y el enojo.
                             </p>
-
 
                             <button
                                 class="start-activity"
                                 type="button"
-                                data-exercise-button="calma"
+                                data-breathing-player="abeja"
                             >
-
                                 <i class="fa-solid fa-play"></i>
-
                                 Comenzar
-
                             </button>
 
                         </div>
 
                     </article>
-
 
                 </div>
 
@@ -1019,24 +876,32 @@
 
                         <div class="activity-picture meditation-picture">
 
-                            <i class="fa-solid fa-spa"></i>
+                            <i class="fa-solid fa-person"></i>
 
                             <span class="time-pill">
-                                5 min
+                                3 min
                             </span>
 
                         </div>
 
-
                         <div class="activity-info">
 
                             <h3>
-                                Volver al presente
+                                Escaneo corporal
                             </h3>
 
                             <p>
-                                Una pausa guiada para detener el ruido mental.
+                                Recorre tu cuerpo de los pies a la cabeza y suelta la tensión parte por parte.
                             </p>
+
+                            <button
+                                class="start-activity"
+                                type="button"
+                                data-meditation-player="escaneo"
+                            >
+                                <i class="fa-solid fa-play"></i>
+                                Comenzar
+                            </button>
 
                         </div>
 
@@ -1047,24 +912,32 @@
 
                         <div class="activity-picture meditation-picture-2">
 
-                            <i class="fa-solid fa-cloud-moon"></i>
+                            <i class="fa-solid fa-hand"></i>
 
                             <span class="time-pill">
-                                8 min
+                                3 min
                             </span>
 
                         </div>
 
-
                         <div class="activity-info">
 
                             <h3>
-                                Calma antes de dormir
+                                Anclaje 5-4-3-2-1
                             </h3>
 
                             <p>
-                                Libera poco a poco la tensión acumulada.
+                                Usa tus cinco sentidos para frenar la ansiedad y volver al aquí y ahora.
                             </p>
+
+                            <button
+                                class="start-activity"
+                                type="button"
+                                data-meditation-player="anclaje"
+                            >
+                                <i class="fa-solid fa-play"></i>
+                                Comenzar
+                            </button>
 
                         </div>
 
@@ -1075,24 +948,68 @@
 
                         <div class="activity-picture meditation-picture-3">
 
-                            <i class="fa-solid fa-heart"></i>
+                            <i class="fa-solid fa-mountain-sun"></i>
 
                             <span class="time-pill">
-                                6 min
+                                3 min
                             </span>
 
                         </div>
 
+                        <div class="activity-info">
+
+                            <h3>
+                                Mi lugar seguro
+                            </h3>
+
+                            <p>
+                                Imagina con detalle un lugar tranquilo donde te sientas protegido.
+                            </p>
+
+                            <button
+                                class="start-activity"
+                                type="button"
+                                data-meditation-player="lugar"
+                            >
+                                <i class="fa-solid fa-play"></i>
+                                Comenzar
+                            </button>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="activity-card">
+
+                        <div class="activity-picture meditation-picture-4">
+
+                            <i class="fa-solid fa-cloud"></i>
+
+                            <span class="time-pill">
+                                3 min
+                            </span>
+
+                        </div>
 
                         <div class="activity-info">
 
                             <h3>
-                                Háblate bonito
+                                Nubes pasajeras
                             </h3>
 
                             <p>
-                                Una pausa para tratarte con mayor amabilidad.
+                                Observa tus pensamientos como nubes que pasan, sin pelear con ellos.
                             </p>
+
+                            <button
+                                class="start-activity"
+                                type="button"
+                                data-meditation-player="nubes"
+                            >
+                                <i class="fa-solid fa-play"></i>
+                                Comenzar
+                            </button>
 
                         </div>
 
@@ -1214,115 +1131,9 @@
                         <button
                             class="video-play"
                             type="button"
-                            data-video-title="Respira conmigo"
-                            data-video-description="Una pausa breve para respirar lentamente y volver al presente."
-                            data-video-url="https://www.youtube.com/embed/VIDEO_ID_1"
-                        >
-
-                            <i class="fa-solid fa-play"></i>
-
-                        </button>
-
-
-                        <span class="video-duration">
-                            5 min
-                        </span>
-
-                    </div>
-
-
-                    <div class="video-info">
-
-                        <span class="video-category">
-                            RESPIRACIÓN
-                        </span>
-
-                        <h3>
-                            Respira conmigo
-                        </h3>
-
-                        <p>
-                            Una pausa breve para bajar el ritmo y volver al presente.
-                        </p>
-
-                    </div>
-
-                </article>
-
-
-                <!-- VIDEO 2 -->
-
-                <article class="video-card">
-
-
-                    <div class="video-thumbnail video-thumb-2">
-
-                        <div class="thumbnail-decoration">
-
-                            <i class="fa-solid fa-spa"></i>
-
-                        </div>
-
-
-                        <button
-                            class="video-play"
-                            type="button"
-                            data-video-title="Cinco minutos de calma"
-                            data-video-description="Una meditación corta para descansar un poco tu mente."
-                            data-video-url="https://www.youtube.com/embed/VIDEO_ID_2"
-                        >
-
-                            <i class="fa-solid fa-play"></i>
-
-                        </button>
-
-
-                        <span class="video-duration">
-                            5 min
-                        </span>
-
-                    </div>
-
-
-                    <div class="video-info">
-
-                        <span class="video-category">
-                            MEDITACIÓN
-                        </span>
-
-                        <h3>
-                            Cinco minutos de calma
-                        </h3>
-
-                        <p>
-                            Una meditación cortita para descansar tu mente.
-                        </p>
-
-                    </div>
-
-                </article>
-
-
-                <!-- VIDEO 3 -->
-
-                <article class="video-card">
-
-
-                    <div class="video-thumbnail video-thumb-3">
-
-                        <div class="thumbnail-decoration">
-
-                            <i class="fa-solid fa-moon"></i>
-
-                        </div>
-
-
-                        <button
-                            class="video-play"
-                            type="button"
-                            data-video-title="Prepárate para dormir"
-                            data-video-description="Respiración y relajación para cerrar el día con más calma."
-                            data-video-url="https://www.youtube.com/embed/VIDEO_ID_3"
+                            data-video-title="Respiración para la ansiedad y el estrés"
+                            data-video-description="Un ejercicio guiado de respiración para calmar el cuerpo cuando sientes ansiedad o nervios."
+                            data-video-url="https://www.youtube-nocookie.com/embed/0mXT7lc-la0"
                         >
 
                             <i class="fa-solid fa-play"></i>
@@ -1340,15 +1151,121 @@
                     <div class="video-info">
 
                         <span class="video-category">
-                            DESCANSO
+                            ANSIEDAD
                         </span>
 
                         <h3>
-                            Prepárate para dormir
+                            Respiración para la ansiedad y el estrés
                         </h3>
 
                         <p>
-                            Una pausa suave para soltar tensión antes de descansar.
+                            Un ejercicio guiado para calmar el cuerpo cuando sientes ansiedad o nervios.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <!-- VIDEO 2 -->
+
+                <article class="video-card">
+
+
+                    <div class="video-thumbnail video-thumb-2">
+
+                        <div class="thumbnail-decoration">
+
+                            <i class="fa-solid fa-dog"></i>
+
+                        </div>
+
+
+                        <button
+                            class="video-play"
+                            type="button"
+                            data-video-title="Yo tenía un perro negro"
+                            data-video-description="Cortometraje de la OMS que explica qué es la depresión y muestra que sí se puede salir adelante pidiendo ayuda."
+                            data-video-url="https://www.youtube-nocookie.com/embed/d4S6rYIGXNc"
+                        >
+
+                            <i class="fa-solid fa-play"></i>
+
+                        </button>
+
+
+                        <span class="video-duration">
+                            4 min
+                        </span>
+
+                    </div>
+
+
+                    <div class="video-info">
+
+                        <span class="video-category">
+                            DEPRESIÓN
+                        </span>
+
+                        <h3>
+                            Yo tenía un perro negro
+                        </h3>
+
+                        <p>
+                            Cortometraje de la OMS que explica la depresión y muestra que pedir ayuda funciona.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <!-- VIDEO 3 -->
+
+                <article class="video-card">
+
+
+                    <div class="video-thumbnail video-thumb-3">
+
+                        <div class="thumbnail-decoration">
+
+                            <i class="fa-solid fa-spa"></i>
+
+                        </div>
+
+
+                        <button
+                            class="video-play"
+                            type="button"
+                            data-video-title="Meditación guiada para la calma"
+                            data-video-description="Una meditación corta con respiración para descansar la mente y recuperar la tranquilidad."
+                            data-video-url="https://www.youtube-nocookie.com/embed/32iAzIvp-1o"
+                        >
+
+                            <i class="fa-solid fa-play"></i>
+
+                        </button>
+
+
+                        <span class="video-duration">
+                            7 min
+                        </span>
+
+                    </div>
+
+
+                    <div class="video-info">
+
+                        <span class="video-category">
+                            CALMA
+                        </span>
+
+                        <h3>
+                            Meditación guiada para la calma
+                        </h3>
+
+                        <p>
+                            Una meditación corta con respiración para descansar la mente y recuperar la tranquilidad.
                         </p>
 
                     </div>
@@ -1482,7 +1399,17 @@
 
 
 <script
-    src="/Sentir/Client/ScreenStudents/Resources/Resources.js"
+    src="/Client/ScreenStudents/Resources/Resources.js"
+></script>
+
+<!-- Ejercicios del apartado "Respiraciones" -->
+<script
+    src="/Client/ScreenStudents/Resources/BreathingPlayer.js"
+></script>
+
+<!-- Meditaciones guiadas del apartado "Meditaciones" -->
+<script
+    src="/Client/ScreenStudents/Resources/MeditationPlayer.js"
 ></script>
 
 </body>

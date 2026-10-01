@@ -158,7 +158,7 @@ document.addEventListener(
 
                     hideSidebar();
 
-                    profileDropdown.classList.remove(
+                    profileDropdown?.classList.remove(
                         "show"
                     );
 
@@ -192,6 +192,11 @@ document.addEventListener(
         ====================================================== */
 
         function loadStudentProfile() {
+
+            // El perfil del encabezado se quitó de esta página
+            if (!studentName || !profileInitial || !headerProfileImage) {
+                return;
+            }
 
 
             const savedName =
@@ -293,19 +298,19 @@ document.addEventListener(
            DROPDOWN PERFIL
         ====================================================== */
 
-        studentProfile.addEventListener(
+        studentProfile?.addEventListener(
             "click",
             (event) => {
 
                 event.stopPropagation();
 
 
-                profileDropdown.classList.toggle(
+                profileDropdown?.classList.toggle(
                     "show"
                 );
 
 
-                notificationToast.classList.remove(
+                notificationToast?.classList.remove(
                     "show"
                 );
 
@@ -313,7 +318,7 @@ document.addEventListener(
         );
 
 
-        profileDropdown.addEventListener(
+        profileDropdown?.addEventListener(
             "click",
             (event) => {
 
@@ -327,7 +332,7 @@ document.addEventListener(
             "click",
             () => {
 
-                profileDropdown.classList.remove(
+                profileDropdown?.classList.remove(
                     "show"
                 );
 
@@ -343,7 +348,7 @@ document.addEventListener(
         let notificationTimer;
 
 
-        notificationButton.addEventListener(
+        notificationButton?.addEventListener(
             "click",
             (event) => {
 
@@ -355,12 +360,12 @@ document.addEventListener(
                 );
 
 
-                profileDropdown.classList.remove(
+                profileDropdown?.classList.remove(
                     "show"
                 );
 
 
-                notificationToast.classList.add(
+                notificationToast?.classList.add(
                     "show"
                 );
 
@@ -369,7 +374,7 @@ document.addEventListener(
                     setTimeout(
                         () => {
 
-                            notificationToast.classList.remove(
+                            notificationToast?.classList.remove(
                                 "show"
                             );
 
@@ -1279,7 +1284,7 @@ document.addEventListener(
            CERRAR SESIÓN
         ====================================================== */
 
-        logoutButton.addEventListener(
+        logoutButton?.addEventListener(
             "click",
             () => {
 

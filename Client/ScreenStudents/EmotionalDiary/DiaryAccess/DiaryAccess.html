@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sentir | Diario emocional</title>
+    <title>Sentir | Mi espacio personal</title>
 
     <!-- Tipografía -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -22,11 +22,7 @@
     <!-- CSS -->
     <link
         rel="stylesheet"
-<<<<<<< HEAD
-        href="/Sentir/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.css"
-=======
-        href="DiaryAccess.css"
->>>>>>> c812b5de93a0bbf7cd574288c7b4156ce0219efe
+        href="/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.css"
     />
 </head>
 <body>
@@ -38,9 +34,9 @@
         <!-- SIDEBAR -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-logo">
-                <a href="/Sentir/Client/ScreenStudents/Students.html" class="logo-link">
+                <a href="/Client/ScreenStudents/Students.html" class="logo-link">
                     <img
-                        src="/Sentir/Shared/LoginResources/logos.png.png"
+                        src="/Shared/LoginResources/logos.png.png"
                         alt="Logo Sentir"
                     />
                 </a>
@@ -48,7 +44,7 @@
 
             <nav class="menu">
                 <a
-                    href="/Sentir/Client/ScreenStudents/Students.html"
+                    href="/Client/ScreenStudents/Students.html"
                     class="menu-item"
                     data-page="inicio"
                 >
@@ -59,7 +55,7 @@
             
 
                 <a
-                    href="/Sentir/Client/ScreenStudents/Resources/Resources.html"
+                    href="/Client/ScreenStudents/Resources/Resources.html"
                     class="menu-item"
                     data-page="recursos"
                 >
@@ -68,35 +64,22 @@
                 </a>
 
                 <a
-                    href="/Sentir/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.html"
+                    href="/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.html"
                     class="menu-item"
                     data-page="diario"
                 >
-                    <i class="fa-solid fa-book-open"></i>
-                    <span>Diario emocional</span>
+                    <i class="fa-solid fa-user-lock"></i>
+                    <span>Mi espacio personal</span>
                 </a>
 
                 <a
-                    href="/Sentir/Client/ScreenStudents/AskForHelp/AskForHelp.html"
+                    href="/Client/Auth/StudentScreen/Apartados/Ayuda.html"
                     class="menu-item"
                     data-page="ayuda"
                 >
                     <i class="fa-solid fa-life-ring"></i>
                     <span>Pedir ayuda</span>
                 </a>
-                <a
-                href="/Sentir/Client/ScreenStudents/StudentProfile/StudentProfile.html"
-                class="menu-item"
-                data-page="perfil"
-            >
-
-                <i class="fa-solid fa-user"></i>
-
-                <span>
-                    Mi perfil
-                </span>
-
-            </a>
 
             </nav>
 
@@ -112,10 +95,6 @@
                     <i class="fa-solid fa-heart privacy-heart"></i>
                 </div>
 
-                <a href="/Sentir/Client/index.html" class="logout">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    <span>Cerrar sesión</span>
-                </a>
             </div>
         </aside>
 
@@ -137,63 +116,13 @@
 
                     <div class="mobile-logo">
                         <img
-                            src="/Sentir/Shared/LoginResources/logos.png.png"
+                            src="/Shared/LoginResources/logos.png.png"
                             alt="Sentir"
                         />
                     </div>
 
-                    <div class="search-box">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <input
-                            type="search"
-                            placeholder="Buscar recursos, ejercicios, temas..."
-                        />
-                    </div>
                 </div>
 
-                <div class="top-actions">
-                    <button class="notification" type="button">
-                        <i class="fa-regular fa-bell"></i>
-                        <span class="notification-dot"></span>
-                    </button>
-
-                    <div class="profile-wrapper">
-                        <button
-                            class="profile"
-                            id="profileButton"
-                            type="button"
-                            aria-label="Abrir menú de perfil"
-                        >
-                            <div class="profile-avatar" data-profile-avatar>
-                                <img
-                                    class="profile-avatar-image"
-                                    alt="Foto de perfil"
-                                    hidden
-                                />
-                                <span class="profile-avatar-fallback">A</span>
-                            </div>
-
-                            <div class="profile-info">
-                                <strong data-student-name>Ana</strong>
-                                <span>Estudiante</span>
-                            </div>
-
-                            <i class="fa-solid fa-chevron-down profile-arrow"></i>
-                        </button>
-
-                        <div class="profile-menu" id="profileMenu">
-                            <a href="/Sentir/Client/ScreenStudents/StudentProfile/StudentProfile.html">
-                                <i class="fa-regular fa-user"></i>
-                                Mi perfil
-                            </a>
-
-                            <a href="/Sentir/Client/index.html">
-                                <i class="fa-solid fa-right-from-bracket"></i>
-                                Cerrar sesión
-                            </a>
-                        </div>
-                    </div>
-                </div>
             </header>
 
             <!-- PANTALLA DIARIO -->
@@ -212,26 +141,26 @@
                     </button>
 
                     <span class="diary-chip">
-                        <i class="fa-solid fa-book-open"></i>
-                        Diario emocional
+                        <i class="fa-solid fa-user-lock"></i>
+                        Mi espacio personal
                     </span>
                 </div>
 
                 <!-- heading -->
                 <div class="diary-heading">
                     <span class="desktop-chip">
-                        <i class="fa-solid fa-book-open"></i>
-                        Diario emocional
+                        <i class="fa-solid fa-user-lock"></i>
+                        Mi espacio personal
                     </span>
 
                     <h1>
-                        Tu diario emocional
+                        Tu espacio personal
                         <span class="heading-heart">♡</span>
                     </h1>
 
                     <p>
-                        Un espacio privado para comprender lo que sientes,
-                        expresar tus pensamientos y conectar contigo.
+                        Aquí encuentras tu diario emocional, tus insignias
+                        y tu seguimiento. Un lugar privado solo para ti.
                     </p>
                 </div>
 
@@ -248,7 +177,7 @@
 
                         <img
                             class="diary-girl"
-                            src="/Sentir/Shared/StudentResources/AccessDiary (2).png"
+                            src="/Shared/StudentResources/AccessDiary (2).png"
                             alt="Estudiante con diario"
                         />
                     </div>
@@ -259,12 +188,29 @@
                             <i class="fa-solid fa-lock"></i>
                         </div>
 
-                        <h2>Ingresa tu clave</h2>
+                        <h2>Ingresa a tu espacio</h2>
                         <p class="access-subtitle">
-                            Solo tú puedes acceder a este espacio
+                            Escribe tu número de identificación y tu clave
                         </p>
 
                         <form id="diaryLoginForm" autocomplete="off">
+                            <div class="pin-input-box id-input-box">
+                                <div class="pin-prefix">
+                                    <i class="fa-regular fa-id-card"></i>
+                                </div>
+
+                                <input
+                                    id="diaryIdentificacion"
+                                    type="text"
+                                    inputmode="numeric"
+                                    maxlength="15"
+                                    placeholder="Número de identificación"
+                                    aria-label="Número de identificación"
+                                    autocomplete="username"
+                                    required
+                                />
+                            </div>
+
                             <div class="pin-input-box">
                                 <div class="pin-prefix">
                                     <i class="fa-solid fa-lock"></i>
@@ -273,10 +219,10 @@
                                 <input
                                     id="diaryPassword"
                                     type="password"
-                                    inputmode="numeric"
-                                    maxlength="6"
-                                    placeholder="••••••"
-                                    aria-label="Clave del diario"
+                                    maxlength="200"
+                                    placeholder="Clave"
+                                    aria-label="Clave"
+                                    autocomplete="current-password"
                                     required
                                 />
 
@@ -293,7 +239,7 @@
                             <p class="form-error" id="formError"></p>
 
                             <button class="enter-button" type="submit">
-                                <span>Ingresar al diario</span>
+                                <span>Ingresar a mi espacio</span>
                                 <i class="fa-solid fa-arrow-right"></i>
                             </button>
                         </form>
@@ -364,7 +310,7 @@
                 <i class="fa-solid fa-key"></i>
             </div>
 
-            <span class="modal-tag">DIARIO EMOCIONAL</span>
+            <span class="modal-tag">MI ESPACIO PERSONAL</span>
 
             <h2>¿Olvidaste tu clave?</h2>
 
@@ -374,7 +320,7 @@
             </p>
 
             <a
-                href="/Sentir/Client/ScreenStudents/EmotionalDiary/DiaryAccess/Forget/Forget.html"
+                href="/Client/ScreenStudents/EmotionalDiary/DiaryAccess/Forget/Forget.html"
                 class="recover-button"
             >
                 Continuar
@@ -386,10 +332,6 @@
     <!-- TOAST -->
     <div class="toast" id="toast"></div>
 
-<<<<<<< HEAD
-    <script src="/Sentir/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.js"></script>
-=======
-    <script src="DiaryAccess.js"></script>
->>>>>>> c812b5de93a0bbf7cd574288c7b4156ce0219efe
+    <script src="/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.js"></script>
 </body>
 </html>

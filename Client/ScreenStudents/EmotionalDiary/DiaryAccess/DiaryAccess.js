@@ -204,38 +204,78 @@ function initPasswordVisibility() {
 /* =========================================
    DIARY ACCESS
 ========================================= */
+const API_INGRESO_ESTUDIANTE = "http://localhost:3000/api/InicioSesion/estudiante";
+
+// Sesión del espacio personal: se borra sola al cerrar la pestaña o el navegador
+const STUDENT_SESSION_KEY = "sentirEstudiante";
+
 function initDiaryAccess() {
     const form = document.getElementById("diaryLoginForm");
+    const idInput = document.getElementById("diaryIdentificacion");
     const input = document.getElementById("diaryPassword");
     const error = document.getElementById("formError");
+    const submit = form ? form.querySelector(".enter-button") : null;
 
-    if (!form || !input) return;
+    if (!form || !input || !idInput) return;
 
-    input.addEventListener("input", function () {
-        input.value = input.value.replace(/\D/g, "");
-
+    idInput.addEventListener("input", function () {
+        idInput.value = idInput.value.replace(/\D/g, "");
         if (error) error.textContent = "";
     });
 
-    form.addEventListener("submit", function (event) {
+    input.addEventListener("input", function () {
+        if (error) error.textContent = "";
+    });
+
+    form.addEventListener("submit", async function (event) {
         event.preventDefault();
 
-        const password = input.value.trim();
+        const identificacion = idInput.value.trim();
+        const contrasena = input.value;
 
-        if (password.length < 4) {
-            if (error) {
-                error.textContent = "Ingresa tu clave para continuar.";
-            }
+        if (!identificacion) {
+            if (error) error.textContent = "Ingresa tu número de identificación.";
+            idInput.focus();
+            return;
+        }
+
+        if (!contrasena) {
+            if (error) error.textContent = "Ingresa tu clave para continuar.";
             input.focus();
             return;
         }
 
-        showToast("Acceso correcto. Abriendo tu diario...");
+        if (submit) submit.disabled = true;
 
-        setTimeout(function () {
-            window.location.href =
-                "/Sentir/Client/ScreenStudents/EmotionalDiary/EmotionalDiary.html";
-        }, 700);
+        try {
+            const response = await fetch(API_INGRESO_ESTUDIANTE, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ identificacion, contrasena })
+            });
+
+            const data = await response.json().catch(function () { return {}; });
+
+            if (!response.ok) {
+                if (error) error.textContent = data.message || "No se pudo iniciar sesión.";
+                input.value = "";
+                input.focus();
+                return;
+            }
+
+            sessionStorage.setItem(STUDENT_SESSION_KEY, JSON.stringify(data.estudiante));
+
+            showToast("Acceso correcto. Abriendo tu espacio...");
+
+            setTimeout(function () {
+                window.location.href =
+                    "/Client/ScreenStudents/EmotionalDiary/EmotionalDiary.html";
+            }, 700);
+        } catch (err) {
+            if (error) error.textContent = "No se pudo conectar con el servidor. Inténtalo de nuevo.";
+        } finally {
+            if (submit) submit.disabled = false;
+        }
     });
 }
 
@@ -278,7 +318,7 @@ function initBackButton() {
             window.history.back();
         } else {
             window.location.href =
-                "/Sentir/Client/ScreenStudents/Students.html";
+                "/Client/ScreenStudents/Students.html";
         }
     });
 }

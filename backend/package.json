@@ -25,6 +25,7 @@
     "express-fileupload": "^1.5.2",
     "multer": "^2.4.0",
     "mysql2": "^3.24.4",
+    "nodemailer": "^10.0.12",
     "sequelize": "^6.37.8"
   },
   "devDependencies": {

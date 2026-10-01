@@ -28,11 +28,13 @@
     <!-- CSS -->
     <link
         rel="stylesheet"
-<<<<<<< HEAD
         href="/Client/ScreenStudents/Students.css"
-=======
-        
->>>>>>> c812b5de93a0bbf7cd574288c7b4156ce0219efe
+    >
+
+    <!-- Formulario compartido "Pide ayuda al psicólogo/a institucional" -->
+    <link
+        rel="stylesheet"
+        href="/Shared/HelpRequest/HelpRequest.css"
     >
 </head>
 
@@ -60,12 +62,12 @@
         <div class="sidebar-logo">
 
             <a
-                href="/Sentir/Client/ScreenStudents/Students.html"
+                href="/Client/ScreenStudents/Students.html"
                 class="logo-link"
             >
 
                 <img
-                    src="/Sentir/Shared/LoginResources/logos.png.png"
+                    src="/Client/img/logo-sentir.png"
                     alt="Logo Sentir"
                 >
 
@@ -77,7 +79,7 @@
         <nav class="menu">
 
             <a
-                href="/Sentir/Client/ScreenStudents/Students.html"
+                href="/Client/ScreenStudents/Students.html"
                 class="menu-item"
                 data-page="inicio"
             >
@@ -92,7 +94,7 @@
 
 
             <a
-                href="/Sentir/Client/ScreenStudents/Resources/Resources.html"
+                href="/Client/ScreenStudents/Resources/Resources.html"
                 class="menu-item"
                 data-page="relajacion"
             >
@@ -107,22 +109,22 @@
 
 
             <a
-                href="/Sentir/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.html"
+                href="./EmotionalDiary/DiaryAccess/DiaryAccess.html"
                 class="menu-item"
                 data-page="diario"
             >
 
-                <i class="fa-solid fa-book-open"></i>
+                <i class="fa-solid fa-user-lock"></i>
 
                 <span>
-                    Diario emocional
+                    Mi espacio personal
                 </span>
 
             </a>
 
 
             <a
-                href="/Sentir/Client/ScreenStudents/AskForHelp/AskForHelp.html"
+                href="/Client/Auth/StudentScreen/Apartados/Ayuda.html"
                 class="menu-item"
                 data-page="ayuda"
             >
@@ -131,21 +133,6 @@
 
                 <span>
                     Pedir ayuda
-                </span>
-
-            </a>
-
-
-            <a
-                href="/Sentir/Client/ScreenStudents/StudentProfile/StudentProfile.html"
-                class="menu-item"
-                data-page="perfil"
-            >
-
-                <i class="fa-solid fa-user"></i>
-
-                <span>
-                    Mi perfil
                 </span>
 
             </a>
@@ -176,20 +163,6 @@
                 </div>
 
             </div>
-
-
-            <a
-                href="/Sentir/Client/index.html"
-                class="logout"
-            >
-
-                <i class="fa-solid fa-right-from-bracket"></i>
-
-                <span>
-                    Cerrar sesión
-                </span>
-
-            </a>
 
         </div>
 
@@ -225,115 +198,9 @@
                 <div class="mobile-logo">
 
                     <img
-                        src="/Sentir/Shared/LoginResources/logos.png.png"
+                        src="/Shared/LoginResources/logos.png.png"
                         alt="Sentir"
                     >
-
-                </div>
-
-
-                <div class="search-box">
-
-                    <i class="fa-solid fa-magnifying-glass"></i>
-
-                    <input
-                        type="search"
-                        id="resourceSearch"
-                        placeholder="Buscar recursos, ejercicios, temas..."
-                    >
-
-                </div>
-
-            </div>
-
-
-            <div class="top-actions">
-
-                <button
-                    class="notification"
-                    type="button"
-                >
-
-                    <i class="fa-regular fa-bell"></i>
-
-                    <span class="notification-dot"></span>
-
-                </button>
-
-
-                <div class="profile-wrapper">
-
-                    <button
-                        class="profile"
-                        id="profileButton"
-                        type="button"
-                    >
-
-                        <div
-                            class="profile-avatar"
-                            data-profile-avatar
-                        >
-
-                            <img
-                                class="profile-avatar-image"
-                                alt="Foto de perfil"
-                                hidden
-                            >
-
-                            <span class="profile-avatar-fallback">
-                                A
-                            </span>
-
-                        </div>
-
-
-                        <div class="profile-info">
-
-                            <strong data-student-name>
-                                Ana
-                            </strong>
-
-                            <span>
-                                Estudiante
-                            </span>
-
-                        </div>
-
-
-                        <i
-                            class="fa-solid fa-chevron-down profile-arrow"
-                        ></i>
-
-                    </button>
-
-
-                    <div
-                        class="profile-menu"
-                        id="profileMenu"
-                    >
-
-                        <a
-                            href="/Sentir/Client/ScreenStudents/StudentProfile/StudentProfile.html"
-                        >
-
-                            <i class="fa-regular fa-user"></i>
-
-                            Mi perfil
-
-                        </a>
-
-
-                        <a
-                            href="/Sentir/Client/index.html"
-                        >
-
-                            <i class="fa-solid fa-right-from-bracket"></i>
-
-                            Cerrar sesión
-
-                        </a>
-
-                    </div>
 
                 </div>
 
@@ -386,6 +253,7 @@
                     <button
                         class="help-now"
                         id="heroHelpButton"
+                        data-open-help-request
                         type="button"
                     >
 
@@ -396,7 +264,7 @@
                         </span>
 
                         <span>
-                            Necesito ayuda ahora
+                            Pide ayuda al psicólogo/a institucional
                         </span>
 
                         <i class="fa-solid fa-arrow-right"></i>
@@ -434,7 +302,7 @@
                 <div class="hero-character-glow"></div>
 
                 <img
-                    src="/Sentir/Shared/StudentResources/MainStudents.png"
+                    src="/Shared/StudentResources/MainStudents.png"
                     alt="Estudiante Sentir"
                 >
 
@@ -759,7 +627,7 @@
                 <div class="question-actions">
 
                     <a
-                        href="/Sentir/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.html"
+                        href="./EmotionalDiary/DiaryAccess/DiaryAccess.html"
                         class="question-primary"
                     >
 
@@ -819,7 +687,7 @@
 
                 <!-- DIARIO -->
                 <a
-                    href="/Sentir/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.html"
+                    href="./EmotionalDiary/DiaryAccess/DiaryAccess.html"
                     class="tool-card diary-card"
                 >
 
@@ -827,7 +695,7 @@
 
                         <div class="tool-icon purple">
 
-                            <i class="fa-solid fa-book-open"></i>
+                            <i class="fa-solid fa-user-lock"></i>
 
                         </div>
 
@@ -841,12 +709,12 @@
                     <div class="tool-text">
 
                         <h3>
-                            Diario emocional
+                            Mi espacio personal
                         </h3>
 
                         <p>
-                            Registra cómo te sientes y encuentra allí
-                            tu seguimiento e insignias.
+                            Inicia sesión para escribir en tu diario emocional,
+                            ver tus insignias y tu seguimiento.
                         </p>
 
                     </div>
@@ -854,7 +722,7 @@
 
                     <div class="tool-link">
 
-                        Abrir diario
+                        Entrar a mi espacio
 
                         <i class="fa-solid fa-arrow-right"></i>
 
@@ -870,7 +738,7 @@
 
                 <!-- RELAJACIÓN -->
                 <a
-                    href="/Sentir/Client/ScreenStudents/Relaxation/Relaxation.html"
+                    href="/Client/ScreenStudents/Resources/Resources.html"
                     class="tool-card relaxation-card"
                 >
 
@@ -925,6 +793,7 @@
                 <button
                     class="tool-card help-card"
                     id="toolHelpButton"
+                        data-open-help-request
                     type="button"
                 >
 
@@ -971,70 +840,6 @@
                     ></i>
 
                 </button>
-
-
-                <!-- PERFIL -->
-                <a
-                    href="/Sentir/Client/ScreenStudents/StudentProfile/StudentProfile.html"
-                    class="tool-card profile-card"
-                >
-
-                    <div class="tool-top">
-
-                        <div class="tool-icon blue">
-
-                            <i class="fa-solid fa-user"></i>
-
-                        </div>
-
-                        <span class="tool-tag blue-tag">
-                            TU CUENTA
-                        </span>
-
-                    </div>
-
-
-                    <div class="tool-text">
-
-                        <h3>
-                            Mi perfil
-                        </h3>
-
-                        <p>
-                            Consulta tu información y personaliza
-                            tu foto de perfil.
-                        </p>
-
-                    </div>
-
-
-                    <div class="tool-link">
-
-                        Ver mi perfil
-
-                        <i class="fa-solid fa-arrow-right"></i>
-
-                    </div>
-
-
-                    <div
-                        class="profile-preview"
-                        data-profile-avatar
-                    >
-
-                        <img
-                            class="profile-avatar-image"
-                            alt="Foto"
-                            hidden
-                        >
-
-                        <span class="profile-avatar-fallback">
-                            A
-                        </span>
-
-                    </div>
-
-                </a>
 
             </div>
 
@@ -1083,81 +888,6 @@
 
 
 <!-- =========================================
-     MODAL AYUDA
-========================================== -->
-<div
-    class="modal-overlay"
-    id="alertModal"
->
-
-    <div class="help-modal">
-
-        <button
-            class="modal-close"
-            id="closeAlert"
-            type="button"
-        >
-
-            <i class="fa-solid fa-xmark"></i>
-
-        </button>
-
-
-        <div class="help-modal-icon">
-
-            <i class="fa-solid fa-heart"></i>
-
-        </div>
-
-
-        <span class="modal-tag">
-            ESTAMOS CONTIGO
-        </span>
-
-
-        <h2>
-            ¿Necesitas ayuda ahora?
-        </h2>
-
-
-        <p>
-            Puedes solicitar apoyo cuando lo necesites.
-            Tu bienestar es importante.
-        </p>
-
-
-        <div class="modal-buttons">
-
-            <a
-                href="/Sentir/Client/ScreenStudents/AskForHelp/AskForHelp.html"
-                class="modal-primary red-button"
-            >
-
-                <i class="fa-solid fa-hands-holding-heart"></i>
-
-                Pedir ayuda
-
-            </a>
-
-
-            <button
-                class="modal-secondary"
-                id="cancelAlert"
-                type="button"
-            >
-
-                Cancelar
-
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =========================================
      MODAL AGENDAR CITA
 ========================================== -->
 <div
@@ -1196,7 +926,7 @@
 
 
             <img
-                src="/Sentir/Shared/StudentResources/AgendarCita.png"
+                src="/Shared/StudentResources/AgendarCita.png"
                 alt=""
                 id="appointmentImage"
             >
@@ -1415,11 +1145,8 @@
 ></div>
 
 
-<<<<<<< HEAD
-<script src="/Sentir/Client/ScreenStudents/Students.js"></script>
-=======
-<script src="Students.js"></script>
->>>>>>> c812b5de93a0bbf7cd574288c7b4156ce0219efe
+<script src="/Client/ScreenStudents/Students.js"></script>
+<script src="/Shared/HelpRequest/HelpRequest.js"></script>
 
 </body>
 </html>

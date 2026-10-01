@@ -5,16 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sentir — Ayuda</title>
     <link rel="stylesheet" href="ayuda.css">
+    <!-- Formulario compartido "Pide ayuda al psicólogo/a institucional" -->
+    <link rel="stylesheet" href="/Shared/HelpRequest/HelpRequest.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
+    <!-- Overlay del menú en celular -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Barra lateral (igual a la de las demás páginas del estudiante) -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <a href="/Client/ScreenStudents/Students.html">
+                <img src="/Client/img/logo-sentir.png" alt="Logo Sentir">
+            </a>
+        </div>
+
+        <nav class="menu">
+            <a href="/Client/ScreenStudents/Students.html" class="menu-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Inicio</span>
+            </a>
+
+            <a href="/Client/ScreenStudents/Resources/Resources.html" class="menu-item">
+                <i class="fa-solid fa-leaf"></i>
+                <span>Recursos</span>
+            </a>
+
+            <a href="/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.html" class="menu-item">
+                <i class="fa-solid fa-user-lock"></i>
+                <span>Mi espacio personal</span>
+            </a>
+
+            <a href="/Client/Auth/StudentScreen/Apartados/Ayuda.html" class="menu-item active" aria-current="page">
+                <i class="fa-solid fa-life-ring"></i>
+                <span>Pedir ayuda</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="privacy-box">
+                <div class="privacy-icon">
+                    <i class="fa-solid fa-shield-heart"></i>
+                </div>
+                <div>
+                    <strong>Tu bienestar importa</strong>
+                    <span>Aquí encontrarás un espacio seguro.</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
     <div class="app">
         <!-- Header -->
         <header class="header">
-            <a href="/Client/Auth/StudentScreen/inicio.html" class="back-btn" title="Volver al inicio">
-                <i class="fa-solid fa-arrow-left"></i>
-            </a>
+            <button type="button" class="back-btn mobile-menu" id="mobileMenu" aria-label="Abrir menú">
+                <i class="fa-solid fa-bars"></i>
+            </button>
             <div class="logo">
                 <div class="logo-icon">
                     <i class="fa-solid fa-life-ring"></i>
@@ -67,37 +116,19 @@
                         </div>
                     </div>
                 </label>
-            </div>
 
-            <div class="email-input-wrap">
-                <label for="email-to">Correo del destinatario</label>
-                <input type="email" id="email-to" placeholder="ejemplo@correo.com" value="juanorozcol@iesantaelena.edu.co">
-                <p class="hint">Cambia este correo por el real de la persona o servicio que quieras contactar.</p>
+                <!-- Abre el mismo formulario de "Pide ayuda" de la pantalla de inicio -->
+                <button type="button" class="contact-option contact-option-psico" data-open-help-request>
+                    <div class="option-content">
+                        <span class="option-icon">🧠</span>
+                        <div>
+                            <strong>Psicólogo/a institucional</strong>
+                            <small>Envía tu solicitud de ayuda al colegio</small>
+                        </div>
+                        <i class="fa-solid fa-arrow-right option-arrow"></i>
+                    </div>
+                </button>
             </div>
-        </section>
-
-        <!-- Mensaje opcional -->
-        <section class="card">
-            <h2><i class="fa-regular fa-comment-dots"></i> Mensaje (opcional)</h2>
-            <textarea id="message" rows="4" placeholder="Puedes escribir cómo te sientes o dejar el mensaje predeterminado..."></textarea>
-            <div class="preset-btns">
-                <button type="button" class="preset-btn" data-msg="Hola, estoy pasando por un momento difícil y me vendría bien hablar. ¿Puedes escribirme o llamarme cuando puedas?">Necesito hablar</button>
-                <button type="button" class="preset-btn" data-msg="Hola, solo quería avisar que hoy no me siento muy bien. No es urgente, pero me gustaría que estuvieras al tanto.">Aviso suave</button>
-                <button type="button" class="preset-btn" data-msg="Hola, necesito apoyo ahora mismo. Por favor contáctame lo antes posible.">Urgente</button>
-            </div>
-        </section>
-
-        <!-- Botón grande de ayuda -->
-        <section class="sos-section">
-            <button type="button" id="sos-btn" class="sos-btn">
-                <span class="sos-icon"><i class="fa-solid fa-paper-plane"></i></span>
-                <span class="sos-text">Enviar pedido de ayuda</span>
-                <span class="sos-sub">Se abrirá tu correo con el mensaje listo</span>
-            </button>
-            <p class="sos-note">
-                <i class="fa-solid fa-info-circle"></i>
-                Esto abrirá tu aplicación de correo (Gmail, Outlook, etc.) con el mensaje preparado. Tú solo tendrás que pulsar Enviar.
-            </p>
         </section>
 
         <!-- Recursos útiles -->
@@ -120,7 +151,24 @@
             <p>Hecho con 💜 para cuidar tu bienestar</p>
         </footer>
     </div>
+    </main>
 
-    <script src="/Client/Auth/StudentScreen/Apartados/Scripts/Ayuda.js"></script>
+    <script>
+        // Abrir / cerrar la barra lateral en celular
+        (function () {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const menuButton = document.getElementById('mobileMenu');
+
+            function toggleSidebar(open) {
+                sidebar.classList.toggle('open', open);
+                overlay.classList.toggle('active', open);
+            }
+
+            menuButton.addEventListener('click', () => toggleSidebar(!sidebar.classList.contains('open')));
+            overlay.addEventListener('click', () => toggleSidebar(false));
+        })();
+    </script>
+    <script src="/Shared/HelpRequest/HelpRequest.js"></script>
 </body>
 </html>

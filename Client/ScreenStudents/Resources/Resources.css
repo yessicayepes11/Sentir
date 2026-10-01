@@ -2967,3 +2967,542 @@ img {
     }
 
 }
+
+/* En computador la barra superior queda vacía (sin buscador, alertas ni perfil);
+   solo se muestra en celular/tablet para el botón de menú y el logo */
+@media (min-width: 921px) {
+
+    .topbar {
+        display: none;
+    }
+
+}
+
+
+/* ==========================================================
+   REPRODUCTOR DE EJERCICIOS DE RESPIRACIÓN (BreathingPlayer.js)
+========================================================== */
+
+.bp-overlay {
+    --bp-color: var(--purple);
+
+    position: fixed;
+    inset: 0;
+    z-index: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    background: rgba(28, 22, 56, 0.45);
+    backdrop-filter: blur(8px);
+    transition: 0.22s ease;
+}
+
+.bp-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.bp-overlay [hidden] {
+    display: none !important;
+}
+
+body.bp-open {
+    overflow: hidden;
+}
+
+.bp-box {
+    position: relative;
+    width: min(500px, 100%);
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    padding: 30px 30px 26px;
+    border-radius: 28px;
+    background: var(--white);
+    box-shadow: var(--shadow);
+    color: var(--text);
+}
+
+.bp-box button {
+    border: 0;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.bp-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: #6f6b7e;
+    background: #f4f1fa;
+}
+
+.bp-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding-right: 40px;
+}
+
+.bp-icon {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    color: white;
+    background: var(--bp-color);
+    font-size: 20px;
+}
+
+.bp-header h2 {
+    margin: 0 0 4px;
+    font-size: 21px;
+}
+
+.bp-header p {
+    margin: 0;
+    color: var(--text-soft);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* Círculo que crece y se achica */
+.bp-stage {
+    margin: 22px 0 6px;
+    text-align: center;
+}
+
+.bp-ring {
+    width: 210px;
+    height: 210px;
+    margin: 0 auto;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--bp-color) 8%, white);
+    border: 2px dashed color-mix(in srgb, var(--bp-color) 30%, white);
+}
+
+.bp-circle {
+    width: 190px;
+    height: 190px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: white;
+    background: radial-gradient(circle at 35% 30%,
+        color-mix(in srgb, var(--bp-color) 55%, white),
+        var(--bp-color));
+    box-shadow: 0 14px 40px color-mix(in srgb, var(--bp-color) 35%, transparent);
+    transform: scale(0.55);
+    will-change: transform;
+}
+
+.bp-circle strong {
+    font-size: 46px;
+    font-weight: 800;
+}
+
+/* Zumbido de la abeja: vibra suavemente */
+.bp-circle.buzz {
+    animation: bp-buzz 0.18s linear infinite;
+}
+
+@keyframes bp-buzz {
+    0%, 100% { box-shadow: 0 14px 40px color-mix(in srgb, var(--bp-color) 35%, transparent); }
+    50% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--bp-color) 18%, transparent); }
+}
+
+.bp-phase {
+    margin: 16px 0 2px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--bp-color);
+}
+
+.bp-cycle {
+    margin: 0;
+    color: var(--text-soft);
+    font-size: 13px;
+}
+
+/* Pasos del ejercicio */
+.bp-steps {
+    list-style: none;
+    margin: 18px 0 12px;
+    padding: 0;
+    display: grid;
+    gap: 6px;
+}
+
+.bp-steps li {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 9px 13px;
+    border-radius: 12px;
+    background: var(--lavender);
+    color: var(--text-soft);
+    font-size: 13px;
+    transition: 0.2s ease;
+}
+
+.bp-steps li.active {
+    color: white;
+    background: var(--bp-color);
+    font-weight: 600;
+}
+
+.bp-benefit {
+    margin: 0 0 16px;
+    padding: 11px 13px;
+    border-radius: 12px;
+    background: #eff9f5;
+    color: #53796b;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.bp-done {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    margin-bottom: 14px;
+    text-align: center;
+}
+
+.bp-done i {
+    color: #5cc898;
+    font-size: 28px;
+    margin-bottom: 4px;
+}
+
+.bp-done span {
+    color: var(--text-soft);
+    font-size: 13px;
+}
+
+.bp-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.bp-main,
+.bp-secondary {
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.bp-main {
+    flex: 1;
+    color: white;
+    background: var(--bp-color);
+}
+
+.bp-secondary {
+    padding: 0 18px;
+    color: #625e72;
+    background: #eeebf4;
+}
+
+/* Si la persona prefiere menos movimiento, el círculo no se anima */
+@media (prefers-reduced-motion: reduce) {
+    .bp-circle {
+        transition: none !important;
+    }
+
+    .bp-circle.buzz {
+        animation: none;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .bp-box {
+        padding: 26px 18px 20px;
+    }
+
+    .bp-ring {
+        width: 180px;
+        height: 180px;
+    }
+
+    .bp-circle {
+        width: 162px;
+        height: 162px;
+    }
+}
+
+
+/* Tarjeta de la 4.ª meditación (Nubes pasajeras) */
+.meditation-picture-4 {
+    color: #3f9fc6;
+    background:
+        linear-gradient(
+            135deg,
+            #dcf2ff,
+            #e9f0ff
+        );
+}
+
+
+/* ==========================================================
+   REPRODUCTOR DE MEDITACIONES GUIADAS (MeditationPlayer.js)
+========================================================== */
+
+.mp-overlay {
+    --mp-color: var(--purple);
+
+    position: fixed;
+    inset: 0;
+    z-index: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    background: rgba(28, 22, 56, 0.45);
+    backdrop-filter: blur(8px);
+    transition: 0.22s ease;
+}
+
+.mp-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mp-overlay [hidden] {
+    display: none !important;
+}
+
+body.mp-open {
+    overflow: hidden;
+}
+
+.mp-box {
+    position: relative;
+    width: min(500px, 100%);
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    padding: 30px 30px 26px;
+    border-radius: 28px;
+    background: var(--white);
+    box-shadow: var(--shadow);
+    color: var(--text);
+}
+
+.mp-box button {
+    border: 0;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.mp-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: #6f6b7e;
+    background: #f4f1fa;
+}
+
+.mp-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding-right: 40px;
+}
+
+.mp-icon {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    color: white;
+    background: var(--mp-color);
+    font-size: 20px;
+}
+
+.mp-header h2 {
+    margin: 0 0 4px;
+    font-size: 21px;
+}
+
+.mp-header p {
+    margin: 0;
+    color: var(--text-soft);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.mp-stage {
+    margin: 24px 0 16px;
+    text-align: center;
+}
+
+/* Esfera que "respira" suavemente mientras la meditación avanza */
+.mp-orb {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 18px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: white;
+    font-size: 38px;
+    background: radial-gradient(circle at 35% 30%,
+        color-mix(in srgb, var(--mp-color) 50%, white),
+        var(--mp-color));
+    box-shadow: 0 0 0 14px color-mix(in srgb, var(--mp-color) 10%, transparent),
+                0 0 0 28px color-mix(in srgb, var(--mp-color) 5%, transparent);
+}
+
+.mp-orb.breathing {
+    animation: mp-breathe 8s ease-in-out infinite;
+}
+
+@keyframes mp-breathe {
+    0%, 100% { transform: scale(0.9); }
+    50% { transform: scale(1.08); }
+}
+
+.mp-step-count {
+    margin: 0 0 8px;
+    color: var(--mp-color);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+}
+
+.mp-text {
+    min-height: 78px;
+    margin: 0;
+    padding: 0 6px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.45;
+}
+
+.mp-text.fade {
+    animation: mp-fade 0.7s ease;
+}
+
+@keyframes mp-fade {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.mp-progress {
+    height: 8px;
+    border-radius: 20px;
+    background: var(--lavender);
+    overflow: hidden;
+}
+
+.mp-progress-bar {
+    width: 0;
+    height: 100%;
+    border-radius: 20px;
+    background: var(--mp-color);
+    transition: width 1s linear;
+}
+
+.mp-times {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 8px 0 16px;
+    color: var(--text-soft);
+    font-size: 12px;
+}
+
+.mp-done {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    margin-bottom: 14px;
+    text-align: center;
+}
+
+.mp-done i {
+    color: #5cc898;
+    font-size: 28px;
+    margin-bottom: 4px;
+}
+
+.mp-done span {
+    color: var(--text-soft);
+    font-size: 13px;
+}
+
+.mp-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.mp-main,
+.mp-secondary {
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.mp-main {
+    flex: 1;
+    color: white;
+    background: var(--mp-color);
+}
+
+.mp-secondary {
+    padding: 0 18px;
+    color: #625e72;
+    background: #eeebf4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mp-orb.breathing,
+    .mp-text.fade {
+        animation: none;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .mp-box {
+        padding: 26px 18px 20px;
+    }
+
+    .mp-text {
+        font-size: 16px;
+    }
+}

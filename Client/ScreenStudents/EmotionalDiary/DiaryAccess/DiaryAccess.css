@@ -1330,3 +1330,41 @@ img {
         letter-spacing: 7px;
     }
 }
+
+/* En computador la barra superior queda vacía (sin buscador, campana ni perfil);
+   solo se muestra en celular/tablet para el botón de menú y el logo */
+@media (min-width: 951px) {
+
+    .topbar {
+        display: none;
+    }
+
+}
+
+
+/* ==========================================================
+   INGRESO: número de identificación + clave
+========================================================== */
+
+/* El campo de identificación no tiene botón de "ver", ocupa todo el ancho */
+.id-input-box {
+    grid-template-columns: 56px 1fr;
+}
+
+/* El documento y la clave ya no son un PIN de 6 números: texto normal */
+.pin-input-box input {
+    padding: 0 14px;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: normal;
+}
+
+.pin-input-box input::placeholder {
+    letter-spacing: normal;
+    font-weight: 500;
+}
+
+.id-input-box + .pin-input-box {
+    margin-top: 12px;
+}

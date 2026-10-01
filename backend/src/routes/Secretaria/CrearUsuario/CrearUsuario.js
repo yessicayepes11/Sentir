@@ -703,6 +703,68 @@ router.put('/actualizar/:id', upload.single('foto'), async (req, res) => {
     }
 });
 
+// ---------------- Eliminación de usuarios con todos sus registros relacionados ----------------
+
+// Nombres legibles para el resumen que ve el administrador
+const NOMBRES_TABLAS = {
+    ayuda: 'solicitudes de ayuda',
+    cita: 'citas',
+    disponibilidad: 'horarios de disponibilidad',
+    docente: 'ficha de docente',
+    docente_grado: 'grados del docente',
+    estudiante: 'ficha de estudiante',
+    diario_emocinal: 'entradas del diario',
+    seguimiento: 'seguimientos',
+    estadistica: 'estadísticas',
+    insignia: 'insignias',
+    estudiante_docente: 'notas de estudiantes',
+    intervension: 'intervenciones',
+    relajacion: 'recursos de relajación'
+};
+
+// Columnas que apuntan a un usuario pero no tienen llave foránea en la base de datos
+const REFERENCIAS_SIN_LLAVE = [
+    { tabla: 'cita', columna: 'id_usuario', padre: 'usuario', columnaPadre: 'id_usuario' }
+];
+
+const esIdentificador = (nombre) => /^[A-Za-z0-9_]+$/.test(nombre);
+
+// Lee de la base de datos qué tablas dependen de cuáles (llaves foráneas)
+async function leerRelaciones(db) {
+    const [rows] = await db.query(`
+        SELECT TABLE_NAME AS tabla, COLUMN_NAME AS columna,
+               REFERENCED_TABLE_NAME AS padre, REFERENCED_COLUMN_NAME AS columnaPadre
+        FROM information_schema.KEY_COLUMN_USAGE
+        WHERE TABLE_SCHEMA = DATABASE() AND REFERENCED_TABLE_NAME IS NOT NULL
+    `);
+
+    return [...rows, ...REFERENCIAS_SIN_LLAVE].filter((relacion) =>
+        [relacion.tabla, relacion.columna, relacion.padre, relacion.columnaPadre].every(esIdentificador)
+    );
+}
+
+// Borra las filas de `tabla` donde `columna` está en `valores`, pero antes borra
+// (de abajo hacia arriba) todo lo que dependa de esas filas.
+async function borrarEnCascada(db, relaciones, tabla, columna, valores, resumen, profundidad = 0) {
+    if (!valores.length || profundidad > 10) return;
+
+    for (const relacion of relaciones.filter((item) => item.padre === tabla)) {
+        const [filas] = await db.query(
+            `SELECT DISTINCT \`${relacion.columnaPadre}\` AS valor FROM \`${tabla}\` WHERE \`${columna}\` IN (?)`,
+            [valores]
+        );
+        const valoresHijos = filas.map((fila) => fila.valor).filter((valor) => valor !== null);
+
+        await borrarEnCascada(db, relaciones, relacion.tabla, relacion.columna, valoresHijos, resumen, profundidad + 1);
+    }
+
+    const [resultado] = await db.query(`DELETE FROM \`${tabla}\` WHERE \`${columna}\` IN (?)`, [valores]);
+
+    if (resultado.affectedRows && tabla !== 'usuario') {
+        resumen[tabla] = (resumen[tabla] || 0) + resultado.affectedRows;
+    }
+}
+
 router.delete('/:id', async (req, res) => {
     const usuarioId = Number(req.params.id);
 
@@ -710,40 +772,47 @@ router.delete('/:id', async (req, res) => {
         return res.status(400).json({ message: 'El identificador del usuario no es válido' });
     }
 
+    const db = connection.promise();
     let transactionStarted = false;
-    try {
-        await connection.promise().beginTransaction();
-        transactionStarted = true;
-        await connection.promise().query('DELETE FROM docente WHERE id_usuario = ?', [usuarioId]);
-        await connection.promise().query('DELETE FROM estudiante WHERE id_usuario = ?', [usuarioId]);
-        const [result] = await connection.promise().query(
-            'DELETE FROM usuario WHERE id_usuario = ?',
-            [usuarioId]
-        );
 
-        if (!result.affectedRows) {
-            await connection.promise().rollback();
-            transactionStarted = false;
+    try {
+        const [usuarios] = await db.query('SELECT id_usuario FROM usuario WHERE id_usuario = ? LIMIT 1', [usuarioId]);
+
+        if (!usuarios.length) {
             return res.status(404).json({ message: 'No se encontró el usuario que deseas eliminar' });
         }
 
-        await connection.promise().commit();
+        const relaciones = await leerRelaciones(db);
+        const resumen = {};
+
+        // Todo o nada: si algo falla, no se borra ningún registro
+        await db.beginTransaction();
+        transactionStarted = true;
+
+        await borrarEnCascada(db, relaciones, 'usuario', 'id_usuario', [usuarioId], resumen);
+
+        await db.commit();
         transactionStarted = false;
 
-        return res.json({ message: 'Usuario eliminado correctamente', id_usuario: usuarioId });
+        const detalle = Object.entries(resumen)
+            .map(([tabla, cantidad]) => `${cantidad} ${NOMBRES_TABLAS[tabla] || tabla}`)
+            .join(', ');
+
+        return res.json({
+            message: detalle
+                ? `Usuario eliminado junto con: ${detalle}`
+                : 'Usuario eliminado correctamente',
+            id_usuario: usuarioId,
+            registros_eliminados: resumen
+        });
     } catch (error) {
         if (transactionStarted) {
-            await connection.promise().rollback().catch(() => {});
-        }
-        if (error.code === 'ER_ROW_IS_REFERENCED_2' || error.code === 'ER_ROW_IS_REFERENCED') {
-            return res.status(409).json({
-                message: 'No se puede eliminar este usuario porque tiene registros relacionados en el sistema'
-            });
+            await db.rollback().catch(() => {});
         }
 
         console.error('Error al eliminar usuario:', error.message);
         return res.status(500).json({
-            message: 'No se pudo eliminar el usuario',
+            message: 'No se pudo eliminar el usuario. No se borró ningún dato.',
             error: error.message
         });
     }

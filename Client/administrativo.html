@@ -136,7 +136,7 @@
 
 <script src="script.js"></script>
 <script>
-    const API_LOGIN = 'http://localhost:3000/api/InicioSesion/login';
+    const API_LOGIN = 'http://localhost:3001/api/InicioSesion/login';
 
     const rolSelect = document.getElementById('rolSelect');
     const correoInput = document.getElementById('loginCorreo');
@@ -193,7 +193,7 @@
     });
 
     // ---------------- Recuperación de contraseña ----------------
-    const API_RECUPERAR = 'http://localhost:3000/api/CrearUsuario/recuperar';
+    const API_RECUPERAR = 'http://localhost:3001/api/CrearUsuario/recuperar';
     const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z\d\s]).{8,}$/;
 
     const modalTitle = document.getElementById('loginModalTitle');

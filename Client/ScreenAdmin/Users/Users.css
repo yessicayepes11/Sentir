@@ -3053,3 +3053,25 @@ tbody tr.selected {
     }
 
 }
+
+/* ==========================================================
+   SELECCIONAR UN USUARIO HACIENDO CLIC EN SU FILA
+========================================================== */
+
+tbody tr[data-user-id] {
+    cursor: pointer;
+}
+
+tbody tr.selected {
+    background: #F1ECFF;
+    box-shadow: inset 4px 0 0 #6c4df6;
+}
+
+/* En pantallas angostas el panel solo aparece cuando hay un usuario seleccionado */
+@media (max-width: 1200px) {
+
+    .selected-user-card.is-open {
+        display: block;
+    }
+
+}

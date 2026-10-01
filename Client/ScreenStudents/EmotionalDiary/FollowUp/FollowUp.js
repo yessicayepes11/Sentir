@@ -393,103 +393,439 @@ document.addEventListener(
            Ya NO usamos emojis.
         ====================================================== */
 
-        const moodData = [
+        // Los datos salen de la base de datos (entradas del diario de los últimos 7 días)
+        loadWeeklyMood();
 
-            {
+        // Balance emocional del mes, también desde la base de datos
+        loadEmotionalBalance();
 
-                day: "Lun",
+        // Racha: días seguidos escribiendo en el diario
+        loadStreak();
 
-                value: 4,
-
-                mood: "very-happy",
-
-                color: "#61cf9a"
-
-            },
-
-            {
-
-                day: "Mar",
-
-                value: 3.5,
-
-                mood: "happy",
-
-                color: "#ffc75a"
-
-            },
-
-            {
-
-                day: "Mié",
-
-                value: 3,
-
-                mood: "neutral",
-
-                color: "#c6a7ff"
-
-            },
-
-            {
-
-                day: "Jue",
-
-                value: 1.5,
-
-                mood: "sad",
-
-                color: "#ff755e"
-
-            },
-
-            {
-
-                day: "Vie",
-
-                value: 3.1,
-
-                mood: "happy",
-
-                color: "#ffc75a"
-
-            },
-
-            {
-
-                day: "Sáb",
-
-                value: 3.4,
-
-                mood: "happy",
-
-                color: "#ffc75a"
-
-            },
-
-            {
-
-                day: "Dom",
-
-                value: 4.1,
-
-                mood: "very-happy",
-
-                color: "#61cf9a"
-
-            }
-
-        ];
-
+        // Reflexión de la semana, escrita por el agente de IA
+        loadWeeklyReflection();
 
 
         /* =====================================================
-           DIBUJAR GRÁFICA
+           TU REFLEXIÓN (cambia cada semana, la escribe la IA)
         ====================================================== */
 
-        drawMoodChart(
-            moodData
-        );
+        async function loadWeeklyReflection() {
+
+            const text = document.getElementById("weeklyReflection");
+            if (!text) return;
+
+            const respaldo = "Estoy aprendiendo a tratarme con más amabilidad, y eso también es un gran avance.";
+
+            try {
+                const response = await fetchWithRetry(
+                    "http://localhost:3001/api/Asistente/reflexion",
+                    {}
+                );
+
+                const data = await response.json().catch(() => ({}));
+
+                text.textContent = `“${data.texto || respaldo}”`;
+            } catch (error) {
+                text.textContent = `“${respaldo}”`;
+            }
+        }
+
+
+        /* =====================================================
+           RACHA DE BIENESTAR
+        ====================================================== */
+
+        async function loadStreak() {
+
+            const value = document.getElementById("streakValue");
+            const text = document.getElementById("streakText");
+
+            if (!value || !text) return;
+
+            let session = null;
+
+            try {
+                session = JSON.parse(sessionStorage.getItem("sentirEstudiante"));
+            } catch (error) {
+                session = null;
+            }
+
+            if (!session || !session.token) {
+                text.textContent = "Ingresa a tu espacio personal para ver tu racha.";
+                return;
+            }
+
+            try {
+                const response = await fetchWithRetry(
+                    "http://localhost:3001/api/Diario/racha",
+                    { headers: { Authorization: "Bearer " + session.token } }
+                );
+
+                const data = await response.json().catch(() => ({}));
+
+                if (!response.ok) {
+                    text.textContent = data.message || "No se pudo cargar tu racha.";
+                    return;
+                }
+
+                renderStreak(data);
+            } catch (error) {
+                text.textContent = "No se pudo conectar con el servidor.";
+            }
+        }
+
+
+        function renderStreak(data) {
+
+            const value = document.getElementById("streakValue");
+            const text = document.getElementById("streakText");
+            const week = document.getElementById("streakWeek");
+
+            const racha = Number(data.racha) || 0;
+
+            value.textContent =
+                `${racha} ${racha === 1 ? "día seguido" : "días seguidos"}`;
+
+            text.innerHTML = "";
+
+            if (data.sinFicha) {
+                text.textContent = "Aún no tienes ficha de estudiante.";
+            } else if (racha === 0) {
+                text.textContent = "Escribe hoy en tu diario para empezar tu racha.";
+            } else if (data.escribioHoy) {
+                text.append("Cuidando de ti ");
+                const heart = document.createElement("i");
+                heart.className = "fa-solid fa-heart";
+                text.appendChild(heart);
+            } else {
+                text.textContent = "¡Escribe hoy para no perder tu racha!";
+            }
+
+            if (data.totalDias) {
+                text.title = `Has escrito en tu diario ${data.totalDias} ${data.totalDias === 1 ? "día" : "días"} en total`;
+            }
+
+            // Círculos de lunes a domingo de esta semana
+            if (!week || !Array.isArray(data.semana)) return;
+
+            const conEntrada = new Set(data.diasConEntrada || []);
+            const nombres = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
+
+            week.innerHTML = "";
+
+            data.semana.forEach((fecha, index) => {
+                const day = document.createElement("div");
+                day.className = "streak-day";
+
+                if (conEntrada.has(fecha)) day.classList.add("complete");
+                if (fecha === data.hoy) day.classList.add("today");
+                if (fecha > data.hoy) day.classList.add("future");
+
+                day.title = conEntrada.has(fecha)
+                    ? "Escribiste en tu diario"
+                    : (fecha > data.hoy ? "Todavía no llega este día" : "No escribiste este día");
+
+                const circle = document.createElement("span");
+
+                if (conEntrada.has(fecha)) {
+                    const check = document.createElement("i");
+                    check.className = "fa-solid fa-check";
+                    circle.appendChild(check);
+                }
+
+                const label = document.createElement("small");
+                label.textContent = nombres[index];
+
+                day.append(circle, label);
+                week.appendChild(day);
+            });
+        }
+
+
+        /* =====================================================
+           BALANCE EMOCIONAL (este mes)
+        ====================================================== */
+
+        // Mismos colores que las caritas de la gráfica semanal
+        const BALANCE_COLORS = {
+            "muy bien": "#61cf9a",
+            "bien": "#ffc75a",
+            "regular": "#c6a7ff",
+            "mal": "#ff9a5e",
+            "muy mal": "#ff5f6d"
+        };
+
+        async function loadEmotionalBalance() {
+
+            let session = null;
+
+            try {
+                session = JSON.parse(sessionStorage.getItem("sentirEstudiante"));
+            } catch (error) {
+                session = null;
+            }
+
+            if (!session || !session.token) {
+                renderBalanceMessage("Tu balance de este mes", "Ingresa a tu espacio personal para ver tu balance.");
+                return;
+            }
+
+            try {
+                const response = await fetchWithRetry(
+                    "http://localhost:3001/api/Diario/balance",
+                    { headers: { Authorization: "Bearer " + session.token } }
+                );
+
+                const data = await response.json().catch(() => ({}));
+
+                if (!response.ok) {
+                    renderBalanceMessage("Tu balance de este mes", data.message || "No se pudo cargar tu balance emocional.");
+                    return;
+                }
+
+                renderBalance(data);
+            } catch (error) {
+                renderBalanceMessage("Tu balance de este mes", "No se pudo conectar con el servidor.");
+            }
+        }
+
+
+        function renderBalance(data) {
+
+            const donut = document.getElementById("balanceDonut");
+            const value = document.getElementById("balanceValue");
+            const list = document.getElementById("balanceList");
+
+            if (!donut || !value || !list) return;
+
+            const emociones = data.emociones || [];
+
+            // Lista de emociones con su porcentaje
+            list.innerHTML = "";
+
+            emociones.forEach((emocion) => {
+                const color = BALANCE_COLORS[String(emocion.nombre).trim().toLowerCase()] || "#b1a0f7";
+
+                const row = document.createElement("div");
+                row.className = "emotion-row";
+                row.title = `${emocion.cantidad} ${emocion.cantidad === 1 ? "registro" : "registros"} este mes`;
+
+                const dot = document.createElement("span");
+                dot.className = "emotion-dot";
+                dot.style.background = color;
+
+                const name = document.createElement("span");
+                name.textContent = `${emocion.foto || ""} ${emocion.nombre}`.trim();
+
+                const percent = document.createElement("strong");
+                percent.textContent = `${emocion.porcentaje}%`;
+
+                row.append(dot, name, percent);
+                list.appendChild(row);
+            });
+
+            // Dona: un tramo por emoción, del tamaño de su porcentaje
+            if (!data.total) {
+                donut.style.background = "conic-gradient(#ebe6f5 0 100%)";
+                value.textContent = "–";
+            } else {
+                let start = 0;
+                const tramos = emociones
+                    .filter((emocion) => emocion.porcentaje > 0)
+                    .map((emocion) => {
+                        const color = BALANCE_COLORS[String(emocion.nombre).trim().toLowerCase()] || "#b1a0f7";
+                        const tramo = `${color} ${start}% ${start + emocion.porcentaje}%`;
+                        start += emocion.porcentaje;
+                        return tramo;
+                    });
+
+                donut.style.background = `conic-gradient(${tramos.join(", ")})`;
+                value.textContent = `${data.equilibrio}%`;
+            }
+
+            // Mensaje comparando con el mes pasado
+            const actual = data.equilibrio;
+            const pasado = data.equilibrioMesPasado;
+            const registros = `${data.total} ${data.total === 1 ? "registro" : "registros"}`;
+
+            if (data.sinFicha) {
+                renderBalanceMessage("Tu balance de este mes", "Aún no tienes ficha de estudiante, por eso no hay registros para mostrar.");
+            } else if (!data.total) {
+                renderBalanceMessage("Aún no tienes registros este mes", "Escribe en tu diario para empezar a ver tu balance emocional.");
+            } else if (pasado === null) {
+                renderBalanceMessage("Tu balance de este mes", `Llevas ${registros} este mes. ¡Sigue escribiendo en tu diario!`);
+            } else if (actual - pasado >= 3) {
+                renderBalanceMessage("Tu equilibrio emocional ha mejorado", `Subió ${actual - pasado} puntos frente al mes pasado. ¡Sigue así!`, true);
+            } else if (pasado - actual >= 3) {
+                renderBalanceMessage("Tu equilibrio bajó un poco", `Está ${pasado - actual} puntos por debajo del mes pasado. Recuerda que puedes pedir ayuda cuando lo necesites.`);
+            } else {
+                renderBalanceMessage("Tu equilibrio se mantiene estable", `Muy parecido al mes pasado, con ${registros} este mes.`);
+            }
+        }
+
+
+        function renderBalanceMessage(title, text, sparkle) {
+
+            const titleBox = document.getElementById("balanceTitle");
+            const textBox = document.getElementById("balanceText");
+
+            if (titleBox) {
+                titleBox.textContent = title + " ";
+
+                if (sparkle) {
+                    const star = document.createElement("i");
+                    star.className = "fa-solid fa-star balance-sparkle";
+                    titleBox.appendChild(star);
+                }
+            }
+
+            if (textBox) textBox.textContent = text;
+        }
+
+
+        async function loadWeeklyMood() {
+
+            const days =
+                buildWeek(null, []);
+
+            drawMoodChart(days);
+
+            let session = null;
+
+            try {
+                session = JSON.parse(sessionStorage.getItem("sentirEstudiante"));
+            } catch (error) {
+                session = null;
+            }
+
+            if (!session || !session.token) {
+                showMoodMessage("Ingresa a tu espacio personal para ver tu estado de ánimo.");
+                return;
+            }
+
+            try {
+                const response = await fetchWithRetry(
+                    "http://localhost:3001/api/Diario/semana",
+                    { headers: { Authorization: "Bearer " + session.token } }
+                );
+
+                const data = await response.json().catch(() => ({}));
+
+                if (!response.ok) {
+                    showMoodMessage(data.message || "No se pudo cargar tu estado de ánimo.");
+                    return;
+                }
+
+                const week =
+                    buildWeek(data.hoy, data.dias || []);
+
+                drawMoodChart(week);
+
+                if (data.sinFicha) {
+                    showMoodMessage("Aún no tienes ficha de estudiante, por eso no hay registros para mostrar.");
+                } else if (!week.some((day) => day.value !== null)) {
+                    showMoodMessage("Aún no tienes registros en los últimos 7 días. Escribe en tu diario para ver tu gráfica.");
+                } else {
+                    showMoodMessage("");
+                }
+            } catch (error) {
+                showMoodMessage("No se pudo conectar con el servidor.");
+            }
+        }
+
+
+        // Si el servidor se está reiniciando, espera un momento y vuelve a intentar (hasta 3 veces)
+        async function fetchWithRetry(url, options, attempts = 3) {
+
+            for (let attempt = 1; ; attempt++) {
+                try {
+                    return await fetch(url, options);
+                } catch (error) {
+                    if (attempt >= attempts) throw error;
+                    showMoodMessage("Conectando con el servidor…");
+                    await new Promise((resolve) => setTimeout(resolve, 1500 * attempt));
+                }
+            }
+        }
+
+
+        // Los 7 días que terminan en "hoy" (fecha del servidor), con el promedio de cada día o null
+        function buildWeek(today, registros) {
+
+            const base =
+                today ? new Date(today + "T12:00:00") : new Date();
+
+            const porFecha =
+                new Map(registros.map((registro) => [registro.fecha, registro]));
+
+            const week = [];
+
+            for (let i = 6; i >= 0; i--) {
+
+                const date =
+                    new Date(base);
+
+                date.setDate(base.getDate() - i);
+
+                const key =
+                    date.getFullYear() + "-" +
+                    String(date.getMonth() + 1).padStart(2, "0") + "-" +
+                    String(date.getDate()).padStart(2, "0");
+
+                const registro =
+                    porFecha.get(key);
+
+                const label =
+                    date.toLocaleDateString("es-CO", { weekday: "short" }).replace(".", "");
+
+                const value =
+                    registro ? Number(registro.promedio) : null;
+
+                week.push({
+                    day: label.charAt(0).toUpperCase() + label.slice(1, 3),
+                    date: key,
+                    value,
+                    entries: registro ? registro.entradas : 0,
+                    ...moodStyle(value)
+                });
+            }
+
+            return week;
+        }
+
+
+        // Carita y color según el promedio del día (5 = Muy bien · 1 = Muy mal)
+        function moodStyle(value) {
+
+            if (value === null) return { mood: null, color: null };
+            if (value >= 4.5) return { mood: "very-happy", color: "#61cf9a" };
+            if (value >= 3.5) return { mood: "happy", color: "#ffc75a" };
+            if (value >= 2.5) return { mood: "neutral", color: "#c6a7ff" };
+            if (value >= 1.5) return { mood: "sad", color: "#ff9a5e" };
+            return { mood: "sad", color: "#ff5f6d" };
+        }
+
+
+        function showMoodMessage(text) {
+
+            const area =
+                document.querySelector(".mood-chart-wrapper .chart-area");
+
+            if (!area) return;
+
+            let box =
+                area.querySelector(".mood-chart-empty");
+
+            if (!box) {
+                box = document.createElement("div");
+                box.className = "mood-chart-empty";
+                area.appendChild(box);
+            }
+
+            box.textContent = text;
+            box.hidden = !text;
+        }
 
 
         function drawMoodChart(data) {
@@ -594,20 +930,28 @@ document.addEventListener(
 
 
 
+            // Días sin entradas: no tienen punto
+            const withData =
+                points.filter(
+                    (point) => typeof point.value === "number"
+                );
+
             const linePath =
                 createSmoothPath(
-                    points
+                    withData
                 );
 
 
             const areaPath =
 
-                `${linePath}
+                withData.length < 2
+                    ? ""
+                    : `${linePath}
 
-                L ${points[points.length - 1].x}
+                L ${withData[withData.length - 1].x}
                   ${chartBottom + 18}
 
-                L ${points[0].x}
+                L ${withData[0].x}
                   ${chartBottom + 18}
 
                 Z`;
@@ -635,7 +979,7 @@ document.addEventListener(
 
 
             createChartPoints(
-                points
+                withData
             );
 
 

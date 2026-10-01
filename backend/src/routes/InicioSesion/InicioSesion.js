@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { connection } from '../../config/mysql/dbmysql.js';
+import { crearTokenEstudiante } from '../../config/studentToken.js';
 
 const router = Router();
 
@@ -123,7 +124,8 @@ router.post('/estudiante', async (req, res) => {
             estudiante: {
                 id_usuario: estudiante.id_usuario,
                 nombre: estudiante.nombre,
-                apellido: estudiante.apellido
+                apellido: estudiante.apellido,
+                token: crearTokenEstudiante(estudiante.id_usuario)
             }
         });
     } catch (error) {

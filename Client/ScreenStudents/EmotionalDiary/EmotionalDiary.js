@@ -1,14 +1,51 @@
+/* =========================
+   FORMULARIO EN BLANCO AL ENTRAR
+   Cada vez que se entra al diario se borra lo que se había
+   llenado antes (emoción, intensidad, opciones y textos).
+========================= */
+
+const DIARY_FORM_KEYS = [
+    "sentirDiaryCurrentEmotion",
+    "sentirDiaryCurrentEmotionValue",
+    "sentirDiaryIntensity",
+    "sentirDiaryTags",
+    "sentirDiaryOtherTag",
+    "sentirDiaryDraft",
+    "sentirOptionalSituation",
+    "sentirOptionalThought",
+    "sentirOptionalNeed"
+];
+
+function clearDiaryForm() {
+    DIARY_FORM_KEYS.forEach(function (key) {
+        localStorage.removeItem(key);
+    });
+}
+
+clearDiaryForm();
+
+// Si se vuelve con el botón "atrás", el navegador puede mostrar la página
+// guardada en memoria con lo que se había escrito: se recarga para empezar en blanco
+window.addEventListener("pageshow", function (event) {
+    if (event.persisted) {
+        clearDiaryForm();
+        window.location.reload();
+    }
+});
+
 document.addEventListener("DOMContentLoaded", function () {
     initSidebar();
     initActiveNavigation();
     initProfileMenu();
     initProfileSync();
     initEmotions();
+    initEmotionCatalog();
     initIntensity();
     initTags();
     initTextAreas();
     initSaveDiary();
     initHistoryModal();
+    initHistoryFilter();
 });
 
 /* =========================
@@ -199,6 +236,41 @@ function loadStudentName() {
 
 let selectedEmotion = "";
 let selectedEmotionValue = 0;
+let selectedEmotionId = null;   // id_emocion de la tabla `emocion`
+
+const API_EMOCIONES = "http://localhost:3001/api/Emocion/listar";
+
+/*
+ * Las 5 emociones de los recuadros están guardadas en la tabla `emocion`
+ * (nombre, descripción y emoji). Aquí se trae su id_emocion y se le pone
+ * a cada recuadro, para que cada entrada del diario sepa qué emoción eligió.
+ */
+async function initEmotionCatalog() {
+    try {
+        const response = await fetch(API_EMOCIONES);
+        if (!response.ok) return;
+
+        const emociones = await response.json();
+
+        document.querySelectorAll(".emotion-card").forEach(function (card) {
+            const match = emociones.find(function (emocion) {
+                return emocion.nombre.trim().toLowerCase() ===
+                    String(card.dataset.emotion || "").trim().toLowerCase();
+            });
+
+            if (match) {
+                card.dataset.idEmocion = match.id_emocion;
+            }
+        });
+
+        const selected = document.querySelector(".emotion-card.selected");
+        if (selected && selected.dataset.idEmocion) {
+            selectedEmotionId = Number(selected.dataset.idEmocion);
+        }
+    } catch (error) {
+        // Sin servidor el diario sigue funcionando, solo sin el id de la emoción
+    }
+}
 
 function initEmotions() {
     const emotions =
@@ -218,6 +290,9 @@ function initEmotions() {
 
             selectedEmotionValue =
                 Number(emotion.dataset.value);
+
+            selectedEmotionId =
+                Number(emotion.dataset.idEmocion) || null;
 
             const radio =
                 emotion.querySelector(
@@ -446,9 +521,46 @@ function initTags() {
                         selectedTags
                     )
                 );
+
+                updateOtherTagBox(true);
             }
         );
     });
+
+    initOtherTag();
+}
+
+/* =========================
+   OPCIÓN "OTRA"
+========================= */
+
+const OTHER_TAG = "Otra";
+
+function initOtherTag() {
+    const input = document.getElementById("otherTagInput");
+    if (!input) return;
+
+    input.value = localStorage.getItem("sentirDiaryOtherTag") || "";
+
+    input.addEventListener("input", function () {
+        localStorage.setItem("sentirDiaryOtherTag", input.value);
+    });
+
+    updateOtherTagBox();
+}
+
+// La casilla "¿Cuál es la otra opción?" solo se ve si "Otra" está marcada
+function updateOtherTagBox(focus) {
+    const box = document.getElementById("otherTagBox");
+    const input = document.getElementById("otherTagInput");
+    if (!box) return;
+
+    const visible = selectedTags.includes(OTHER_TAG);
+    box.hidden = !visible;
+
+    if (focus && visible && input && !input.value) {
+        input.focus();
+    }
 }
 
 /* =========================
@@ -605,7 +717,7 @@ function initSaveDiary() {
 
     saveButton.addEventListener(
         "click",
-        function () {
+        async function () {
 
             const diaryText =
                 document.getElementById(
@@ -660,6 +772,9 @@ function initSaveDiary() {
                 emotionValue:
                     selectedEmotionValue,
 
+                idEmocion:
+                    selectedEmotionId,
+
                 intensity:
                     Number(
                         intensityRange?.value ||
@@ -693,6 +808,26 @@ function initSaveDiary() {
                     new Date()
                         .toISOString()
             };
+
+            // "Otra": hay que escribir cuál es
+            const otherTag =
+                (document.getElementById("otherTagInput")?.value || "").trim();
+
+            if (selectedTags.includes(OTHER_TAG) && !otherTag) {
+                showToast("Escribe cuál es la otra opción.");
+                document.getElementById("otherTagInput")?.focus();
+                return;
+            }
+
+            entry.otherTag = otherTag;
+
+            // Guardar en la base de datos (tabla diario_emocinal)
+            const saved =
+                await saveDiaryToServer(entry, saveButton);
+
+            if (!saved) {
+                return;
+            }
 
             const entries =
                 getStoredEntries();
@@ -751,6 +886,81 @@ function initSaveDiary() {
             }
         }
     );
+}
+
+const API_GUARDAR_DIARIO = "http://localhost:3001/api/Diario/guardar";
+
+/*
+ * Envía la entrada al servidor. El servidor sabe qué estudiante es por el
+ * token que recibió al ingresar (sessionStorage "sentirEstudiante").
+ * Devuelve true si se guardó.
+ */
+async function saveDiaryToServer(entry, button) {
+
+    let session = null;
+
+    try {
+        session = JSON.parse(sessionStorage.getItem("sentirEstudiante"));
+    } catch (error) {
+        session = null;
+    }
+
+    if (!session || !session.token) {
+        showToast("Tu sesión venció. Vuelve a ingresar a tu espacio personal.");
+        setTimeout(function () {
+            window.location.href =
+                "/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.html";
+        }, 1500);
+        return false;
+    }
+
+    button.disabled = true;
+
+    try {
+        const response = await fetch(API_GUARDAR_DIARIO, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + session.token
+            },
+            body: JSON.stringify({
+                idEmocion: entry.idEmocion,
+                nivel: entry.intensity,
+                descripcion: entry.text,
+                etiquetas: entry.tags,
+                otra: entry.otherTag,
+                respuestas: {
+                    situacion: entry.situation,
+                    pensamiento: entry.thought,
+                    necesidad: entry.need
+                }
+            })
+        });
+
+        const data = await response.json().catch(function () { return {}; });
+
+        if (response.status === 401) {
+            sessionStorage.removeItem("sentirEstudiante");
+            showToast(data.message || "Tu sesión venció. Vuelve a ingresar.");
+            setTimeout(function () {
+                window.location.href =
+                    "/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.html";
+            }, 1500);
+            return false;
+        }
+
+        if (!response.ok) {
+            showToast(data.message || "No se pudo guardar tu diario.");
+            return false;
+        }
+
+        return true;
+    } catch (error) {
+        showToast("No se pudo conectar con el servidor. Tu diario no se perdió, inténtalo de nuevo.");
+        return false;
+    } finally {
+        button.disabled = false;
+    }
 }
 
 function clearCurrentDraft() {
@@ -821,6 +1031,17 @@ function clearCurrentDraft() {
     }
 
     selectedTags = [];
+
+    localStorage.removeItem("sentirDiaryOtherTag");
+
+    const otherTagInput =
+        document.getElementById("otherTagInput");
+
+    if (otherTagInput) {
+        otherTagInput.value = "";
+    }
+
+    updateOtherTagBox();
 
     document
         .querySelectorAll(
@@ -923,6 +1144,79 @@ function initHistoryModal() {
     );
 }
 
+/* =========================
+   FILTRO DEL HISTORIAL POR FECHA
+========================= */
+
+// Fecha local de la entrada en formato AAAA-MM-DD (para comparar con los <input type="date">)
+function toLocalDateKey(value) {
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return "";
+    }
+
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${date.getFullYear()}-${month}-${day}`;
+}
+
+function filterEntriesByDate(entries) {
+    let from = document.getElementById("historyFrom")?.value || "";
+    let to = document.getElementById("historyTo")?.value || "";
+
+    // Si se escriben al revés, se intercambian
+    if (from && to && from > to) {
+        [from, to] = [to, from];
+    }
+
+    return entries.filter(function (entry) {
+        const key = toLocalDateKey(entry.createdAt);
+
+        if (!key) return false;
+        if (from && key < from) return false;
+        if (to && key > to) return false;
+
+        return true;
+    });
+}
+
+function updateHistoryCount(shown, total) {
+    const counter = document.getElementById("historyCount");
+    if (!counter) return;
+
+    const filtering =
+        document.getElementById("historyFrom")?.value ||
+        document.getElementById("historyTo")?.value;
+
+    counter.textContent = filtering
+        ? `${shown} de ${total} ${total === 1 ? "entrada" : "entradas"}`
+        : `${total} ${total === 1 ? "entrada" : "entradas"}`;
+}
+
+function initHistoryFilter() {
+    const from = document.getElementById("historyFrom");
+    const to = document.getElementById("historyTo");
+    const clear = document.getElementById("historyClearFilter");
+
+    if (!from || !to) return;
+
+    // No se pueden elegir fechas futuras
+    const today = toLocalDateKey(new Date());
+    from.max = today;
+    to.max = today;
+
+    from.addEventListener("change", renderHistoryList);
+    to.addEventListener("change", renderHistoryList);
+
+    clear?.addEventListener("click", function () {
+        from.value = "";
+        to.value = "";
+        renderHistoryList();
+    });
+}
+
 function renderHistoryList() {
 
     const list =
@@ -939,7 +1233,7 @@ function renderHistoryList() {
         return;
     }
 
-    const entries =
+    const allEntries =
         getStoredEntries().sort(
             function (a, b) {
 
@@ -954,8 +1248,32 @@ function renderHistoryList() {
             }
         );
 
+    // Filtro por fecha (Desde / Hasta)
+    const entries =
+        filterEntriesByDate(allEntries);
+
+    updateHistoryCount(entries.length, allEntries.length);
+
     list.innerHTML = "";
     detail.innerHTML = "";
+
+    if (allEntries.length && !entries.length) {
+
+        list.innerHTML = `
+            <div class="history-empty">
+                No hay entradas en esas fechas.
+                Prueba con otro rango o pulsa "Ver todo".
+            </div>
+        `;
+
+        detail.innerHTML = `
+            <div class="history-empty">
+                Aquí se mostrará el detalle de cada entrada que abras.
+            </div>
+        `;
+
+        return;
+    }
 
     if (!entries.length) {
 

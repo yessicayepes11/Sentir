@@ -13,7 +13,7 @@
 
 (function () {
 
-    const API_AYUDA = "http://localhost:3000/api/Ayuda/solicitar";
+    const API_AYUDA = "http://localhost:3001/api/Ayuda/solicitar";
 
     const MODAL_HTML = `
 <div class="hr-box" role="dialog" aria-modal="true" aria-labelledby="helpRequestTitle">
@@ -110,6 +110,8 @@
             Fecha de la solicitud: <strong id="helpFechaHoy"></strong> (se registra automáticamente)
         </p>
 
+        <p class="hr-chat-note" id="helpChatNote" hidden></p>
+
         <div class="hr-privacy">
             <i class="fa-solid fa-shield-heart"></i>
             <span>Tu documento solo se usa para verificar que eres tú. No se muestra a nadie.</span>
@@ -141,6 +143,9 @@
 
 
     let modal;
+
+    // Datos que manda el chat de IA (origen, nivel y factores de riesgo detectados)
+    let contextoChat = null;
 
 
     function $(id) {
@@ -187,7 +192,8 @@
     }
 
 
-    function openHelpRequest() {
+    // prefill (opcional): { prioridad, descripcion } — por ejemplo, desde el chat de IA
+    function openHelpRequest(prefill) {
 
         if (!modal) {
             createModal();
@@ -195,6 +201,40 @@
 
         const form = $("helpRequestForm");
         form.reset();
+
+        // Si el estudiante ya inició sesión en "Mi espacio personal", se llenan sus datos
+        try {
+            const sesion = JSON.parse(sessionStorage.getItem("sentirEstudiante"));
+            if (sesion && sesion.id_usuario) {
+                $("helpIdentificacion").value = String(sesion.id_usuario);
+                $("helpNombre").value = `${sesion.nombre || ""} ${sesion.apellido || ""}`.trim();
+            }
+        } catch (error) {
+            // sin sesión: el estudiante escribe sus datos
+        }
+
+        contextoChat = null;
+        $("helpChatNote").hidden = true;
+
+        if (prefill && typeof prefill === "object") {
+            if (prefill.prioridad) $("helpPrioridad").value = prefill.prioridad;
+            if (prefill.descripcion) $("helpDescripcion").value = prefill.descripcion;
+
+            if (prefill.origen === "chat") {
+                contextoChat = {
+                    origen: "chat",
+                    nivel: prefill.nivel || "",
+                    factores: Array.isArray(prefill.factores) ? prefill.factores : []
+                };
+
+                // Transparencia: el estudiante ve qué se enviará (nunca la conversación)
+                const nombres = Array.isArray(prefill.nombresFactores) ? prefill.nombresFactores : [];
+                $("helpChatNote").textContent = nombres.length
+                    ? "Junto con tu solicitud se enviarán los temas que detectó el chat: " + nombres.join(", ") + ". La conversación no se envía."
+                    : "Tu solicitud llegará marcada como enviada desde el chat. La conversación no se envía.";
+                $("helpChatNote").hidden = false;
+            }
+        }
         form.hidden = false;
         $("helpRequestSuccess").hidden = true;
         $("helpRequestError").textContent = "";
@@ -232,7 +272,8 @@
             gradoNumero: $("helpGradoNumero").value.trim(),
             gradoLetra: $("helpGradoLetra").value.trim(),
             prioridad: $("helpPrioridad").value,
-            descripcion: $("helpDescripcion").value.trim()
+            descripcion: $("helpDescripcion").value.trim(),
+            ...(contextoChat || {})
         };
 
         if (!data.identificacion) {

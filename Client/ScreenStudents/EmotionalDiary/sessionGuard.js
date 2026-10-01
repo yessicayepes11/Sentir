@@ -19,7 +19,8 @@
     }
 
     if (!estudiante || !estudiante.id_usuario) {
-        window.location.replace(LOGIN_PAGE);
+        // Se recuerda a qué página quería ir, para volver ahí después de ingresar
+        window.location.replace(LOGIN_PAGE + "?volver=" + encodeURIComponent(window.location.pathname));
     }
 
 })();

@@ -153,9 +153,9 @@ function initActiveNavigation() {
                 ).pathname
             );
 
-
+        // Recursos es parte de "Mi espacio personal": se marca esa opción
         const resourcesMatch =
-            link.dataset.page === "recursos" &&
+            link.dataset.page === "diario" &&
             (
                 currentPath.includes("/resources/") ||
                 currentPath.includes("/relaxation/")

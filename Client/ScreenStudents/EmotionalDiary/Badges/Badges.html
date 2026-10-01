@@ -29,6 +29,12 @@
         rel="stylesheet"
         href="Badges.css"
     >
+    <!-- Barra superior y ventana de perfil (compartido con Mi diario y Mi seguimiento) -->
+    <link rel="stylesheet" href="/Client/ScreenStudents/EmotionalDiary/ProfileEditor.css">
+    <!-- Formulario "Pide ayuda al psicólogo/a" (lo usa el chat como salida de ayuda) -->
+    <link rel="stylesheet" href="/Shared/HelpRequest/HelpRequest.css">
+    <!-- Chat con IA "Sentir IA" -->
+    <link rel="stylesheet" href="/Shared/AiChat/AiChat.css">
 </head>
 
 
@@ -125,14 +131,6 @@
                     <span>Inicio</span>
                 </a>
 
-
-                <a
-                    href="/Client/ScreenStudents/Resources/Resources.html"
-                    class="menu-item"
-                >
-                    <i class="fa-solid fa-leaf"></i>
-                    <span>Recursos</span>
-                </a>
 
 
                 <a
@@ -254,6 +252,26 @@
 
 
 
+        <!-- BARRA SUPERIOR: cerrar sesión (izquierda) y mi perfil (derecha) -->
+        <div class="diary-userbar">
+            <button class="logout-chip" id="studentLogout" type="button">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Cerrar sesión
+            </button>
+
+            <button class="profile-chip" id="openStudentProfile" type="button" aria-label="Ver y editar mi perfil">
+                <span class="profile-chip-avatar" id="profileChipAvatar">
+                    <i class="fa-solid fa-user"></i>
+                </span>
+                <span class="profile-chip-text">
+                    <strong id="profileChipName">Mi perfil</strong>
+                    <small>Ver y editar mi perfil</small>
+                </span>
+                <i class="fa-solid fa-pen profile-chip-edit"></i>
+            </button>
+        </div>
+
+
         <!-- =================================================
              HERO
         ================================================== -->
@@ -287,40 +305,6 @@
                 </p>
 
 
-                <div class="hero-buttons">
-
-                    <a
-                        href="/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.html"
-                        class="hero-button primary"
-                    >
-
-                        <i class="fa-regular fa-calendar-days"></i>
-
-                        <span>
-                            Ir a diario emocional
-                        </span>
-
-                        <i class="fa-solid fa-chevron-right"></i>
-
-                    </a>
-
-
-                    <a
-                        href="/Client/ScreenStudents/EmotionalDiary/FollowUp/FollowUp.html"
-                        class="hero-button secondary"
-                    >
-
-                        <i class="fa-solid fa-chart-line"></i>
-
-                        <span>
-                            Ir a seguimiento
-                        </span>
-
-                        <i class="fa-solid fa-chevron-right"></i>
-
-                    </a>
-
-                </div>
 
             </div>
 
@@ -390,6 +374,49 @@
 
             </div>
 
+        </section>
+
+
+        <!-- NAVEGACIÓN: debajo del cuadro, igual que en Mi diario y Mi seguimiento -->
+        <section class="mini-nav">
+            <a href="/Client/ScreenStudents/EmotionalDiary/EmotionalDiary.html" class="mini-nav-card blue">
+                <div class="mini-nav-icon">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <div class="mini-nav-text">
+                    <h4>Ir a mi diario</h4>
+                    <p>Escribe cómo te sientes hoy y registra tus emociones.</p>
+                </div>
+                <div class="mini-nav-arrow">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </a>
+
+            <a href="/Client/ScreenStudents/EmotionalDiary/FollowUp/FollowUp.html" class="mini-nav-card purple">
+                <div class="mini-nav-icon">
+                    <i class="fa-solid fa-chart-simple"></i>
+                </div>
+                <div class="mini-nav-text">
+                    <h4>Ir a seguimiento</h4>
+                    <p>Conoce tu evolución y descubre patrones en tu bienestar.</p>
+                </div>
+                <div class="mini-nav-arrow">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </a>
+
+            <a href="/Client/ScreenStudents/Resources/Resources.html" class="mini-nav-card green">
+                <div class="mini-nav-icon">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+                <div class="mini-nav-text">
+                    <h4>Ir a recursos</h4>
+                    <p>Respiraciones, meditaciones y videos para cuidarte.</p>
+                </div>
+                <div class="mini-nav-arrow">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </a>
         </section>
 
 
@@ -1061,7 +1088,10 @@
 
 
 <script src="Badges.js"></script>
+<script src="/Client/ScreenStudents/EmotionalDiary/ProfileEditor.js"></script>
 
+<script src="/Shared/HelpRequest/HelpRequest.js"></script>
+<script src="/Shared/AiChat/AiChat.js"></script>
 </body>
 
 </html>

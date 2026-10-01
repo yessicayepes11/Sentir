@@ -3538,3 +3538,122 @@ img {
     }
 
 }
+
+
+/* ==========================================================
+   NAVEGACIÓN DEBAJO DEL CUADRO (igual que en Mi diario y Mi seguimiento)
+========================================================== */
+.mini-nav {
+    margin: 0 0 17px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.mini-nav-card {
+    min-height: 110px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 15px;
+    align-items: center;
+    padding: 16px 18px;
+    border-radius: 22px;
+    border: 1px solid rgba(108, 77, 246, .07);
+    text-decoration: none;
+    transition: .2s ease;
+}
+
+.mini-nav-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 27px rgba(72, 52, 154, .09);
+}
+
+.mini-nav-card.blue { background: linear-gradient(110deg, #f0f6ff, #e5edff); }
+.mini-nav-card.purple { background: linear-gradient(110deg, #f5edff, #efe4ff); }
+
+.mini-nav-icon {
+    width: 62px;
+    height: 62px;
+    display: grid;
+    place-items: center;
+    border-radius: 18px;
+    font-size: 27px;
+    background: rgba(255, 255, 255, .66);
+    color: #5c60ec;
+}
+
+.mini-nav-text h4 {
+    margin: 0;
+    color: #5632d4;
+    font-size: 18px;
+}
+
+.mini-nav-text p {
+    margin: 4px 0 0;
+    color: #746d93;
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.mini-nav-arrow {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, .55);
+    background: #7a63f5;
+    color: #fff;
+}
+
+@media (max-width: 700px) {
+    .mini-nav {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .mini-nav-card {
+        min-height: 96px;
+        gap: 12px;
+        padding: 14px;
+        border-radius: 19px;
+    }
+
+    .mini-nav-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 15px;
+        font-size: 23px;
+    }
+
+    .mini-nav-text h4 { font-size: 16px; }
+
+    .mini-nav-arrow {
+        width: 40px;
+        height: 40px;
+        border-width: 4px;
+    }
+}
+
+
+/* ==========================================================
+   NAVEGACIÓN DE "MI ESPACIO PERSONAL": 3 tarjetas por fila
+   (diario, seguimiento, insignias y recursos)
+========================================================== */
+.mini-nav {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.mini-nav-card.green { background: linear-gradient(110deg, #ecfaf3, #def5ea); }
+.mini-nav-card.green .mini-nav-icon { color: #2f9e6d; }
+.mini-nav-card.green .mini-nav-arrow { background: #3cb57f; }
+
+.mini-nav-card.pink { background: linear-gradient(110deg, #fff0f8, #fbe3f3); }
+.mini-nav-card.pink .mini-nav-icon { color: #d059ac; }
+.mini-nav-card.pink .mini-nav-arrow { background: #d76bb8; }
+
+@media (max-width: 1000px) {
+    .mini-nav {
+        grid-template-columns: 1fr;
+    }
+}

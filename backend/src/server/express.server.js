@@ -5,6 +5,10 @@ import { fileURLToPath } from 'node:url';
 import CrearUsuarioRouter from '../routes/Secretaria/CrearUsuario/CrearUsuario.js';
 import InicioSesionRouter from '../routes/InicioSesion/InicioSesion.js';
 import AyudaRouter from '../routes/Ayuda/Ayuda.js';
+import EmocionRouter from '../routes/Emocion/Emocion.js';
+import DiarioRouter from '../routes/Diario/Diario.js';
+import PerfilEstudianteRouter from '../routes/Estudiante/Perfil.js';
+import AsistenteRouter from '../routes/Asistente/Asistente.js';
 
 const uploadsDir = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../uploads');
 
@@ -28,6 +32,10 @@ class Server {
         this.app.use('/api/CrearUsuario', CrearUsuarioRouter);
         this.app.use('/api/InicioSesion', InicioSesionRouter);
         this.app.use('/api/Ayuda', AyudaRouter);
+        this.app.use('/api/Emocion', EmocionRouter);
+        this.app.use('/api/Diario', DiarioRouter);
+        this.app.use('/api/Estudiante', PerfilEstudianteRouter);
+        this.app.use('/api/Asistente', AsistenteRouter);
     }
 
     start() {

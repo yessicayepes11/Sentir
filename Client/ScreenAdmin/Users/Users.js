@@ -1114,6 +1114,13 @@ function renderUsers() {
                 );
 
 
+            // Al hacer clic en la fila se muestra su información a la derecha
+            row.dataset.userId =
+                user.id;
+
+            row.title =
+                "Ver información de " + user.name;
+
 
             if (
                 user.id ===
@@ -2565,6 +2572,39 @@ confirmDelete.addEventListener(
 
 
 // ======================================================
+// PANEL DEL USUARIO SELECCIONADO
+// En pantallas anchas está siempre a la derecha. En pantallas
+// angostas está oculto: se muestra debajo de la tabla al
+// seleccionar un usuario y la página baja hasta él.
+// ======================================================
+
+function revealSelectedUserCard() {
+
+    const card =
+        document.querySelector(
+            ".selected-user-card"
+        );
+
+    if (!card || !selectedUserId) {
+        return;
+    }
+
+    card.classList.add(
+        "is-open"
+    );
+
+    if (window.matchMedia("(max-width: 1200px)").matches) {
+        card.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+
+}
+
+
+
+// ======================================================
 // ACCIONES TABLA
 // ======================================================
 
@@ -2583,7 +2623,20 @@ tableBody.addEventListener(
 
 
 
+        // Clic en cualquier parte de la fila (que no sea un botón): seleccionar y mostrar
         if (!button) {
+
+            const row =
+                event.target.closest(
+                    "tr[data-user-id]"
+                );
+
+            if (row) {
+                showUserDetails(
+                    Number(row.dataset.userId)
+                );
+                revealSelectedUserCard();
+            }
 
             return;
 
@@ -2613,6 +2666,8 @@ tableBody.addEventListener(
             showUserDetails(
                 id
             );
+
+            revealSelectedUserCard();
 
         }
 

@@ -1,3 +1,34 @@
+/* =========================================
+   A DÓNDE IR DESPUÉS DE INGRESAR
+   Si llegó aquí desde una página de "Mi espacio personal" (ej. Recursos),
+   vuelve a esa página; si no, va al diario. Solo se aceptan páginas
+   del estudiante (nunca direcciones externas).
+========================================= */
+function destinoTrasIngreso() {
+    const volver = new URLSearchParams(window.location.search).get("volver") || "";
+
+    if (/^\/Client\/ScreenStudents\/[A-Za-z0-9_\/-]+\.html$/.test(volver) && !volver.includes("DiaryAccess")) {
+        return volver;
+    }
+
+    return "/Client/ScreenStudents/EmotionalDiary/EmotionalDiary.html";
+}
+
+/* =========================================
+   SI YA INICIÓ SESIÓN, PASA DIRECTO
+   (no se vuelve a pedir documento y clave)
+========================================= */
+(function () {
+    try {
+        const session = JSON.parse(sessionStorage.getItem("sentirEstudiante"));
+        if (session && session.id_usuario && session.token) {
+            window.location.replace(destinoTrasIngreso());
+        }
+    } catch (error) {
+        // sesión dañada: se queda en el ingreso
+    }
+})();
+
 document.addEventListener("DOMContentLoaded", function () {
     initSidebar();
     initActiveNavigation();
@@ -204,7 +235,7 @@ function initPasswordVisibility() {
 /* =========================================
    DIARY ACCESS
 ========================================= */
-const API_INGRESO_ESTUDIANTE = "http://localhost:3000/api/InicioSesion/estudiante";
+const API_INGRESO_ESTUDIANTE = "http://localhost:3001/api/InicioSesion/estudiante";
 
 // Sesión del espacio personal: se borra sola al cerrar la pestaña o el navegador
 const STUDENT_SESSION_KEY = "sentirEstudiante";
@@ -268,8 +299,7 @@ function initDiaryAccess() {
             showToast("Acceso correcto. Abriendo tu espacio...");
 
             setTimeout(function () {
-                window.location.href =
-                    "/Client/ScreenStudents/EmotionalDiary/EmotionalDiary.html";
+                window.location.href = destinoTrasIngreso();
             }, 700);
         } catch (err) {
             if (error) error.textContent = "No se pudo conectar con el servidor. Inténtalo de nuevo.";

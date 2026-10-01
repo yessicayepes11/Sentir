@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import { connection } from '../../config/mysql/dbmysql.js';
+import { codigosValidos, nivelValido, nivelDeFactores, nivelMayor } from '../../config/factoresRiesgo.js';
+import { avisarPsicologia } from '../../config/alertasPsicologia.js';
 
 const router = Router();
 
@@ -84,12 +86,31 @@ router.post('/solicitar', async (req, res) => {
             });
         }
 
+        // Si viene del chat de IA: factores de riesgo detectados (solo códigos del catálogo)
+        const origen = req.body.origen === 'chat' ? 'chat' : 'formulario';
+        const factores = origen === 'chat' ? codigosValidos(req.body.factores) : [];
+        let nivel = origen === 'chat' ? nivelValido(req.body.nivel) : '';
+        if (factores.length) nivel = nivelMayor(nivelDeFactores(factores), nivel || 'bajo');
+
         // La fecha se registra sola (DEFAULT current_timestamp en la tabla)
-        await connection.promise().query(
-            `INSERT INTO ayuda (nombre, descripcion, tipo_contacto, prioridad, grado, id_usuario)
-             VALUES (?, ?, ?, ?, ?, ?)`,
-            [nombre, descripcion, correo, prioridad, `${numero}-${gradoLetra}`, rows[0].id_usuario]
+        const grado = `${numero}-${gradoLetra}`;
+        const [resultado] = await connection.promise().query(
+            `INSERT INTO ayuda (nombre, descripcion, tipo_contacto, prioridad, grado, id_usuario, nombre_docente,
+                                origen, nivel_riesgo, factores_riesgo)
+             VALUES (?, ?, ?, ?, ?, ?, '', ?, ?, ?)`,
+            [nombre, descripcion, correo, prioridad, grado, rows[0].id_usuario, origen, nivel, factores.join(',')]
         );
+
+        // Aviso a psicología: notificación en su perfil + correo.
+        // Si el correo falla, la solicitud ya quedó guardada: solo se registra el error.
+        try {
+            const aviso = await avisarPsicologia({
+                idAyuda: resultado.insertId, nombre, grado, prioridad, descripcion, origen, nivel, factores
+            });
+            console.log(`Solicitud de ayuda ${resultado.insertId}: ${aviso.notificaciones} notificaciones, correo a ${aviso.correos} destinatario(s)`);
+        } catch (errorAviso) {
+            console.error(`Solicitud de ayuda ${resultado.insertId}: no se pudo avisar a psicología:`, errorAviso.message);
+        }
 
         return res.status(201).json({ message: 'Tu solicitud fue enviada al psicólogo/a institucional' });
     } catch (error) {

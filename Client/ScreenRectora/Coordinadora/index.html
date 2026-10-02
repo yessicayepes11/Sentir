@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#6C4DF6" />
+  <title>Coordinadora de convivencia · SENTIR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="inicio">
+  <div class="mobile-backdrop" id="mobileBackdrop"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <a href="index.html" class="brand" aria-label="Ir al inicio">
+      <img src="assets/sentir-logo-oficial.png" alt="SENTIR" class="brand-logo">
+    </a>
+
+    <nav class="sidebar-nav">
+      <a class="nav-link active" href="index.html" data-nav="inicio"><i data-lucide="house"></i><span>Inicio</span></a>
+<a class="nav-link" href="casos.html" data-nav="casos"><i data-lucide="file-text"></i><span>Casos reportados</span></a>
+<a class="nav-link" href="alertas.html" data-nav="alertas"><i data-lucide="bell"></i><span>Alertas</span></a>
+<a class="nav-link" href="seguimiento.html" data-nav="seguimiento"><i data-lucide="chart-no-axes-column-increasing"></i><span>Seguimiento</span></a>
+<a class="nav-link" href="convivencia.html" data-nav="convivencia"><i data-lucide="users"></i><span>Convivencia</span></a>
+<a class="nav-link" href="reportes.html" data-nav="reportes"><i data-lucide="bar-chart-3"></i><span>Reportes</span></a>
+<a class="nav-link" href="perfil.html" data-nav="perfil"><i data-lucide="user-round"></i><span>Mi perfil</span></a>
+    </nav>
+
+    <div class="sidebar-message" aria-hidden="true">
+      <span class="side-spark">✦</span>
+      <p>Escuela que siente,<br><b>comunidad que crece.</b></p>
+      <span class="side-heart">♥</span>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="icon-btn mobile-menu" id="mobileMenuBtn" aria-label="Abrir menú">
+          <i data-lucide="menu"></i>
+        </button>
+        <div>
+          <h1>Coordinadora de convivencia</h1>
+          <p>Panel institucional</p>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="icon-btn notification-btn" id="notificationBtn" aria-label="Notificaciones">
+          <i data-lucide="bell"></i>
+          <span class="notification-dot" id="notificationCount">3</span>
+        </button>
+        <span class="topbar-divider"></span>
+        <button class="profile-trigger" id="profileTrigger" aria-expanded="false">
+          <img src="assets/coordinadora-avatar.png" alt="Foto de perfil" class="avatar js-profile-avatar">
+          <span class="profile-copy">
+            <strong id="topProfileName">María Fernanda Torres</strong>
+            <small>Coordinadora de convivencia</small>
+          </span>
+          <i data-lucide="chevron-down" class="chevron"></i>
+        </button>
+      </div>
+    </header>
+
+    <section class="notification-panel" id="notificationPanel" aria-hidden="true">
+      <div class="panel-head">
+        <div>
+          <h3>Notificaciones</h3>
+          <p>Lo más reciente de tu institución</p>
+        </div>
+        <button class="icon-btn" data-close-panel><i data-lucide="x"></i></button>
+      </div>
+      <div class="notification-list">
+        <button class="notification-item" data-go="alertas.html">
+          <span class="notification-icon danger"><i data-lucide="bell-ring"></i></span>
+          <span><b>Nueva alerta de alta prioridad</b><small>Grado 8°B · hace 12 min</small></span>
+        </button>
+        <button class="notification-item" data-go="seguimiento.html">
+          <span class="notification-icon primary"><i data-lucide="activity"></i></span>
+          <span><b>Caso actualizado</b><small>Seguimiento de caso #2316 · hace 1 h</small></span>
+        </button>
+        <button class="notification-item" data-go="convivencia.html">
+          <span class="notification-icon success"><i data-lucide="check-circle-2"></i></span>
+          <span><b>Compromiso completado</b><small>Acuerdo de convivencia · hoy</small></span>
+        </button>
+      </div>
+    </section>
+
+    <div class="profile-menu" id="profileMenu" aria-hidden="true">
+      <a href="perfil.html"><i data-lucide="user-round"></i> Ver mi perfil</a>
+      <button id="logoutBtn"><i data-lucide="log-out"></i> Cerrar sesión</button>
+    </div>
+
+    <main class="page-content">
+      
+<section class="hero-card">
+  <div class="hero-copy">
+    <span class="eyebrow">Panel institucional</span>
+    <h2>Hola, Coordinadora <span class="hero-heart">♡</span></h2>
+    <p>Aquí puedes revisar las alertas, casos remitidos y hacer seguimiento al estado de la convivencia en tu institución.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="alertas.html"><i data-lucide="bell"></i> Ver alertas</a>
+      <a class="btn btn-outline" href="reportes.html"><i data-lucide="bar-chart-3"></i> Ver reporte</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <img src="assets/coordinadora-hero.png" alt="Ilustración de coordinadora de convivencia">
+  </div>
+</section>
+
+<section class="kpi-grid" id="dashboardKpis">
+  <article class="kpi-card">
+    <span class="kpi-icon pink"><i data-lucide="bell"></i></span>
+    <div><small>Alertas activas</small><strong id="kpiAlerts">14</strong><p class="trend up">↑ 3 respecto a la semana anterior</p></div>
+  </article>
+  <article class="kpi-card">
+    <span class="kpi-icon blue"><i data-lucide="users"></i></span>
+    <div><small>Casos en seguimiento</small><strong id="kpiTracking">21</strong><p class="trend down">↓ 2 respecto a la semana anterior</p></div>
+  </article>
+  <article class="kpi-card">
+    <span class="kpi-icon green"><i data-lucide="badge-check"></i></span>
+    <div><small>Situaciones resueltas</small><strong id="kpiResolved">36</strong><p class="trend up">↑ 8 respecto al mes anterior</p></div>
+  </article>
+  <article class="kpi-card">
+    <span class="kpi-icon lilac"><i data-lucide="users-round"></i></span>
+    <div><small>Docentes que reportaron</small><strong>9</strong><p>Este mes</p></div>
+  </article>
+</section>
+
+<section class="dashboard-grid">
+  <article class="panel-card">
+    <div class="section-head">
+      <h3><i data-lucide="bell-ring" class="title-icon pink-text"></i> Alertas prioritarias</h3>
+      <a href="alertas.html">Ver todas <i data-lucide="arrow-right"></i></a>
+    </div>
+    <div id="priorityAlerts" class="compact-list"></div>
+  </article>
+
+  <article class="panel-card">
+    <div class="section-head">
+      <h3><i data-lucide="chart-no-axes-column-increasing" class="title-icon pink-text"></i> Panorama por grado</h3>
+      <a href="reportes.html">Ver detalle <i data-lucide="arrow-right"></i></a>
+    </div>
+    <div class="grade-bars">
+      <div class="grade-row"><span>Sexto</span><div class="progress"><i style="width:65%"></i></div><b>65%</b></div>
+      <div class="grade-row"><span>Séptimo</span><div class="progress pinkbar"><i style="width:78%"></i></div><b>78%</b></div>
+      <div class="grade-row"><span>Octavo</span><div class="progress"><i style="width:52%"></i></div><b>52%</b></div>
+      <div class="grade-row"><span>Noveno</span><div class="progress"><i style="width:41%"></i></div><b>41%</b></div>
+      <div class="grade-row"><span>Décimo</span><div class="progress deep"><i style="width:68%"></i></div><b>68%</b></div>
+      <div class="grade-row"><span>Once</span><div class="progress pinkbar"><i style="width:47%"></i></div><b>47%</b></div>
+    </div>
+  </article>
+</section>
+
+<section class="panel-card case-follow-panel">
+  <div class="section-head">
+    <h3><i data-lucide="users-round" class="title-icon purple-text"></i> Seguimiento de casos</h3>
+    <a href="seguimiento.html">Ver todos los casos <i data-lucide="arrow-right"></i></a>
+  </div>
+  <div class="status-grid" id="dashboardStatusGrid"></div>
+</section>
+
+<section class="role-note">
+  <span class="role-icon"><i data-lucide="shield-check"></i></span>
+  <div>
+    <strong>Tu rol como Coordinadora de convivencia</strong>
+    <p>Puedes ver información institucional, alertas, casos reportados y su seguimiento. No tienes acceso a los diarios personales ni a detalles clínicos de los estudiantes; aquí se ve información confidencial y contextual para acompañar la convivencia escolar.</p>
+  </div>
+  <i data-lucide="info" class="role-info"></i>
+</section>
+
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#6C4DF6" />
+  <title>Convivencia · SENTIR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="convivencia">
+  <div class="mobile-backdrop" id="mobileBackdrop"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <a href="index.html" class="brand" aria-label="Ir al inicio">
+      <img src="assets/sentir-logo-oficial.png" alt="SENTIR" class="brand-logo">
+    </a>
+
+    <nav class="sidebar-nav">
+      <a class="nav-link" href="index.html" data-nav="inicio"><i data-lucide="house"></i><span>Inicio</span></a>
+<a class="nav-link" href="casos.html" data-nav="casos"><i data-lucide="file-text"></i><span>Casos reportados</span></a>
+<a class="nav-link" href="alertas.html" data-nav="alertas"><i data-lucide="bell"></i><span>Alertas</span></a>
+<a class="nav-link" href="seguimiento.html" data-nav="seguimiento"><i data-lucide="chart-no-axes-column-increasing"></i><span>Seguimiento</span></a>
+<a class="nav-link active" href="convivencia.html" data-nav="convivencia"><i data-lucide="users"></i><span>Convivencia</span></a>
+<a class="nav-link" href="reportes.html" data-nav="reportes"><i data-lucide="bar-chart-3"></i><span>Reportes</span></a>
+<a class="nav-link" href="perfil.html" data-nav="perfil"><i data-lucide="user-round"></i><span>Mi perfil</span></a>
+    </nav>
+
+    <div class="sidebar-message" aria-hidden="true">
+      <span class="side-spark">✦</span>
+      <p>Escuela que siente,<br><b>comunidad que crece.</b></p>
+      <span class="side-heart">♥</span>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="icon-btn mobile-menu" id="mobileMenuBtn" aria-label="Abrir menú">
+          <i data-lucide="menu"></i>
+        </button>
+        <div>
+          <h1>Convivencia</h1>
+          <p>Mediaciones, acuerdos y actividades</p>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="icon-btn notification-btn" id="notificationBtn" aria-label="Notificaciones">
+          <i data-lucide="bell"></i>
+          <span class="notification-dot" id="notificationCount">3</span>
+        </button>
+        <span class="topbar-divider"></span>
+        <button class="profile-trigger" id="profileTrigger" aria-expanded="false">
+          <img src="assets/coordinadora-avatar.png" alt="Foto de perfil" class="avatar js-profile-avatar">
+          <span class="profile-copy">
+            <strong id="topProfileName">María Fernanda Torres</strong>
+            <small>Coordinadora de convivencia</small>
+          </span>
+          <i data-lucide="chevron-down" class="chevron"></i>
+        </button>
+      </div>
+    </header>
+
+    <section class="notification-panel" id="notificationPanel" aria-hidden="true">
+      <div class="panel-head">
+        <div>
+          <h3>Notificaciones</h3>
+          <p>Lo más reciente de tu institución</p>
+        </div>
+        <button class="icon-btn" data-close-panel><i data-lucide="x"></i></button>
+      </div>
+      <div class="notification-list">
+        <button class="notification-item" data-go="alertas.html">
+          <span class="notification-icon danger"><i data-lucide="bell-ring"></i></span>
+          <span><b>Nueva alerta de alta prioridad</b><small>Grado 8°B · hace 12 min</small></span>
+        </button>
+        <button class="notification-item" data-go="seguimiento.html">
+          <span class="notification-icon primary"><i data-lucide="activity"></i></span>
+          <span><b>Caso actualizado</b><small>Seguimiento de caso #2316 · hace 1 h</small></span>
+        </button>
+        <button class="notification-item" data-go="convivencia.html">
+          <span class="notification-icon success"><i data-lucide="check-circle-2"></i></span>
+          <span><b>Compromiso completado</b><small>Acuerdo de convivencia · hoy</small></span>
+        </button>
+      </div>
+    </section>
+
+    <div class="profile-menu" id="profileMenu" aria-hidden="true">
+      <a href="perfil.html"><i data-lucide="user-round"></i> Ver mi perfil</a>
+      <button id="logoutBtn"><i data-lucide="log-out"></i> Cerrar sesión</button>
+    </div>
+
+    <main class="page-content">
+      
+<section class="page-heading">
+  <div><span class="eyebrow">Convivencia escolar</span><h2>Convivencia</h2><p>Organiza mediaciones, reuniones, compromisos y acciones de acompañamiento.</p></div>
+  <button class="btn btn-primary" data-open-modal="meetingModal"><i data-lucide="calendar-plus"></i> Nueva actividad</button>
+</section>
+
+<section class="summary-strip">
+  <article><span class="summary-icon purple"><i data-lucide="handshake"></i></span><div><small>Mediaciones activas</small><strong>6</strong></div></article>
+  <article><span class="summary-icon blue"><i data-lucide="calendar-days"></i></span><div><small>Reuniones próximas</small><strong id="meetingCount">0</strong></div></article>
+  <article><span class="summary-icon orange"><i data-lucide="list-checks"></i></span><div><small>Compromisos pendientes</small><strong id="pendingCommitments">0</strong></div></article>
+  <article><span class="summary-icon green"><i data-lucide="circle-check-big"></i></span><div><small>Cumplimiento</small><strong id="commitmentRate">0%</strong></div></article>
+</section>
+
+<section class="dashboard-grid convivencia-grid">
+  <article class="panel-card">
+    <div class="section-head"><h3><i data-lucide="calendar-days" class="title-icon purple-text"></i> Próximas actividades</h3><button class="link-button" data-open-modal="meetingModal">Agregar</button></div>
+    <div id="meetingList" class="timeline-list"></div>
+  </article>
+  <article class="panel-card">
+    <div class="section-head"><h3><i data-lucide="list-checks" class="title-icon blue-text"></i> Compromisos</h3><span class="muted-text">Marca los completados</span></div>
+    <div id="commitmentsList" class="commitments-list"></div>
+  </article>
+</section>
+
+<section class="panel-card">
+  <div class="section-head"><h3><i data-lucide="sparkles" class="title-icon pink-text"></i> Acciones de convivencia</h3></div>
+  <div class="action-cards">
+    <button class="action-card" data-open-modal="mediationModal"><span><i data-lucide="handshake"></i></span><div><b>Registrar mediación</b><small>Documenta un espacio de diálogo y acuerdos.</small></div><i data-lucide="chevron-right"></i></button>
+    <a class="action-card" href="reportes.html"><span><i data-lucide="chart-column"></i></span><div><b>Consultar tendencias</b><small>Observa indicadores generales de convivencia.</small></div><i data-lucide="chevron-right"></i></a>
+    <a class="action-card" href="alertas.html"><span><i data-lucide="bell-ring"></i></span><div><b>Revisar alertas</b><small>Atiende las situaciones que requieren revisión.</small></div><i data-lucide="chevron-right"></i></a>
+  </div>
+</section>
+
+<div class="modal" id="meetingModal">
+  <div class="modal-dialog">
+    <button class="modal-close" data-close-modal><i data-lucide="x"></i></button>
+    <div class="modal-title"><span class="modal-icon blue"><i data-lucide="calendar-plus"></i></span><div><h3>Nueva actividad</h3><p>Agenda una reunión, mediación o espacio de convivencia.</p></div></div>
+    <form id="meetingForm" class="form-grid">
+      <label>Título<input name="title" required placeholder="Ej. Reunión con acudientes"></label>
+      <label>Tipo<select name="type"><option>Reunión</option><option>Mediación</option><option>Taller</option><option>Comité</option></select></label>
+      <label>Fecha<input name="date" type="date" required></label>
+      <label>Hora<input name="time" type="time" required></label>
+      <label class="full">Descripción<textarea name="description" rows="3" placeholder="Detalles de la actividad..."></textarea></label>
+      <div class="form-actions full"><button class="btn btn-soft" type="button" data-close-modal>Cancelar</button><button class="btn btn-primary" type="submit">Guardar actividad</button></div>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="mediationModal">
+  <div class="modal-dialog">
+    <button class="modal-close" data-close-modal><i data-lucide="x"></i></button>
+    <div class="modal-title"><span class="modal-icon purple"><i data-lucide="handshake"></i></span><div><h3>Registrar mediación</h3><p>Guarda un resumen institucional del espacio realizado.</p></div></div>
+    <form id="mediationForm" class="form-grid">
+      <label>Participantes<input name="participants" required placeholder="Ej. Estudiantes 8°B"></label>
+      <label>Fecha<input name="date" type="date" required></label>
+      <label class="full">Acuerdos<textarea name="agreements" rows="4" required placeholder="Escribe los acuerdos alcanzados..."></textarea></label>
+      <div class="form-actions full"><button class="btn btn-soft" type="button" data-close-modal>Cancelar</button><button class="btn btn-primary" type="submit">Registrar mediación</button></div>
+    </form>
+  </div>
+</div>
+
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

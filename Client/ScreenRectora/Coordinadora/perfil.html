@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#6C4DF6" />
+  <title>Mi perfil · SENTIR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="perfil">
+  <div class="mobile-backdrop" id="mobileBackdrop"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <a href="index.html" class="brand" aria-label="Ir al inicio">
+      <img src="assets/sentir-logo-oficial.png" alt="SENTIR" class="brand-logo">
+    </a>
+
+    <nav class="sidebar-nav">
+      <a class="nav-link" href="index.html" data-nav="inicio"><i data-lucide="house"></i><span>Inicio</span></a>
+<a class="nav-link" href="casos.html" data-nav="casos"><i data-lucide="file-text"></i><span>Casos reportados</span></a>
+<a class="nav-link" href="alertas.html" data-nav="alertas"><i data-lucide="bell"></i><span>Alertas</span></a>
+<a class="nav-link" href="seguimiento.html" data-nav="seguimiento"><i data-lucide="chart-no-axes-column-increasing"></i><span>Seguimiento</span></a>
+<a class="nav-link" href="convivencia.html" data-nav="convivencia"><i data-lucide="users"></i><span>Convivencia</span></a>
+<a class="nav-link" href="reportes.html" data-nav="reportes"><i data-lucide="bar-chart-3"></i><span>Reportes</span></a>
+<a class="nav-link active" href="perfil.html" data-nav="perfil"><i data-lucide="user-round"></i><span>Mi perfil</span></a>
+    </nav>
+
+    <div class="sidebar-message" aria-hidden="true">
+      <span class="side-spark">✦</span>
+      <p>Escuela que siente,<br><b>comunidad que crece.</b></p>
+      <span class="side-heart">♥</span>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="icon-btn mobile-menu" id="mobileMenuBtn" aria-label="Abrir menú">
+          <i data-lucide="menu"></i>
+        </button>
+        <div>
+          <h1>Mi perfil</h1>
+          <p>Datos de la coordinadora</p>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="icon-btn notification-btn" id="notificationBtn" aria-label="Notificaciones">
+          <i data-lucide="bell"></i>
+          <span class="notification-dot" id="notificationCount">3</span>
+        </button>
+        <span class="topbar-divider"></span>
+        <button class="profile-trigger" id="profileTrigger" aria-expanded="false">
+          <img src="assets/coordinadora-avatar.png" alt="Foto de perfil" class="avatar js-profile-avatar">
+          <span class="profile-copy">
+            <strong id="topProfileName">María Fernanda Torres</strong>
+            <small>Coordinadora de convivencia</small>
+          </span>
+          <i data-lucide="chevron-down" class="chevron"></i>
+        </button>
+      </div>
+    </header>
+
+    <section class="notification-panel" id="notificationPanel" aria-hidden="true">
+      <div class="panel-head">
+        <div>
+          <h3>Notificaciones</h3>
+          <p>Lo más reciente de tu institución</p>
+        </div>
+        <button class="icon-btn" data-close-panel><i data-lucide="x"></i></button>
+      </div>
+      <div class="notification-list">
+        <button class="notification-item" data-go="alertas.html">
+          <span class="notification-icon danger"><i data-lucide="bell-ring"></i></span>
+          <span><b>Nueva alerta de alta prioridad</b><small>Grado 8°B · hace 12 min</small></span>
+        </button>
+        <button class="notification-item" data-go="seguimiento.html">
+          <span class="notification-icon primary"><i data-lucide="activity"></i></span>
+          <span><b>Caso actualizado</b><small>Seguimiento de caso #2316 · hace 1 h</small></span>
+        </button>
+        <button class="notification-item" data-go="convivencia.html">
+          <span class="notification-icon success"><i data-lucide="check-circle-2"></i></span>
+          <span><b>Compromiso completado</b><small>Acuerdo de convivencia · hoy</small></span>
+        </button>
+      </div>
+    </section>
+
+    <div class="profile-menu" id="profileMenu" aria-hidden="true">
+      <a href="perfil.html"><i data-lucide="user-round"></i> Ver mi perfil</a>
+      <button id="logoutBtn"><i data-lucide="log-out"></i> Cerrar sesión</button>
+    </div>
+
+    <main class="page-content">
+      
+<section class="page-heading">
+  <div><span class="eyebrow">Cuenta institucional</span><h2>Mi perfil</h2><p>Actualiza tu fotografía y tus datos de contacto visibles en el panel.</p></div>
+</section>
+
+<section class="profile-layout">
+  <article class="panel-card profile-card">
+    <div class="profile-photo-wrap">
+      <img src="assets/coordinadora-avatar.png" alt="Foto de perfil" class="profile-large js-profile-avatar" id="profilePreview">
+      <label class="photo-edit" for="profilePhotoInput"><i data-lucide="camera"></i></label>
+      <input id="profilePhotoInput" type="file" accept="image/*" hidden>
+    </div>
+    <h3 id="profileDisplayName">María Fernanda Torres</h3>
+    <p>Coordinadora de convivencia</p>
+    <span class="pill success"><i data-lucide="badge-check"></i> Cuenta activa</span>
+    <div class="profile-mini-stats">
+      <div><strong>21</strong><small>Casos seguidos</small></div>
+      <div><strong>14</strong><small>Alertas activas</small></div>
+    </div>
+  </article>
+
+  <article class="panel-card">
+    <div class="section-head"><h3>Información personal</h3></div>
+    <form id="profileForm" class="form-grid">
+      <label>Nombre completo<input name="name" value="María Fernanda Torres"></label>
+      <label>Correo institucional<input name="email" type="email" value="maria.torres@institucion.edu.co"></label>
+      <label>Celular<input name="phone" value="300 555 2187"></label>
+      <label>Cargo<input value="Coordinadora de convivencia" disabled></label>
+      <label class="full">Descripción<textarea name="bio" rows="4">Acompañamiento institucional para fortalecer la convivencia, la prevención y el bienestar escolar.</textarea></label>
+      <div class="form-actions full"><button class="btn btn-primary" type="submit"><i data-lucide="save"></i> Guardar cambios</button></div>
+    </form>
+  </article>
+</section>
+
+<section class="panel-card settings-card">
+  <div class="section-head"><h3>Preferencias del panel</h3></div>
+  <div class="setting-row"><div><b>Notificaciones de alertas prioritarias</b><p>Recibir avisos dentro del panel cuando llegue una alerta de alta prioridad.</p></div><label class="switch"><input type="checkbox" checked><span></span></label></div>
+  <div class="setting-row"><div><b>Recordatorios de seguimiento</b><p>Mostrar recordatorios sobre casos que requieren revisión.</p></div><label class="switch"><input type="checkbox" checked><span></span></label></div>
+  <div class="setting-row"><div><b>Resumen semanal</b><p>Mostrar un resumen institucional al inicio de cada semana.</p></div><label class="switch"><input type="checkbox"><span></span></label></div>
+</section>
+
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#6C4DF6" />
+  <title>Reportes · SENTIR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="reportes">
+  <div class="mobile-backdrop" id="mobileBackdrop"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <a href="index.html" class="brand" aria-label="Ir al inicio">
+      <img src="assets/sentir-logo-oficial.png" alt="SENTIR" class="brand-logo">
+    </a>
+
+    <nav class="sidebar-nav">
+      <a class="nav-link" href="index.html" data-nav="inicio"><i data-lucide="house"></i><span>Inicio</span></a>
+<a class="nav-link" href="casos.html" data-nav="casos"><i data-lucide="file-text"></i><span>Casos reportados</span></a>
+<a class="nav-link" href="alertas.html" data-nav="alertas"><i data-lucide="bell"></i><span>Alertas</span></a>
+<a class="nav-link" href="seguimiento.html" data-nav="seguimiento"><i data-lucide="chart-no-axes-column-increasing"></i><span>Seguimiento</span></a>
+<a class="nav-link" href="convivencia.html" data-nav="convivencia"><i data-lucide="users"></i><span>Convivencia</span></a>
+<a class="nav-link active" href="reportes.html" data-nav="reportes"><i data-lucide="bar-chart-3"></i><span>Reportes</span></a>
+<a class="nav-link" href="perfil.html" data-nav="perfil"><i data-lucide="user-round"></i><span>Mi perfil</span></a>
+    </nav>
+
+    <div class="sidebar-message" aria-hidden="true">
+      <span class="side-spark">✦</span>
+      <p>Escuela que siente,<br><b>comunidad que crece.</b></p>
+      <span class="side-heart">♥</span>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="icon-btn mobile-menu" id="mobileMenuBtn" aria-label="Abrir menú">
+          <i data-lucide="menu"></i>
+        </button>
+        <div>
+          <h1>Reportes</h1>
+          <p>Indicadores y panorama institucional</p>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="icon-btn notification-btn" id="notificationBtn" aria-label="Notificaciones">
+          <i data-lucide="bell"></i>
+          <span class="notification-dot" id="notificationCount">3</span>
+        </button>
+        <span class="topbar-divider"></span>
+        <button class="profile-trigger" id="profileTrigger" aria-expanded="false">
+          <img src="assets/coordinadora-avatar.png" alt="Foto de perfil" class="avatar js-profile-avatar">
+          <span class="profile-copy">
+            <strong id="topProfileName">María Fernanda Torres</strong>
+            <small>Coordinadora de convivencia</small>
+          </span>
+          <i data-lucide="chevron-down" class="chevron"></i>
+        </button>
+      </div>
+    </header>
+
+    <section class="notification-panel" id="notificationPanel" aria-hidden="true">
+      <div class="panel-head">
+        <div>
+          <h3>Notificaciones</h3>
+          <p>Lo más reciente de tu institución</p>
+        </div>
+        <button class="icon-btn" data-close-panel><i data-lucide="x"></i></button>
+      </div>
+      <div class="notification-list">
+        <button class="notification-item" data-go="alertas.html">
+          <span class="notification-icon danger"><i data-lucide="bell-ring"></i></span>
+          <span><b>Nueva alerta de alta prioridad</b><small>Grado 8°B · hace 12 min</small></span>
+        </button>
+        <button class="notification-item" data-go="seguimiento.html">
+          <span class="notification-icon primary"><i data-lucide="activity"></i></span>
+          <span><b>Caso actualizado</b><small>Seguimiento de caso #2316 · hace 1 h</small></span>
+        </button>
+        <button class="notification-item" data-go="convivencia.html">
+          <span class="notification-icon success"><i data-lucide="check-circle-2"></i></span>
+          <span><b>Compromiso completado</b><small>Acuerdo de convivencia · hoy</small></span>
+        </button>
+      </div>
+    </section>
+
+    <div class="profile-menu" id="profileMenu" aria-hidden="true">
+      <a href="perfil.html"><i data-lucide="user-round"></i> Ver mi perfil</a>
+      <button id="logoutBtn"><i data-lucide="log-out"></i> Cerrar sesión</button>
+    </div>
+
+    <main class="page-content">
+      
+<section class="page-heading">
+  <div><span class="eyebrow">Indicadores institucionales</span><h2>Reportes</h2><p>Consulta tendencias generales sin exponer información personal sensible.</p></div>
+  <div class="button-row"><button class="btn btn-soft" id="printReport"><i data-lucide="printer"></i> Imprimir</button><button class="btn btn-primary" id="exportReport"><i data-lucide="download"></i> Exportar CSV</button></div>
+</section>
+
+<section class="panel-card">
+  <div class="filters report-filters">
+    <select id="reportPeriod"><option value="month">Este mes</option><option value="quarter">Último trimestre</option><option value="year">Este año</option></select>
+    <select id="reportGrade"><option value="">Todos los grados</option><option>Sexto</option><option>Séptimo</option><option>Octavo</option><option>Noveno</option><option>Décimo</option><option>Once</option></select>
+    <button class="btn btn-outline" id="applyReportFilters"><i data-lucide="sliders-horizontal"></i> Aplicar filtros</button>
+  </div>
+</section>
+
+<section class="kpi-grid report-kpis">
+  <article class="kpi-card"><span class="kpi-icon pink"><i data-lucide="bell"></i></span><div><small>Alertas registradas</small><strong>28</strong><p>Periodo seleccionado</p></div></article>
+  <article class="kpi-card"><span class="kpi-icon blue"><i data-lucide="folder-kanban"></i></span><div><small>Casos abiertos</small><strong>18</strong><p>Seguimiento activo</p></div></article>
+  <article class="kpi-card"><span class="kpi-icon green"><i data-lucide="circle-check-big"></i></span><div><small>Tasa de cierre</small><strong>67%</strong><p>Casos con plan de cierre</p></div></article>
+  <article class="kpi-card"><span class="kpi-icon lilac"><i data-lucide="handshake"></i></span><div><small>Acciones realizadas</small><strong>16</strong><p>Mediaciones y talleres</p></div></article>
+</section>
+
+<section class="dashboard-grid report-grid">
+  <article class="panel-card chart-card">
+    <div class="section-head"><div><h3>Alertas por grado</h3><p>Distribución institucional</p></div></div>
+    <canvas id="barChart" width="760" height="330" aria-label="Gráfico de alertas por grado"></canvas>
+  </article>
+  <article class="panel-card chart-card">
+    <div class="section-head"><div><h3>Estado de los casos</h3><p>Casos registrados</p></div></div>
+    <canvas id="donutChart" width="470" height="330" aria-label="Gráfico de estado de casos"></canvas>
+    <div class="chart-legend" id="donutLegend"></div>
+  </article>
+</section>
+
+<section class="panel-card">
+  <div class="section-head"><h3>Resumen por grado</h3><span class="muted-text">Datos demostrativos del panel</span></div>
+  <div class="table-wrap">
+    <table class="data-table"><thead><tr><th>Grado</th><th>Alertas</th><th>Casos</th><th>Resueltos</th><th>Indicador de bienestar</th></tr></thead>
+    <tbody>
+      <tr><td>Sexto</td><td>8</td><td>5</td><td>4</td><td><span class="pill success">65%</span></td></tr>
+      <tr><td>Séptimo</td><td>10</td><td>6</td><td>5</td><td><span class="pill attention">78%</span></td></tr>
+      <tr><td>Octavo</td><td>7</td><td>5</td><td>3</td><td><span class="pill info">52%</span></td></tr>
+      <tr><td>Noveno</td><td>5</td><td>4</td><td>3</td><td><span class="pill info">41%</span></td></tr>
+      <tr><td>Décimo</td><td>6</td><td>4</td><td>3</td><td><span class="pill success">68%</span></td></tr>
+      <tr><td>Once</td><td>4</td><td>3</td><td>2</td><td><span class="pill info">47%</span></td></tr>
+    </tbody></table>
+  </div>
+</section>
+
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

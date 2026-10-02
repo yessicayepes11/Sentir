@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#6C4DF6" />
-  <title>Coordinadora académica · SENTIR</title>
+  <title>Mi perfil · SENTIR</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body data-page="inicio">
+<body data-page="perfil">
   <div class="mobile-backdrop" id="mobileBackdrop"></div>
 
   <aside class="sidebar" id="sidebar">
@@ -19,13 +19,13 @@
     </a>
 
     <nav class="sidebar-nav">
-      <a class="nav-link active" href="index.html" data-nav="inicio"><i data-lucide="house"></i><span>Inicio</span></a>
+      <a class="nav-link" href="index.html" data-nav="inicio"><i data-lucide="house"></i><span>Inicio</span></a>
 <a class="nav-link" href="casos.html" data-nav="casos"><i data-lucide="file-text"></i><span>Casos reportados</span></a>
 <a class="nav-link" href="alertas.html" data-nav="alertas"><i data-lucide="bell"></i><span>Alertas</span></a>
 <a class="nav-link" href="seguimiento.html" data-nav="seguimiento"><i data-lucide="chart-no-axes-column-increasing"></i><span>Seguimiento</span></a>
 <a class="nav-link" href="convivencia.html" data-nav="convivencia"><i data-lucide="users"></i><span>Convivencia</span></a>
 <a class="nav-link" href="reportes.html" data-nav="reportes"><i data-lucide="bar-chart-3"></i><span>Reportes</span></a>
-<a class="nav-link" href="perfil.html" data-nav="perfil"><i data-lucide="user-round"></i><span>Mi perfil</span></a>
+<a class="nav-link active" href="perfil.html" data-nav="perfil"><i data-lucide="user-round"></i><span>Mi perfil</span></a>
     </nav>
 
     <div class="sidebar-message" aria-hidden="true">
@@ -42,8 +42,8 @@
           <i data-lucide="menu"></i>
         </button>
         <div>
-          <h1>Coordinadora académica</h1>
-          <p>Panel institucional</p>
+          <h1>Mi perfil</h1>
+          <p>Datos de la coordinadora</p>
         </div>
       </div>
 
@@ -56,7 +56,7 @@
         <button class="profile-trigger" id="profileTrigger" aria-expanded="false">
           <img src="assets/coordinadora-avatar.png" alt="Foto de perfil" class="avatar js-profile-avatar">
           <span class="profile-copy">
-            <strong id="topProfileName">María Fernanda Torres</strong>
+            <strong id="topProfileName">Laura Martínez</strong>
             <small>Coordinadora de convivencia</small>
           </span>
           <i data-lucide="chevron-down" class="chevron"></i>
@@ -95,80 +95,44 @@
 
     <main class="page-content">
       
-<section class="hero-card">
-  <div class="hero-copy">
-    <span class="eyebrow">Panel institucional</span>
-    <h2>Hola, Coordinadora <span class="hero-heart">♡</span></h2>
-    <p>Aquí puedes revisar las alertas, casos remitidos y hacer seguimiento al estado de la convivencia en tu institución.</p>
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="alertas.html"><i data-lucide="bell"></i> Ver alertas</a>
-      <a class="btn btn-outline" href="reportes.html"><i data-lucide="bar-chart-3"></i> Ver reporte</a>
-    </div>
-  </div>
-  <div class="hero-visual">
-    <img src="assets/coordinadora-hero.png" alt="Ilustración de coordinadora de convivencia">
-  </div>
+<section class="page-heading">
+  <div><span class="eyebrow">Cuenta institucional</span><h2>Mi perfil</h2><p>Actualiza tu fotografía y tus datos de contacto visibles en el panel.</p></div>
 </section>
 
-<section class="kpi-grid" id="dashboardKpis">
-  <article class="kpi-card">
-    <span class="kpi-icon pink"><i data-lucide="bell"></i></span>
-    <div><small>Alertas activas</small><strong id="kpiAlerts">14</strong><p class="trend up">↑ 3 respecto a la semana anterior</p></div>
-  </article>
-  <article class="kpi-card">
-    <span class="kpi-icon blue"><i data-lucide="users"></i></span>
-    <div><small>Casos en seguimiento</small><strong id="kpiTracking">21</strong><p class="trend down">↓ 2 respecto a la semana anterior</p></div>
-  </article>
-  <article class="kpi-card">
-    <span class="kpi-icon green"><i data-lucide="badge-check"></i></span>
-    <div><small>Situaciones resueltas</small><strong id="kpiResolved">36</strong><p class="trend up">↑ 8 respecto al mes anterior</p></div>
-  </article>
-  <article class="kpi-card">
-    <span class="kpi-icon lilac"><i data-lucide="users-round"></i></span>
-    <div><small>Docentes que reportaron</small><strong>9</strong><p>Este mes</p></div>
-  </article>
-</section>
-
-<section class="dashboard-grid">
-  <article class="panel-card">
-    <div class="section-head">
-      <h3><i data-lucide="bell-ring" class="title-icon pink-text"></i> Alertas prioritarias</h3>
-      <a href="alertas.html">Ver todas <i data-lucide="arrow-right"></i></a>
+<section class="profile-layout">
+  <article class="panel-card profile-card">
+    <div class="profile-photo-wrap">
+      <img src="assets/coordinadora-avatar.png" alt="Foto de perfil" class="profile-large js-profile-avatar" id="profilePreview">
+      <label class="photo-edit" for="profilePhotoInput"><i data-lucide="camera"></i></label>
+      <input id="profilePhotoInput" type="file" accept="image/*" hidden>
     </div>
-    <div id="priorityAlerts" class="compact-list"></div>
+    <h3 id="profileDisplayName">Laura Martínez</h3>
+    <p>Coordinadora de convivencia</p>
+    <span class="pill success"><i data-lucide="badge-check"></i> Cuenta activa</span>
+    <div class="profile-mini-stats">
+      <div><strong>21</strong><small>Casos seguidos</small></div>
+      <div><strong>14</strong><small>Alertas activas</small></div>
+    </div>
   </article>
 
   <article class="panel-card">
-    <div class="section-head">
-      <h3><i data-lucide="chart-no-axes-column-increasing" class="title-icon pink-text"></i> Panorama por grado</h3>
-      <a href="reportes.html">Ver detalle <i data-lucide="arrow-right"></i></a>
-    </div>
-    <div class="grade-bars">
-      <div class="grade-row"><span>Sexto</span><div class="progress"><i style="width:65%"></i></div><b>65%</b></div>
-      <div class="grade-row"><span>Séptimo</span><div class="progress pinkbar"><i style="width:78%"></i></div><b>78%</b></div>
-      <div class="grade-row"><span>Octavo</span><div class="progress"><i style="width:52%"></i></div><b>52%</b></div>
-      <div class="grade-row"><span>Noveno</span><div class="progress"><i style="width:41%"></i></div><b>41%</b></div>
-      <div class="grade-row"><span>Décimo</span><div class="progress deep"><i style="width:68%"></i></div><b>68%</b></div>
-      <div class="grade-row"><span>Once</span><div class="progress pinkbar"><i style="width:47%"></i></div><b>47%</b></div>
-    </div>
+    <div class="section-head"><h3>Información personal</h3></div>
+    <form id="profileForm" class="form-grid">
+      <label>Nombre completo<input name="name" value="Laura Martínez"></label>
+      <label>Correo institucional<input name="email" type="email" value="laura.martinez@institucion.edu.co"></label>
+      <label>Celular<input name="phone" value="300 555 2187"></label>
+      <label>Cargo<input value="Coordinadora de convivencia" disabled></label>
+      <label class="full">Descripción<textarea name="bio" rows="4">Acompañamiento institucional para fortalecer la convivencia, la prevención y el bienestar escolar.</textarea></label>
+      <div class="form-actions full"><button class="btn btn-primary" type="submit"><i data-lucide="save"></i> Guardar cambios</button></div>
+    </form>
   </article>
 </section>
 
-<section class="panel-card case-follow-panel">
-  <div class="section-head">
-    <h3><i data-lucide="users-round" class="title-icon purple-text"></i> Seguimiento de casos</h3>
-    <a href="seguimiento.html">Ver todos los casos <i data-lucide="arrow-right"></i></a>
-  </div>
-  <div class="status-grid" id="dashboardStatusGrid"></div>
-</section>
-
-<section class="role-note">
-  <span class="role-icon"><i data-lucide="shield-check"></i></span>
-  <div>
-    <strong>Tu rol como Coordinadora de convivencia</strong>
-    <p>Puedes ver información institucional, alertas, casos reportados y su seguimiento. No tienes acceso a los diarios personales ni a detalles clínicos de los estudiantes; aquí se ve información confidencial y contextual para acompañar la convivencia escolar.</p>
-  </div>
-  <i data-lucide="info" class="role-info"></i>
+<section class="panel-card settings-card">
+  <div class="section-head"><h3>Preferencias del panel</h3></div>
+  <div class="setting-row"><div><b>Notificaciones de alertas prioritarias</b><p>Recibir avisos dentro del panel cuando llegue una alerta de alta prioridad.</p></div><label class="switch"><input type="checkbox" checked><span></span></label></div>
+  <div class="setting-row"><div><b>Recordatorios de seguimiento</b><p>Mostrar recordatorios sobre casos que requieren revisión.</p></div><label class="switch"><input type="checkbox" checked><span></span></label></div>
+  <div class="setting-row"><div><b>Resumen semanal</b><p>Mostrar un resumen institucional al inicio de cada semana.</p></div><label class="switch"><input type="checkbox"><span></span></label></div>
 </section>
 
     </main>

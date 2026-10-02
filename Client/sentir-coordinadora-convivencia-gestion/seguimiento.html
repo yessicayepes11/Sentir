@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#6C4DF6" />
-  <title>Casos reportados · SENTIR</title>
+  <title>Seguimiento · SENTIR</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body data-page="casos">
+<body data-page="seguimiento">
   <div class="mobile-backdrop" id="mobileBackdrop"></div>
 
   <aside class="sidebar" id="sidebar">
@@ -20,9 +20,9 @@
 
     <nav class="sidebar-nav">
       <a class="nav-link" href="index.html" data-nav="inicio"><i data-lucide="house"></i><span>Inicio</span></a>
-<a class="nav-link active" href="casos.html" data-nav="casos"><i data-lucide="file-text"></i><span>Casos reportados</span></a>
+<a class="nav-link" href="casos.html" data-nav="casos"><i data-lucide="file-text"></i><span>Casos reportados</span></a>
 <a class="nav-link" href="alertas.html" data-nav="alertas"><i data-lucide="bell"></i><span>Alertas</span></a>
-<a class="nav-link" href="seguimiento.html" data-nav="seguimiento"><i data-lucide="chart-no-axes-column-increasing"></i><span>Seguimiento</span></a>
+<a class="nav-link active" href="seguimiento.html" data-nav="seguimiento"><i data-lucide="chart-no-axes-column-increasing"></i><span>Seguimiento</span></a>
 <a class="nav-link" href="convivencia.html" data-nav="convivencia"><i data-lucide="users"></i><span>Convivencia</span></a>
 <a class="nav-link" href="reportes.html" data-nav="reportes"><i data-lucide="bar-chart-3"></i><span>Reportes</span></a>
 <a class="nav-link" href="perfil.html" data-nav="perfil"><i data-lucide="user-round"></i><span>Mi perfil</span></a>
@@ -42,8 +42,8 @@
           <i data-lucide="menu"></i>
         </button>
         <div>
-          <h1>Casos reportados</h1>
-          <p>Gestión y revisión de casos</p>
+          <h1>Seguimiento</h1>
+          <p>Estado y evolución de los casos</p>
         </div>
       </div>
 
@@ -56,7 +56,7 @@
         <button class="profile-trigger" id="profileTrigger" aria-expanded="false">
           <img src="assets/coordinadora-avatar.png" alt="Foto de perfil" class="avatar js-profile-avatar">
           <span class="profile-copy">
-            <strong id="topProfileName">María Fernanda Torres</strong>
+            <strong id="topProfileName">Laura Martínez</strong>
             <small>Coordinadora de convivencia</small>
           </span>
           <i data-lucide="chevron-down" class="chevron"></i>
@@ -96,51 +96,24 @@
     <main class="page-content">
       
 <section class="page-heading">
-  <div><span class="eyebrow">Gestión institucional</span><h2>Casos reportados</h2><p>Consulta, filtra y actualiza los casos remitidos a convivencia.</p></div>
+  <div><span class="eyebrow">Acompañamiento</span><h2>Seguimiento</h2><p>Visualiza el avance de los casos y registra notas institucionales de seguimiento.</p></div>
+  <a class="btn btn-primary" href="casos.html"><i data-lucide="folder-kanban"></i> Ver casos</a>
 </section>
 
-<section class="summary-strip">
-  <article><span class="summary-icon orange"><i data-lucide="clock-3"></i></span><div><small>Pendientes</small><strong id="casePendingCount">0</strong></div></article>
-  <article><span class="summary-icon blue"><i data-lucide="refresh-cw"></i></span><div><small>En proceso</small><strong id="caseProcessCount">0</strong></div></article>
-  <article><span class="summary-icon purple"><i data-lucide="brain"></i></span><div><small>Escalados</small><strong id="caseEscalatedCount">0</strong></div></article>
-  <article><span class="summary-icon green"><i data-lucide="check-circle-2"></i></span><div><small>Cerrados</small><strong id="caseClosedCount">0</strong></div></article>
-</section>
+<section class="summary-strip" id="trackingSummary"></section>
 
 <section class="panel-card">
   <div class="filters">
-    <label class="search-box"><i data-lucide="search"></i><input id="caseSearch" type="search" placeholder="Buscar estudiante, grado o caso..."></label>
-    <select id="caseStatusFilter"><option value="">Todos los estados</option><option>Pendiente</option><option>En proceso</option><option>Escalado</option><option>Cerrado</option></select>
-    <select id="caseRiskFilter"><option value="">Todos los riesgos</option><option>Alto</option><option>Medio</option><option>Bajo</option></select>
-    <button class="btn btn-soft" id="clearCaseFilters"><i data-lucide="rotate-ccw"></i> Limpiar</button>
+    <label class="search-box"><i data-lucide="search"></i><input id="trackingSearch" type="search" placeholder="Buscar caso o estudiante..."></label>
+    <select id="trackingStageFilter"><option value="">Todas las etapas</option><option>Pendiente</option><option>En proceso</option><option>Escalado</option><option>Cerrado</option></select>
   </div>
-  <div class="table-wrap">
-    <table class="data-table">
-      <thead><tr><th>Caso</th><th>Estudiante</th><th>Grado</th><th>Tipo</th><th>Riesgo</th><th>Estado</th><th>Última actualización</th><th></th></tr></thead>
-      <tbody id="casesTableBody"></tbody>
-    </table>
-  </div>
-  <div class="mobile-card-list" id="casesMobileList"></div>
+  <div class="tracking-grid" id="trackingGrid"></div>
 </section>
 
-<div class="modal" id="caseDetailModal">
+<div class="modal" id="trackingModal">
   <div class="modal-dialog modal-lg">
     <button class="modal-close" data-close-modal><i data-lucide="x"></i></button>
-    <div id="caseDetailContent"></div>
-  </div>
-</div>
-
-<div class="modal" id="caseCreateModal">
-  <div class="modal-dialog">
-    <button class="modal-close" data-close-modal><i data-lucide="x"></i></button>
-    <div class="modal-title"><span class="modal-icon purple"><i data-lucide="file-plus-2"></i></span><div><h3>Registrar nuevo caso</h3><p>Completa la información institucional necesaria.</p></div></div>
-    <form id="caseCreateForm" class="form-grid">
-      <label>Nombre del estudiante<input name="student" required placeholder="Ej. Valentina Gómez"></label>
-      <label>Grado<input name="grade" required placeholder="Ej. 8°B"></label>
-      <label>Tipo de situación<select name="type" required><option value="">Selecciona...</option><option>Conflicto entre estudiantes</option><option>Convivencia escolar</option><option>Seguimiento solicitado</option><option>Ausentismo</option></select></label>
-      <label>Nivel de riesgo<select name="risk" required><option>Medio</option><option>Alto</option><option>Bajo</option></select></label>
-      <label class="full">Descripción<textarea name="description" rows="4" required placeholder="Describe brevemente la situación reportada..."></textarea></label>
-      <div class="form-actions full"><button type="button" class="btn btn-soft" data-close-modal>Cancelar</button><button class="btn btn-primary" type="submit">Guardar caso</button></div>
-    </form>
+    <div id="trackingModalContent"></div>
   </div>
 </div>
 

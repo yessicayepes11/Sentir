@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#6C4DF6" />
-  <title>Coordinadora académica · SENTIR</title>
+  <title>Casos reportados · SENTIR</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body data-page="inicio">
+<body data-page="casos">
   <div class="mobile-backdrop" id="mobileBackdrop"></div>
 
   <aside class="sidebar" id="sidebar">
@@ -19,8 +19,8 @@
     </a>
 
     <nav class="sidebar-nav">
-      <a class="nav-link active" href="index.html" data-nav="inicio"><i data-lucide="house"></i><span>Inicio</span></a>
-<a class="nav-link" href="casos.html" data-nav="casos"><i data-lucide="file-text"></i><span>Casos reportados</span></a>
+      <a class="nav-link" href="index.html" data-nav="inicio"><i data-lucide="house"></i><span>Inicio</span></a>
+<a class="nav-link active" href="casos.html" data-nav="casos"><i data-lucide="file-text"></i><span>Casos reportados</span></a>
 <a class="nav-link" href="alertas.html" data-nav="alertas"><i data-lucide="bell"></i><span>Alertas</span></a>
 <a class="nav-link" href="seguimiento.html" data-nav="seguimiento"><i data-lucide="chart-no-axes-column-increasing"></i><span>Seguimiento</span></a>
 <a class="nav-link" href="convivencia.html" data-nav="convivencia"><i data-lucide="users"></i><span>Convivencia</span></a>
@@ -42,8 +42,8 @@
           <i data-lucide="menu"></i>
         </button>
         <div>
-          <h1>Coordinadora académica</h1>
-          <p>Panel institucional</p>
+          <h1>Casos reportados</h1>
+          <p>Gestión y revisión de casos</p>
         </div>
       </div>
 
@@ -56,7 +56,7 @@
         <button class="profile-trigger" id="profileTrigger" aria-expanded="false">
           <img src="assets/coordinadora-avatar.png" alt="Foto de perfil" class="avatar js-profile-avatar">
           <span class="profile-copy">
-            <strong id="topProfileName">María Fernanda Torres</strong>
+            <strong id="topProfileName">Laura Martínez</strong>
             <small>Coordinadora de convivencia</small>
           </span>
           <i data-lucide="chevron-down" class="chevron"></i>
@@ -95,81 +95,55 @@
 
     <main class="page-content">
       
-<section class="hero-card">
-  <div class="hero-copy">
-    <span class="eyebrow">Panel institucional</span>
-    <h2>Hola, Coordinadora <span class="hero-heart">♡</span></h2>
-    <p>Aquí puedes revisar las alertas, casos remitidos y hacer seguimiento al estado de la convivencia en tu institución.</p>
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="alertas.html"><i data-lucide="bell"></i> Ver alertas</a>
-      <a class="btn btn-outline" href="reportes.html"><i data-lucide="bar-chart-3"></i> Ver reporte</a>
-    </div>
+<section class="page-heading">
+  <div><span class="eyebrow">Gestión institucional</span><h2>Casos reportados</h2><p>Consulta, filtra y actualiza los casos remitidos a convivencia.</p></div>
+  <button class="btn btn-primary" data-open-modal="caseCreateModal"><i data-lucide="plus"></i> Registrar caso</button>
+</section>
+
+<section class="summary-strip">
+  <article><span class="summary-icon orange"><i data-lucide="clock-3"></i></span><div><small>Pendientes</small><strong id="casePendingCount">0</strong></div></article>
+  <article><span class="summary-icon blue"><i data-lucide="refresh-cw"></i></span><div><small>En proceso</small><strong id="caseProcessCount">0</strong></div></article>
+  <article><span class="summary-icon purple"><i data-lucide="brain"></i></span><div><small>Escalados</small><strong id="caseEscalatedCount">0</strong></div></article>
+  <article><span class="summary-icon green"><i data-lucide="check-circle-2"></i></span><div><small>Cerrados</small><strong id="caseClosedCount">0</strong></div></article>
+</section>
+
+<section class="panel-card">
+  <div class="filters">
+    <label class="search-box"><i data-lucide="search"></i><input id="caseSearch" type="search" placeholder="Buscar estudiante, grado o caso..."></label>
+    <select id="caseStatusFilter"><option value="">Todos los estados</option><option>Pendiente</option><option>En proceso</option><option>Escalado</option><option>Cerrado</option></select>
+    <select id="caseRiskFilter"><option value="">Todos los riesgos</option><option>Alto</option><option>Medio</option><option>Bajo</option></select>
+    <button class="btn btn-soft" id="clearCaseFilters"><i data-lucide="rotate-ccw"></i> Limpiar</button>
   </div>
-  <div class="hero-visual">
-    <img src="assets/coordinadora-hero.png" alt="Ilustración de coordinadora de convivencia">
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead><tr><th>Caso</th><th>Estudiante</th><th>Grado</th><th>Tipo</th><th>Riesgo</th><th>Estado</th><th>Última actualización</th><th></th></tr></thead>
+      <tbody id="casesTableBody"></tbody>
+    </table>
   </div>
+  <div class="mobile-card-list" id="casesMobileList"></div>
 </section>
 
-<section class="kpi-grid" id="dashboardKpis">
-  <article class="kpi-card">
-    <span class="kpi-icon pink"><i data-lucide="bell"></i></span>
-    <div><small>Alertas activas</small><strong id="kpiAlerts">14</strong><p class="trend up">↑ 3 respecto a la semana anterior</p></div>
-  </article>
-  <article class="kpi-card">
-    <span class="kpi-icon blue"><i data-lucide="users"></i></span>
-    <div><small>Casos en seguimiento</small><strong id="kpiTracking">21</strong><p class="trend down">↓ 2 respecto a la semana anterior</p></div>
-  </article>
-  <article class="kpi-card">
-    <span class="kpi-icon green"><i data-lucide="badge-check"></i></span>
-    <div><small>Situaciones resueltas</small><strong id="kpiResolved">36</strong><p class="trend up">↑ 8 respecto al mes anterior</p></div>
-  </article>
-  <article class="kpi-card">
-    <span class="kpi-icon lilac"><i data-lucide="users-round"></i></span>
-    <div><small>Docentes que reportaron</small><strong>9</strong><p>Este mes</p></div>
-  </article>
-</section>
-
-<section class="dashboard-grid">
-  <article class="panel-card">
-    <div class="section-head">
-      <h3><i data-lucide="bell-ring" class="title-icon pink-text"></i> Alertas prioritarias</h3>
-      <a href="alertas.html">Ver todas <i data-lucide="arrow-right"></i></a>
-    </div>
-    <div id="priorityAlerts" class="compact-list"></div>
-  </article>
-
-  <article class="panel-card">
-    <div class="section-head">
-      <h3><i data-lucide="chart-no-axes-column-increasing" class="title-icon pink-text"></i> Panorama por grado</h3>
-      <a href="reportes.html">Ver detalle <i data-lucide="arrow-right"></i></a>
-    </div>
-    <div class="grade-bars">
-      <div class="grade-row"><span>Sexto</span><div class="progress"><i style="width:65%"></i></div><b>65%</b></div>
-      <div class="grade-row"><span>Séptimo</span><div class="progress pinkbar"><i style="width:78%"></i></div><b>78%</b></div>
-      <div class="grade-row"><span>Octavo</span><div class="progress"><i style="width:52%"></i></div><b>52%</b></div>
-      <div class="grade-row"><span>Noveno</span><div class="progress"><i style="width:41%"></i></div><b>41%</b></div>
-      <div class="grade-row"><span>Décimo</span><div class="progress deep"><i style="width:68%"></i></div><b>68%</b></div>
-      <div class="grade-row"><span>Once</span><div class="progress pinkbar"><i style="width:47%"></i></div><b>47%</b></div>
-    </div>
-  </article>
-</section>
-
-<section class="panel-card case-follow-panel">
-  <div class="section-head">
-    <h3><i data-lucide="users-round" class="title-icon purple-text"></i> Seguimiento de casos</h3>
-    <a href="seguimiento.html">Ver todos los casos <i data-lucide="arrow-right"></i></a>
+<div class="modal" id="caseDetailModal">
+  <div class="modal-dialog modal-lg">
+    <button class="modal-close" data-close-modal><i data-lucide="x"></i></button>
+    <div id="caseDetailContent"></div>
   </div>
-  <div class="status-grid" id="dashboardStatusGrid"></div>
-</section>
+</div>
 
-<section class="role-note">
-  <span class="role-icon"><i data-lucide="shield-check"></i></span>
-  <div>
-    <strong>Tu rol como Coordinadora de convivencia</strong>
-    <p>Puedes ver información institucional, alertas, casos reportados y su seguimiento. No tienes acceso a los diarios personales ni a detalles clínicos de los estudiantes; aquí se ve información confidencial y contextual para acompañar la convivencia escolar.</p>
+<div class="modal" id="caseCreateModal">
+  <div class="modal-dialog">
+    <button class="modal-close" data-close-modal><i data-lucide="x"></i></button>
+    <div class="modal-title"><span class="modal-icon purple"><i data-lucide="file-plus-2"></i></span><div><h3>Registrar nuevo caso</h3><p>Completa la información institucional necesaria.</p></div></div>
+    <form id="caseCreateForm" class="form-grid">
+      <label>Nombre del estudiante<input name="student" required placeholder="Ej. Valentina Gómez"></label>
+      <label>Grado<input name="grade" required placeholder="Ej. 8°B"></label>
+      <label>Tipo de situación<select name="type" required><option value="">Selecciona...</option><option>Conflicto entre estudiantes</option><option>Convivencia escolar</option><option>Seguimiento solicitado</option><option>Ausentismo</option></select></label>
+      <label>Nivel de riesgo<select name="risk" required><option>Medio</option><option>Alto</option><option>Bajo</option></select></label>
+      <label class="full">Descripción<textarea name="description" rows="4" required placeholder="Describe brevemente la situación reportada..."></textarea></label>
+      <div class="form-actions full"><button type="button" class="btn btn-soft" data-close-modal>Cancelar</button><button class="btn btn-primary" type="submit">Guardar caso</button></div>
+    </form>
   </div>
-  <i data-lucide="info" class="role-info"></i>
-</section>
+</div>
 
     </main>
   </div>

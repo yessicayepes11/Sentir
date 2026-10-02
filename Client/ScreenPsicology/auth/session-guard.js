@@ -12,6 +12,29 @@
             .forEach(key => sessionStorage.removeItem(key));
     }
 
+    // Si la psicóloga inició sesión en el inicio de sesión principal (administrativo.html),
+    // esa sesión vale aquí: no se le pide iniciar sesión otra vez.
+    function sesionDesdeInicioPrincipal() {
+        let usuario = null;
+        try {
+            usuario = JSON.parse(sessionStorage.getItem('usuarioSentir') || 'null');
+        } catch (error) {
+            usuario = null;
+        }
+
+        if (!usuario || !usuario.token || Number(usuario.id_rol) !== 6) return;
+        if (sessionStorage.getItem(SESSION_KEY) === 'active') return;
+
+        const now = Date.now();
+        sessionStorage.setItem(SESSION_KEY, 'active');
+        sessionStorage.setItem(LOGIN_AT_KEY, String(now));
+        sessionStorage.setItem('sentir_psych_last_activity', String(now));
+        sessionStorage.setItem('sentir_psych_email', usuario.correo || '');
+        sessionStorage.setItem(ROLE_KEY, 'psychology');
+    }
+
+    sesionDesdeInicioPrincipal();
+
     function isAuthorized() {
         const active = sessionStorage.getItem(SESSION_KEY) === 'active';
         const correctRole = sessionStorage.getItem(ROLE_KEY) === 'psychology';
@@ -23,7 +46,8 @@
     function enforceAccess() {
         if (!isAuthorized()) {
             clearPsychSession();
-            window.location.replace('../auth/Welcome.html');
+            // Sin sesión: al inicio de sesión principal de Sentir
+            window.location.replace('/Client/administrativo.html');
             return false;
         }
         return true;

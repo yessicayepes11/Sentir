@@ -1,0 +1,151 @@
+/* =========================================================
+   PERFIL DE PSICOLOGÍA CON EL MISMO DISEÑO DEL DOCENTE
+   Reglas extraídas de ScreenTeacher/Profile/Profile.css (recuadro de
+   bienvenida, columnas y tarjetas de consejos), limitadas a .psy-look
+   para no afectar el resto de las pantallas de psicología.
+========================================================= */
+
+.psy-look {
+    --purple-dark: #4f22da;
+    --shadow:
+        0 9px 30px
+        rgba(73, 57, 153, 0.08);
+}
+
+.psy-look .nav-icon svg,
+.psy-look .sidebar-heart svg,
+.psy-look .hamburger svg,
+.psy-look .notification-box svg,
+.psy-look .header-placeholder svg,
+.psy-look .dropdown-icon svg,
+.psy-look .hero-heart svg,
+.psy-look .card-header-icon svg,
+.psy-look .readonly-badge svg,
+.psy-look .large-profile-placeholder svg,
+.psy-look .change-photo-button svg,
+.psy-look .data-icon svg,
+.psy-look .institution-note-icon svg,
+.psy-look .request-update-button svg,
+.psy-look .wellbeing-heading-icon svg,
+.psy-look .wellbeing-icon svg,
+.psy-look .side-title-icon svg,
+.psy-look .account-item-icon svg,
+.psy-look .security-icon svg,
+.psy-look .help-icon svg,
+.psy-look .close-modal svg,
+.psy-look .modal-icon svg,
+.psy-look .request-note svg,
+.psy-look .toast-icon svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+
+.psy-look .hero { min-height: 245px; position: relative; display: flex; align-items: center; overflow: hidden; padding: 36px 40px; border-radius: 26px; background: linear-gradient( 110deg, #ffffff, #f4f1ff 43%, #e4e0ff ); box-shadow: var(--shadow); }
+
+.psy-look .hero-content { max-width: 65%; position: relative; z-index: 5; }
+
+.psy-look .hero h1 { color: var(--purple-dark); font-size: clamp( 40px, 3.5vw, 56px ); line-height: 1; letter-spacing: -2px; }
+
+.psy-look .hero h2 { max-width: 620px; margin-top: 10px; color: #504b88; font-size: 18px; line-height: 1.4; font-weight: 500; }
+
+.psy-look .hero-quote { width: fit-content; display: flex; align-items: center; gap: 12px; margin-top: 27px; padding: 12px 20px; border-radius: 30px; background: rgba(255,255,255,.82); color: #625da7; }
+
+.psy-look .hero-heart { width: 24px; height: 24px; color: #966ef4; }
+
+.psy-look .hero-heart svg { fill: #966ef4; stroke: #966ef4; }
+
+.psy-look .hero-quote p { max-width: 260px; font-size: 12px; line-height: 1.4; }
+
+.psy-look .teacher-photo-area { width: 520px; height: 100%; position: absolute; right: 0; top: 0; }
+
+.psy-look .teacher-image-slot { width: 285px; height: 235px; position: absolute; right: 140px; bottom: 0; z-index: 4; }
+
+.psy-look .teacher-image-slot img { width: 100%; height: 100%; object-fit: contain; object-position: bottom; }
+
+.psy-look .hero-circle { position: absolute; border-radius: 50%; }
+
+.psy-look .circle-one { width: 330px; height: 330px; right: 100px; top: 15px; background: rgba(158, 144, 250, .17); }
+
+.psy-look .circle-two { width: 170px; height: 170px; right: -10px; bottom: -60px; background: rgba(119, 94, 234, .12); }
+
+.psy-look .hero-side-text { position: absolute; right: 35px; top: 58px; z-index: 5; color: #7567df; font-size: 15px; line-height: 1.45; font-style: italic; transform: rotate(-5deg); }
+
+.psy-look .hero-leaf { position: absolute; z-index: 3; border-radius: 100% 0 100% 0; background: #8176e8; opacity: .6; }
+
+.psy-look .leaf-one { width: 42px; height: 92px; right: 20px; bottom: 8px; transform: rotate(25deg); }
+
+.psy-look .leaf-two { width: 30px; height: 70px; right: 67px; bottom: -2px; transform: rotate(-24deg); }
+
+.psy-look .profile-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(310px, .9fr); gap: 17px; margin-top: 17px; }
+
+.psy-look .profile-main-column,
+.psy-look .profile-side-column { display: flex; flex-direction: column; gap: 17px; }
+
+.psy-look .phrase-card { min-height: 190px; position: relative; overflow: hidden; padding: 21px 22px; border-radius: 23px; background: white; box-shadow: var(--shadow); }
+
+.psy-look .phrase-heading { position: relative; z-index: 3; display: flex; align-items: center; gap: 12px; }
+
+.psy-look .phrase-heading h3 { color: #2e286e; font-size: 15px; }
+
+.psy-look .phrase-icon { width: 45px; height: 45px; flex-shrink: 0; display: grid; place-items: center; padding: 10px; border-radius: 14px; }
+
+.psy-look .phrase-icon svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+
+.psy-look .phrase-content { position: relative; z-index: 3; display: flex; align-items: center; justify-content: center; min-height: 112px; padding: 12px 12px 5px; text-align: center; }
+
+.psy-look .phrase-content p { color: #5147a2; font-family: Georgia, "Times New Roman", serif; font-size: 17px; font-style: italic; line-height: 1.55; }
+
+.psy-look .phrase-decoration { position: absolute; right: 22px; bottom: 14px; z-index: 2; font-size: 27px; opacity: .55; }
+
+.psy-look .phrase-purple { background: linear-gradient( 135deg, #ffffff, #f4f0ff ); }
+
+.psy-look .phrase-purple
+.phrase-icon { background: #eee8ff; color: #7147ef; }
+
+.psy-look .phrase-purple
+.phrase-decoration { color: #8056ef; }
+
+.psy-look .phrase-green { background: linear-gradient( 135deg, #ffffff, #ebfaf5 ); }
+
+.psy-look .phrase-green
+.phrase-icon { background: #daf7e9; color: #24b57a; }
+
+.psy-look .phrase-green
+.phrase-decoration { color: #55cda1; }
+
+.psy-look .phrase-pink { background: linear-gradient( 135deg, #ffffff, #fff0f5 ); }
+
+.psy-look .phrase-pink
+.phrase-icon { background: #ffe1eb; color: #ed6088; }
+
+.psy-look .phrase-pink
+.phrase-decoration { color: #ee6f96; }
+
+.psy-look .phrase-card::before,
+.psy-look .phrase-card::after { content: ""; position: absolute; border-radius: 100% 0 100% 0; opacity: .18; }
+
+.psy-look .phrase-card::before { width: 45px; height: 90px; right: 17px; bottom: -17px; background: currentColor; transform: rotate(27deg); }
+
+.psy-look .phrase-card::after { width: 28px; height: 63px; right: 58px; bottom: -13px; background: currentColor; transform: rotate(-25deg); }
+
+.psy-look .phrase-purple { color: #7865e7; }
+
+.psy-look .phrase-green { color: #38b989; }
+
+.psy-look .phrase-pink { color: #ed7899; }
+
+@media (max-width: 1100px) {
+    .psy-look .profile-layout { grid-template-columns: 1fr; }
+    .psy-look .profile-side-column { display: grid; grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 850px) {
+    .psy-look .teacher-photo-area { right: -80px; opacity: .3; }
+}
+
+@media (max-width: 650px) {
+    .psy-look .hero { min-height: 290px; align-items: flex-start; padding: 29px 21px; }
+    .psy-look .hero-content { max-width: 100%; }
+    .psy-look .hero h1 { font-size: 38px; }
+    .psy-look .hero h2 { max-width: 310px; font-size: 15px; }
+    .psy-look .teacher-photo-area { right: -130px; opacity: .12; }
+    .psy-look .hero-side-text { display: none; }
+    .psy-look .profile-side-column { display: flex; }
+}

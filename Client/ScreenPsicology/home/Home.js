@@ -11,7 +11,41 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeaderSearch();
     initMoodStats();
     document.getElementById('goToAlertsBtn').addEventListener('click', () => window.location.href = '../alerts/Alerts.html');
+
+    // Datos reales de la base de datos (los carga sentir-shared.js)
+    document.addEventListener('sentir:datos', (event) => {
+        renderWelcome();
+        renderMood(event.detail.inicio.animo);
+        renderKpis();
+        renderCasesPreview();
+        renderPendingFollowups();
+        renderAiInsight();
+    });
 });
+
+/* Estado anímico general de la institución (diario emocional, últimos 30 días) */
+function renderMood(animo) {
+    if (!animo) return;
+    window.sentirAnimo = animo;
+
+    const titulo = document.getElementById('moodStatusTitle');
+    if (titulo) titulo.innerText = animo.etiqueta;
+
+    const valores = { happy: animo.positivo, neutral: animo.neutral, sad: animo.bajo };
+    document.querySelectorAll('.mood-emoji').forEach(pill => {
+        const objetivo = valores[pill.dataset.mood] || 0;
+        pill.dataset.value = objetivo;
+        pill.title = `${animo.registros} registros de ánimo en los últimos 30 días`;
+        const porcentaje = pill.querySelector('.mood-percent');
+        let actual = 0;
+        const paso = Math.max(1, objetivo / 24);
+        const intervalo = setInterval(() => {
+            actual += paso;
+            if (actual >= objetivo) { porcentaje.innerText = objetivo + '%'; clearInterval(intervalo); }
+            else porcentaje.innerText = Math.floor(actual) + '%';
+        }, 25);
+    });
+}
 
 function initMoodStats() {
     const pills = document.querySelectorAll('.mood-emoji');
@@ -42,11 +76,17 @@ const MOOD_INSIGHTS = {
 };
 
 function openMoodStatsModal(highlightMood) {
+    const animo = window.sentirAnimo || { positivo: 0, neutral: 0, bajo: 0, registros: 0 };
     const data = [
-        { key: 'happy', emoji: '😊', label: 'Ánimo Positivo', value: 62 },
-        { key: 'neutral', emoji: '😐', label: 'Ánimo Neutral', value: 24 },
-        { key: 'sad', emoji: '😔', label: 'Ánimo Bajo', value: 14 }
+        { key: 'happy', emoji: '😊', label: 'Ánimo Positivo', value: animo.positivo },
+        { key: 'neutral', emoji: '😐', label: 'Ánimo Neutral', value: animo.neutral },
+        { key: 'sad', emoji: '😔', label: 'Ánimo Bajo', value: animo.bajo }
     ];
+    const MOOD_INSIGHTS = {
+        happy: `😊 El ${animo.positivo}% de los registros del diario (últimos 30 días) son de ánimo positivo ("Muy bien" o "Bien").`,
+        neutral: `😐 El ${animo.neutral}% de los registros son de ánimo neutral ("Regular"). Vale la pena reforzar espacios de pausa activa.`,
+        sad: `😔 El ${animo.bajo}% de los registros son de ánimo bajo ("Mal" o "Muy mal"). Es el grupo de mayor prioridad: revisa los casos activos en Alertas.`
+    };
 
     const rowsHTML = data.map(d => `
         <div class="mood-chart-row ${d.key === highlightMood ? 'is-active' : ''}">
@@ -59,7 +99,7 @@ function openMoodStatsModal(highlightMood) {
     const overlay = openSentirModal(`
         <div class="sentir-modal-header">
             <div class="sentir-modal-icon"><i class="fa-solid fa-chart-simple"></i></div>
-            <div><h3>Estado Anímico Institucional</h3><p>Distribución general reportada esta semana</p></div>
+            <div><h3>Estado Anímico Institucional</h3><p>${animo.registros} registros del diario emocional en los últimos 30 días</p></div>
         </div>
         <div class="sentir-modal-body">
             <div class="mood-chart">${rowsHTML}</div>
@@ -108,15 +148,16 @@ function renderWelcome() {
 }
 
 function renderKpis() {
+    const k = (window.sentirInicio && window.sentirInicio.kpis) || {};
     const students = getStudents();
-    const alertasNuevas = getAlerts().filter(a => a.estado !== 'Resuelta').length;
-    const riesgoAlto = students.filter(s => s.risk === 'high').length;
+    const alertasActivas = k.alertasActivas ?? getAlerts().filter(a => a.estado !== 'Resuelta').length;
+    const riesgoAlto = k.riesgoAlto ?? students.filter(s => s.risk === 'high').length;
 
     const kpis = [
-        { icon: 'fa-users', label: 'Evaluados', value: 1240, cls: '' },
+        { icon: 'fa-users', label: 'Evaluados', value: k.evaluados ?? 0, cls: '', info: 'Estudiantes que registraron su ánimo en el diario en los últimos 30 días.' },
         { icon: 'fa-triangle-exclamation', label: 'Riesgo Alto', value: riesgoAlto, cls: 'alert', goto: () => window.location.href = '../alerts/Alerts.html' },
-        { icon: 'fa-bell', label: 'Alertas Activas', value: alertasNuevas, cls: 'urgent', goto: () => window.location.href = '../alerts/Alerts.html' },
-        { icon: 'fa-circle-check', label: 'Casos Cerrados', value: 45, cls: '' }
+        { icon: 'fa-bell', label: 'Alertas Activas', value: alertasActivas, cls: 'urgent', goto: () => window.location.href = '../alerts/Alerts.html' },
+        { icon: 'fa-circle-check', label: 'Casos Cerrados', value: k.casosCerrados ?? 0, cls: '', info: 'Solicitudes de ayuda y alertas marcadas como resueltas.' }
     ];
 
     const grid = document.getElementById('homeKpiGrid');
@@ -129,7 +170,7 @@ function renderKpis() {
     `).join('');
 
     grid.querySelectorAll('.kpi-card').forEach((card, i) => {
-        const activate = kpis[i].goto || (() => showToast({ title: kpis[i].label, message: 'Cifra acumulada del período actual.', icon: 'fa-chart-line', type: 'info' }));
+        const activate = kpis[i].goto || (() => showToast({ title: kpis[i].label, message: kpis[i].info || 'Cifra acumulada del período actual.', icon: 'fa-chart-line', type: 'info' }));
         card.addEventListener('click', activate);
         card.addEventListener('keydown', (event) => {
             if (event.key === 'Enter' || event.key === ' ') {
@@ -159,7 +200,7 @@ function animateCounters(scope) {
 
 function renderCasesPreview() {
     const students = getStudents();
-    const priority = students.filter(s => s.risk === 'high').slice(0, 2);
+    const priority = students.filter(s => s.risk === 'high').slice(0, 3);
     const container = document.getElementById('homeCasesPreview');
 
     if (!priority.length) {
@@ -373,7 +414,13 @@ function renderAiInsight() {
     const trend = getAiTrend();
     const text = document.getElementById('aiInsightText');
     const trace = document.getElementById('aiTraceabilityBody');
-    if (!trend || !text || !trace) return;
+    if (!text || !trace) return;
+
+    if (!trend) {
+        text.innerHTML = 'Por ahora no hay una tendencia de <strong>ánimo bajo</strong> concentrada en un grado. Sentir AI seguirá analizando los registros del diario emocional.';
+        trace.innerHTML = '<p><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Se compara la cantidad de registros "Mal" y "Muy mal" por grado en los últimos 7 días frente a los 7 anteriores. No constituye un diagnóstico.</p>';
+        return;
+    }
 
     const previous = Number(trend.previousCount) || 0;
     const current = Number(trend.currentCount) || 0;
@@ -381,7 +428,9 @@ function renderAiInsight() {
     const direction = variation > 0 ? 'incremento' : variation < 0 ? 'disminución' : 'estabilidad';
     const variationText = variation === 0 ? 'sin variación porcentual' : `${Math.abs(variation)}% de ${direction}`;
 
-    text.innerHTML = `Se observa un <strong>${variationText}</strong> en registros asociados con ${trend.topic} en el grado <strong>${trend.group}</strong>, coincidiendo con la proximidad de los exámenes de estado.`;
+    text.innerHTML = previous > 0
+        ? `Se observa un <strong>${variationText}</strong> en registros de ${trend.topic} en el grado <strong>${trend.group}</strong>.`
+        : `El grado <strong>${trend.group}</strong> tiene <strong>${current}</strong> registro${current === 1 ? '' : 's'} de ${trend.topic} en los ${trend.currentPeriod}, sin registros de este tipo la semana anterior.`;
 
     trace.innerHTML = `
         <div><strong>${current}</strong><span>${trend.currentPeriod}</span></div>

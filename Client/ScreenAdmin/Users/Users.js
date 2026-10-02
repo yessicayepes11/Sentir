@@ -1485,13 +1485,22 @@ function updateConditionalFields() {
     configureStudentWizard();
 }
 
+// El grupo ahora es un número (9-1). Si llega un grado viejo con letra (9-A),
+// la letra se convierte en número: A = 1, B = 2, C = 3...
+function groupToNumber(group) {
+    const value = String(group || "").trim();
+    if (/^\d{1,2}$/.test(value)) return String(Number(value));
+    if (/^[A-Za-z]$/.test(value)) return String(value.toUpperCase().charCodeAt(0) - 64);
+    return "";
+}
+
 function splitAssignedGrade(grade) {
     const value = String(grade || "").trim();
-    const match = value.match(/^(\d{1,2})[°º]?\s*-\s*(\d{1,2})$/)
-        || value.match(/^(\d{1,2})[°º]?\s+(\d{1,2})$/);
+    const match = value.match(/^(\d+)[°º]?\s*-\s*([A-Za-z]|\d{1,2})$/i)
+        || value.match(/^(\d+)[°º]?\s*([A-Za-z])$/i);
 
     if (match) {
-        return { number: match[1], letter: match[2] };
+        return { number: match[1], letter: groupToNumber(match[2]) };
     }
 
     const numberOnly = value.match(/^(\d+)[°º]?$/);
@@ -1499,9 +1508,9 @@ function splitAssignedGrade(grade) {
 }
 
 function splitStudentGrade(grade) {
-    const match = String(grade || "").trim().match(/^(\d{1,2})\s*-\s*(\d{1,2})$/);
+    const match = String(grade || "").trim().match(/^(\d{1,2})\s*-\s*([A-Za-z]|\d{1,2})$/i);
     return match
-        ? { number: match[1], letter: match[2] }
+        ? { number: match[1], letter: groupToNumber(match[2]) }
         : { number: "", letter: "" };
 }
 
@@ -1573,7 +1582,7 @@ studentStepNext.addEventListener("click", () => {
     if (isTeacherWizard) {
         teacherWizardStep = 2;
     } else if (studentWizardStep === 2) {
-        studentGradeValue.value = `${studentGradeYear.value.trim()}-${studentGradeLetter.value.trim().toLocaleUpperCase("es")}`;
+        studentGradeValue.value = `${studentGradeYear.value.trim()}-${groupToNumber(studentGradeLetter.value)}`;
         studentWizardStep = 3;
     } else {
         studentWizardStep += 1;
@@ -1603,15 +1612,15 @@ function addTeacherGradeRow(grade = "") {
         <label>Año / grado
             <input class="teacher-grade-year" type="number" min="0" max="99" step="1" placeholder="Ej. 10" aria-label="Año o número del grado que enseña">
         </label>
-        <label>Número
-            <input class="teacher-grade-letter" type="number" min="0" max="99" step="1" inputmode="numeric" placeholder="Ej. 1" aria-label="Segundo número del grado que enseña">
+        <label>Grupo
+            <input class="teacher-grade-letter" type="number" min="1" max="99" step="1" placeholder="Ej. 1" aria-label="Número del grupo que enseña">
         </label>
         <button class="remove-teacher-grade" type="button" aria-label="Quitar grado"><i data-lucide="x"></i></button>
     `;
 
     const parsedGrade = splitAssignedGrade(grade);
     row.querySelector(".teacher-grade-year").value = parsedGrade.number;
-    row.querySelector(".teacher-grade-letter").value = parsedGrade.letter.slice(0, 1);
+    row.querySelector(".teacher-grade-letter").value = parsedGrade.letter;
     row.querySelector(".remove-teacher-grade").addEventListener("click", () => row.remove());
     teacherGradesList.appendChild(row);
     refreshIcons();
@@ -1628,13 +1637,13 @@ function collectTeacherGrades() {
 
     for (const row of teacherGradesList.querySelectorAll(".teacher-grade-row")) {
         const year = row.querySelector(".teacher-grade-year").value.trim();
-        const secondNumber = row.querySelector(".teacher-grade-letter").value.trim();
-        if (!year && !secondNumber) continue;
-        if (!/^\d{1,2}$/.test(year) || !/^\d{1,2}$/.test(secondNumber)) {
-            return { grades: [], error: "Completa los dos números de cada grado que enseña" };
+        const letter = groupToNumber(row.querySelector(".teacher-grade-letter").value);
+        if (!year && !row.querySelector(".teacher-grade-letter").value.trim()) continue;
+        if (!/^\d{1,2}$/.test(year) || !/^[1-9]\d?$/.test(letter)) {
+            return { grades: [], error: "Completa el grado y el número del grupo de cada grado que enseña" };
         }
 
-        const grade = `${year}-${secondNumber}`;
+        const grade = `${year}-${letter}`;
         if (seenGrades.has(grade)) {
             return { grades: [], error: `El grado ${grade} está repetido` };
         }
@@ -1824,9 +1833,24 @@ photoInput.addEventListener(
 // CREAR
 // ======================================================
 
+/* Campo de contraseña: obligatorio al crear; opcional al editar (vacío = no se cambia) */
+function configurarCampoContrasena(editando) {
+    if (!passwordInput) return;
+    passwordInput.required = !editando;
+    passwordInput.placeholder = editando ? "Escribe una nueva solo si quieres cambiarla" : "Crear contraseña";
+
+    const pista = document.getElementById("passwordHint");
+    if (pista) {
+        pista.textContent = editando
+            ? "Déjala vacía para conservar la contraseña actual. Si escribes una nueva: mínimo 8 caracteres, con una mayúscula, una minúscula, un número y un carácter especial."
+            : "Mínimo 8 caracteres, con una mayúscula, una minúscula, un número y un carácter especial.";
+    }
+}
+
 function openCreateModal() {
 
     userForm.reset();
+    configurarCampoContrasena(false);
     studentWizardStep = 1;
     teacherWizardStep = 1;
     studentGradeValue.value = "";
@@ -1964,8 +1988,9 @@ function openEditModal(id) {
         user.phone;
 
 
-    passwordInput.value =
-        user.password;
+    // Las contraseñas están cifradas: no se muestran. Vacío = se conserva la actual.
+    passwordInput.value = "";
+    configurarCampoContrasena(true);
 
     if (birthDateInput && user.birthDate) {
         birthDateInput.value = user.birthDate;
@@ -2177,7 +2202,9 @@ userForm.addEventListener(
             return;
         }
 
-        if (!isStrongPassword(passwordInput.value)) {
+        const editandoSinCambiarContrasena = Boolean(editingId.value) && !passwordInput.value;
+
+        if (!editandoSinCambiarContrasena && !isStrongPassword(passwordInput.value)) {
             showToast("La contraseña debe tener mínimo 8 caracteres, incluir mayúsculas, minúsculas, números y un carácter especial");
             passwordInput.focus();
             return;
@@ -2320,13 +2347,13 @@ userForm.addEventListener(
 
             gradoNumero: gradeNumberInput.value,
 
-            gradoLetra: gradeLetterInput.value.trim().toLocaleUpperCase("es")
+            gradoLetra: groupToNumber(gradeLetterInput.value)
 
         };
 
         const studentPayload = {
             studentGradeNumber: studentGradeYear.value.trim(),
-            studentGradeLetter: studentGradeLetter.value.trim().toLocaleUpperCase("es"),
+            studentGradeLetter: groupToNumber(studentGradeLetter.value),
             hasDiagnosis: studentHasDiagnosis.value,
             diagnosisName: studentDiagnosisName.value.trim(),
             diagnosisDescription: studentDiagnosisDescription.value.trim(),

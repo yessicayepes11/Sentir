@@ -425,105 +425,59 @@
              PRÓXIMA INSIGNIA
         ================================================== -->
 
-        <section class="next-badge-card">
-
-
+        <section class="next-badge-card" id="nextBadgeCard">
             <div class="featured-badge">
-
-
                 <div class="featured-badge-shape">
-
                     <div class="featured-inner">
-                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star" id="featuredIcon"></i>
                     </div>
-
                 </div>
-
             </div>
-
-
-
             <div class="next-badge-content">
-
                 <span class="featured-label">
                     INSIGNIA DESTACADA
                 </span>
-
                 <h2>
                     Próxima por desbloquear
                 </h2>
-
-                <p>
-                    ¡Te falta muy poco! Sigue registrando
-                    cómo te sientes en tu diario para obtener
-                    esta insignia.
+                <p id="featuredText">
+                    Sentir IA está preparando tus insignias…
                 </p>
-
-
                 <div class="progress-row">
-
                     <div class="progress-track">
-
                         <div
                             class="progress-fill"
-                            style="width: 80%;"
+                            id="featuredFill"
+                            style="width: 0%;"
                         ></div>
-
                     </div>
-
-                    <strong>
-                        4/5
+                    <strong id="featuredCount">
+                        0/0
                     </strong>
-
                 </div>
-
             </div>
-
-
-
             <div class="featured-description">
-
-                <h3>
-                    Explorador de emociones
+                <h3 id="featuredTitle">
+                    Cargando…
                 </h3>
-
-                <p>
-                    Has registrado tu estado de ánimo durante 5 días.
-                </p>
-
-
-                <span class="encouragement-pill">
-                    ¡Tú puedes!
-
-                    <i class="fa-solid fa-star"></i>
-                </span>
-
+                <p id="featuredDescription"></p>
+                <a class="encouragement-pill featured-go" id="featuredGo" href="/Client/ScreenStudents/Resources/Resources.html">
+                    Ir al recurso
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
             </div>
-
-
-
             <div class="featured-decoration">
-
                 <span>
                     Cada día<br>
                     cuenta
                 </span>
-
                 <i class="fa-solid fa-heart"></i>
-
-
                 <div class="decorative-leaves">
-
                     <i class="fa-solid fa-leaf leaf-one"></i>
-
                     <i class="fa-solid fa-leaf leaf-two"></i>
-
                     <i class="fa-solid fa-leaf leaf-three"></i>
-
                 </div>
-
             </div>
-
         </section>
 
 
@@ -542,357 +496,58 @@
                 </h2>
 
                 <p>
-                    Explora tus logros por categoría.
-                    Cada insignia representa un paso en tu bienestar.
+                    Cada insignia se gana usando un recurso: respiraciones,
+                    meditaciones, retos de autocuidado, videos o tu diario. Sentir IA crea nuevas a medida que avanzas.
                 </p>
 
             </div>
 
 
 
-            <!-- FILTROS -->
-
+            <!-- FILTROS: una categoría por cada tipo de recurso -->
             <div
                 class="badge-filters"
                 id="badgeFilters"
             >
-
-                <button
-                    class="filter-button active"
-                    data-filter="all"
-                >
-
+                <button class="filter-button active" data-filter="all">
                     <i class="fa-solid fa-star"></i>
-
                     Todas
-
                 </button>
-
-
-                <button
-                    class="filter-button"
-                    data-filter="constancia"
-                >
-
-                    <i class="fa-solid fa-medal"></i>
-
-                    Constancia
-
+                <button class="filter-button" data-filter="respiracion">
+                    <i class="fa-solid fa-wind"></i>
+                    Respiración
                 </button>
-
-
-                <button
-                    class="filter-button"
-                    data-filter="autocuidado"
-                >
-
-                    <i class="fa-solid fa-heart"></i>
-
-                    Autocuidado
-
-                </button>
-
-
-                <button
-                    class="filter-button"
-                    data-filter="reflexion"
-                >
-
-                    <i class="fa-solid fa-lightbulb"></i>
-
-                    Reflexión
-
-                </button>
-
-
-                <button
-                    class="filter-button"
-                    data-filter="calma"
-                >
-
+                <button class="filter-button" data-filter="meditacion">
                     <i class="fa-solid fa-spa"></i>
-
-                    Calma
-
+                    Meditación
                 </button>
-
-
-                <button
-                    class="filter-button"
-                    data-filter="apoyo"
-                >
-
-                    <i class="fa-solid fa-user-group"></i>
-
-                    Apoyo
-
+                <button class="filter-button" data-filter="autocuidado">
+                    <i class="fa-solid fa-hand-holding-heart"></i>
+                    Autocuidado
                 </button>
-
+                <button class="filter-button" data-filter="video">
+                    <i class="fa-solid fa-film"></i>
+                    Videos
+                </button>
+                <button class="filter-button" data-filter="diario">
+                    <i class="fa-solid fa-book-open"></i>
+                    Diario
+                </button>
+                <button class="filter-button" data-filter="ganadas">
+                    <i class="fa-solid fa-medal"></i>
+                    Ganadas
+                </button>
             </div>
-
-
-
-            <!-- GRID DE INSIGNIAS -->
-
+            <!-- GRID DE INSIGNIAS: se llena con las insignias guardadas en la base de datos -->
             <div
                 class="badges-grid"
                 id="badgesGrid"
             >
-
-
-                <!-- PRIMER PASO -->
-
-                <article
-                    class="badge-card"
-                    data-category="constancia"
-                    data-name="Primer paso"
-                >
-
-                    <span class="badge-category green">
-
-                        <i class="fa-solid fa-stopwatch"></i>
-
-                        Constancia
-
-                    </span>
-
-
-                    <div class="badge-icon calendar">
-
-                        <i class="fa-regular fa-calendar-check"></i>
-
-                    </div>
-
-
-                    <h3>
-                        Primer paso
-                    </h3>
-
-
-                    <p>
-                        Registra tu estado de ánimo
-                        por primera vez.
-                    </p>
-
-
-                    <div class="badge-status unlocked">
-
-                        <i class="fa-solid fa-circle-check"></i>
-
-                        Desbloqueada
-
-                    </div>
-
-                </article>
-
-
-
-                <!-- TIEMPO PARA MÍ -->
-
-                <article
-                    class="badge-card"
-                    data-category="autocuidado"
-                    data-name="Tiempo para mí"
-                >
-
-                    <span class="badge-category blue">
-
-                        <i class="fa-solid fa-heart"></i>
-
-                        Autocuidado
-
-                    </span>
-
-
-                    <div class="badge-icon heart">
-
-                        <i class="fa-solid fa-heart"></i>
-
-                    </div>
-
-
-                    <h3>
-                        Tiempo para mí
-                    </h3>
-
-
-                    <p>
-                        Completa 3 ejercicios
-                        de autocuidado.
-                    </p>
-
-
-                    <div class="small-progress">
-
-                        <div class="small-progress-track">
-
-                            <div
-                                class="small-progress-fill"
-                                style="width: 66%;"
-                            ></div>
-
-                        </div>
-
-                        <span>
-                            2/3
-                        </span>
-
-                    </div>
-
-                </article>
-
-
-
-                <!-- MENTE CURIOSA -->
-
-                <article
-                    class="badge-card"
-                    data-category="reflexion"
-                    data-name="Mente curiosa"
-                >
-
-                    <span class="badge-category purple">
-
-                        <i class="fa-solid fa-lightbulb"></i>
-
-                        Reflexión
-
-                    </span>
-
-
-                    <div class="badge-icon journal">
-
-                        <i class="fa-solid fa-book-open"></i>
-
-                    </div>
-
-
-                    <h3>
-                        Mente curiosa
-                    </h3>
-
-
-                    <p>
-                        Escribe 5 entradas
-                        en tu diario emocional.
-                    </p>
-
-
-                    <div class="small-progress">
-
-                        <div class="small-progress-track">
-
-                            <div
-                                class="small-progress-fill"
-                                style="width: 60%;"
-                            ></div>
-
-                        </div>
-
-                        <span>
-                            3/5
-                        </span>
-
-                    </div>
-
-                </article>
-
-
-
-                <!-- RESPIRO PROFUNDO -->
-
-                <article
-                    class="badge-card locked"
-                    data-category="calma"
-                    data-name="Respiro profundo"
-                >
-
-                    <span class="badge-category lavender">
-
-                        <i class="fa-solid fa-spa"></i>
-
-                        Calma
-
-                    </span>
-
-
-                    <div class="badge-icon lotus">
-
-                        <i class="fa-solid fa-spa"></i>
-
-                    </div>
-
-
-                    <h3>
-                        Respiro profundo
-                    </h3>
-
-
-                    <p>
-                        Practica 5 ejercicios
-                        de respiración.
-                    </p>
-
-
-                    <div class="badge-status locked-status">
-
-                        <i class="fa-solid fa-lock"></i>
-
-                        Aún bloqueada
-
-                    </div>
-
-                </article>
-
-
-
-                <!-- BUENA COMPAÑÍA -->
-
-                <article
-                    class="badge-card locked"
-                    data-category="apoyo"
-                    data-name="Buena compañía"
-                >
-
-                    <span class="badge-category cyan">
-
-                        <i class="fa-solid fa-user-group"></i>
-
-                        Apoyo
-
-                    </span>
-
-
-                    <div class="badge-icon people">
-
-                        <i class="fa-solid fa-user-group"></i>
-
-                    </div>
-
-
-                    <h3>
-                        Buena compañía
-                    </h3>
-
-
-                    <p>
-                        Explora recursos sobre
-                        apoyo y redes.
-                    </p>
-
-
-                    <div class="badge-status locked-status">
-
-                        <i class="fa-solid fa-lock"></i>
-
-                        Aún bloqueada
-
-                    </div>
-
-                </article>
-
+                <p class="badges-loading">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    Sentir IA está preparando tus insignias…
+                </p>
             </div>
-
         </section>
 
 
@@ -1080,6 +735,12 @@
             class="modal-status"
             id="modalBadgeStatus"
         ></div>
+        <p class="modal-goal" id="modalBadgeGoal"></p>
+        <div class="modal-resources" id="modalBadgeResources"></div>
+        <a class="modal-go" id="modalBadgeGo" href="/Client/ScreenStudents/Resources/Resources.html">
+            Ir al recurso
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
 
     </div>
 

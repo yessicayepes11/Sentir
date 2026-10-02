@@ -7,16 +7,17 @@
    0. CONFIGURACIÓN DE LA PSICÓLOGA (editar aquí una sola vez)
    -------------------------------------------------------------------------- */
 // ✅ Ya con la foto real de la psicóloga (Sentir/assets/psicologa-avatar.png)
+// El perfil real se carga desde la base de datos (ver "DATOS REALES" más abajo)
 const SENTIR_DEFAULT_PROFILE = {
-    name: 'Jannette Cardeño',
+    name: 'Cargando…',
     role: 'Psicóloga Escolar',
-    licencia: 'Lic. Psicología N.° 45210',
-    experiencia: '8 años de experiencia',
+    licencia: '',
+    experiencia: '',
     avatar: '../assets/psicologa-avatar.png',
-    email: 'jannette.cardeno@sentir.edu.co',
-    especialidad: 'Psicología Educativa y Clínica Infanto-Juvenil',
-    sedes: 'Sede Principal · Sede Norte',
-    horario: 'Lunes a Viernes · 7:00am – 3:00pm'
+    email: '',
+    especialidad: '',
+    sedes: 'I.E. Santa Elena',
+    horario: ''
 };
 
 function getPsychProfile() {
@@ -74,7 +75,7 @@ const DEFAULT_AI_TREND = {
 };
 
 function getAiTrend() {
-    return SentirStore.get('ai_trend', DEFAULT_AI_TREND);
+    return SentirStore.get('ai_trend', null);
 }
 
 const DEFAULT_ALERTS = [
@@ -129,14 +130,14 @@ const DEFAULT_ACTIVITIES = [
     { id: 'act4', titulo: 'Caminata consciente', tipo: 'Movimiento', fecha: addDaysISO(-2), nivel: 'Riesgo alto', descripcion: 'Actividad física suave y guiada para liberar tensión y mejorar el estado de ánimo.' }
 ];
 
-function getStudents() { return SentirStore.get('students', DEFAULT_STUDENTS); }
+function getStudents() { return SentirStore.get('students', []); }
 function saveStudents(list) { SentirStore.set('students', list); }
-function getAlerts() { return SentirStore.get('alerts', DEFAULT_ALERTS); }
+function getAlerts() { return SentirStore.get('alerts', []); }
 function saveAlerts(list) { SentirStore.set('alerts', list); }
 function getInterventions() { return SentirStore.get('interventions', DEFAULT_INTERVENTIONS); }
 function saveInterventions(obj) { SentirStore.set('interventions', obj); }
 function getGuardians() { return SentirStore.get('guardians', DEFAULT_GUARDIANS); }
-function getAgenda() { return SentirStore.get('agenda', DEFAULT_AGENDA); }
+function getAgenda() { return SentirStore.get('agenda', []); }
 function saveAgenda(list) { SentirStore.set('agenda', list); }
 function getActivities() { return SentirStore.get('activities', DEFAULT_ACTIVITIES); }
 function saveActivities(list) { SentirStore.set('activities', list); }
@@ -314,9 +315,9 @@ function resolveModulePath(target) {
 }
 
 function performPsychologistLogout() {
-    ['sentir_psych_session', 'sentir_psych_login_at', 'sentir_psych_last_activity', 'sentir_psych_email', 'sentir_psych_role']
+    ['sentir_psych_session', 'sentir_psych_login_at', 'sentir_psych_last_activity', 'sentir_psych_email', 'sentir_psych_role', 'usuarioSentir']
         .forEach(key => sessionStorage.removeItem(key));
-    window.location.replace('../auth/Welcome.html');
+    window.location.replace('/Client/administrativo.html');
 }
 
 function initLogoutButtons() {
@@ -1175,7 +1176,121 @@ function initInactivityLogout() {
 /* --------------------------------------------------------------------------
    8. ARRANQUE COMÚN — cada página llama a esto en su DOMContentLoaded
    -------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   DATOS REALES (backend /api/Psicologia)
+   Trae el perfil de la psicóloga que inició sesión y el panorama de la
+   institución (estudiantes, alertas, ánimo, cifras). Los guarda donde el
+   módulo los lee (SentirStore) y avisa con el evento "sentir:datos" para
+   que cada página se vuelva a pintar.
+   -------------------------------------------------------------------------- */
+const SENTIR_API = 'http://localhost:3001/api/Psicologia';
+
+function sentirToken() {
+    try {
+        return JSON.parse(sessionStorage.getItem('usuarioSentir') || '{}').token || '';
+    } catch (e) {
+        return '';
+    }
+}
+
+async function sentirApi(ruta, opciones = {}) {
+    const respuesta = await fetch(SENTIR_API + ruta, {
+        ...opciones,
+        headers: { ...(opciones.headers || {}), Authorization: 'Bearer ' + sentirToken() }
+    });
+    const datos = await respuesta.json().catch(() => ({}));
+    if (respuesta.status === 401) {
+        performPsychologistLogout();
+        throw new Error(datos.message || 'Tu sesión venció.');
+    }
+    if (!respuesta.ok) throw new Error(datos.message || 'No se pudo conectar con el servidor.');
+    return datos;
+}
+
+function capitalizarNombre(valor) {
+    return String(valor || '').toLocaleLowerCase('es').replace(/(^|\s)(\p{L})/gu, (m, e, l) => e + l.toLocaleUpperCase('es'));
+}
+
+function aplicarPerfilReal(perfil) {
+    const u = perfil.usuario;
+    const nombre = capitalizarNombre(`${u.nombre} ${u.apellido}`);
+    SentirStore.set('psych_profile', {
+        ...getPsychProfile(),
+        name: nombre,
+        nombre: capitalizarNombre(u.nombre),
+        apellido: capitalizarNombre(u.apellido),
+        role: 'Psicóloga Escolar',
+        avatar: u.foto || `https://ui-avatars.com/api/?name=${encodeURIComponent(nombre)}&background=6C4DF6&color=fff&bold=true`,
+        email: u.correo,
+        celular: u.celular,
+        usuario: u,
+        cifras: perfil.cifras
+    });
+    renderHeaderProfile();
+}
+
+function refrescarNotificaciones() {
+    const dropdown = document.getElementById('notifDropdown');
+    const bell = document.getElementById('notifBell');
+    if (!dropdown || !bell) return;
+
+    const alertas = getAlerts().filter(a => a.estado === 'Nueva');
+    const badge = bell.querySelector('.badge');
+    dropdown.innerHTML = `<div class="notif-header">Alertas Recientes</div>` + (
+        alertas.length
+            ? alertas.map(a => `<button type="button" class="notif-item is-urgent" role="menuitem" data-goto="alertas.html">🚨 ${a.estudiante} (${a.grado}) requiere atención</button>`).join('')
+            : `<div class="notif-item" role="status">✅ No hay alertas nuevas por ahora</div>`
+    ) + `<button type="button" class="notif-item" role="menuitem" data-goto="agenda.html">📅 Revisa tu agenda de hoy</button>`;
+    if (badge) {
+        badge.textContent = alertas.length;
+        badge.style.display = alertas.length ? 'flex' : 'none';
+    }
+    dropdown.querySelectorAll('.notif-item[data-goto]').forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            window.location.href = resolveModulePath(item.dataset.goto);
+        });
+    });
+}
+
+async function cargarDatosReales() {
+    if (!sentirToken()) return null;
+    try {
+        const [perfil, inicio] = await Promise.all([sentirApi('/perfil'), sentirApi('/inicio')]);
+        aplicarPerfilReal(perfil);
+        SentirStore.set('students', inicio.estudiantes || []);
+        SentirStore.set('alerts', inicio.alertas || []);
+        SentirStore.set('ai_trend', inicio.tendencia || null);
+        window.sentirInicio = inicio;
+
+        initSidebarActiveState();
+        refrescarNotificaciones();
+        checkForNewAlerts();
+
+        document.dispatchEvent(new CustomEvent('sentir:datos', { detail: { perfil, inicio } }));
+        return { perfil, inicio };
+    } catch (error) {
+        console.warn('Psicología: no se pudieron cargar los datos reales:', error.message);
+        if (typeof showToast === 'function') {
+            showToast({ title: 'Sin conexión con el servidor', message: 'No se pudieron cargar los datos. Revisa que el backend esté encendido.', icon: 'fa-plug-circle-xmark', type: 'urgent' });
+        }
+        return null;
+    }
+}
+
+// Borra los datos de ejemplo que hayan quedado guardados en el navegador de versiones anteriores
+function limpiarDatosDeEjemplo() {
+    SentirStore.set('alerts', getAlerts().filter(a => String(a.id).startsWith('ayuda-')));
+    SentirStore.set('students', getStudents().filter(s => s.idUsuario));
+    // Citas de ejemplo (ag1–ag4); las que creó la psicóloga se conservan
+    SentirStore.set('agenda', getAgenda().filter(a => !['ag1', 'ag2', 'ag3', 'ag4'].includes(a.id)));
+    if (!getPsychProfile().usuario) SentirStore.set('psych_profile', SENTIR_DEFAULT_PROFILE);
+    const tendencia = getAiTrend();
+    if (tendencia && !String(tendencia.topic || '').includes('ánimo bajo')) SentirStore.set('ai_trend', null);
+}
+
 function initSentirCore() {
+    limpiarDatosDeEjemplo();
     renderHeaderProfile();
     initLogoHome();
     initSidebarActiveState();
@@ -1186,4 +1301,5 @@ function initSentirCore() {
     initStudentPanelActions();
     initAlertWatcher();
     initInactivityLogout();
+    cargarDatosReales();
 }

@@ -250,9 +250,10 @@ function filterStudents() {
         function (row) {
 
 
+            // Se busca en el nombre, el documento y el correo
             const studentName =
                 normalizeText(
-                    row.dataset.name
+                    row.dataset.search || row.dataset.name
                 );
 
 
@@ -271,9 +272,19 @@ function filterStudents() {
                 studentGroup === groupValue;
 
 
+            const gradeFilter =
+                document.getElementById("gradeFilter");
+
+            const matchesGrade =
+                !gradeFilter ||
+                gradeFilter.value === "all" ||
+                row.dataset.grade === gradeFilter.value;
+
+
             if (
                 matchesName &&
-                matchesGroup
+                matchesGroup &&
+                matchesGrade
             ) {
 
                 row.style.display = "";
@@ -351,6 +362,18 @@ clearFilters.addEventListener(
 
         groupFilter.value =
             "all";
+
+
+        const gradeFilter =
+            document.getElementById("gradeFilter");
+
+        if (gradeFilter) {
+
+            gradeFilter.value = "all";
+
+            gradeFilter.dispatchEvent(new Event("change"));
+
+        }
 
 
         filterStudents();
@@ -667,7 +690,13 @@ const alertStudentGrade =
    ABRIR ALERTA
 ========================================================= */
 
+let currentAlertStudentId = null;
+
 function openAlert(student) {
+
+
+    currentAlertStudentId =
+        student.id || null;
 
 
     alertStudentInitials.textContent =
@@ -726,6 +755,9 @@ alertButtons.forEach(
 
 
                 const student = {
+
+                    id:
+                        button.dataset.id,
 
                     name:
                         button.dataset.student,
@@ -883,35 +915,84 @@ studentAlertForm.addEventListener(
 
 
         /* =================================================
-           DESPUÉS AQUÍ CONECTAS EL BACKEND
+           ENVIAR AL SERVIDOR
+           Se guarda la alerta y psicología recibe una notificación.
         ================================================= */
 
-        console.log(
-            "Alerta docente:",
-            alertData
-        );
+        const submitButton =
+            studentAlertForm.querySelector("[type=submit]");
+
+        let token = "";
+
+        try {
+            token = JSON.parse(sessionStorage.getItem("usuarioSentir") || "{}").token || "";
+        } catch (error) {
+            token = "";
+        }
+
+        if (submitButton) submitButton.disabled = true;
+
+        fetch("http://localhost:3001/api/Docente/alertas", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + token
+            },
+            body: JSON.stringify({
+                idEstudiante: currentAlertStudentId,
+                tipo: alertData.situation,
+                motivo: (document.getElementById("alertOther") || {}).value || "",
+                descripcion: alertData.description
+            })
+        })
+            .then(async function (response) {
+
+                const result =
+                    await response.json().catch(function () { return {}; });
+
+                if (!response.ok) {
+                    throw new Error(result.message || "No se pudo enviar la alerta.");
+                }
+
+
+                /* LIMPIAR FORMULARIO */
+
+                studentAlertForm.reset();
+
+                const otherField = document.getElementById("alertOtherField");
+                if (otherField) otherField.hidden = true;
+
+
+                alertCounter.textContent =
+                    "0 / 500";
 
 
 
-        /* LIMPIAR FORMULARIO */
+                /* CERRAR */
 
-        studentAlertForm.reset();
-
-
-        alertCounter.textContent =
-            "0 / 500";
+                closeAlert();
 
 
 
-        /* CERRAR */
+                /* MENSAJE DE ÉXITO */
 
-        closeAlert();
+                showToast();
 
+            })
+            .catch(function (error) {
 
+                alert(
+                    error.message === "Failed to fetch"
+                        ? "No se pudo conectar con el servidor."
+                        : error.message
+                );
 
-        /* MENSAJE DE ÉXITO */
+            })
+            .finally(function () {
 
-        showToast();
+                if (submitButton) submitButton.disabled = false;
+
+            });
 
     }
 );

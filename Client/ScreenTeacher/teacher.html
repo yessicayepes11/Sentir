@@ -17,6 +17,12 @@
         href="teacher.css"
     >
 
+    <!-- Perfil del docente que inició sesión (botón del encabezado, ventana y saludo) -->
+    <link rel="stylesheet" href="TeacherProfile.css">
+    <script src="TeacherProfile.js"></script>
+    <!-- Mis alertas recientes (con filtros) -->
+    <script src="TeacherAlerts.js"></script>
+
 </head>
 
 
@@ -53,42 +59,7 @@
 
 
 
-            <div class="teacher-profile-overlay" id="teacherProfileModal" aria-hidden="true">
-                <section class="teacher-profile-modal" role="dialog" aria-modal="true" aria-labelledby="teacherProfileTitle">
-                    <button class="teacher-profile-close" id="closeTeacherProfile" type="button" aria-label="Cerrar perfil">×</button>
-                    <div class="teacher-profile-heading">
-                        <div>
-                            <span class="teacher-profile-kicker">Perfil docente</span>
-                            <h2 id="teacherProfileTitle">Mi información</h2>
-                            <p>Consulta tus datos y actualiza tu correo, celular o foto.</p>
-                        </div>
-                        <div class="teacher-profile-photo">
-                            <img id="teacherModalPhoto" src="" alt="Foto de perfil docente" hidden>
-                            <span id="teacherModalPhotoPlaceholder" aria-hidden="true">D</span>
-                        </div>
-                    </div>
-
-                    <form id="teacherProfileForm">
-                        <div class="teacher-profile-grid">
-                            <label class="teacher-profile-field"><span>Nombre</span><input id="teacherProfileFirstName" type="text" readonly></label>
-                            <label class="teacher-profile-field"><span>Apellidos</span><input id="teacherProfileLastName" type="text" readonly></label>
-                            <label class="teacher-profile-field"><span>Identificación</span><input id="teacherProfileIdNumber" type="text" readonly></label>
-                            <label class="teacher-profile-field"><span>Correo electrónico</span><input id="teacherProfileEmail" type="email" maxlength="150" autocomplete="email" required></label>
-                            <label class="teacher-profile-field"><span>Celular</span><input id="teacherProfilePhone" type="tel" inputmode="numeric" maxlength="15" autocomplete="tel" required></label>
-                            <label class="teacher-profile-field"><span>Año cursado</span><input id="teacherProfileYear" type="text" readonly></label>
-                            <label class="teacher-profile-field"><span>Director de grupo</span><input id="teacherProfileDirector" type="text" readonly></label>
-                            <label class="teacher-profile-field"><span>Grupo dirigido</span><input id="teacherProfileAssignedGrade" type="text" readonly></label>
-                            <label class="teacher-profile-field teacher-profile-wide"><span>Grados que enseña</span><input id="teacherProfileTeachingGrades" type="text" readonly></label>
-                            <label class="teacher-profile-field"><span>Foto de perfil</span><input id="profilePhotoInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
-                        </div>
-                        <p class="teacher-profile-message" id="teacherProfileMessage" role="status" aria-live="polite"></p>
-                        <div class="teacher-profile-actions">
-                            <button class="teacher-profile-cancel" id="cancelTeacherProfile" type="button">Cancelar</button>
-                            <button class="teacher-profile-save" id="saveTeacherProfile" type="submit">Guardar cambios</button>
-                        </div>
-                    </form>
-                </section>
-            </div>
+            <!-- La ventana de perfil la crea TeacherProfile.js -->
 
 
         <!-- =================================================
@@ -1020,220 +991,7 @@
 
 
                         <tbody>
-
-
-                        <!-- =====================================
-                             ALERTA 1
-                        ====================================== -->
-
-                        <tr>
-
-
-                            <td>
-
-
-                                <div class="student-table-data">
-
-
-                                    <div class="student-avatar">
-
-                                        <svg viewBox="0 0 24 24">
-
-                                            <circle
-                                                cx="12"
-                                                cy="8"
-                                                r="4"
-                                            />
-
-                                            <path
-                                                d="M4 21c.5-5 3.6-7 8-7s7.5 2 8 7"
-                                            />
-
-                                        </svg>
-
-                                    </div>
-
-
-                                    <strong>
-                                        Mariana G.
-                                    </strong>
-
-
-                                </div>
-
-
-                            </td>
-
-
-                            <td>
-                                15 sep
-                            </td>
-
-
-                            <td>
-                                Cambios en el comportamiento
-                            </td>
-
-
-                            <td>
-                                1 estudiante
-                            </td>
-
-
-                            <td>
-
-                                <span class="status sent">
-                                    Enviado
-                                </span>
-
-                            </td>
-
-
-                        </tr>
-
-
-
-                        <!-- =====================================
-                             ALERTA 2
-                        ====================================== -->
-
-                        <tr>
-
-
-                            <td>
-
-
-                                <div class="student-table-data">
-
-
-                                    <div class="student-avatar">
-
-                                        <svg viewBox="0 0 24 24">
-
-                                            <circle
-                                                cx="12"
-                                                cy="8"
-                                                r="4"
-                                            />
-
-                                            <path
-                                                d="M4 21c.5-5 3.6-7 8-7s7.5 2 8 7"
-                                            />
-
-                                        </svg>
-
-                                    </div>
-
-
-                                    <strong>
-                                        Samuel R.
-                                    </strong>
-
-
-                                </div>
-
-
-                            </td>
-
-
-                            <td>
-                                10 sep
-                            </td>
-
-
-                            <td>
-                                Dificultades de convivencia
-                            </td>
-
-
-                            <td>
-                                1 estudiante
-                            </td>
-
-
-                            <td>
-
-                                <span class="status received">
-                                    Recibido
-                                </span>
-
-                            </td>
-
-
-                        </tr>
-
-
-
-                        <!-- =====================================
-                             ALERTA 3
-                        ====================================== -->
-
-                        <tr>
-
-
-                            <td>
-
-
-                                <div class="student-table-data">
-
-
-                                    <div class="student-avatar">
-
-                                        <svg viewBox="0 0 24 24">
-
-                                            <circle
-                                                cx="12"
-                                                cy="8"
-                                                r="4"
-                                            />
-
-                                            <path
-                                                d="M4 21c.5-5 3.6-7 8-7s7.5 2 8 7"
-                                            />
-
-                                        </svg>
-
-                                    </div>
-
-
-                                    <strong>
-                                        Valentina M.
-                                    </strong>
-
-
-                                </div>
-
-
-                            </td>
-
-
-                            <td>
-                                3 sep
-                            </td>
-
-
-                            <td>
-                                Aislamiento en clases
-                            </td>
-
-
-                            <td>
-                                1 estudiante
-                            </td>
-
-
-                            <td>
-
-                                <span class="status reviewed">
-                                    Revisado por orientación
-                                </span>
-
-                            </td>
-
-
-                        </tr>
-
-
+                        <!-- Las alertas del docente se cargan desde la base de datos (TeacherAlerts.js) -->
                         </tbody>
 
 
@@ -1368,19 +1126,7 @@
                         <option value="">
                             Selecciona un estudiante
                         </option>
-
-                        <option value="mariana">
-                            Mariana Gómez
-                        </option>
-
-                        <option value="samuel">
-                            Samuel Rodríguez
-                        </option>
-
-                        <option value="valentina">
-                            Valentina Martínez
-                        </option>
-
+                        <!-- Se llena con los datos de la base de datos (TeacherAlerts.js) -->
                     </select>
 
                 </div>
@@ -1403,19 +1149,7 @@
                         <option value="">
                             Selecciona el grupo
                         </option>
-
-                        <option value="8-1">
-                            8°1
-                        </option>
-
-                        <option value="9-2">
-                            9°2
-                        </option>
-
-                        <option value="10-1">
-                            10°1
-                        </option>
-
+                        <!-- Se llena con los datos de la base de datos (TeacherAlerts.js) -->
                     </select>
 
                 </div>
@@ -1442,28 +1176,44 @@
                         Selecciona una opción
                     </option>
 
-                    <option value="comportamiento">
+                    <option value="Cambio de comportamiento">
                         Cambio de comportamiento
                     </option>
 
-                    <option value="aislamiento">
+                    <option value="Aislamiento">
                         Aislamiento
                     </option>
 
-                    <option value="convivencia">
+                    <option value="Dificultades de convivencia">
                         Dificultades de convivencia
                     </option>
 
-                    <option value="rendimiento">
+                    <option value="Cambio en participación">
+                        Cambio notable en participación
+                    </option>
+                    <option value="Cambio en rendimiento académico">
                         Cambio en rendimiento académico
                     </option>
 
-                    <option value="otro">
-                        Otro comportamiento observado
+                    <option value="Otro">
+                        Otro
                     </option>
 
                 </select>
 
+            </div>
+
+            <!-- MOTIVO (solo cuando se elige "Otro") -->
+            <div class="form-field" id="typeOtherField" hidden>
+                <label for="typeOther">
+                    ¿Cuál es el motivo?
+                </label>
+                <input
+                    type="text"
+                    id="typeOther"
+                    maxlength="80"
+                    placeholder="Escribe el motivo de la alerta"
+                >
             </div>
 
 

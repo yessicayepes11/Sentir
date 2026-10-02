@@ -124,6 +124,7 @@
 
     let modal;
     let exercise = null;
+    let currentId = null;
     let state = null;   // { cycle, phaseIndex, remaining }
     let timer = null;
     let running = false;
@@ -171,6 +172,7 @@
         }
 
         exercise = EXERCISES[id];
+        currentId = id;
         modal.style.setProperty("--bp-color", exercise.color);
 
         $("bpIcon").innerHTML = `<i class="fa-solid ${exercise.icon}"></i>`;
@@ -318,6 +320,11 @@
         stopTimer();
         running = false;
 
+        // Avisa que terminó (cuenta para las insignias)
+        document.dispatchEvent(new CustomEvent("sentir:actividad", {
+            detail: { tipo: "respiracion", clave: currentId }
+        }));
+
         setCircle(SCALE_MIN, 1.5);
         $("bpCircle").classList.remove("buzz");
         $("bpCounter").innerHTML = '<i class="fa-solid fa-check"></i>';
@@ -382,5 +389,11 @@
             open(trigger.dataset.breathingPlayer);
         }
     });
+
+    // Permite agregar ejercicios creados por la IA (Recursos > "Creado para ti")
+    window.SentirBreathingPlayer = {
+        register: function (id, data) { EXERCISES[id] = data; },
+        open: open
+    };
 
 })();

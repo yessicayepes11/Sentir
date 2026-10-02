@@ -954,12 +954,41 @@ async function saveDiaryToServer(entry, button) {
             return false;
         }
 
+        avisarInsigniasDelDiario(session.token);
+
         return true;
     } catch (error) {
         showToast("No se pudo conectar con el servidor. Tu diario no se perdió, inténtalo de nuevo.");
         return false;
     } finally {
         button.disabled = false;
+    }
+}
+
+/*
+ * Cada entrada del diario cuenta para las insignias de "Diario".
+ * Después de guardar se actualiza el progreso y, si ganó una, se le avisa.
+ */
+async function avisarInsigniasDelDiario(token) {
+
+    try {
+        const response = await fetch("http://localhost:3001/api/Bienestar/insignias", {
+            headers: { "Authorization": "Bearer " + token }
+        });
+        const data = await response.json().catch(function () { return {}; });
+        if (!response.ok) return;
+
+        const ganadas = (data.insignias || []).filter(function (insignia) {
+            return (data.recienDesbloqueadas || []).includes(insignia.id);
+        });
+
+        if (ganadas.length) {
+            setTimeout(function () {
+                showToast("🏅 ¡Ganaste la insignia \"" + ganadas[0].titulo + "\"! Mírala en Insignias.");
+            }, 3000);
+        }
+    } catch (error) {
+        // si falla, el progreso se actualiza la próxima vez que abra Insignias
     }
 }
 

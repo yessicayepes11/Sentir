@@ -73,8 +73,8 @@
                     </div>
                     <strong>-</strong>
                     <div class="hr-input">
-                        <input type="text" id="helpGradoLetra" maxlength="1"
-                               placeholder="A" aria-label="Letra del grupo" required>
+                        <input type="text" id="helpGradoLetra" inputmode="numeric" maxlength="2"
+                               placeholder="1" aria-label="Número del grupo" required>
                     </div>
                 </div>
             </label>
@@ -175,7 +175,7 @@
             }
         });
 
-        // Solo números en documento y grado, solo una letra en el grupo
+        // Solo números en documento, grado y grupo
         $("helpIdentificacion").addEventListener("input", function () {
             this.value = this.value.replace(/\D/g, "");
         });
@@ -185,7 +185,7 @@
         });
 
         $("helpGradoLetra").addEventListener("input", function () {
-            this.value = this.value.replace(/[^a-zA-Z]/g, "").toUpperCase().slice(0, 1);
+            this.value = this.value.replace(/\D/g, "").slice(0, 2);
         });
 
         $("helpRequestForm").addEventListener("submit", submitHelpRequest);
@@ -292,9 +292,9 @@
         }
 
         const grade = Number(data.gradoNumero);
-        if (!data.gradoNumero || grade < 0 || grade > 11 || !data.gradoLetra) {
+        if (!data.gradoNumero || grade < 0 || grade > 11 || !/^[1-9]\d?$/.test(data.gradoLetra)) {
             errorText.textContent =
-                "Escribe tu grado: un número del 0 al 11 y la letra del grupo (ej: 9 - A).";
+                "Escribe tu grado: un número del 0 al 11 y el número del grupo (ej: 9 - 1).";
             return;
         }
 

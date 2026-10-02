@@ -66,8 +66,8 @@
         <!-- Paso 0: inicio de sesión -->
         <div class="modal-form" id="stepLogin">
             <label id="loginIdentifierLabel">
-                <span id="loginIdentifierText">Correo</span>
-                <input type="email" id="loginCorreo" placeholder="Ingrese su correo" autocomplete="username">
+                <span id="loginIdentifierText">Identificación o correo</span>
+                <input type="text" id="loginCorreo" placeholder="Número de identificación o correo" autocomplete="username">
             </label>
 
             <label>
@@ -148,16 +148,8 @@
     const loginError = document.getElementById('loginError');
     const adminLoginSubmitBtn = document.getElementById('adminLoginSubmitBtn');
 
-    function actualizarCampoIdentificador() {
-        const isSecretaria = rolSelect.value === '1';
-        loginIdentifierText.textContent = isSecretaria ? 'Identificación' : 'Correo';
-        correoInput.type = isSecretaria ? 'text' : 'email';
-        correoInput.inputMode = isSecretaria ? 'numeric' : 'email';
-        correoInput.placeholder = isSecretaria ? 'Ingrese su número de identificación' : 'Ingrese su correo';
-        correoInput.value = '';
-    }
-
-    rolSelect.addEventListener('change', actualizarCampoIdentificador);
+    // Todos los roles entran con su número de identificación o con su correo
+    loginIdentifierText.textContent = 'Identificación o correo';
 
     async function iniciarSesion() {
         loginError.textContent = '';
@@ -173,16 +165,11 @@
         }
 
         if (!identificador || !contrasena) {
-            loginError.textContent = rol === '1'
-                ? 'Ingresa tu identificación y contraseña.'
-                : 'Ingresa tu correo y contraseña.';
+            loginError.textContent = 'Ingresa tu identificación o correo y tu contraseña.';
             return;
         }
 
-        if (rol === '1' && !/^\d+$/.test(identificador)) {
-            loginError.textContent = 'La identificación debe contener solo números.';
-            return;
-        }
+        const esIdentificacion = /^\d+$/.test(identificador);
 
         adminLoginSubmitBtn.disabled = true;
 
@@ -192,7 +179,7 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     rol,
-                    ...(rol === '1' ? { identificacion: identificador } : { correo: identificador }),
+                    ...(esIdentificacion ? { identificacion: identificador } : { correo: identificador }),
                     contrasena
                 })
             });
@@ -407,5 +394,7 @@
         }
     });
 </script>
+<!-- Ojito para ver la contraseña -->
+<script src="/Shared/PasswordToggle/PasswordToggle.js"></script>
 </body>
 </html>

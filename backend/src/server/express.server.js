@@ -9,6 +9,9 @@ import EmocionRouter from '../routes/Emocion/Emocion.js';
 import DiarioRouter from '../routes/Diario/Diario.js';
 import PerfilEstudianteRouter from '../routes/Estudiante/Perfil.js';
 import AsistenteRouter from '../routes/Asistente/Asistente.js';
+import BienestarRouter from '../routes/Bienestar/Bienestar.js';
+import PerfilDocenteRouter from '../routes/Docente/Perfil.js';
+import PsicologiaRouter from '../routes/Psicologia/Psicologia.js';
 
 const uploadsDir = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../uploads');
 
@@ -25,6 +28,7 @@ class Server {
         this.app.use(cors());
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
+
         this.app.use('/uploads', express.static(uploadsDir));
     }
 
@@ -36,6 +40,9 @@ class Server {
         this.app.use('/api/Diario', DiarioRouter);
         this.app.use('/api/Estudiante', PerfilEstudianteRouter);
         this.app.use('/api/Asistente', AsistenteRouter);
+        this.app.use('/api/Bienestar', BienestarRouter);
+        this.app.use('/api/Docente', PerfilDocenteRouter);
+        this.app.use('/api/Psicologia', PsicologiaRouter);
     }
 
     start() {

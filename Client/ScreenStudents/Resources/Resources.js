@@ -875,6 +875,12 @@ function finishBreathingExercise() {
         String(completed + 1)
     );
 
+
+    // Cuenta para las insignias de respiración
+    document.dispatchEvent(new CustomEvent("sentir:actividad", {
+        detail: { tipo: "respiracion", clave: "panel-" + currentExercise }
+    }));
+
 }
 
 
@@ -1099,6 +1105,9 @@ function initResourceTabs() {
 
         meditations:
             document.getElementById("meditationsContent"),
+
+        selfcare:
+            document.getElementById("selfcareContent"),
 
         psychologist:
             document.getElementById("psychologistContent")

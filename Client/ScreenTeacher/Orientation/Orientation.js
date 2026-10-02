@@ -551,319 +551,224 @@ function addAssistantMessage(html) {
 
 
 /* =========================================================
-   RESPUESTAS TEMPORALES
+   ORIENTACIÓN CON IA (Sentir IA para docentes)
 
-   ESTO DESPUÉS SE REEMPLAZARÁ POR LA IA.
+   El mensaje se envía al servidor, que consulta la IA con
+   instrucciones de orientación escolar para docentes.
+   La conversación NO se guarda en la base de datos: solo vive
+   en esta pestaña (sessionStorage) mientras la sesión está abierta.
 ========================================================= */
 
-function getTemporaryAssistantResponse(
-    message
-) {
+const ORIENTACION_API =
+    "http://localhost:3001/api/Docente/orientacion";
+
+const ORIENTACION_KEY =
+    "sentirOrientacionDocente";
+
+let orientacionHistorial = [];
 
 
-    const normalized =
-        message
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(
-            /[\u0300-\u036f]/g,
-            ""
-        );
+function sesionDocente() {
 
-
-
-    /* =====================================================
-       AISLAMIENTO
-    ====================================================== */
-
-    if (
-        normalized.includes("aislad") ||
-        normalized.includes("callad") ||
-        normalized.includes("solo")
-    ) {
-
-        return `
-
-            <p>
-                Si notas que un estudiante está más
-                aislado o callado de lo habitual,
-                puedes comenzar observando el cambio
-                con calma.
-            </p>
-
-            <ul>
-
-                <li>
-                    Busca un momento tranquilo para hablar.
-                </li>
-
-                <li>
-                    Pregunta de manera abierta cómo se siente.
-                </li>
-
-                <li>
-                    Evita presionarlo para que explique algo.
-                </li>
-
-                <li>
-                    Observa si el comportamiento continúa.
-                </li>
-
-            </ul>
-
-            <p>
-                Si la situación persiste o consideras
-                que debe ser conocida por el equipo
-                responsable, puedes enviar una alerta
-                desde <strong>Mis estudiantes</strong>.
-            </p>
-
-        `;
-
+    try {
+        return JSON.parse(sessionStorage.getItem("usuarioSentir") || "{}");
+    } catch (error) {
+        return {};
     }
-
-
-
-    /* =====================================================
-       CONVIVENCIA
-    ====================================================== */
-
-    if (
-        normalized.includes("conflicto") ||
-        normalized.includes("pelea") ||
-        normalized.includes("convivencia")
-    ) {
-
-        return `
-
-            <p>
-                Ante un conflicto entre estudiantes,
-                intenta mantener una postura neutral
-                y escuchar las diferentes versiones
-                antes de sacar conclusiones.
-            </p>
-
-            <ul>
-
-                <li>
-                    Evita exponerlos frente al grupo.
-                </li>
-
-                <li>
-                    Promueve una conversación respetuosa.
-                </li>
-
-                <li>
-                    Identifica hechos concretos,
-                    no suposiciones.
-                </li>
-
-                <li>
-                    Si la situación requiere seguimiento
-                    institucional, comunícala al área
-                    correspondiente.
-                </li>
-
-            </ul>
-
-        `;
-
-    }
-
-
-
-    /* =====================================================
-       ESCUCHA
-    ====================================================== */
-
-    if (
-        normalized.includes("escuchar") ||
-        normalized.includes("escucha")
-    ) {
-
-        return `
-
-            <p>
-                La escucha activa puede ayudar a que
-                un estudiante se sienta tomado en cuenta.
-            </p>
-
-            <ul>
-
-                <li>
-                    Mantén contacto visual sin intimidar.
-                </li>
-
-                <li>
-                    Evita interrumpir mientras habla.
-                </li>
-
-                <li>
-                    Usa frases como
-                    “entiendo lo que me estás contando”.
-                </li>
-
-                <li>
-                    No prometas guardar secretos cuando
-                    pueda existir una situación que requiera
-                    apoyo institucional.
-                </li>
-
-            </ul>
-
-        `;
-
-    }
-
-
-
-    /* =====================================================
-       ÁNIMO
-    ====================================================== */
-
-    if (
-        normalized.includes("triste") ||
-        normalized.includes("animo") ||
-        normalized.includes("llora")
-    ) {
-
-        return `
-
-            <p>
-                Si observas un cambio importante en
-                el estado de ánimo de un estudiante,
-                procura acercarte desde la empatía.
-            </p>
-
-            <ul>
-
-                <li>
-                    Pregunta si desea hablar.
-                </li>
-
-                <li>
-                    Escucha sin minimizar lo que siente.
-                </li>
-
-                <li>
-                    Observa si el cambio se mantiene.
-                </li>
-
-                <li>
-                    Si consideras necesaria una revisión,
-                    registra una alerta para el equipo
-                    correspondiente.
-                </li>
-
-            </ul>
-
-            <p>
-                El docente acompaña y comunica;
-                la valoración e intervención corresponde
-                a las áreas autorizadas.
-            </p>
-
-        `;
-
-    }
-
-
-
-    /* =====================================================
-       RESPUESTA GENERAL
-    ====================================================== */
-
-    return `
-
-        <p>
-            Gracias por contarme la situación.
-        </p>
-
-        <p>
-            Como orientación general, puedes comenzar
-            observando qué ocurrió, cuándo empezó y
-            si el comportamiento se ha repetido.
-        </p>
-
-        <ul>
-
-            <li>
-                Acércate al estudiante de manera tranquila.
-            </li>
-
-            <li>
-                Escucha sin juzgar ni presionar.
-            </li>
-
-            <li>
-                Evita interpretar o diagnosticar
-                lo que puede estar ocurriendo.
-            </li>
-
-            <li>
-                Si notas que la situación requiere
-                atención institucional, utiliza
-                <strong>Mis estudiantes</strong>
-                para enviar una alerta.
-            </li>
-
-        </ul>
-
-        <p>
-            Si quieres, puedes contarme con más detalle
-            qué observaste y te daré algunas ideas
-            generales.
-        </p>
-
-    `;
 
 }
 
 
+function guardarHistorial() {
 
-/* =========================================================
-   SIMULACIÓN DEL ASISTENTE
-========================================================= */
+    try {
+        sessionStorage.setItem(
+            ORIENTACION_KEY,
+            JSON.stringify({
+                usuario: sesionDocente().id_usuario,
+                historial: orientacionHistorial.slice(-30)
+            })
+        );
+    } catch (error) {
+        /* sin almacenamiento: la conversación solo dura en la página */
+    }
+
+}
+
+
+/* Texto de la IA -> HTML seguro (párrafos, listas y **negritas**) */
+function formatearRespuesta(texto) {
+
+    const bloques = [];
+    let lista = null;
+
+    String(texto || "").split(/\n/).forEach(function (linea) {
+
+        const limpia = linea.trim();
+
+        if (!limpia) {
+            lista = null;
+            return;
+        }
+
+        const esLista = /^([-*•]|\d+[.)])\s+/.test(limpia);
+        const contenido = escapeHTML(limpia.replace(/^([-*•]|\d+[.)])\s+/, ""))
+            .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+            .replace(/(^|[^*])\*([^*\s][^*]*?)\*(?!\*)/g, "$1<em>$2</em>");
+
+        if (esLista) {
+            if (!lista) {
+                lista = [];
+                bloques.push(lista);
+            }
+            lista.push(contenido);
+        } else {
+            lista = null;
+            bloques.push("<p>" + contenido + "</p>");
+        }
+
+    });
+
+    return bloques.map(function (bloque) {
+        return Array.isArray(bloque)
+            ? "<ul>" + bloque.map(function (item) { return "<li>" + item + "</li>"; }).join("") + "</ul>"
+            : bloque;
+    }).join("");
+
+}
+
+
+function avisoDeAlerta() {
+
+    return `
+        <div class="orientation-alert-tip">
+            <strong>Esta situación puede requerir atención prioritaria.</strong>
+            <span>No la manejes solo/a: envía una alerta para que psicología y orientación la revisen.</span>
+            <a href="/Client/ScreenTeacher/MyStudents/MyStudents.html">Enviar alerta desde Mis estudiantes</a>
+        </div>`;
+
+}
+
+
+function mostrarRespuesta(entrada) {
+
+    addAssistantMessage(
+        formatearRespuesta(entrada.texto) +
+        (entrada.sugerirAlerta ? avisoDeAlerta() : "")
+    );
+
+}
+
 
 function simulateAssistantResponse(
     userMessage
 ) {
 
+    orientacionHistorial.push({ rol: "docente", texto: userMessage });
+    guardarHistorial();
 
     showTypingIndicator();
 
+    if (chatInput) chatInput.disabled = true;
 
-    /*
-        Este setTimeout únicamente simula
-        el tiempo de respuesta.
 
-        Cuando conecten IA,
-        aquí se reemplaza por fetch().
-    */
+    fetch(ORIENTACION_API, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + (sesionDocente().token || "")
+        },
+        body: JSON.stringify({
+            mensajes: orientacionHistorial.slice(-12)
+        })
+    })
+        .then(async function (response) {
 
-    setTimeout(
-        function () {
+            const data =
+                await response.json().catch(function () { return {}; });
 
+            if (response.status === 401) {
+                window.location.replace("/Client/administrativo.html");
+                return;
+            }
+
+            if (!response.ok) {
+                throw new Error(data.message || "No se pudo obtener una respuesta.");
+            }
+
+            const entrada = {
+                rol: "asistente",
+                texto: data.respuesta,
+                sugerirAlerta: Boolean(data.sugerirAlerta)
+            };
+
+            orientacionHistorial.push(entrada);
+            guardarHistorial();
+
+            removeTypingIndicator();
+            mostrarRespuesta(entrada);
+
+        })
+        .catch(function (error) {
 
             removeTypingIndicator();
 
-
-            const response =
-                getTemporaryAssistantResponse(
-                    userMessage
-                );
-
-
             addAssistantMessage(
-                response
+                "<p>" + escapeHTML(
+                    error.message === "Failed to fetch"
+                        ? "No se pudo conectar con el servidor. Inténtalo de nuevo en un momento."
+                        : error.message
+                ) + "</p>"
             );
 
+            // El mensaje que no tuvo respuesta no se reenvía como contexto
+            orientacionHistorial.pop();
+            guardarHistorial();
 
-        },
-        900
-    );
+        })
+        .finally(function () {
+
+            if (chatInput) {
+                chatInput.disabled = false;
+                chatInput.focus();
+            }
+
+        });
 
 }
+
+
+/* Saludo con el nombre del docente y conversación anterior de esta sesión */
+(function iniciarOrientacion() {
+
+    const sesion = sesionDocente();
+    const nombre = String(sesion.nombre || "").trim().split(/\s+/)[0] || "";
+    const saludo = document.getElementById("orientationGreeting");
+
+    if (saludo) {
+        saludo.textContent = nombre
+            ? "¡Hola, " + nombre.charAt(0).toLocaleUpperCase("es") + nombre.slice(1).toLocaleLowerCase("es") + "!"
+            : "¡Hola!";
+    }
+
+    const primeraHora = document.querySelector("#chatMessages .message-time");
+    if (primeraHora) primeraHora.textContent = getCurrentTime();
+
+    try {
+        const guardado = JSON.parse(sessionStorage.getItem(ORIENTACION_KEY) || "null");
+
+        if (guardado && guardado.usuario === sesion.id_usuario && Array.isArray(guardado.historial)) {
+            orientacionHistorial = guardado.historial;
+            orientacionHistorial.forEach(function (entrada) {
+                if (entrada.rol === "asistente") mostrarRespuesta(entrada);
+                else addUserMessage(entrada.texto);
+            });
+        }
+    } catch (error) {
+        orientacionHistorial = [];
+    }
+
+})();
 
 
 

@@ -41,6 +41,10 @@ export function leerTokenEstudiante(token) {
     }
 }
 
+// El mismo token sirve para el personal del colegio (docentes, psicóloga, etc.):
+// solo guarda el id_usuario firmado, así que nadie puede hacerse pasar por otro.
+export const crearTokenUsuario = crearTokenEstudiante;
+export const leerTokenUsuario = leerTokenEstudiante;
 export function crearTokenDocente(idUsuario) {
     const payload = Buffer.from(JSON.stringify({
         id: String(idUsuario),

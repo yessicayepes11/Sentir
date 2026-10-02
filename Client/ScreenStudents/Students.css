@@ -4966,3 +4966,32 @@ img {
     }
 
 }
+
+
+/* =========================================================
+   "TU ESPACIO DE BIENESTAR": tarjetas centradas
+   (son 3, así que no queda un hueco a la derecha)
+========================================================= */
+
+.tools-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.tools-grid > .tool-card {
+    flex: 0 1 calc((100% - 39px) / 4);
+    min-width: 0;
+}
+
+@media (max-width: 1100px) {
+    .tools-grid > .tool-card {
+        flex-basis: calc((100% - 13px) / 2);
+    }
+}
+
+@media (max-width: 700px) {
+    .tools-grid > .tool-card {
+        flex-basis: 100%;
+    }
+}

@@ -7,6 +7,7 @@ import nodemailer from 'nodemailer';
 import { Router } from 'express';
 import { connection } from '../../../config/mysql/dbmysql.js';
 import { leerTokenDocente } from '../../../config/studentToken.js';
+import { cifrarContrasena } from '../../../config/contrasenas.js';
 
 const router = Router();
 const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z\d\s]).{8,}$/;
@@ -95,6 +96,7 @@ function getTeacherData(role, payload) {
     const anoCursado = anoCursadoValue ? Number(anoCursadoValue) : null;
     const directorGrupo = String(payload.directorGrupo ?? '');
     const gradoNumero = String(payload.gradoNumero ?? '').trim();
+    // El grupo es un número: 9-1, 10-2...
     const gradoLetra = String(payload.gradoLetra ?? '').trim();
     let teachingGrades = [];
 
@@ -117,18 +119,18 @@ function getTeacherData(role, payload) {
         throw new Error('Selecciona una opción válida para director de grupo');
     }
 
-    if ((gradoNumero || gradoLetra) && (!/^\d{1,2}$/.test(gradoNumero) || !/^\d{1,2}$/.test(gradoLetra))) {
-        throw new Error('Completa los dos números del grado, o deja ambos vacíos');
+    if ((gradoNumero || gradoLetra) && (!/^\d{1,2}$/.test(gradoNumero) || !/^[1-9]\d?$/.test(gradoLetra))) {
+        throw new Error('Completa el grado y el número del grupo, o deja ambos vacíos');
     }
 
     const gradoAsignado = gradoNumero && gradoLetra ? `${gradoNumero}-${gradoLetra}` : null;
     if (!['0', '1'].includes(directorGrupo)) {
         throw new Error('Indica si es director de grupo');
     }
-    if (directorGrupo === '1' && (!/^\d{1,2}$/.test(gradoNumero) || !/^\d{1,2}$/.test(gradoLetra))) {
-        throw new Error('Completa los dos números del grupo que dirige');
+    if (directorGrupo === '1' && (!/^\d{1,2}$/.test(gradoNumero) || !/^[1-9]\d?$/.test(gradoLetra))) {
+        throw new Error('Completa el grado y el número del grupo que dirige');
     }
-    if (!teachingGrades.length || teachingGrades.some((grade) => !/^\d{1,2}-\d{1,2}$/.test(grade))) {
+    if (!teachingGrades.length || teachingGrades.some((grade) => !/^\d{1,2}-[1-9]\d?$/.test(grade))) {
         throw new Error('Añade al menos un grado válido que enseñe el docente');
     }
     if (new Set(teachingGrades).size !== teachingGrades.length) {
@@ -204,8 +206,8 @@ function getStudentData(role, payload) {
     const diagnosisName = hasDiagnosis ? String(payload.diagnosisName || '').trim() : '';
     const diagnosisDescription = hasDiagnosis ? String(payload.diagnosisDescription || '').trim() : '';
 
-    if (!/^\d{1,2}$/.test(gradeNumber) || !/^\d{1,2}$/.test(gradeLetter)) {
-        throw new Error('Ingresa los dos números del grado del estudiante');
+    if (!/^\d{1,2}$/.test(gradeNumber) || !/^[1-9]\d?$/.test(gradeLetter)) {
+        throw new Error('Ingresa el grado y el número del grupo del estudiante');
     }
     if (!/^\d+$/.test(guardianDocument) || !Number.isSafeInteger(Number(guardianDocument))) {
         throw new Error('Ingresa un número de identificación válido para el acudiente');
@@ -356,7 +358,6 @@ router.get('/listar', async (req, res) => {
                 u.apellido,
                 u.edad,
                 u.correo AS email,
-                u.contrasena AS password,
                 u.fecha_nac AS birthDate,
                 u.fecha_reg AS registrationDate,
                 u.estadi AS status,
@@ -402,7 +403,7 @@ router.get('/listar', async (req, res) => {
             age: Number(usuario.edad) || 0,
             email: usuario.email || '',
             phone: usuario.phone ? String(usuario.phone) : 'No disponible',
-            password: usuario.password || '',
+            password: '',   // las contraseñas están cifradas y nunca se envían
             documentType: usuario.documentType || 'Cédula',
             roleId: Number(usuario.roleId),
             committeeMember: Number(usuario.committeeMember) === 1,
@@ -687,7 +688,7 @@ router.put('/actualizar/:id', upload.single('foto'), async (req, res) => {
             return res.status(400).json({ message: 'El identificador del usuario no es válido' });
         }
 
-        if (!selectedRole || !email || !password) {
+        if (!selectedRole || !email) {
             return res.status(400).json({ message: 'Faltan datos obligatorios para actualizar el usuario' });
         }
 
@@ -700,7 +701,8 @@ router.put('/actualizar/:id', upload.single('foto'), async (req, res) => {
             return res.status(400).json({ message: error.message });
         }
 
-        if (!passwordRegex.test(password)) {
+        // Solo se cambia la contraseña si el administrador escribió una nueva
+        if (password && !passwordRegex.test(password)) {
             return res.status(400).json({
                 message: 'La contraseña debe tener 8+ caracteres, mayúsculas, números y un símbolo.'
             });
@@ -769,7 +771,7 @@ router.put('/actualizar/:id', upload.single('foto'), async (req, res) => {
 
         await connection.promise().query(
             `UPDATE usuario
-             SET nombre = ?, apellido = ?, edad = ?, correo = ?, contrasena = ?, fecha_nac = ?,
+             SET nombre = ?, apellido = ?, edad = ?, correo = ?, contrasena = COALESCE(?, contrasena), fecha_nac = ?,
                  fecha_reg = ?, estadi = ?, foto = ?, tipo_id = ?, celular = ?, id_rol = ?, comite_convivencia = ?
              WHERE id_usuario = ?`,
             [
@@ -777,7 +779,7 @@ router.put('/actualizar/:id', upload.single('foto'), async (req, res) => {
                 apellido,
                 age,
                 email,
-                password,
+                password ? await cifrarContrasena(password) : null,
                 effectiveBirthDate,
                 effectiveRegistrationDate,
                 status,
@@ -834,7 +836,9 @@ const NOMBRES_TABLAS = {
     insignia: 'insignias',
     estudiante_docente: 'notas de estudiantes',
     intervension: 'intervenciones',
-    relajacion: 'recursos de relajación'
+    relajacion: 'recursos de relajación',
+    recurso_ia: 'recursos creados con IA',
+    actividad_recurso: 'actividades de recursos'
 };
 
 // Columnas que apuntan a un usuario pero no tienen llave foránea en la base de datos
@@ -1071,7 +1075,7 @@ router.post('/crear', upload.single('foto'), async (req, res) => {
             apellido,
             edad,
             email,
-            password,
+            await cifrarContrasena(password),
             fechaNac,
             fechaReg,
             status,
@@ -1243,7 +1247,7 @@ router.post('/recuperar/restablecer-enlace', async (req, res) => {
 
         const [result] = await connection.promise().query(
             'UPDATE usuario SET contrasena = ? WHERE LOWER(TRIM(correo)) = ?',
-            [nuevaContrasena, reset.correo]
+            [await cifrarContrasena(nuevaContrasena), reset.correo]
         );
         if (!result.affectedRows) {
             passwordResetLinks.delete(tokenHash);
@@ -1366,7 +1370,7 @@ router.post('/recuperar/cambiar-contrasena', async (req, res) => {
 
         const [result] = await connection.promise().query(
             'UPDATE usuario SET contrasena = ? WHERE LOWER(TRIM(correo)) = ?',
-            [nuevaContrasena, correo]
+            [await cifrarContrasena(nuevaContrasena), correo]
         );
 
         if (!result.affectedRows) {

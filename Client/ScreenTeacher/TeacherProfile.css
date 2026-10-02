@@ -1,0 +1,471 @@
+/* =========================================================
+   PERFIL DEL DOCENTE (botón del encabezado + ventana)
+========================================================= */
+
+.tp-trigger {
+    cursor: pointer;
+    border-radius: 16px;
+    transition: background 0.2s ease;
+}
+
+.header-user.tp-trigger {
+    padding: 4px 8px 4px 4px;
+}
+
+.header-user.tp-trigger:hover,
+.tp-trigger:focus-visible {
+    background: rgba(108, 77, 246, 0.08);
+    outline: none;
+}
+
+.tp-trigger .header-avatar {
+    cursor: pointer;
+}
+
+/* La cámara del encabezado ya no aplica: la foto se cambia en la ventana */
+.tp-trigger .camera-overlay {
+    display: none;
+}
+
+body.tp-open {
+    overflow: hidden;
+}
+
+.tp-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(28, 22, 56, 0.45);
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.22s ease, visibility 0.22s ease;
+}
+
+.tp-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.tp-box {
+    position: relative;
+    width: min(760px, 100%);
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    padding: 26px;
+    border-radius: 26px;
+    color: #2d2a3e;
+    background: #ffffff;
+    box-shadow: 0 25px 60px rgba(40, 20, 110, 0.28);
+}
+
+.tp-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 38px;
+    height: 38px;
+    border: 0;
+    border-radius: 50%;
+    color: #6c4df6;
+    background: #f0ebff;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.tp-loading {
+    padding: 40px 0;
+    color: #7a7590;
+    text-align: center;
+}
+
+.tp-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding-right: 40px;
+    margin-bottom: 20px;
+}
+
+.tp-avatar {
+    position: relative;
+    width: 88px;
+    height: 88px;
+    flex-shrink: 0;
+}
+
+.tp-avatar img,
+.tp-avatar > span {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    object-fit: cover;
+    color: white;
+    background: linear-gradient(135deg, #7c5cf7, #b26cf0);
+    font-size: 34px;
+    font-weight: 700;
+    box-shadow: 0 0 0 4px #f0ebff;
+}
+
+.tp-photo-btn {
+    position: absolute;
+    right: -2px;
+    bottom: -2px;
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border: 3px solid white;
+    border-radius: 50%;
+    color: white;
+    background: #6c4df6;
+    cursor: pointer;
+}
+
+.tp-photo-btn svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+}
+
+.tp-header h2 {
+    margin: 0 0 3px;
+    font-size: 1.35rem;
+}
+
+.tp-header p {
+    margin: 0;
+    color: #7a7590;
+    font-size: 0.9rem;
+    word-break: break-word;
+}
+
+.tp-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.tp-chip {
+    padding: 3px 10px;
+    border-radius: 999px;
+    color: #6c4df6;
+    background: #f0ebff;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.tp-chip.ok {
+    color: #23875c;
+    background: #e3f8ee;
+}
+
+.tp-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+.tp-card {
+    padding: 16px 18px;
+    border: 1px solid #ebe6f5;
+    border-radius: 18px;
+    background: #fbfaff;
+}
+
+.tp-card h3 {
+    margin: 0 0 10px;
+    color: #4e2fc7;
+    font-size: 0.95rem;
+}
+
+.tp-card h3.tp-sub {
+    margin-top: 16px;
+}
+
+.tp-dato {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 7px 0;
+    border-bottom: 1px dashed #ebe6f5;
+    font-size: 0.86rem;
+}
+
+.tp-dato:last-of-type {
+    border-bottom: 0;
+}
+
+.tp-dato span {
+    color: #7a7590;
+}
+
+.tp-dato strong {
+    text-align: right;
+    font-weight: 600;
+}
+
+.tp-grades {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tp-grade {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 84px;
+    padding: 8px 12px;
+    border-radius: 14px;
+    background: white;
+    box-shadow: inset 0 0 0 1px #e4dcff;
+}
+
+.tp-grade strong {
+    color: #6c4df6;
+    font-size: 1.05rem;
+}
+
+.tp-grade small {
+    color: #7a7590;
+    font-size: 0.72rem;
+}
+
+.tp-empty {
+    margin: 4px 0 0;
+    color: #7a7590;
+    font-size: 0.85rem;
+}
+
+.tp-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.tp-fields label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    color: #5c5772;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.tp-fields input {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid #e2dcf2;
+    border-radius: 12px;
+    color: #2d2a3e;
+    background: white;
+    font: inherit;
+    font-size: 0.92rem;
+    font-weight: 400;
+}
+
+.tp-fields input:focus {
+    border-color: #7b5cff;
+    outline: 3px solid rgba(123, 92, 255, 0.15);
+}
+
+.tp-hint {
+    margin: 10px 0 0;
+    color: #7a7590;
+    font-size: 0.78rem;
+}
+
+.tp-message {
+    min-height: 1.2em;
+    margin: 8px 0 0;
+    color: #23875c;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.tp-message.error {
+    color: #d14b5c;
+}
+
+.tp-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.tp-actions button {
+    padding: 11px 18px;
+    border: 0;
+    border-radius: 999px;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.tp-save {
+    color: white;
+    background: linear-gradient(135deg, #7c5cf7, #b26cf0);
+}
+
+.tp-save:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.tp-logout {
+    color: #d14b5c;
+    background: #fdecef;
+}
+
+@media (max-width: 640px) {
+    .tp-box {
+        padding: 20px 16px;
+    }
+
+    .tp-header {
+        flex-direction: column;
+        text-align: center;
+        padding-right: 0;
+    }
+
+    .tp-chips {
+        justify-content: center;
+    }
+
+    .tp-grid,
+    .tp-fields {
+        grid-template-columns: 1fr;
+    }
+
+    .tp-actions {
+        flex-direction: column-reverse;
+    }
+}
+
+/* "Mis grupos" sin grupos asignados */
+.tp-groups-empty {
+    grid-column: 1 / -1;
+    padding: 18px;
+    border-radius: 16px;
+    color: #7a7590;
+    background: #faf8ff;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* =========================================================
+   ENCABEZADO: solo foto y nombre
+========================================================= */
+
+.tp-hidden {
+    display: none !important;
+}
+
+.tp-header-only,
+.tp-header-only .header-avatar,
+.tp-header-only label {
+    cursor: default !important;
+}
+
+button.tp-header-only:hover,
+button.tp-header-only:focus {
+    background: transparent;
+    box-shadow: none;
+    transform: none;
+}
+
+.tp-header-only .header-avatar:hover {
+    transform: none;
+}
+
+.header-user img.tp-header-photo {
+    display: block !important;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* =========================================================
+   PÁGINA "MI PERFIL" (antes era una ventana flotante)
+========================================================= */
+
+.tp-page {
+    padding: 26px;
+    border-radius: 26px;
+    color: #2d2a3e;
+    background: #ffffff;
+    box-shadow: 0 14px 34px rgba(108, 77, 246, 0.08);
+}
+
+.tp-page .tp-header {
+    padding-right: 0;
+}
+
+@media (max-width: 640px) {
+    .tp-page {
+        padding: 18px 14px;
+    }
+}
+
+/* "Cerrar sesión" en la barra lateral */
+.tp-logout-item {
+    border: 0;
+    background: transparent;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.tp-logout-item,
+.tp-logout-item .nav-icon svg {
+    color: #d14b5c;
+    stroke: currentColor;
+}
+
+.tp-logout-item:hover,
+.tp-logout-item:focus-visible {
+    background: #fdecef;
+    outline: none;
+}
+
+/* Tarjetas de resumen de Inicio: se pueden tocar */
+.tp-summary-link {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tp-summary-link:hover,
+.tp-summary-link:focus-visible {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 34px rgba(98, 60, 226, 0.14);
+    outline: none;
+}
+
+.tp-summary-link .info-pill {
+    font-weight: 700;
+}
+
+/* Resalta la sección a la que se bajó */
+.tp-flash {
+    animation: tpFlash 1.6s ease;
+}
+
+@keyframes tpFlash {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(108, 77, 246, 0); }
+    30% { box-shadow: 0 0 0 5px rgba(108, 77, 246, 0.3); }
+}

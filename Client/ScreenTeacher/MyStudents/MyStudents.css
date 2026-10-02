@@ -2940,3 +2940,83 @@ tbody tr:hover {
     }
 
 }
+
+/* =========================================================
+   FOTOS DE LOS ESTUDIANTES Y "ENVIADA POR"
+========================================================= */
+
+.student-avatar,
+.selected-student-avatar,
+#modalStudentInitials {
+    overflow: hidden;
+}
+
+.student-avatar .student-photo,
+.selected-student-avatar .student-photo,
+#modalStudentInitials .student-photo {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+.alert-sender {
+    margin: -4px 0 14px;
+    padding: 9px 13px;
+    border-radius: 12px;
+    color: #6e6890;
+    background: #f6f3ff;
+    font-size: 0.85rem;
+}
+
+.alert-sender strong {
+    color: #4e2fc7;
+}
+
+#alertOtherField[hidden] {
+    display: none;
+}
+
+#alertOther {
+    width: 100%;
+}
+
+.form-field input[type="text"] {
+    width: 100%;
+    padding: 12px 13px;
+    border: 1px solid #ddd8ef;
+    border-radius: 12px;
+    outline: none;
+    color: #332d6c;
+    background: #fefeff;
+    font: inherit;
+    transition: .2s ease;
+}
+
+.form-field input[type="text"]:focus {
+    border-color: #7955ed;
+    box-shadow: 0 0 0 3px rgba(121, 85, 237, .08);
+}
+
+
+/* Barra de filtros: búsqueda, grado, grupo y limpiar */
+.filters-card {
+    grid-template-columns: minmax(240px, 1fr) 180px 180px auto;
+}
+
+@media (max-width: 1100px) {
+    .filters-card {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .filters-card .search-box {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 600px) {
+    .filters-card {
+        grid-template-columns: 1fr;
+    }
+}

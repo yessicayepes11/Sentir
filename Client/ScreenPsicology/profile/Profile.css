@@ -43,3 +43,20 @@
 @keyframes avatarPop { 0% { transform: scale(0.7) rotate(-10deg); opacity: 0.4; } 60% { transform: scale(1.08) rotate(3deg); } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
 
 @media (max-width: 1024px) { .profile-columns { grid-template-columns: 1fr; } }
+
+/* Datos reales del perfil */
+.profile-note,
+.modal-hint {
+    margin-top: 10px;
+    color: #8b84b5;
+    font-size: 11px;
+}
+
+/* Perfil con el mismo diseño del docente */
+#psychProfilePage {
+    margin-bottom: 20px;
+}
+
+.profile-columns-single {
+    grid-template-columns: 1fr;
+}

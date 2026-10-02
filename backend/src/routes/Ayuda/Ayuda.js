@@ -39,7 +39,8 @@ router.post('/solicitar', async (req, res) => {
         const correo = String(req.body.correo || '').trim().toLowerCase();
         const prioridad = String(req.body.prioridad || '').trim();
         const gradoNumero = String(req.body.gradoNumero || '').trim();
-        const gradoLetra = String(req.body.gradoLetra || '').trim().toUpperCase();
+        // El grupo es un número: 9-1, 10-2...
+        const gradoLetra = String(req.body.gradoLetra || '').trim();
 
         if (!identificacion) {
             return res.status(400).json({ message: 'Ingresa tu número de identificación' });
@@ -62,8 +63,8 @@ router.post('/solicitar', async (req, res) => {
         }
 
         const numero = Number(gradoNumero);
-        if (!/^\d{1,2}$/.test(gradoNumero) || numero < 0 || numero > 11 || !/^[A-Z]$/.test(gradoLetra)) {
-            return res.status(400).json({ message: 'El grado debe ser un número del 0 al 11 y una letra, por ejemplo 9 - A' });
+        if (!/^\d{1,2}$/.test(gradoNumero) || numero < 0 || numero > 11 || !/^[1-9]\d?$/.test(gradoLetra)) {
+            return res.status(400).json({ message: 'El grado debe ser un número del 0 al 11 y el número del grupo, por ejemplo 9 - 1' });
         }
 
         if (estaBloqueado(ip)) {

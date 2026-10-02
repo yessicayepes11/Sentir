@@ -132,6 +132,7 @@
 
     let modal;
     let meditation = null;
+    let currentId = null;
     let state = null;   // { stepIndex, stepRemaining, elapsed }
     let timer = null;
     let running = false;
@@ -179,6 +180,7 @@
         }
 
         meditation = MEDITATIONS[id];
+        currentId = id;
         modal.style.setProperty("--mp-color", meditation.color);
 
         $("mpIcon").innerHTML = `<i class="fa-solid ${meditation.icon}"></i>`;
@@ -312,6 +314,11 @@
         stopTimer();
         running = false;
 
+        // Avisa que terminó (cuenta para las insignias)
+        document.dispatchEvent(new CustomEvent("sentir:actividad", {
+            detail: { tipo: "meditacion", clave: currentId }
+        }));
+
         $("mpOrb").classList.remove("breathing");
         $("mpStepCount").textContent = "Meditación completada";
         $("mpText").textContent = "Lo hiciste muy bien. Puedes volver a esta pausa cada vez que la necesites.";
@@ -359,5 +366,11 @@
             open(trigger.dataset.meditationPlayer);
         }
     });
+
+    // Permite agregar ejercicios creados por la IA (Recursos > "Creado para ti")
+    window.SentirMeditationPlayer = {
+        register: function (id, data) { MEDITATIONS[id] = data; },
+        open: open
+    };
 
 })();

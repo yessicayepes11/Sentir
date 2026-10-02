@@ -3657,3 +3657,129 @@ img {
         grid-template-columns: 1fr;
     }
 }
+
+
+/* =========================================================
+   INSIGNIAS DESDE LA BASE DE DATOS (generadas con IA)
+========================================================= */
+
+.badge-card {
+    cursor: pointer;
+}
+
+.badge-card:focus-visible {
+    outline: 3px solid rgba(128, 83, 222, 0.35);
+    outline-offset: 2px;
+}
+
+.badge-goal {
+    display: block;
+    margin: 6px 0 2px;
+    color: #8053de;
+    font-size: 9px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.badges-loading {
+    grid-column: 1 / -1;
+    padding: 26px 14px;
+    color: #7a7399;
+    font-size: 12px;
+    text-align: center;
+}
+
+.badges-loading i {
+    color: #8a5cf6;
+    margin-right: 5px;
+}
+
+.featured-go {
+    margin-top: 8px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.featured-go[hidden],
+.modal-go[hidden] {
+    display: none !important;
+}
+
+.modal-goal {
+    margin-top: 12px;
+    color: #6e6890;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.modal-resources {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-top: 12px;
+    text-align: left;
+}
+
+.modal-resources:empty {
+    display: none;
+}
+
+.modal-resources > span {
+    color: #8a5cf6;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.modal-resources a {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 12px;
+    border-radius: 14px;
+    color: #3b3170;
+    background: #f4efff;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.modal-resources a:hover {
+    background: #ebe3ff;
+}
+
+.modal-resources a span {
+    flex: 1;
+}
+
+.modal-resources a i:first-child {
+    color: #8a5cf6;
+}
+
+.modal-go {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    width: 100%;
+    margin-top: 14px;
+    padding: 11px 14px;
+    border-radius: 999px;
+    color: white;
+    background: linear-gradient(135deg, #7c5cf7, #b26cf0);
+    font-size: 12px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+
+/* Categoría "Autocuidado" */
+.badge-category.peach {
+    color: #c9622f;
+    background: #fff0e6;
+}
+
+.badge-icon.care {
+    color: #e0794c;
+    background: linear-gradient(145deg, #ffe9dc, #ffe3ee);
+}

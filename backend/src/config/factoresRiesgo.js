@@ -190,6 +190,32 @@ export const FACTORES = [
 const PALABRAS_INMINENCIA = ['esta noche', 'hoy mismo', 'ahora mismo', 'ya tengo las pastillas', 'ya tengo con que',
     'me voy a despedir', 'es la ultima vez', 'nadie me va a volver a ver'];
 
+// Cómo lo escribe un DOCENTE (tercera persona) en las alertas de "Mis estudiantes".
+// Las de arriba están en primera persona, como escribe el estudiante en el chat.
+const TERCERA_PERSONA = {
+    ideacion_suicida: ['quiere morir', 'quiere morirse', 'se quiere morir', 'no quiere vivir', 'quitarse la vida',
+        'acabar con su vida', 'matarse', 'se quiere matar', 'se va a matar', 'piensa en morir', 'habla de morir',
+        'habla de la muerte', 'ideas de muerte', 'pensamientos de muerte'],
+    plan_intento_suicida: ['intento matarse', 'intento quitarse la vida', 'tiene un plan', 'se tomo unas pastillas',
+        'se tomo pastillas', 'se va a tirar', 'se va a lanzar', 'se va a colgar', 'carta de despedida', 'se esta despidiendo'],
+    autolesion: ['se corta', 'se cortaba', 'cortes en', 'cortadas en', 'se hace dano', 'se lastima', 'se autolesiona',
+        'se quema', 'se golpea a si mism', 'heridas en los brazos', 'marcas en los brazos'],
+    desesperanza: ['ya no aguanta', 'no puede mas', 'dice que nada vale la pena', 'no le ve sentido', 'cansado de vivir',
+        'cansada de vivir', 'dice que es una carga'],
+    abuso_sexual: ['abusan de el', 'abusan de ella', 'abusaron de', 'lo tocan', 'la tocan', 'lo manosean', 'la manosean',
+        'lo violaron', 'la violaron'],
+    violencia_intrafamiliar: ['le pegan', 'lo golpean', 'la golpean', 'lo maltratan', 'la maltratan', 'moretones',
+        'golpes en', 'miedo de ir a su casa', 'violencia en su casa', 'lo dejan sin comer', 'la dejan sin comer'],
+    grooming_sextorsion: ['le piden fotos', 'le pide fotos', 'lo chantajean', 'la chantajean', 'un adulto le escribe'],
+    reclutamiento_grupos: ['lo quieren reclutar', 'la quieren reclutar', 'lo amenazaron de muerte', 'la amenazaron de muerte'],
+    conducta_alimentaria: ['no come', 'dejo de comer', 'se provoca el vomito', 'vomita despues de comer'],
+    necesidades_basicas: ['llega sin comer', 'aguanta hambre', 'pasa hambre', 'no tiene que comer']
+};
+
+FACTORES.forEach((factor) => {
+    if (TERCERA_PERSONA[factor.codigo]) factor.palabras.push(...TERCERA_PERSONA[factor.codigo]);
+});
+
 // Las expresiones se comparan sin tildes ni ñ: se normalizan una sola vez al cargar
 FACTORES.forEach((factor) => { factor.palabras = factor.palabras.map((palabra) => normalizarTexto(palabra)); });
 PALABRAS_INMINENCIA.forEach((palabra, i) => { PALABRAS_INMINENCIA[i] = normalizarTexto(palabra); });

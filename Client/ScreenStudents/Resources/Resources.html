@@ -41,6 +41,8 @@
         rel="stylesheet"
         href="/Client/ScreenStudents/Resources/Resources.css"
     >
+    <!-- Ejercicios creados con IA ("Creado para ti") -->
+    <link rel="stylesheet" href="/Client/ScreenStudents/Resources/ResourcesAI.css">
     <!-- Barra superior y ventana de perfil (compartido con Mi diario, Seguimiento e Insignias) -->
     <link rel="stylesheet" href="/Client/ScreenStudents/EmotionalDiary/ProfileEditor.css">
     <!-- Formulario "Pide ayuda al psicólogo/a" (salida de ayuda del chat) -->
@@ -716,6 +718,20 @@
                 <button
                     class="resource-tab"
                     type="button"
+                    data-category="selfcare"
+                >
+
+                    <i class="fa-solid fa-hand-holding-heart"></i>
+
+                    <span>
+                        Autocuidado
+                    </span>
+
+                </button>
+
+                <button
+                    class="resource-tab"
+                    type="button"
                     data-category="psychologist"
                 >
 
@@ -1078,6 +1094,121 @@
 
             </div>
 
+
+            <!-- AUTOCUIDADO: retos cortos para cuidar el cuerpo y la mente -->
+            <div
+                class="category-content"
+                id="selfcareContent"
+            >
+                <div class="library-heading">
+                    <div>
+                        <h2>
+                            Retos de autocuidado
+                        </h2>
+                        <p>
+                            Pequeñas acciones para cuidar tu cuerpo y tu mente: descansar, moverte, conectar con otros y desconectarte.
+                        </p>
+                    </div>
+                </div>
+                <div class="activities-grid">
+                    <article class="activity-card">
+                        <div class="activity-picture selfcare-picture" style="--sc-color: #5b8def;">
+                            <i class="fa-solid fa-glass-water"></i>
+                            <span class="time-pill">
+                                5 min
+                            </span>
+                        </div>
+                        <div class="activity-info">
+                            <h3>
+                                Recarga de agua y pausa
+                            </h3>
+                            <p>
+                                Hidrátate y dale un respiro a tu cuerpo con una pausa corta.
+                            </p>
+                            <button
+                                class="start-activity"
+                                type="button"
+                                data-selfcare-player="agua"
+                            >
+                                <i class="fa-solid fa-play"></i>
+                                Empezar reto
+                            </button>
+                        </div>
+                    </article>
+                    <article class="activity-card">
+                        <div class="activity-picture selfcare-picture" style="--sc-color: #2f9e6d;">
+                            <i class="fa-solid fa-person-walking"></i>
+                            <span class="time-pill">
+                                10 min
+                            </span>
+                        </div>
+                        <div class="activity-info">
+                            <h3>
+                                Caminata consciente
+                            </h3>
+                            <p>
+                                Camina unos minutos fijándote en lo que ves, oyes y sientes.
+                            </p>
+                            <button
+                                class="start-activity"
+                                type="button"
+                                data-selfcare-player="caminata"
+                            >
+                                <i class="fa-solid fa-play"></i>
+                                Empezar reto
+                            </button>
+                        </div>
+                    </article>
+                    <article class="activity-card">
+                        <div class="activity-picture selfcare-picture" style="--sc-color: #e05f8a;">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span class="time-pill">
+                                5 min
+                            </span>
+                        </div>
+                        <div class="activity-info">
+                            <h3>
+                                Mensaje que abraza
+                            </h3>
+                            <p>
+                                Escríbele a alguien que quieres para recordarle que es importante.
+                            </p>
+                            <button
+                                class="start-activity"
+                                type="button"
+                                data-selfcare-player="mensaje"
+                            >
+                                <i class="fa-solid fa-play"></i>
+                                Empezar reto
+                            </button>
+                        </div>
+                    </article>
+                    <article class="activity-card">
+                        <div class="activity-picture selfcare-picture" style="--sc-color: #e0794c;">
+                            <i class="fa-solid fa-mobile-screen"></i>
+                            <span class="time-pill">
+                                20 min
+                            </span>
+                        </div>
+                        <div class="activity-info">
+                            <h3>
+                                Desconexión de pantallas
+                            </h3>
+                            <p>
+                                Regálate 20 minutos sin celular ni redes sociales.
+                            </p>
+                            <button
+                                class="start-activity"
+                                type="button"
+                                data-selfcare-player="pantallas"
+                            >
+                                <i class="fa-solid fa-play"></i>
+                                Empezar reto
+                            </button>
+                        </div>
+                    </article>
+                </div>
+            </div>
 
             <!-- PSICÓLOGA -->
 
@@ -1470,6 +1601,12 @@
 <script
     src="/Client/ScreenStudents/Resources/MeditationPlayer.js"
 ></script>
+
+<!-- Retos del apartado "Autocuidado" -->
+<script src="/Client/ScreenStudents/Resources/SelfCarePlayer.js"></script>
+
+<!-- Ejercicios creados con IA y avance de las insignias -->
+<script src="/Client/ScreenStudents/Resources/ResourcesAI.js"></script>
 
 <script src="/Client/ScreenStudents/EmotionalDiary/ProfileEditor.js"></script>
 <script src="/Shared/HelpRequest/HelpRequest.js"></script>

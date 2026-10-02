@@ -1,6 +1,19 @@
 import { Router } from 'express';
 import { connection } from '../../config/mysql/dbmysql.js';
-import { crearTokenDocente, crearTokenEstudiante } from '../../config/studentToken.js';
+import { cifrarContrasena, verificarContrasena } from '../../config/contrasenas.js';
+
+// Comprueba la contraseña (cifrada con scrypt). Si el usuario todavía tenía la
+// contraseña en texto plano y es correcta, se guarda cifrada en ese momento.
+async function contrasenaCorrecta(usuario, contrasena) {
+    if (!usuario) return false;
+    const { valida, debeCifrarse } = await verificarContrasena(contrasena, usuario.contrasena);
+    if (valida && debeCifrarse) {
+        await connection.promise().query('UPDATE usuario SET contrasena = ? WHERE id_usuario = ?',
+            [await cifrarContrasena(contrasena), usuario.id_usuario]);
+    }
+    return valida;
+}
+import { crearTokenDocente, crearTokenEstudiante, crearTokenUsuario } from '../../config/studentToken.js';
 
 const router = Router();
 
@@ -11,7 +24,7 @@ const redirectByRole = {
     3: './ScreenDirectivo/Corrdinacion/academico.html',
     4: './ScreenDirectivo/Corrdinacion/convivencia.html',
     5: './ScreenTeacher/teacher.html',
-    6: './ScreenPsicology/index.html',
+    6: './ScreenPsicology/home/Home.html',
     7: './ScreeUAI/uai.html'
 };
 
@@ -21,23 +34,23 @@ router.post('/login', async (req, res) => {
         const correo = String(req.body.correo || '').trim();
         const identificacion = String(req.body.identificacion || '').trim();
         const contrasena = String(req.body.contrasena || '');
-        const loginIdentifier = rol === 1 ? identificacion : correo;
+
+        // Todos los roles pueden entrar con su número de identificación o con su correo:
+        // si lo escrito son solo números se busca por identificación; si no, por correo.
+        const loginIdentifier = identificacion || correo;
+        const porIdentificacion = /^\d+$/.test(loginIdentifier);
 
         if (!rol || !loginIdentifier || !contrasena) {
-            return res.status(400).json({ message: 'Debe seleccionar un rol e ingresar su identificador y contraseña' });
-        }
-
-        if (rol === 1 && !/^\d+$/.test(identificacion)) {
-            return res.status(400).json({ message: 'La identificación debe contener solo números' });
+            return res.status(400).json({ message: 'Selecciona tu rol e ingresa tu identificación o correo y tu contraseña' });
         }
 
         if (!redirectByRole[rol]) {
             return res.status(400).json({ message: 'El rol seleccionado no tiene acceso por este medio' });
         }
 
-        const loginColumn = rol === 1 ? 'u.id_usuario' : 'u.correo';
+        const loginColumn = porIdentificacion ? 'u.id_usuario' : 'u.correo';
         const [rows] = await connection.promise().query(
-            `SELECT u.id_usuario, u.nombre, u.apellido, u.contrasena, u.estadi, u.id_rol, r.nombre AS rol
+            `SELECT u.id_usuario, u.nombre, u.apellido, u.correo, u.contrasena, u.estadi, u.id_rol, r.nombre AS rol
              FROM usuario u
              INNER JOIN rol r ON r.id_rol = u.id_rol
              WHERE ${loginColumn} = ?
@@ -47,9 +60,9 @@ router.post('/login', async (req, res) => {
 
         const usuario = rows[0];
 
-        if (!usuario || usuario.contrasena !== contrasena) {
+        if (!(await contrasenaCorrecta(usuario, contrasena))) {
             return res.status(401).json({
-                message: rol === 1 ? 'Identificación o contraseña incorrectas' : 'Correo o contraseña incorrectos'
+                message: porIdentificacion ? 'Identificación o contraseña incorrectas' : 'Correo o contraseña incorrectos'
             });
         }
 
@@ -66,11 +79,14 @@ router.post('/login', async (req, res) => {
             nombre: usuario.nombre,
             apellido: usuario.apellido,
             id_rol: usuario.id_rol,
-            rol: usuario.rol
+            rol: usuario.rol,
+            correo: usuario.correo
         };
-        if (rol === 5) {
-            usuarioResponse.token = crearTokenDocente(usuario.id_usuario);
-        }
+        // Token firmado: con él cada pantalla sabe quién inició sesión.
+        // El docente recibe el token "de docente" (sirve para su perfil); los demás roles, uno general.
+        usuarioResponse.token = rol === 5
+            ? crearTokenDocente(usuario.id_usuario)
+            : crearTokenUsuario(usuario.id_usuario);
 
         return res.json({
             message: 'Inicio de sesión exitoso',
@@ -116,7 +132,7 @@ router.post('/estudiante', async (req, res) => {
         const estudiante = rows[0];
 
         // Mismo mensaje si no existe o si la clave no coincide, para no revelar qué documentos están registrados
-        if (!estudiante || estudiante.contrasena !== contrasena) {
+        if (!(await contrasenaCorrecta(estudiante, contrasena))) {
             const actual = fallosPorIp.get(ip) || { fallos: 0, bloqueadoHasta: 0 };
             actual.fallos += 1;
             if (actual.fallos >= MAX_FALLOS) {

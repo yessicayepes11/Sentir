@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { connection } from '../../config/mysql/dbmysql.js';
 import { leerTokenEstudiante } from '../../config/studentToken.js';
+import { proveedorActivo } from '../../config/ia.js';
 import {
     clasificarTexto, catalogoParaIA, codigosValidos, nivelValido, nivelDeFactores,
     nivelMayor, debeOfrecerAyuda, nombresDe
@@ -21,32 +22,7 @@ import {
 
 const router = Router();
 
-const PROVEEDORES = [
-    {
-        nombre: 'Groq',
-        url: 'https://api.groq.com/openai/v1/chat/completions',
-        clave: () => process.env.GROQ_API_KEY,
-        modelo: () => process.env.GROQ_MODEL || 'openai/gpt-oss-120b'
-    },
-    {
-        nombre: 'OpenAI',
-        url: 'https://api.openai.com/v1/chat/completions',
-        clave: () => process.env.OPENAI_API_KEY,
-        modelo: () => process.env.OPENAI_MODEL || 'gpt-4o-mini'
-    }
-];
-
-// El primer proveedor que tenga clave configurada
-function proveedorActivo() {
-    const proveedor = PROVEEDORES.find((p) => String(p.clave() || '').trim());
-    if (!proveedor) return null;
-    return {
-        nombre: proveedor.nombre,
-        url: proveedor.url,
-        clave: String(proveedor.clave()).trim(),
-        modelo: String(proveedor.modelo()).trim()
-    };
-}
+// El proveedor de IA (Groq u OpenAI) se elige en config/ia.js
 
 const MAX_MENSAJES = 12;        // cuántos mensajes de la conversación se envían como contexto
 const MAX_CARACTERES = 1000;    // largo máximo de cada mensaje

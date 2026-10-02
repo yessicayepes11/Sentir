@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../shared/sentir-shared.css">
     <link rel="stylesheet" href="Profile.css">
+    <!-- Mismo diseño del perfil del docente -->
+    <link rel="stylesheet" href="../../ScreenTeacher/TeacherProfile.css">
+    <link rel="stylesheet" href="ProfileLook.css">
 </head>
 <body data-page="perfil">
 
@@ -66,43 +69,279 @@
 
             <div class="page-fade-in">
 
-                <div class="profile-hero">
-                    <div class="profile-hero-left">
-                        <div class="profile-hero-avatar-wrap">
-                            <img class="profile-hero-avatar" id="profileHeroAvatar" src="" alt="Foto de perfil">
-                            <button class="avatar-edit-btn" id="avatarEditBtn" title="Cambiar foto"><i class="fa-solid fa-camera"></i></button>
+
+                <!-- Mismo diseño que "Mi perfil" del docente: bienvenida, perfil y consejos (estilos en ProfileLook.css) -->
+                <div class="psy-look">
+
+                    <section class="hero">
+
+
+                <div class="hero-content">
+
+
+                    <h1>
+                        Gracias por estar aquí
+                    </h1>
+
+                    <h2>
+                        Tu escucha cambia historias, incluso en los días difíciles.
+                    </h2>
+
+
+                    <div class="hero-quote">
+
+
+                        <div class="hero-heart">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path
+                                    d="M12 21
+                                       C10 18.8 4 14.2 4 8.8
+                                       C4 5.7 6.3 4 8.8 4
+                                       C10.5 4 11.6 5 12 5.8
+                                       C12.4 5 13.5 4 15.2 4
+                                       C17.7 4 20 5.7 20 8.8
+                                       C20 14.2 14 18.8 12 21Z"
+                                />
+
+                            </svg>
+
                         </div>
-                        <div>
-                            <h1 id="profileHeroName">Cargando...</h1>
-                            <p id="profileHeroSubtitle">Psicóloga Escolar · Institución Educativa Sentir</p>
-                            <div class="profile-tags">
-                                <span id="tagLicencia"><i class="fa-solid fa-id-card"></i></span>
-                                <span id="tagExperiencia"><i class="fa-solid fa-briefcase"></i></span>
-                                <span><i class="fa-solid fa-circle-check"></i> Verificada</span>
-                            </div>
-                        </div>
+
+
+                        <p>
+                            “Quien cuida a otros también merece cuidarse.”
+                        </p>
+
+
                     </div>
-                    <button class="btn-primary-action" id="editProfileBtn"><i class="fa-solid fa-pen"></i> Editar Perfil</button>
+
+
                 </div>
 
-                <div class="kpi-grid profile-kpis">
-                    <div class="kpi-card"><i class="fa-solid fa-user-group kpi-icon"></i><h3 class="counter-number">328</h3><p>Estudiantes atendidos</p></div>
-                    <div class="kpi-card"><i class="fa-solid fa-calendar-check kpi-icon"></i><h3 class="counter-number">57</h3><p>Sesiones este mes</p></div>
-                    <div class="kpi-card"><i class="fa-solid fa-stopwatch kpi-icon"></i><h3 class="counter-number">12</h3><p>Min. resp. promedio</p></div>
-                    <div class="kpi-card"><i class="fa-solid fa-heart kpi-icon"></i><h3 class="counter-number">96</h3><p>% Satisfacción</p></div>
-                </div>
 
-                <div class="profile-columns">
-                    <div class="sidebar-box profile-box">
-                        <h3><span class="profile-section-icon icon-purple"><i class="fa-solid fa-id-badge"></i></span> Información Profesional</h3>
-                        <ul class="profile-info-list">
-                            <li><span>Correo institucional</span><strong id="infoEmail"></strong></li>
-                            <li><span>Especialidad</span><strong id="infoEspecialidad"></strong></li>
-                            <li><span>Sedes a cargo</span><strong id="infoSedes"></strong></li>
-                            <li><span>Horario de atención</span><strong id="infoHorario"></strong></li>
-                        </ul>
+
+                <!-- =================================================
+                     FOTO GRANDE / ILUSTRACIÓN
+                ================================================== -->
+
+                <div class="teacher-photo-area">
+
+
+                    <div class="hero-circle circle-one"></div>
+
+                    <div class="hero-circle circle-two"></div>
+
+
+
+                    <div class="teacher-image-slot">
+
+                            <img
+                                src="../assets/psicologa.png"
+                                alt="Psicóloga"
+                            >
+
                     </div>
 
+
+                    <p class="hero-side-text">
+                        Tu bienestar<br>también sostiene<br>el de tu comunidad ♡
+                    </p>
+
+
+                    <div class="hero-leaf leaf-one"></div>
+
+                    <div class="hero-leaf leaf-two"></div>
+
+
+                </div>
+
+
+            </section>
+
+                    <section class="profile-layout">
+
+                        <div class="profile-main-column">
+                            <!-- Perfil de la psicóloga: lo llena Profile.js con los datos de la base de datos -->
+                            <div id="psychProfilePage"></div>
+                        </div>
+
+                        <aside class="profile-side-column">
+
+
+    <!-- =============================================
+         FRASE 1
+    ============================================== -->
+
+    <article class="phrase-card phrase-purple">
+
+
+        <div class="phrase-heading">
+
+            <div class="phrase-icon">
+
+                <svg viewBox="0 0 24 24">
+
+                    <path
+                        d="M12 21
+                           C10 18.8 4 14.2 4 8.8
+                           C4 5.7 6.3 4 8.8 4
+                           C10.5 4 11.6 5 12 5.8
+                           C12.4 5 13.5 4 15.2 4
+                           C17.7 4 20 5.7 20 8.8
+                           C20 14.2 14 18.8 12 21Z"
+                    />
+
+                </svg>
+
+            </div>
+
+
+            <h3>
+                Una frase para hoy
+            </h3>
+
+        </div>
+
+
+        <div class="phrase-content">
+
+            <p>
+                “Lo estás haciendo bien.<br>
+                A veces, solo necesitas<br>
+                recordártelo.”
+            </p>
+
+        </div>
+
+
+        <div class="phrase-decoration">
+            ♡
+        </div>
+
+
+    </article>
+
+
+
+    <!-- =============================================
+         FRASE 2
+    ============================================== -->
+
+    <article class="phrase-card phrase-green">
+
+
+        <div class="phrase-heading">
+
+            <div class="phrase-icon">
+
+                <svg viewBox="0 0 24 24">
+
+                    <path
+                        d="M12 20V10"
+                    />
+
+                    <path
+                        d="M12 13C7 13 4 10 4 6
+                           c5 0 8 2 8 7z"
+                    />
+
+                    <path
+                        d="M12 10c0-5 3-7 8-7
+                           0 4-3 7-8 7z"
+                    />
+
+                </svg>
+
+            </div>
+
+
+            <h3>
+                Un pequeño recordatorio
+            </h3>
+
+        </div>
+
+
+        <div class="phrase-content">
+
+            <p>
+                Descansar también<br>
+                es parte del proceso.<br>
+                Tu bienestar es importante.
+            </p>
+
+        </div>
+
+
+        <div class="phrase-decoration">
+            ✦
+        </div>
+
+
+    </article>
+
+
+
+    <!-- =============================================
+         FRASE 3
+    ============================================== -->
+
+    <article class="phrase-card phrase-pink">
+
+
+        <div class="phrase-heading">
+
+            <div class="phrase-icon">
+
+                <svg viewBox="0 0 24 24">
+
+                    <path
+                        d="M12 21
+                           C10 18.8 4 14.2 4 8.8
+                           C4 5.7 6.3 4 8.8 4
+                           C10.5 4 11.6 5 12 5.8
+                           C12.4 5 13.5 4 15.2 4
+                           C17.7 4 20 5.7 20 8.8
+                           C20 14.2 14 18.8 12 21Z"
+                    />
+
+                </svg>
+
+            </div>
+
+
+            <h3>
+                Hoy queremos decirte
+            </h3>
+
+        </div>
+
+
+        <div class="phrase-content">
+
+            <p>
+                “Gracias por escuchar,<br>acompañar y creer<br>en cada historia.”
+            </p>
+
+        </div>
+
+
+        <div class="phrase-decoration">
+            ♡
+        </div>
+
+
+    </article>
+
+
+</aside>
+
+                    </section>
+                </div>
+
+                <div class="profile-columns profile-columns-single">
                     <div class="sidebar-box profile-box">
                         <h3><span class="profile-section-icon icon-blue"><i class="fa-solid fa-sliders"></i></span> Preferencias de Notificación</h3>
                         <div class="toggle-row"><div><strong>Alertas de estudiantes</strong><p>Notificación inmediata ante alertas activadas</p></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>

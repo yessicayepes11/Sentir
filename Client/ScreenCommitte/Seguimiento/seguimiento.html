@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SENTIR | Seguimiento</title>
+
+  <link rel="stylesheet" href="seguimiento.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+      <div class="logo-container">
+        <img
+          src="/Sentir/Shared/TeacherResources/logolado.png"
+          alt="Logo SENTIR"
+          class="logo"
+        >
+      </div>
+
+      <nav class="nav-menu">
+
+        <a href="/Sentir/Client/ScreenCommitte/Committe.html" class="nav-link">
+          <i class="fa-solid fa-house"></i>
+          <span>Inicio</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Casos/casos.html" class="nav-link">
+          <i class="fa-regular fa-file-lines"></i>
+          <span>Casos reportados</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Alertas/alertas.html" class="nav-link">
+          <i class="fa-regular fa-bell"></i>
+          <span>Alertas</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Seguimiento/seguimiento.html" class="nav-link active">
+          <i class="fa-solid fa-chart-simple"></i>
+          <span>Seguimiento</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Convivencia/convivencia.html" class="nav-link">
+          <i class="fa-solid fa-people-group"></i>
+          <span>Convivencia</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Reportes/reportes.html" class="nav-link">
+          <i class="fa-solid fa-chart-column"></i>
+          <span>Reportes</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Perfil/perfil.html" class="nav-link">
+          <i class="fa-regular fa-user"></i>
+          <span>Mi perfil</span>
+        </a>
+
+      </nav>
+
+      <div class="sidebar-message">
+
+        <i class="fa-solid fa-heart"></i>
+
+        <p>
+          Dar seguimiento también significa
+          <strong>acompañar de forma constante</strong>
+        </p>
+
+      </div>
+
+    </aside>
+
+
+    <!-- CONTENIDO -->
+    <main class="main-content">
+
+      <!-- HEADER -->
+      <header class="header">
+
+        <button class="menu-button" id="menuButton">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="header-spacer"></div>
+
+        <button class="notification-button">
+          <i class="fa-regular fa-bell"></i>
+          <span class="notification-count">3</span>
+        </button>
+
+        <div class="profile-wrapper">
+
+          <button class="profile-box" id="profileBox">
+
+            <div class="profile-photo-container">
+
+              <img
+                id="profilePhoto"
+                class="profile-photo"
+                alt="Foto del profesor"
+              >
+
+              <i
+                id="profileFallback"
+                class="fa-solid fa-user profile-fallback"
+              ></i>
+
+            </div>
+
+            <div class="profile-text">
+              <strong>Carlos Ramírez</strong>
+              <span>Comité de Convivencia</span>
+            </div>
+
+            <i class="fa-solid fa-chevron-down profile-arrow"></i>
+
+          </button>
+
+
+          <div class="profile-menu" id="profileMenu">
+
+            <button id="changePhotoButton">
+              <i class="fa-regular fa-image"></i>
+              Cambiar foto
+            </button>
+
+            <a href="/Sentir/Client/ScreenCommitte/Perfil/perfil.html">
+              <i class="fa-regular fa-user"></i>
+              Mi perfil
+            </a>
+
+          </div>
+
+
+          <input
+            type="file"
+            id="photoInput"
+            accept="image/*"
+            hidden
+          >
+
+        </div>
+
+      </header>
+
+
+      <!-- ENCABEZADO -->
+      <section class="page-heading">
+
+        <div>
+
+          <span class="page-label">
+            ACOMPAÑAMIENTO
+          </span>
+
+          <h1>Seguimiento</h1>
+
+          <p>
+            Consulta la evolución de los casos que reciben
+            acompañamiento y revisa las acciones realizadas,
+            próximas revisiones y estado actual.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- ESTADÍSTICAS -->
+      <section class="stats-grid">
+
+        <article class="stat-card">
+
+          <div class="stat-icon orange">
+            <i class="fa-regular fa-clock"></i>
+          </div>
+
+          <div>
+            <span>Pendientes</span>
+            <strong>12</strong>
+            <small>Por revisar o asignar</small>
+          </div>
+
+        </article>
+
+
+        <article class="stat-card">
+
+          <div class="stat-icon blue">
+            <i class="fa-solid fa-arrows-rotate"></i>
+          </div>
+
+          <div>
+            <span>En proceso</span>
+            <strong>18</strong>
+            <small>Con acompañamiento activo</small>
+          </div>
+
+        </article>
+
+
+        <article class="stat-card">
+
+          <div class="stat-icon purple">
+            <i class="fa-solid fa-user-doctor"></i>
+          </div>
+
+          <div>
+            <span>Remitidos</span>
+            <strong>6</strong>
+            <small>A otras áreas</small>
+          </div>
+
+        </article>
+
+
+        <article class="stat-card">
+
+          <div class="stat-icon green">
+            <i class="fa-regular fa-circle-check"></i>
+          </div>
+
+          <div>
+            <span>Cerrados</span>
+            <strong>35</strong>
+            <small>Con cierre registrado</small>
+          </div>
+
+        </article>
+
+      </section>
+
+
+      <!-- FILTROS -->
+      <section class="filters-panel">
+
+        <div class="filters-heading">
+
+          <div>
+            <span>CONSULTA</span>
+            <h2>Casos en seguimiento</h2>
+          </div>
+
+          <p>
+            Busca un estudiante o filtra los casos por grado y estado.
+          </p>
+
+        </div>
+
+
+        <div class="filters-grid">
+
+          <label class="search-box">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+              type="search"
+              id="trackingSearch"
+              placeholder="Buscar estudiante o situación..."
+            >
+
+          </label>
+
+
+          <select id="gradeFilter">
+
+            <option value="all">
+              Todos los grados
+            </option>
+
+            <option value="6">
+              Sexto
+            </option>
+
+            <option value="7">
+              Séptimo
+            </option>
+
+            <option value="8">
+              Octavo
+            </option>
+
+            <option value="9">
+              Noveno
+            </option>
+
+            <option value="10">
+              Décimo
+            </option>
+
+            <option value="11">
+              Once
+            </option>
+
+          </select>
+
+
+          <select id="statusFilter">
+
+            <option value="all">
+              Todos los estados
+            </option>
+
+            <option value="proceso">
+              En proceso
+            </option>
+
+            <option value="revision">
+              En revisión
+            </option>
+
+            <option value="remitido">
+              Remitido
+            </option>
+
+            <option value="cerrado">
+              Cerrado
+            </option>
+
+          </select>
+
+        </div>
+
+      </section>
+
+
+      <!-- TARJETAS DE SEGUIMIENTO -->
+      <section class="tracking-grid" id="trackingGrid">
+
+        <!-- ESTUDIANTE 1 -->
+        <article
+          class="tracking-card"
+          data-name="María López"
+          data-grade="7"
+          data-status="proceso"
+        >
+
+          <div class="student-header">
+
+            <div class="student-avatar">
+              ML
+            </div>
+
+            <div class="student-info">
+
+              <strong>
+                María López
+              </strong>
+
+              <span>
+                7°2 · Acoso escolar
+              </span>
+
+            </div>
+
+            <span class="status-badge blue">
+              En proceso
+            </span>
+
+          </div>
+
+
+          <div class="progress-section">
+
+            <div class="progress-header">
+
+              <span>
+                Evolución del seguimiento
+              </span>
+
+              <strong>
+                68%
+              </strong>
+
+            </div>
+
+            <div class="progress-bar">
+
+              <div
+                class="progress-fill purple"
+                style="width: 68%;"
+              ></div>
+
+            </div>
+
+          </div>
+
+
+          <div class="tracking-data">
+
+            <div>
+
+              <span>
+                Última revisión
+              </span>
+
+              <strong>
+                05 oct 2026
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>
+                Próxima revisión
+              </span>
+
+              <strong>
+                10 oct 2026
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>
+                Responsable
+              </span>
+
+              <strong>
+                Comité
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="tracking-footer">
+
+            <span>
+              <i class="fa-solid fa-circle"></i>
+              Acompañamiento activo
+            </span>
+
+            <button
+              class="view-tracking-button"
+              data-student="María López"
+              data-grade="7°2"
+              data-case="Acoso escolar"
+              data-status="En proceso"
+              data-progress="68%"
+              data-last="05 de octubre de 2026"
+              data-next="10 de octubre de 2026"
+              data-responsible="Comité de Convivencia"
+              data-description="Se mantiene acompañamiento institucional. Se han establecido acuerdos con el grupo y seguimiento a la convivencia dentro del aula."
+            >
+              Ver seguimiento
+            </button>
+
+          </div>
+
+        </article>
+
+
+        <!-- ESTUDIANTE 2 -->
+        <article
+          class="tracking-card"
+          data-name="Ana Torres"
+          data-grade="8"
+          data-status="revision"
+        >
+
+          <div class="student-header">
+
+            <div class="student-avatar pink">
+              AT
+            </div>
+
+            <div class="student-info">
+
+              <strong>
+                Ana Torres
+              </strong>
+
+              <span>
+                8°3 · Aislamiento social
+              </span>
+
+            </div>
+
+            <span class="status-badge orange">
+              En revisión
+            </span>
+
+          </div>
+
+
+          <div class="progress-section">
+
+            <div class="progress-header">
+
+              <span>
+                Evolución del seguimiento
+              </span>
+
+              <strong>
+                48%
+              </strong>
+
+            </div>
+
+            <div class="progress-bar">
+
+              <div
+                class="progress-fill pink"
+                style="width: 48%;"
+              ></div>
+
+            </div>
+
+          </div>
+
+
+          <div class="tracking-data">
+
+            <div>
+              <span>Última revisión</span>
+              <strong>04 oct 2026</strong>
+            </div>
+
+            <div>
+              <span>Próxima revisión</span>
+              <strong>08 oct 2026</strong>
+            </div>
+
+            <div>
+              <span>Responsable</span>
+              <strong>Orientación</strong>
+            </div>
+
+          </div>
+
+
+          <div class="tracking-footer">
+
+            <span>
+              <i class="fa-solid fa-circle"></i>
+              Observación activa
+            </span>
+
+            <button
+              class="view-tracking-button"
+              data-student="Ana Torres"
+              data-grade="8°3"
+              data-case="Aislamiento social"
+              data-status="En revisión"
+              data-progress="48%"
+              data-last="04 de octubre de 2026"
+              data-next="08 de octubre de 2026"
+              data-responsible="Orientación Escolar"
+              data-description="Se continúa observando la interacción de la estudiante con su grupo. Se han identificado pequeños avances en participación."
+            >
+              Ver seguimiento
+            </button>
+
+          </div>
+
+        </article>
+
+
+        <!-- ESTUDIANTE 3 -->
+        <article
+          class="tracking-card"
+          data-name="Samuel Gómez"
+          data-grade="9"
+          data-status="remitido"
+        >
+
+          <div class="student-header">
+
+            <div class="student-avatar orange">
+              SG
+            </div>
+
+            <div class="student-info">
+
+              <strong>
+                Samuel Gómez
+              </strong>
+
+              <span>
+                9°1 · Situación familiar
+              </span>
+
+            </div>
+
+            <span class="status-badge purple">
+              Remitido
+            </span>
+
+          </div>
+
+
+          <div class="progress-section">
+
+            <div class="progress-header">
+
+              <span>
+                Evolución del seguimiento
+              </span>
+
+              <strong>
+                58%
+              </strong>
+
+            </div>
+
+            <div class="progress-bar">
+
+              <div
+                class="progress-fill blue"
+                style="width: 58%;"
+              ></div>
+
+            </div>
+
+          </div>
+
+
+          <div class="tracking-data">
+
+            <div>
+              <span>Última revisión</span>
+              <strong>02 oct 2026</strong>
+            </div>
+
+            <div>
+              <span>Próxima revisión</span>
+              <strong>09 oct 2026</strong>
+            </div>
+
+            <div>
+              <span>Responsable</span>
+              <strong>Psicología</strong>
+            </div>
+
+          </div>
+
+
+          <div class="tracking-footer">
+
+            <span>
+              <i class="fa-solid fa-circle"></i>
+              Remisión activa
+            </span>
+
+            <button
+              class="view-tracking-button"
+              data-student="Samuel Gómez"
+              data-grade="9°1"
+              data-case="Situación familiar"
+              data-status="Remitido"
+              data-progress="58%"
+              data-last="02 de octubre de 2026"
+              data-next="09 de octubre de 2026"
+              data-responsible="Psicología"
+              data-description="El caso fue remitido al área de Psicología. El comité conserva la trazabilidad institucional y revisa el cumplimiento de los acuerdos."
+            >
+              Ver seguimiento
+            </button>
+
+          </div>
+
+        </article>
+
+
+        <!-- ESTUDIANTE 4 -->
+        <article
+          class="tracking-card"
+          data-name="Valentina Ruiz"
+          data-grade="10"
+          data-status="cerrado"
+        >
+
+          <div class="student-header">
+
+            <div class="student-avatar green">
+              VR
+            </div>
+
+            <div class="student-info">
+
+              <strong>
+                Valentina Ruiz
+              </strong>
+
+              <span>
+                10°4 · Cambio de comportamiento
+              </span>
+
+            </div>
+
+            <span class="status-badge green">
+              Cerrado
+            </span>
+
+          </div>
+
+
+          <div class="progress-section">
+
+            <div class="progress-header">
+
+              <span>
+                Evolución del seguimiento
+              </span>
+
+              <strong>
+                100%
+              </strong>
+
+            </div>
+
+            <div class="progress-bar">
+
+              <div
+                class="progress-fill green"
+                style="width: 100%;"
+              ></div>
+
+            </div>
+
+          </div>
+
+
+          <div class="tracking-data">
+
+            <div>
+              <span>Última revisión</span>
+              <strong>01 oct 2026</strong>
+            </div>
+
+            <div>
+              <span>Cierre</span>
+              <strong>03 oct 2026</strong>
+            </div>
+
+            <div>
+              <span>Responsable</span>
+              <strong>Comité</strong>
+            </div>
+
+          </div>
+
+
+          <div class="tracking-footer">
+
+            <span class="success-text">
+              <i class="fa-solid fa-circle-check"></i>
+              Seguimiento finalizado
+            </span>
+
+            <button
+              class="view-tracking-button"
+              data-student="Valentina Ruiz"
+              data-grade="10°4"
+              data-case="Cambio de comportamiento"
+              data-status="Cerrado"
+              data-progress="100%"
+              data-last="01 de octubre de 2026"
+              data-next="Caso cerrado"
+              data-responsible="Comité de Convivencia"
+              data-description="El seguimiento fue finalizado luego de evidenciar una evolución positiva y cumplimiento de los acuerdos establecidos."
+            >
+              Ver seguimiento
+            </button>
+
+          </div>
+
+        </article>
+
+
+        <!-- ESTUDIANTE 5 -->
+        <article
+          class="tracking-card"
+          data-name="Mateo Ríos"
+          data-grade="11"
+          data-status="remitido"
+        >
+
+          <div class="student-header">
+
+            <div class="student-avatar dark">
+              MR
+            </div>
+
+            <div class="student-info">
+
+              <strong>
+                Mateo Ríos
+              </strong>
+
+              <span>
+                11°1 · Conflicto reiterado
+              </span>
+
+            </div>
+
+            <span class="status-badge purple">
+              Remitido
+            </span>
+
+          </div>
+
+
+          <div class="progress-section">
+
+            <div class="progress-header">
+
+              <span>
+                Evolución del seguimiento
+              </span>
+
+              <strong>
+                76%
+              </strong>
+
+            </div>
+
+            <div class="progress-bar">
+
+              <div
+                class="progress-fill purple"
+                style="width: 76%;"
+              ></div>
+
+            </div>
+
+          </div>
+
+
+          <div class="tracking-data">
+
+            <div>
+              <span>Última revisión</span>
+              <strong>30 sept 2026</strong>
+            </div>
+
+            <div>
+              <span>Próxima revisión</span>
+              <strong>07 oct 2026</strong>
+            </div>
+
+            <div>
+              <span>Responsable</span>
+              <strong>Psicología</strong>
+            </div>
+
+          </div>
+
+
+          <div class="tracking-footer">
+
+            <span>
+              <i class="fa-solid fa-circle"></i>
+              Atención especializada
+            </span>
+
+            <button
+              class="view-tracking-button"
+              data-student="Mateo Ríos"
+              data-grade="11°1"
+              data-case="Conflicto reiterado"
+              data-status="Remitido"
+              data-progress="76%"
+              data-last="30 de septiembre de 2026"
+              data-next="07 de octubre de 2026"
+              data-responsible="Psicología"
+              data-description="Se mantiene acompañamiento especializado y revisión periódica de los compromisos establecidos con el estudiante."
+            >
+              Ver seguimiento
+            </button>
+
+          </div>
+
+        </article>
+
+      </section>
+
+
+      <!-- RESUMEN INFERIOR -->
+      <section class="overview-panel">
+
+        <div class="overview-heading">
+
+          <div>
+
+            <span>
+              ESTADO GENERAL
+            </span>
+
+            <h2>
+              Evolución de los seguimientos
+            </h2>
+
+            <p>
+              Vista rápida de la distribución actual de los casos.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="overview-grid">
+
+          <div class="overview-item">
+
+            <div class="overview-number orange">
+              12
+            </div>
+
+            <div>
+              <strong>Pendientes</strong>
+              <span>17% del total</span>
+            </div>
+
+          </div>
+
+
+          <div class="overview-item">
+
+            <div class="overview-number blue">
+              18
+            </div>
+
+            <div>
+              <strong>En proceso</strong>
+              <span>25% del total</span>
+            </div>
+
+          </div>
+
+
+          <div class="overview-item">
+
+            <div class="overview-number purple">
+              6
+            </div>
+
+            <div>
+              <strong>Remitidos</strong>
+              <span>8% del total</span>
+            </div>
+
+          </div>
+
+
+          <div class="overview-item">
+
+            <div class="overview-number green">
+              35
+            </div>
+
+            <div>
+              <strong>Cerrados</strong>
+              <span>50% del total</span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <!-- MODAL DE SEGUIMIENTO -->
+  <div
+    class="tracking-modal"
+    id="trackingModal"
+  >
+
+    <div class="modal-card">
+
+      <button
+        class="modal-close"
+        id="modalClose"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+
+      <span class="modal-label">
+        Detalle de seguimiento
+      </span>
+
+
+      <h2 id="modalCase">
+        Seguimiento
+      </h2>
+
+
+      <div class="modal-student">
+
+        <div class="modal-avatar">
+          <i class="fa-solid fa-user"></i>
+        </div>
+
+        <div>
+
+          <strong id="modalStudent">
+            Estudiante
+          </strong>
+
+          <span id="modalGrade">
+            Grado
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="modal-progress-box">
+
+        <div>
+
+          <span>
+            Avance del seguimiento
+          </span>
+
+          <strong id="modalProgress">
+            0%
+          </strong>
+
+        </div>
+
+        <div class="modal-progress-bar">
+
+          <div
+            id="modalProgressFill"
+            class="modal-progress-fill"
+          ></div>
+
+        </div>
+
+      </div>
+
+
+      <div class="modal-info-grid">
+
+        <div>
+          <span>Estado</span>
+          <strong id="modalStatus">-</strong>
+        </div>
+
+        <div>
+          <span>Responsable</span>
+          <strong id="modalResponsible">-</strong>
+        </div>
+
+        <div>
+          <span>Última revisión</span>
+          <strong id="modalLast">-</strong>
+        </div>
+
+        <div>
+          <span>Próxima revisión</span>
+          <strong id="modalNext">-</strong>
+        </div>
+
+      </div>
+
+
+      <div class="modal-description">
+
+        <span>
+          Observación de seguimiento
+        </span>
+
+        <p id="modalDescription">
+          Información del seguimiento.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div
+    class="mobile-overlay"
+    id="mobileOverlay"
+  ></div>
+
+
+  <div
+    class="toast"
+    id="toast"
+  ></div>
+
+
+  <script src="seguimiento.js"></script>
+
+</body>
+
+</html>

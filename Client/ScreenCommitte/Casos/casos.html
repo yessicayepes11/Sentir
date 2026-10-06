@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SENTIR | Casos reportados</title>
+
+  <link rel="stylesheet" href="casos.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+      <div class="logo-container">
+        <img
+          src="/Sentir/Shared/TeacherResources/logolado.png"
+          alt="Logo SENTIR"
+          class="logo"
+        >
+      </div>
+
+      <nav class="nav-menu">
+
+        <a href="/Sentir/Client/ScreenCommitte/Committe.html" class="nav-link">
+          <i class="fa-solid fa-house"></i>
+          <span>Inicio</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Casos/casos.html" class="nav-link active">
+          <i class="fa-regular fa-file-lines"></i>
+          <span>Casos reportados</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Alertas/alertas.html" class="nav-link">
+          <i class="fa-regular fa-bell"></i>
+          <span>Alertas</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Seguimiento/seguimiento.html" class="nav-link">
+          <i class="fa-solid fa-chart-simple"></i>
+          <span>Seguimiento</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Convivencia/convivencia.html" class="nav-link">
+          <i class="fa-solid fa-people-group"></i>
+          <span>Convivencia</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Reportes/reportes.html" class="nav-link">
+          <i class="fa-solid fa-chart-column"></i>
+          <span>Reportes</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Perfil/perfil.html" class="nav-link">
+          <i class="fa-regular fa-user"></i>
+          <span>Mi perfil</span>
+        </a>
+
+      </nav>
+
+      <div class="sidebar-message">
+        <i class="fa-solid fa-heart"></i>
+
+        <p>
+          Cada caso merece una mirada
+          <strong>responsable y humana</strong>
+        </p>
+      </div>
+
+    </aside>
+
+
+    <!-- CONTENIDO -->
+    <main class="main-content">
+
+      <!-- HEADER -->
+      <header class="header">
+
+        <button class="menu-button" id="menuButton">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="header-spacer"></div>
+
+        <button class="notification-button">
+          <i class="fa-regular fa-bell"></i>
+          <span class="notification-count">3</span>
+        </button>
+
+        <div class="profile-wrapper">
+
+          <button class="profile-box" id="profileBox">
+
+            <div class="profile-photo-container">
+
+              <img
+                id="profilePhoto"
+                class="profile-photo"
+                alt="Foto del profesor"
+              >
+
+              <i
+                id="profileFallback"
+                class="fa-solid fa-user profile-fallback"
+              ></i>
+
+            </div>
+
+            <div class="profile-text">
+              <strong>Carlos Ramírez</strong>
+              <span>Comité de Convivencia</span>
+            </div>
+
+            <i class="fa-solid fa-chevron-down profile-arrow"></i>
+
+          </button>
+
+          <div class="profile-menu" id="profileMenu">
+
+            <button id="changePhotoButton">
+              <i class="fa-regular fa-image"></i>
+              Cambiar foto
+            </button>
+
+            <a href="/Sentir/Client/ScreenCommitte/Perfil/perfil.html">
+              <i class="fa-regular fa-user"></i>
+              Mi perfil
+            </a>
+
+          </div>
+
+          <input
+            type="file"
+            id="photoInput"
+            accept="image/*"
+            hidden
+          >
+
+        </div>
+
+      </header>
+
+
+      <!-- ENCABEZADO -->
+      <section class="page-heading">
+
+        <div>
+
+          <span class="page-label">
+            GESTIÓN DE CASOS
+          </span>
+
+          <h1>Casos reportados</h1>
+
+          <p>
+            Consulta los casos registrados, revisa su prioridad,
+            estado y seguimiento institucional.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- MÉTRICAS -->
+      <section class="stats-grid">
+
+        <article class="stat-card">
+
+          <div class="stat-icon purple">
+            <i class="fa-regular fa-folder-open"></i>
+          </div>
+
+          <div>
+            <span>Total de casos</span>
+            <strong>42</strong>
+          </div>
+
+        </article>
+
+
+        <article class="stat-card">
+
+          <div class="stat-icon red">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </div>
+
+          <div>
+            <span>Prioridad alta</span>
+            <strong>7</strong>
+          </div>
+
+        </article>
+
+
+        <article class="stat-card">
+
+          <div class="stat-icon blue">
+            <i class="fa-solid fa-arrows-rotate"></i>
+          </div>
+
+          <div>
+            <span>En seguimiento</span>
+            <strong>18</strong>
+          </div>
+
+        </article>
+
+
+        <article class="stat-card">
+
+          <div class="stat-icon green">
+            <i class="fa-regular fa-circle-check"></i>
+          </div>
+
+          <div>
+            <span>Casos cerrados</span>
+            <strong>17</strong>
+          </div>
+
+        </article>
+
+      </section>
+
+
+      <!-- FILTROS -->
+      <section class="filters-panel">
+
+        <div class="filters-heading">
+
+          <div>
+
+            <span>
+              CONSULTA
+            </span>
+
+            <h2>
+              Buscar casos
+            </h2>
+
+          </div>
+
+          <p>
+            Filtra los casos según la información que necesites revisar.
+          </p>
+
+        </div>
+
+
+        <div class="filters-grid">
+
+          <label class="search-box">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+              type="search"
+              id="caseSearch"
+              placeholder="Buscar estudiante o situación..."
+            >
+
+          </label>
+
+
+          <select id="gradeFilter">
+
+            <option value="all">
+              Todos los grados
+            </option>
+
+            <option value="6">
+              Sexto
+            </option>
+
+            <option value="7">
+              Séptimo
+            </option>
+
+            <option value="8">
+              Octavo
+            </option>
+
+            <option value="9">
+              Noveno
+            </option>
+
+            <option value="10">
+              Décimo
+            </option>
+
+            <option value="11">
+              Once
+            </option>
+
+          </select>
+
+
+          <select id="priorityFilter">
+
+            <option value="all">
+              Todas las prioridades
+            </option>
+
+            <option value="alta">
+              Alta
+            </option>
+
+            <option value="media">
+              Media
+            </option>
+
+            <option value="baja">
+              Baja
+            </option>
+
+          </select>
+
+
+          <select id="statusFilter">
+
+            <option value="all">
+              Todos los estados
+            </option>
+
+            <option value="pendiente">
+              Pendiente
+            </option>
+
+            <option value="seguimiento">
+              En seguimiento
+            </option>
+
+            <option value="remitido">
+              Remitido
+            </option>
+
+            <option value="cerrado">
+              Cerrado
+            </option>
+
+          </select>
+
+        </div>
+
+      </section>
+
+
+      <!-- LISTADO -->
+      <section class="cases-panel">
+
+        <div class="panel-header">
+
+          <div>
+
+            <span class="section-label">
+              CASOS INSTITUCIONALES
+            </span>
+
+            <h2>
+              Casos registrados
+            </h2>
+
+          </div>
+
+          <span class="cases-count" id="casesCount">
+            6 casos visibles
+          </span>
+
+        </div>
+
+
+        <div class="cases-list" id="casesList">
+
+          <!-- CASO 1 -->
+          <article
+            class="case-card"
+            data-name="María López"
+            data-grade="7"
+            data-priority="alta"
+            data-status="seguimiento"
+          >
+
+            <div class="case-avatar">
+              ML
+            </div>
+
+            <div class="case-main">
+
+              <div class="case-title-row">
+
+                <div>
+
+                  <strong>
+                    María López
+                  </strong>
+
+                  <span>
+                    Grado 7°3
+                  </span>
+
+                </div>
+
+                <span class="priority-badge high">
+                  Alta prioridad
+                </span>
+
+              </div>
+
+
+              <h3>
+                Posible situación de acoso escolar
+              </h3>
+
+              <p>
+                Reporte relacionado con comentarios ofensivos reiterados
+                dentro del grupo.
+              </p>
+
+
+              <div class="case-meta">
+
+                <span>
+                  <i class="fa-regular fa-calendar"></i>
+                  05 oct 2026
+                </span>
+
+                <span>
+                  <i class="fa-solid fa-user"></i>
+                  Docente de Español
+                </span>
+
+                <span class="status-tag tracking">
+                  En seguimiento
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <button
+              class="summary-button"
+              data-student="María López"
+              data-grade="7°3"
+              data-title="Posible situación de acoso escolar"
+              data-description="Reporte relacionado con comentarios ofensivos reiterados dentro del grupo."
+              data-priority="Alta prioridad"
+              data-status="En seguimiento"
+              data-reporter="Docente de Español"
+              data-date="05 de octubre de 2026"
+            >
+              Ver resumen
+            </button>
+
+          </article>
+
+
+          <!-- CASO 2 -->
+          <article
+            class="case-card"
+            data-name="Juan Pérez"
+            data-grade="6"
+            data-priority="media"
+            data-status="pendiente"
+          >
+
+            <div class="case-avatar blue">
+              JP
+            </div>
+
+            <div class="case-main">
+
+              <div class="case-title-row">
+
+                <div>
+
+                  <strong>
+                    Juan Pérez
+                  </strong>
+
+                  <span>
+                    Grado 6°1
+                  </span>
+
+                </div>
+
+                <span class="priority-badge medium">
+                  Prioridad media
+                </span>
+
+              </div>
+
+
+              <h3>
+                Conflicto entre estudiantes
+              </h3>
+
+              <p>
+                Se registra discusión frecuente durante los espacios
+                de descanso.
+              </p>
+
+
+              <div class="case-meta">
+
+                <span>
+                  <i class="fa-regular fa-calendar"></i>
+                  04 oct 2026
+                </span>
+
+                <span>
+                  <i class="fa-solid fa-user"></i>
+                  Docente director
+                </span>
+
+                <span class="status-tag pending">
+                  Pendiente
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <button
+              class="summary-button"
+              data-student="Juan Pérez"
+              data-grade="6°1"
+              data-title="Conflicto entre estudiantes"
+              data-description="Se registra discusión frecuente durante los espacios de descanso."
+              data-priority="Prioridad media"
+              data-status="Pendiente"
+              data-reporter="Docente director"
+              data-date="04 de octubre de 2026"
+            >
+              Ver resumen
+            </button>
+
+          </article>
+
+
+          <!-- CASO 3 -->
+          <article
+            class="case-card"
+            data-name="Ana Torres"
+            data-grade="8"
+            data-priority="alta"
+            data-status="seguimiento"
+          >
+
+            <div class="case-avatar pink">
+              AT
+            </div>
+
+            <div class="case-main">
+
+              <div class="case-title-row">
+
+                <div>
+
+                  <strong>
+                    Ana Torres
+                  </strong>
+
+                  <span>
+                    Grado 8°2
+                  </span>
+
+                </div>
+
+                <span class="priority-badge high">
+                  Alta prioridad
+                </span>
+
+              </div>
+
+
+              <h3>
+                Aislamiento social
+              </h3>
+
+              <p>
+                Se evidencia disminución de interacción
+                y participación dentro del grupo.
+              </p>
+
+
+              <div class="case-meta">
+
+                <span>
+                  <i class="fa-regular fa-calendar"></i>
+                  03 oct 2026
+                </span>
+
+                <span>
+                  <i class="fa-solid fa-user"></i>
+                  Orientación escolar
+                </span>
+
+                <span class="status-tag tracking">
+                  En seguimiento
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <button
+              class="summary-button"
+              data-student="Ana Torres"
+              data-grade="8°2"
+              data-title="Aislamiento social"
+              data-description="Se evidencia disminución de interacción y participación dentro del grupo."
+              data-priority="Alta prioridad"
+              data-status="En seguimiento"
+              data-reporter="Orientación escolar"
+              data-date="03 de octubre de 2026"
+            >
+              Ver resumen
+            </button>
+
+          </article>
+
+
+          <!-- CASO 4 -->
+          <article
+            class="case-card"
+            data-name="Samuel Gómez"
+            data-grade="9"
+            data-priority="media"
+            data-status="remitido"
+          >
+
+            <div class="case-avatar orange">
+              SG
+            </div>
+
+            <div class="case-main">
+
+              <div class="case-title-row">
+
+                <div>
+
+                  <strong>
+                    Samuel Gómez
+                  </strong>
+
+                  <span>
+                    Grado 9°1
+                  </span>
+
+                </div>
+
+                <span class="priority-badge medium">
+                  Prioridad media
+                </span>
+
+              </div>
+
+
+              <h3>
+                Situación familiar reportada
+              </h3>
+
+              <p>
+                Caso que requiere acompañamiento adicional y
+                articulación con otras áreas.
+              </p>
+
+
+              <div class="case-meta">
+
+                <span>
+                  <i class="fa-regular fa-calendar"></i>
+                  02 oct 2026
+                </span>
+
+                <span>
+                  <i class="fa-solid fa-user"></i>
+                  Coordinación
+                </span>
+
+                <span class="status-tag referred">
+                  Remitido
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <button
+              class="summary-button"
+              data-student="Samuel Gómez"
+              data-grade="9°1"
+              data-title="Situación familiar reportada"
+              data-description="Caso que requiere acompañamiento adicional y articulación con otras áreas."
+              data-priority="Prioridad media"
+              data-status="Remitido"
+              data-reporter="Coordinación"
+              data-date="02 de octubre de 2026"
+            >
+              Ver resumen
+            </button>
+
+          </article>
+
+
+          <!-- CASO 5 -->
+          <article
+            class="case-card"
+            data-name="Valentina Ruiz"
+            data-grade="10"
+            data-priority="baja"
+            data-status="cerrado"
+          >
+
+            <div class="case-avatar green">
+              VR
+            </div>
+
+            <div class="case-main">
+
+              <div class="case-title-row">
+
+                <div>
+
+                  <strong>
+                    Valentina Ruiz
+                  </strong>
+
+                  <span>
+                    Grado 10°4
+                  </span>
+
+                </div>
+
+                <span class="priority-badge low">
+                  Prioridad baja
+                </span>
+
+              </div>
+
+
+              <h3>
+                Cambio de comportamiento
+              </h3>
+
+              <p>
+                Situación revisada y acompañada con evolución positiva.
+              </p>
+
+
+              <div class="case-meta">
+
+                <span>
+                  <i class="fa-regular fa-calendar"></i>
+                  01 oct 2026
+                </span>
+
+                <span>
+                  <i class="fa-solid fa-user"></i>
+                  Docente de grupo
+                </span>
+
+                <span class="status-tag closed">
+                  Cerrado
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <button
+              class="summary-button"
+              data-student="Valentina Ruiz"
+              data-grade="10°4"
+              data-title="Cambio de comportamiento"
+              data-description="Situación revisada y acompañada con evolución positiva."
+              data-priority="Prioridad baja"
+              data-status="Cerrado"
+              data-reporter="Docente de grupo"
+              data-date="01 de octubre de 2026"
+            >
+              Ver resumen
+            </button>
+
+          </article>
+
+
+          <!-- CASO 6 -->
+          <article
+            class="case-card"
+            data-name="Mateo Ríos"
+            data-grade="11"
+            data-priority="alta"
+            data-status="remitido"
+          >
+
+            <div class="case-avatar purple-dark">
+              MR
+            </div>
+
+            <div class="case-main">
+
+              <div class="case-title-row">
+
+                <div>
+
+                  <strong>
+                    Mateo Ríos
+                  </strong>
+
+                  <span>
+                    Grado 11°2
+                  </span>
+
+                </div>
+
+                <span class="priority-badge high">
+                  Alta prioridad
+                </span>
+
+              </div>
+
+
+              <h3>
+                Conflicto reiterado
+              </h3>
+
+              <p>
+                Situación recurrente que fue remitida para
+                acompañamiento especializado.
+              </p>
+
+
+              <div class="case-meta">
+
+                <span>
+                  <i class="fa-regular fa-calendar"></i>
+                  30 sept 2026
+                </span>
+
+                <span>
+                  <i class="fa-solid fa-user"></i>
+                  Comité de convivencia
+                </span>
+
+                <span class="status-tag referred">
+                  Remitido
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <button
+              class="summary-button"
+              data-student="Mateo Ríos"
+              data-grade="11°2"
+              data-title="Conflicto reiterado"
+              data-description="Situación recurrente que fue remitida para acompañamiento especializado."
+              data-priority="Alta prioridad"
+              data-status="Remitido"
+              data-reporter="Comité de convivencia"
+              data-date="30 de septiembre de 2026"
+            >
+              Ver resumen
+            </button>
+
+          </article>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <!-- MODAL -->
+  <div class="case-modal" id="caseModal">
+
+    <div class="modal-card">
+
+      <button class="modal-close" id="modalClose">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+
+      <span class="modal-label">
+        Resumen del caso
+      </span>
+
+
+      <h2 id="modalCaseTitle">
+        Caso
+      </h2>
+
+
+      <div class="modal-student">
+
+        <div class="modal-avatar">
+          <i class="fa-solid fa-user"></i>
+        </div>
+
+        <div>
+          <strong id="modalStudent">
+            Estudiante
+          </strong>
+
+          <span id="modalGrade">
+            Grado
+          </span>
+        </div>
+
+      </div>
+
+
+      <div class="modal-info-grid">
+
+        <div>
+          <span>Prioridad</span>
+          <strong id="modalPriority">-</strong>
+        </div>
+
+        <div>
+          <span>Estado</span>
+          <strong id="modalStatus">-</strong>
+        </div>
+
+        <div>
+          <span>Reportado por</span>
+          <strong id="modalReporter">-</strong>
+        </div>
+
+        <div>
+          <span>Fecha</span>
+          <strong id="modalDate">-</strong>
+        </div>
+
+      </div>
+
+
+      <div class="modal-description">
+
+        <span>
+          Descripción
+        </span>
+
+        <p id="modalDescription">
+          Información del caso.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <div class="toast" id="toast"></div>
+
+
+  <script src="casos.js"></script>
+
+</body>
+
+</html>

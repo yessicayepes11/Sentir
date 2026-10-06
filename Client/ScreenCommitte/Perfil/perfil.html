@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SENTIR | Mi perfil</title>
+
+  <link rel="stylesheet" href="perfil.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+      <div class="logo-container">
+        <img
+          src="/Sentir/Shared/TeacherResources/logolado.png"
+          alt="Logo SENTIR"
+          class="logo"
+        >
+      </div>
+
+      <nav class="nav-menu">
+
+        <a href="/Sentir/Client/ScreenCommitte/Committe.html" class="nav-link">
+          <i class="fa-solid fa-house"></i>
+          <span>Inicio</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Casos/casos.html" class="nav-link">
+          <i class="fa-regular fa-file-lines"></i>
+          <span>Casos reportados</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Alertas/alertas.html" class="nav-link">
+          <i class="fa-regular fa-bell"></i>
+          <span>Alertas</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Seguimiento/seguimiento.html" class="nav-link">
+          <i class="fa-solid fa-chart-simple"></i>
+          <span>Seguimiento</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Convivencia/convivencia.html" class="nav-link">
+          <i class="fa-solid fa-people-group"></i>
+          <span>Convivencia</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Reportes/reportes.html" class="nav-link">
+          <i class="fa-solid fa-chart-column"></i>
+          <span>Reportes</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Perfil/perfil.html" class="nav-link active">
+          <i class="fa-regular fa-user"></i>
+          <span>Mi perfil</span>
+        </a>
+
+      </nav>
+
+      <div class="sidebar-message">
+
+        <i class="fa-solid fa-heart"></i>
+
+        <p>
+          Acompañar también empieza por
+          <strong>cuidar nuestra identidad</strong>
+        </p>
+
+      </div>
+
+    </aside>
+
+
+    <!-- CONTENIDO -->
+    <main class="main-content">
+
+      <!-- HEADER -->
+      <header class="header">
+
+        <button class="menu-button" id="menuButton">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="header-spacer"></div>
+
+        <button class="notification-button">
+          <i class="fa-regular fa-bell"></i>
+          <span class="notification-count">3</span>
+        </button>
+
+        <div class="profile-wrapper">
+
+          <button class="profile-box" id="profileBox">
+
+            <div class="profile-photo-container">
+
+              <img
+                class="shared-profile-photo profile-photo"
+                id="profilePhoto"
+                alt="Foto del profesor"
+              >
+
+              <i
+                class="fa-solid fa-user profile-fallback"
+                id="profileFallback"
+              ></i>
+
+            </div>
+
+            <div class="profile-text">
+              <strong>Carlos Ramírez</strong>
+              <span>Comité de Convivencia</span>
+            </div>
+
+            <i class="fa-solid fa-chevron-down profile-arrow"></i>
+
+          </button>
+
+          <div class="profile-menu" id="profileMenu">
+
+            <button id="changePhotoButton">
+              <i class="fa-regular fa-image"></i>
+              Cambiar foto
+            </button>
+
+            <a href="/Sentir/Client/ScreenCommitte/Perfil/perfil.html">
+              <i class="fa-regular fa-user"></i>
+              Mi perfil
+            </a>
+
+          </div>
+
+          <input
+            type="file"
+            id="photoInput"
+            accept="image/*"
+            hidden
+          >
+
+        </div>
+
+      </header>
+
+
+      <!-- ENCABEZADO -->
+      <section class="page-heading">
+
+        <span class="page-label">
+          MI CUENTA
+        </span>
+
+        <h1>Mi perfil</h1>
+
+        <p>
+          Consulta tu información personal y actualiza tu fotografía
+          de perfil dentro del módulo del Comité de Convivencia.
+        </p>
+
+      </section>
+
+
+      <!-- CONTENIDO PERFIL -->
+      <section class="profile-layout">
+
+        <!-- PERFIL PRINCIPAL -->
+        <article class="profile-card">
+
+          <div class="profile-decoration one"></div>
+          <div class="profile-decoration two"></div>
+
+          <div class="large-photo-container">
+
+            <img
+              class="shared-profile-photo large-profile-photo"
+              id="largeProfilePhoto"
+              alt="Foto del profesor"
+            >
+
+            <i
+              class="fa-solid fa-user large-profile-fallback"
+              id="largeProfileFallback"
+            ></i>
+
+          </div>
+
+          <h2>
+            Carlos Ramírez
+          </h2>
+
+          <span class="role-badge">
+            Comité de Convivencia
+          </span>
+
+          <p class="profile-message">
+            “Acompañar con empatía también transforma
+            nuestra comunidad educativa.”
+          </p>
+
+          <button
+            class="change-photo-main"
+            id="changePhotoMainButton"
+          >
+            <i class="fa-regular fa-image"></i>
+            Cambiar foto
+          </button>
+
+          <span class="photo-help">
+            Esta foto aparecerá automáticamente en todas las pantallas.
+          </span>
+
+        </article>
+
+
+        <!-- INFORMACIÓN -->
+        <article class="information-panel">
+
+          <div class="panel-heading">
+
+            <div>
+
+              <span>
+                INFORMACIÓN PERSONAL
+              </span>
+
+              <h2>
+                Datos del profesor
+              </h2>
+
+              <p>
+                La información institucional se encuentra disponible
+                únicamente en modo consulta.
+              </p>
+
+            </div>
+
+            <div class="lock-icon">
+              <i class="fa-solid fa-lock"></i>
+            </div>
+
+          </div>
+
+
+          <div class="info-grid">
+
+            <div class="info-card">
+
+              <div class="info-icon purple">
+                <i class="fa-regular fa-user"></i>
+              </div>
+
+              <div>
+                <span>Nombre completo</span>
+                <strong>Carlos Ramírez</strong>
+              </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+              <div class="info-icon pink">
+                <i class="fa-solid fa-people-group"></i>
+              </div>
+
+              <div>
+                <span>Rol</span>
+                <strong>Comité de Convivencia</strong>
+              </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+              <div class="info-icon blue">
+                <i class="fa-regular fa-envelope"></i>
+              </div>
+
+              <div>
+                <span>Correo institucional</span>
+                <strong>carlos.ramirez@institucion.edu.co</strong>
+              </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+              <div class="info-icon green">
+                <i class="fa-solid fa-school"></i>
+              </div>
+
+              <div>
+                <span>Área</span>
+                <strong>Convivencia escolar</strong>
+              </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+              <div class="info-icon orange">
+                <i class="fa-solid fa-id-card"></i>
+              </div>
+
+              <div>
+                <span>Documento</span>
+                <strong>1.026.548.921</strong>
+              </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+              <div class="info-icon purple">
+                <i class="fa-solid fa-circle-check"></i>
+              </div>
+
+              <div>
+                <span>Estado</span>
+                <strong>Activo</strong>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- BLOQUE PERMISOS -->
+          <div class="permissions-card">
+
+            <div class="permissions-icon">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+
+            <div>
+
+              <span class="permissions-label">
+                TU ACCESO
+              </span>
+
+              <h3>
+                Funciones del Comité de Convivencia
+              </h3>
+
+              <p>
+                Puedes consultar casos, revisar alertas y seguimiento,
+                además de gestionar mediaciones, compromisos y
+                actividades de convivencia.
+              </p>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      </section>
+
+
+      <!-- RESUMEN CUENTA -->
+      <section class="account-summary">
+
+        <div class="summary-title">
+
+          <span>
+            TU ESPACIO EN SENTIR
+          </span>
+
+          <h2>
+            Acceso rápido
+          </h2>
+
+        </div>
+
+
+        <div class="summary-grid">
+
+          <a href="/Sentir/Client/ScreenCommitte/Casos/casos.html" class="summary-card">
+
+            <div class="summary-icon purple">
+              <i class="fa-regular fa-file-lines"></i>
+            </div>
+
+            <div>
+              <strong>Casos reportados</strong>
+              <span>Consulta los casos institucionales.</span>
+            </div>
+
+            <i class="fa-solid fa-chevron-right"></i>
+
+          </a>
+
+
+          <a href="/Sentir/Client/ScreenCommitte/Alertas/alertas.html" class="summary-card">
+
+            <div class="summary-icon pink">
+              <i class="fa-regular fa-bell"></i>
+            </div>
+
+            <div>
+              <strong>Alertas</strong>
+              <span>Revisa situaciones que requieren atención.</span>
+            </div>
+
+            <i class="fa-solid fa-chevron-right"></i>
+
+          </a>
+
+
+          <a href="/Sentir/Client/ScreenCommitte/Convivencia/convivencia.html" class="summary-card">
+
+            <div class="summary-icon blue">
+              <i class="fa-solid fa-handshake"></i>
+            </div>
+
+            <div>
+              <strong>Convivencia</strong>
+              <span>Gestiona mediaciones y compromisos.</span>
+            </div>
+
+            <i class="fa-solid fa-chevron-right"></i>
+
+          </a>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <div
+    class="mobile-overlay"
+    id="mobileOverlay"
+  ></div>
+
+
+  <div
+    class="toast"
+    id="toast"
+  ></div>
+
+
+  <script src="perfil.js"></script>
+
+</body>
+
+</html>

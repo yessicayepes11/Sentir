@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SENTIR | Reportes</title>
+
+  <link rel="stylesheet" href="reportes.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+      <div class="logo-container">
+        <img
+          src="/Sentir/Shared/TeacherResources/logolado.png"
+          alt="Logo SENTIR"
+          class="logo"
+        >
+      </div>
+
+      <nav class="nav-menu">
+
+        <a href="/Sentir/Client/ScreenCommitte/Committe.html" class="nav-link">
+          <i class="fa-solid fa-house"></i>
+          <span>Inicio</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Casos/casos.html" class="nav-link">
+          <i class="fa-regular fa-file-lines"></i>
+          <span>Casos reportados</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Alertas/alertas.html" class="nav-link">
+          <i class="fa-regular fa-bell"></i>
+          <span>Alertas</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Seguimiento/seguimiento.html" class="nav-link">
+          <i class="fa-solid fa-chart-simple"></i>
+          <span>Seguimiento</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Convivencia/convivencia.html" class="nav-link">
+          <i class="fa-solid fa-people-group"></i>
+          <span>Convivencia</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Reportes/reportes.html" class="nav-link active">
+          <i class="fa-solid fa-chart-column"></i>
+          <span>Reportes</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Perfil/perfil.html" class="nav-link">
+          <i class="fa-regular fa-user"></i>
+          <span>Mi perfil</span>
+        </a>
+
+      </nav>
+
+      <div class="sidebar-message">
+
+        <i class="fa-solid fa-heart"></i>
+
+        <p>
+          Comprender los datos también ayuda a
+          <strong>tomar mejores decisiones</strong>
+        </p>
+
+      </div>
+
+    </aside>
+
+
+    <!-- CONTENIDO -->
+    <main class="main-content">
+
+      <!-- HEADER -->
+      <header class="header">
+
+        <button class="menu-button" id="menuButton">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="header-spacer"></div>
+
+        <button class="notification-button">
+          <i class="fa-regular fa-bell"></i>
+          <span class="notification-count">3</span>
+        </button>
+
+        <div class="profile-wrapper">
+
+          <button class="profile-box" id="profileBox">
+
+            <div class="profile-photo-container">
+
+              <img
+                id="profilePhoto"
+                class="profile-photo"
+                alt="Foto del profesor"
+              >
+
+              <i
+                id="profileFallback"
+                class="fa-solid fa-user profile-fallback"
+              ></i>
+
+            </div>
+
+            <div class="profile-text">
+              <strong>Carlos Ramírez</strong>
+              <span>Comité de Convivencia</span>
+            </div>
+
+            <i class="fa-solid fa-chevron-down profile-arrow"></i>
+
+          </button>
+
+          <div class="profile-menu" id="profileMenu">
+
+            <button id="changePhotoButton">
+              <i class="fa-regular fa-image"></i>
+              Cambiar foto
+            </button>
+
+            <a href="/Sentir/Client/ScreenCommitte/Perfil/perfil.html">
+              <i class="fa-regular fa-user"></i>
+              Mi perfil
+            </a>
+
+          </div>
+
+          <input
+            type="file"
+            id="photoInput"
+            accept="image/*"
+            hidden
+          >
+
+        </div>
+
+      </header>
+
+
+      <!-- ENCABEZADO -->
+      <section class="page-heading">
+
+        <div>
+
+          <span class="page-label">
+            ANÁLISIS INSTITUCIONAL
+          </span>
+
+          <h1>Reportes</h1>
+
+          <p>
+            Consulta el panorama general de convivencia, revisa
+            tendencias y analiza la evolución de los casos registrados.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- MÉTRICAS -->
+      <section class="stats-grid">
+
+        <article class="stat-card">
+
+          <div class="stat-icon purple">
+            <i class="fa-regular fa-folder-open"></i>
+          </div>
+
+          <div>
+            <span>Casos registrados</span>
+            <strong>42</strong>
+          </div>
+
+        </article>
+
+
+        <article class="stat-card">
+
+          <div class="stat-icon pink">
+            <i class="fa-regular fa-bell"></i>
+          </div>
+
+          <div>
+            <span>Alertas recibidas</span>
+            <strong>34</strong>
+          </div>
+
+        </article>
+
+
+        <article class="stat-card">
+
+          <div class="stat-icon blue">
+            <i class="fa-solid fa-arrows-rotate"></i>
+          </div>
+
+          <div>
+            <span>En seguimiento</span>
+            <strong>18</strong>
+          </div>
+
+        </article>
+
+
+        <article class="stat-card">
+
+          <div class="stat-icon green">
+            <i class="fa-regular fa-circle-check"></i>
+          </div>
+
+          <div>
+            <span>Situaciones resueltas</span>
+            <strong>36</strong>
+          </div>
+
+        </article>
+
+      </section>
+
+
+      <!-- TIPOS DE REPORTE -->
+      <section class="reports-section">
+
+        <div class="section-heading">
+
+          <div>
+            <span>CONSULTA</span>
+            <h2>Reportes disponibles</h2>
+
+            <p>
+              Selecciona el reporte que deseas revisar.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="reports-grid">
+
+          <article class="report-card">
+
+            <div class="report-icon purple">
+              <i class="fa-solid fa-chart-pie"></i>
+            </div>
+
+            <h3>
+              Panorama general
+            </h3>
+
+            <p>
+              Resumen de alertas, casos y seguimientos
+              registrados en la institución.
+            </p>
+
+            <button
+              class="report-button"
+              data-report="Panorama general"
+              data-description="Este reporte resume los principales indicadores de convivencia: casos activos, alertas, seguimientos y situaciones resueltas."
+            >
+              Ver reporte
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+          </article>
+
+
+          <article class="report-card">
+
+            <div class="report-icon blue">
+              <i class="fa-solid fa-school"></i>
+            </div>
+
+            <h3>
+              Reporte por grado
+            </h3>
+
+            <p>
+              Observa qué grados concentran mayor cantidad
+              de situaciones registradas.
+            </p>
+
+            <button
+              class="report-button"
+              data-report="Reporte por grado"
+              data-description="Permite comparar la cantidad de casos y alertas registrados entre los distintos grados de la institución."
+            >
+              Ver reporte
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+          </article>
+
+
+          <article class="report-card">
+
+            <div class="report-icon pink">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+
+            <h3>
+              Alertas y prioridades
+            </h3>
+
+            <p>
+              Consulta las alertas clasificadas según su
+              prioridad y estado actual.
+            </p>
+
+            <button
+              class="report-button"
+              data-report="Alertas y prioridades"
+              data-description="Este reporte muestra la distribución de alertas según su nivel de prioridad y estado de atención."
+            >
+              Ver reporte
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+          </article>
+
+
+          <article class="report-card">
+
+            <div class="report-icon green">
+              <i class="fa-solid fa-chart-line"></i>
+            </div>
+
+            <h3>
+              Evolución de casos
+            </h3>
+
+            <p>
+              Analiza cómo cambian los casos desde el
+              reporte inicial hasta su cierre.
+            </p>
+
+            <button
+              class="report-button"
+              data-report="Evolución de casos"
+              data-description="Muestra la evolución de los casos, incluyendo aquellos pendientes, en seguimiento, remitidos y cerrados."
+            >
+              Ver reporte
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- PANORAMA -->
+      <section class="analysis-grid">
+
+        <!-- POR GRADO -->
+        <article class="panel">
+
+          <div class="panel-heading">
+
+            <div>
+              <span>CONVIVENCIA ESCOLAR</span>
+              <h2>Panorama por grado</h2>
+
+              <p>
+                Nivel general de situaciones registradas.
+              </p>
+            </div>
+
+          </div>
+
+
+          <div class="grade-list">
+
+            <div class="grade-row">
+
+              <span>Sexto</span>
+
+              <div class="progress-bar">
+                <div
+                  class="progress purple"
+                  style="width: 65%;"
+                ></div>
+              </div>
+
+              <strong>65%</strong>
+
+            </div>
+
+
+            <div class="grade-row">
+
+              <span>Séptimo</span>
+
+              <div class="progress-bar">
+                <div
+                  class="progress pink"
+                  style="width: 78%;"
+                ></div>
+              </div>
+
+              <strong>78%</strong>
+
+            </div>
+
+
+            <div class="grade-row">
+
+              <span>Octavo</span>
+
+              <div class="progress-bar">
+                <div
+                  class="progress purple"
+                  style="width: 52%;"
+                ></div>
+              </div>
+
+              <strong>52%</strong>
+
+            </div>
+
+
+            <div class="grade-row">
+
+              <span>Noveno</span>
+
+              <div class="progress-bar">
+                <div
+                  class="progress light-purple"
+                  style="width: 41%;"
+                ></div>
+              </div>
+
+              <strong>41%</strong>
+
+            </div>
+
+
+            <div class="grade-row">
+
+              <span>Décimo</span>
+
+              <div class="progress-bar">
+                <div
+                  class="progress strong-purple"
+                  style="width: 68%;"
+                ></div>
+              </div>
+
+              <strong>68%</strong>
+
+            </div>
+
+
+            <div class="grade-row">
+
+              <span>Once</span>
+
+              <div class="progress-bar">
+                <div
+                  class="progress pink"
+                  style="width: 47%;"
+                ></div>
+              </div>
+
+              <strong>47%</strong>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- ESTADOS -->
+        <article class="panel">
+
+          <div class="panel-heading">
+
+            <div>
+              <span>CASOS</span>
+              <h2>Estado de los casos</h2>
+
+              <p>
+                Distribución actual de los casos institucionales.
+              </p>
+            </div>
+
+          </div>
+
+
+          <div class="donut-area">
+
+            <div class="donut-chart">
+
+              <div class="donut-center">
+                <strong>42</strong>
+                <span>Total</span>
+              </div>
+
+            </div>
+
+
+            <div class="legend">
+
+              <div>
+
+                <span class="legend-dot purple"></span>
+
+                <p>
+                  <strong>12</strong>
+                  Pendientes
+                </p>
+
+              </div>
+
+
+              <div>
+
+                <span class="legend-dot blue"></span>
+
+                <p>
+                  <strong>18</strong>
+                  En proceso
+                </p>
+
+              </div>
+
+
+              <div>
+
+                <span class="legend-dot pink"></span>
+
+                <p>
+                  <strong>6</strong>
+                  Remitidos
+                </p>
+
+              </div>
+
+
+              <div>
+
+                <span class="legend-dot green"></span>
+
+                <p>
+                  <strong>6</strong>
+                  Cerrados
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      </section>
+
+
+      <!-- TABLA DE REPORTES -->
+      <section class="history-panel">
+
+        <div class="panel-heading">
+
+          <div>
+
+            <span>HISTORIAL</span>
+
+            <h2>
+              Reportes recientes
+            </h2>
+
+            <p>
+              Consulta los últimos reportes disponibles.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="table-scroll">
+
+          <table>
+
+            <thead>
+
+              <tr>
+                <th>Reporte</th>
+                <th>Periodo</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Acción</th>
+              </tr>
+
+            </thead>
+
+
+            <tbody>
+
+              <tr>
+
+                <td>
+                  Panorama general
+                </td>
+
+                <td>
+                  Septiembre 2026
+                </td>
+
+                <td>
+                  01 oct 2026
+                </td>
+
+                <td>
+                  <span class="status available">
+                    Disponible
+                  </span>
+                </td>
+
+                <td>
+                  <button
+                    class="table-report-button"
+                    data-report="Panorama general"
+                    data-description="Resumen institucional correspondiente al mes de septiembre de 2026."
+                  >
+                    Ver
+                  </button>
+                </td>
+
+              </tr>
+
+
+              <tr>
+
+                <td>
+                  Convivencia por grado
+                </td>
+
+                <td>
+                  Periodo 3
+                </td>
+
+                <td>
+                  28 sept 2026
+                </td>
+
+                <td>
+                  <span class="status available">
+                    Disponible
+                  </span>
+                </td>
+
+                <td>
+                  <button
+                    class="table-report-button"
+                    data-report="Convivencia por grado"
+                    data-description="Reporte consolidado de situaciones registradas según grado."
+                  >
+                    Ver
+                  </button>
+                </td>
+
+              </tr>
+
+
+              <tr>
+
+                <td>
+                  Alertas y prioridades
+                </td>
+
+                <td>
+                  Septiembre 2026
+                </td>
+
+                <td>
+                  25 sept 2026
+                </td>
+
+                <td>
+                  <span class="status available">
+                    Disponible
+                  </span>
+                </td>
+
+                <td>
+                  <button
+                    class="table-report-button"
+                    data-report="Alertas y prioridades"
+                    data-description="Reporte con clasificación de alertas según prioridad y estado."
+                  >
+                    Ver
+                  </button>
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <!-- MODAL -->
+  <div
+    class="report-modal"
+    id="reportModal"
+  >
+
+    <div class="modal-card">
+
+      <button
+        class="modal-close"
+        id="modalClose"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+
+      <span class="modal-label">
+        Vista del reporte
+      </span>
+
+
+      <h2 id="modalReportTitle">
+        Reporte
+      </h2>
+
+
+      <p
+        class="modal-description"
+        id="modalReportDescription"
+      >
+        Información del reporte.
+      </p>
+
+
+      <div class="modal-stats">
+
+        <div>
+
+          <strong>
+            42
+          </strong>
+
+          <span>
+            Casos
+          </span>
+
+        </div>
+
+
+        <div>
+
+          <strong>
+            34
+          </strong>
+
+          <span>
+            Alertas
+          </span>
+
+        </div>
+
+
+        <div>
+
+          <strong>
+            18
+          </strong>
+
+          <span>
+            Seguimientos
+          </span>
+
+        </div>
+
+
+        <div>
+
+          <strong>
+            36
+          </strong>
+
+          <span>
+            Resueltos
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="modal-note">
+
+        <i class="fa-solid fa-circle-info"></i>
+
+        <p>
+          Esta vista resume la información institucional.
+          Más adelante puedes conectar estos valores directamente
+          con tu base de datos.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div
+    class="mobile-overlay"
+    id="mobileOverlay"
+  ></div>
+
+
+  <div
+    class="toast"
+    id="toast"
+  ></div>
+
+
+  <script src="reportes.js"></script>
+
+</body>
+
+</html>

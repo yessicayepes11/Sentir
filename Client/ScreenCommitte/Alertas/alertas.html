@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SENTIR | Alertas | Convivencia</title>
+
+  <link rel="stylesheet" href="alertas.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+      <div class="logo-container">
+
+        <a href="/Sentir/Client/ScreenCommitte/Committe.html" class="logo-link">
+
+          <img
+            src="/Sentir/Shared/TeacherResources/logolado.png"
+            alt="Logo SENTIR"
+            class="logo"
+          >
+
+        </a>
+
+      </div>
+
+      <nav class="nav-menu">
+
+        <a href="/Sentir/Client/ScreenCommitte/Committe.html" class="nav-link">
+          <i class="fa-solid fa-house"></i>
+          <span>Inicio</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Casos/casos.html" class="nav-link">
+          <i class="fa-regular fa-file-lines"></i>
+          <span>Casos reportados</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Alertas/alertas.html" class="nav-link active">
+          <i class="fa-regular fa-bell"></i>
+          <span>Alertas</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Seguimiento/seguimiento.html" class="nav-link">
+          <i class="fa-solid fa-chart-simple"></i>
+          <span>Seguimiento</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Convivencia/convivencia.html" class="nav-link">
+          <i class="fa-solid fa-people-group"></i>
+          <span>Convivencia</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Reportes/reportes.html" class="nav-link">
+          <i class="fa-solid fa-chart-column"></i>
+          <span>Reportes</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/perfil.html" class="nav-link">
+          <i class="fa-regular fa-user"></i>
+          <span>Mi perfil</span>
+        </a>
+
+      </nav>
+
+      <div class="sidebar-message">
+        <i class="fa-solid fa-heart"></i>
+
+        <p>
+          Detectar a tiempo también es
+          <strong>una forma de cuidar</strong>
+        </p>
+      </div>
+
+    </aside>
+
+
+    <!-- CONTENIDO -->
+    <main class="main-content">
+
+      <!-- HEADER -->
+      <header class="header">
+
+        <button class="menu-button" id="menuButton">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="header-spacer"></div>
+
+        <button class="notification-button">
+          <i class="fa-regular fa-bell"></i>
+          <span class="notification-count">3</span>
+        </button>
+
+        <div class="profile-wrapper">
+
+          <button class="profile-box" id="profileBox">
+
+            <div class="profile-photo-container">
+
+              <img
+                id="profilePhoto"
+                class="profile-photo"
+                alt="Foto del profesor"
+              >
+
+              <i
+                id="profileFallback"
+                class="fa-solid fa-user profile-fallback"
+              ></i>
+
+            </div>
+
+            <div class="profile-text">
+              <strong>Carlos Ramírez</strong>
+              <span>Comité de Convivencia</span>
+            </div>
+
+            <i class="fa-solid fa-chevron-down profile-arrow"></i>
+
+          </button>
+
+          <div class="profile-menu" id="profileMenu">
+
+            <button id="changePhotoButton">
+              <i class="fa-regular fa-image"></i>
+              Cambiar foto
+            </button>
+
+            <a href="/Sentir/Client/ScreenCommitte/Perfil/perfil.html">
+              <i class="fa-regular fa-user"></i>
+              Mi perfil
+            </a>
+
+          </div>
+
+          <input
+            type="file"
+            id="photoInput"
+            accept="image/*"
+            hidden
+          >
+
+        </div>
+
+      </header>
+
+
+      <!-- HERO -->
+      <section class="hero">
+
+        <div class="hero-left">
+
+          <span class="hero-tag">
+            <i class="fa-regular fa-bell"></i>
+            Detección temprana
+          </span>
+
+          <h1>Alertas</h1>
+
+          <p>
+            Consulta las situaciones recientes que requieren atención
+            del Comité de Convivencia y prioriza aquellas que necesitan
+            una revisión más rápida.
+          </p>
+
+        </div>
+
+        <div class="hero-right">
+
+          <div class="alert-illustration">
+            <div class="alert-bubble big">
+              <i class="fa-solid fa-bell"></i>
+            </div>
+
+            <div class="alert-bubble small pink">
+              <i class="fa-solid fa-heart"></i>
+            </div>
+
+            <div class="alert-bubble small blue">
+              <i class="fa-solid fa-user-group"></i>
+            </div>
+          </div>
+
+          <div class="hero-message">
+            “Una alerta a tiempo puede abrir la puerta al acompañamiento”
+            <span>♥</span>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- RESUMEN -->
+      <section class="stats-section">
+
+        <article class="stat-card pink">
+
+          <div class="stat-icon">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </div>
+
+          <div>
+            <strong>5</strong>
+            <p>Alertas pendientes</p>
+            <span>Requieren revisión</span>
+          </div>
+
+        </article>
+
+
+        <article class="stat-card yellow">
+
+          <div class="stat-icon">
+            <i class="fa-solid fa-eye"></i>
+          </div>
+
+          <div>
+            <strong>8</strong>
+            <p>En observación</p>
+            <span>Con monitoreo activo</span>
+          </div>
+
+        </article>
+
+
+        <article class="stat-card red">
+
+          <div class="stat-icon">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+
+          <div>
+            <strong>2</strong>
+            <p>Prioridad alta</p>
+            <span>Revisión inmediata</span>
+          </div>
+
+        </article>
+
+
+        <article class="stat-card green">
+
+          <div class="stat-icon">
+            <i class="fa-solid fa-check"></i>
+          </div>
+
+          <div>
+            <strong>21</strong>
+            <p>Revisadas</p>
+            <span>Últimos 30 días</span>
+          </div>
+
+        </article>
+
+      </section>
+
+
+      <!-- FILTROS -->
+      <section class="filter-section">
+
+        <div class="filter-heading">
+
+          <div>
+            <span>Consulta</span>
+            <h2>Alertas recientes</h2>
+
+            <p>
+              Filtra las alertas para encontrar más rápido
+              las situaciones que deseas revisar.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="filters">
+
+          <label class="search-box">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+              type="search"
+              id="alertSearch"
+              placeholder="Buscar estudiante o situación..."
+            >
+
+          </label>
+
+
+          <select id="priorityFilter">
+
+            <option value="all">
+              Todas las prioridades
+            </option>
+
+            <option value="alta">
+              Prioridad alta
+            </option>
+
+            <option value="media">
+              Prioridad media
+            </option>
+
+            <option value="baja">
+              Prioridad baja
+            </option>
+
+          </select>
+
+
+          <select id="statusFilter">
+
+            <option value="all">
+              Todos los estados
+            </option>
+
+            <option value="pendiente">
+              Pendiente
+            </option>
+
+            <option value="observacion">
+              En observación
+            </option>
+
+            <option value="revisada">
+              Revisada
+            </option>
+
+          </select>
+
+        </div>
+
+      </section>
+
+
+      <!-- ALERTAS -->
+      <section class="alerts-grid" id="alertsGrid">
+
+        <!-- ALERTA 1 -->
+        <article
+          class="alert-card"
+          data-priority="alta"
+          data-status="pendiente"
+        >
+
+          <span class="priority-badge high">
+            Prioridad alta
+          </span>
+
+          <div class="alert-card-top">
+
+            <div class="alert-icon-card danger">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+
+            <div class="alert-student">
+
+              <strong>
+                María López
+              </strong>
+
+              <span>
+                7° · Hace 2 horas
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <h3>
+            Posible situación de acoso escolar
+          </h3>
+
+          <p>
+            Se reportan comentarios ofensivos recurrentes
+            y malestar emocional durante la jornada escolar.
+          </p>
+
+
+          <div class="alert-details">
+
+            <span>
+              <i class="fa-solid fa-tag"></i>
+              Convivencia
+            </span>
+
+            <span>
+              <i class="fa-regular fa-clock"></i>
+              Pendiente
+            </span>
+
+          </div>
+
+
+          <div class="alert-footer">
+
+            <button
+              class="view-alert-button"
+              data-name="María López"
+              data-grade="7°"
+              data-title="Posible situación de acoso escolar"
+              data-description="Se reportan comentarios ofensivos recurrentes y malestar emocional durante la jornada escolar."
+              data-priority="Prioridad alta"
+              data-status="Pendiente"
+            >
+              Ver información
+            </button>
+
+            <a href="/Sentir/Client/ScreenCommitte/Casos/casos.html">
+              Ver caso
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+
+          </div>
+
+        </article>
+
+
+        <!-- ALERTA 2 -->
+        <article
+          class="alert-card"
+          data-priority="media"
+          data-status="observacion"
+        >
+
+          <span class="priority-badge medium">
+            Prioridad media
+          </span>
+
+          <div class="alert-card-top">
+
+            <div class="alert-icon-card warning">
+              <i class="fa-solid fa-user-group"></i>
+            </div>
+
+            <div class="alert-student">
+
+              <strong>
+                Juan Pérez
+              </strong>
+
+              <span>
+                6° · Hace 5 horas
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <h3>
+            Conflicto entre estudiantes
+          </h3>
+
+          <p>
+            Se registró una discusión recurrente entre compañeros
+            durante los espacios de descanso.
+          </p>
+
+
+          <div class="alert-details">
+
+            <span>
+              <i class="fa-solid fa-tag"></i>
+              Conflicto
+            </span>
+
+            <span>
+              <i class="fa-regular fa-eye"></i>
+              En observación
+            </span>
+
+          </div>
+
+
+          <div class="alert-footer">
+
+            <button
+              class="view-alert-button"
+              data-name="Juan Pérez"
+              data-grade="6°"
+              data-title="Conflicto entre estudiantes"
+              data-description="Se registró una discusión recurrente entre compañeros durante los espacios de descanso."
+              data-priority="Prioridad media"
+              data-status="En observación"
+            >
+              Ver información
+            </button>
+
+            <a href="/Sentir/Client/ScreenCommitte/Casos/casos.html">
+              Ver caso
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+
+          </div>
+
+        </article>
+
+
+        <!-- ALERTA 3 -->
+        <article
+          class="alert-card"
+          data-priority="alta"
+          data-status="pendiente"
+        >
+
+          <span class="priority-badge high">
+            Prioridad alta
+          </span>
+
+          <div class="alert-card-top">
+
+            <div class="alert-icon-card blue">
+              <i class="fa-solid fa-user"></i>
+            </div>
+
+            <div class="alert-student">
+
+              <strong>
+                Ana Torres
+              </strong>
+
+              <span>
+                8° · Ayer
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <h3>
+            Aislamiento social
+          </h3>
+
+          <p>
+            Se observa una disminución significativa en la interacción
+            con sus compañeros y en su participación grupal.
+          </p>
+
+
+          <div class="alert-details">
+
+            <span>
+              <i class="fa-solid fa-tag"></i>
+              Bienestar
+            </span>
+
+            <span>
+              <i class="fa-regular fa-clock"></i>
+              Pendiente
+            </span>
+
+          </div>
+
+
+          <div class="alert-footer">
+
+            <button
+              class="view-alert-button"
+              data-name="Ana Torres"
+              data-grade="8°"
+              data-title="Aislamiento social"
+              data-description="Se observa una disminución significativa en la interacción con sus compañeros y en su participación grupal."
+              data-priority="Prioridad alta"
+              data-status="Pendiente"
+            >
+              Ver información
+            </button>
+
+            <a href="/Sentir/Client/ScreenCommitte/Seguimiento/seguimiento.html">
+              Seguimiento
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+
+          </div>
+
+        </article>
+
+
+        <!-- ALERTA 4 -->
+        <article
+          class="alert-card"
+          data-priority="baja"
+          data-status="observacion"
+        >
+
+          <span class="priority-badge low">
+            Prioridad baja
+          </span>
+
+          <div class="alert-card-top">
+
+            <div class="alert-icon-card green">
+              <i class="fa-solid fa-face-meh"></i>
+            </div>
+
+            <div class="alert-student">
+
+              <strong>
+                Valentina Ruiz
+              </strong>
+
+              <span>
+                10° · Hace 2 días
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <h3>
+            Cambio de comportamiento
+          </h3>
+
+          <p>
+            Se han observado variaciones leves de ánimo que
+            requieren acompañamiento y observación.
+          </p>
+
+
+          <div class="alert-details">
+
+            <span>
+              <i class="fa-solid fa-tag"></i>
+              Observación
+            </span>
+
+            <span>
+              <i class="fa-regular fa-eye"></i>
+              En observación
+            </span>
+
+          </div>
+
+
+          <div class="alert-footer">
+
+            <button
+              class="view-alert-button"
+              data-name="Valentina Ruiz"
+              data-grade="10°"
+              data-title="Cambio de comportamiento"
+              data-description="Se han observado variaciones leves de ánimo que requieren acompañamiento y observación."
+              data-priority="Prioridad baja"
+              data-status="En observación"
+            >
+              Ver información
+            </button>
+
+            <a href="/Sentir/Client/ScreenCommitte/Seguimiento/seguimiento.html">
+              Seguimiento
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+
+          </div>
+
+        </article>
+
+      </section>
+
+
+      <!-- MENSAJE FINAL -->
+      <section class="final-message">
+
+        <div class="final-icon">
+          <i class="fa-solid fa-heart"></i>
+        </div>
+
+        <div>
+
+          <span>SENTIR</span>
+
+          <h2>
+            Ver una alerta es el primer paso para poder acompañar.
+          </h2>
+
+          <p>
+            La detección temprana permite que las áreas responsables
+            puedan responder de manera más oportuna.
+          </p>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <!-- MODAL -->
+  <div class="alert-modal" id="alertModal">
+
+    <div class="modal-card">
+
+      <button
+        class="modal-close"
+        id="modalClose"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+
+      <span class="modal-label">
+        Información de la alerta
+      </span>
+
+
+      <h2 id="modalTitle">
+        Alerta
+      </h2>
+
+
+      <div class="modal-student">
+
+        <div class="modal-avatar">
+          <i class="fa-solid fa-user"></i>
+        </div>
+
+        <div>
+          <strong id="modalStudent">
+            Estudiante
+          </strong>
+
+          <span id="modalGrade">
+            Grado
+          </span>
+        </div>
+
+      </div>
+
+
+      <div class="modal-info-grid">
+
+        <div>
+          <span>Prioridad</span>
+          <strong id="modalPriority">-</strong>
+        </div>
+
+        <div>
+          <span>Estado</span>
+          <strong id="modalStatus">-</strong>
+        </div>
+
+      </div>
+
+
+      <div class="modal-description">
+
+        <span>
+          Descripción
+        </span>
+
+        <p id="modalDescription">
+          Información de la alerta.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div
+    class="mobile-overlay"
+    id="mobileOverlay"
+  ></div>
+
+
+  <div
+    class="toast"
+    id="toast"
+  ></div>
+
+
+  <script src="alertas.js"></script>
+
+</body>
+
+</html>

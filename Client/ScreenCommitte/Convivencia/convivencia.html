@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SENTIR | Convivencia</title>
+
+  <link rel="stylesheet" href="convivencia.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+      <div class="logo-container">
+
+        <a href="/Sentir/Client/ScreenCommitte/Committe.html" class="logo-link">
+
+          <img
+            src="/Sentir/Shared/TeacherResources/logolado.png"
+            alt="Logo SENTIR"
+            class="logo"
+          >
+
+        </a>
+
+      </div>
+      <nav class="nav-menu">
+
+        <a href="/Sentir/Client/ScreenCommitte/Committe.html" class="nav-link">
+          <i class="fa-solid fa-house"></i>
+          <span>Inicio</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Casos/casos.html" class="nav-link">
+          <i class="fa-regular fa-file-lines"></i>
+          <span>Casos reportados</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Alertas/alertas.html" class="nav-link">
+          <i class="fa-regular fa-bell"></i>
+          <span>Alertas</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Seguimiento/seguimiento.html" class="nav-link">
+          <i class="fa-solid fa-chart-simple"></i>
+          <span>Seguimiento</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Convivencia/convivencia.html" class="nav-link active">
+          <i class="fa-solid fa-people-group"></i>
+          <span>Convivencia</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Reportes/reportes.html" class="nav-link">
+          <i class="fa-solid fa-chart-column"></i>
+          <span>Reportes</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Perfil/perfil.html" class="nav-link">
+          <i class="fa-regular fa-user"></i>
+          <span>Mi perfil</span>
+        </a>
+
+      </nav>
+
+      <div class="sidebar-message">
+        <i class="fa-solid fa-heart"></i>
+
+        <p>
+          Construimos acuerdos para una
+          <strong>convivencia más sana</strong>
+        </p>
+      </div>
+
+    </aside>
+
+
+    <!-- CONTENIDO -->
+    <main class="main-content">
+
+      <!-- HEADER -->
+      <header class="header">
+
+        <button class="menu-button" id="menuButton">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="header-spacer"></div>
+
+        <button class="notification-button">
+          <i class="fa-regular fa-bell"></i>
+          <span class="notification-count">3</span>
+        </button>
+
+        <div class="profile-wrapper">
+
+          <button class="profile-box" id="profileBox">
+
+            <div class="profile-photo-container">
+
+              <img
+                id="profilePhoto"
+                class="profile-photo"
+                alt="Foto del profesor"
+              >
+
+              <i
+                id="profileFallback"
+                class="fa-solid fa-user profile-fallback"
+              ></i>
+
+            </div>
+
+            <div class="profile-text">
+              <strong>Carlos Ramírez</strong>
+              <span>Comité de Convivencia</span>
+            </div>
+
+            <i class="fa-solid fa-chevron-down profile-arrow"></i>
+
+          </button>
+
+          <div class="profile-menu" id="profileMenu">
+
+            <button id="changePhotoButton">
+              <i class="fa-regular fa-image"></i>
+              Cambiar foto
+            </button>
+
+            <a href="/Sentir/Client/ScreenCommitte/Perfil/perfil.html">
+              <i class="fa-regular fa-user"></i>
+              Mi perfil
+            </a>
+
+          </div>
+
+          <input
+            type="file"
+            id="photoInput"
+            accept="image/*"
+            hidden
+          >
+
+        </div>
+
+      </header>
+
+
+      <!-- ENCABEZADO -->
+      <section class="page-heading">
+
+        <div class="heading-text">
+
+          <span class="page-label">
+            CONVIVENCIA ESCOLAR
+          </span>
+
+          <h1>Convivencia</h1>
+
+          <p>
+            Organiza y edita mediaciones, reuniones, compromisos
+            y acciones de acompañamiento.
+          </p>
+
+        </div>
+
+        <div class="heading-actions">
+
+          <button
+            class="outline-button"
+            id="newCommitmentButton"
+          >
+            <i class="fa-solid fa-list-check"></i>
+            Nuevo compromiso
+          </button>
+
+          <button
+            class="primary-button"
+            id="newActivityButton"
+          >
+            <i class="fa-regular fa-calendar-plus"></i>
+            Nueva actividad
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- MÉTRICAS -->
+      <section class="stats-grid">
+
+        <article class="stat-card">
+
+          <div class="stat-icon purple">
+            <i class="fa-solid fa-handshake"></i>
+          </div>
+
+          <div>
+            <span>Mediaciones activas</span>
+            <strong>6</strong>
+          </div>
+
+        </article>
+
+
+        <article class="stat-card">
+
+          <div class="stat-icon blue">
+            <i class="fa-regular fa-calendar-days"></i>
+          </div>
+
+          <div>
+            <span>Reuniones próximas</span>
+            <strong>3</strong>
+          </div>
+
+        </article>
+
+
+        <article class="stat-card">
+
+          <div class="stat-icon orange">
+            <i class="fa-solid fa-list-check"></i>
+          </div>
+
+          <div>
+            <span>Compromisos pendientes</span>
+            <strong id="pendingCounter">3</strong>
+          </div>
+
+        </article>
+
+
+        <article class="stat-card">
+
+          <div class="stat-icon green">
+            <i class="fa-regular fa-circle-check"></i>
+          </div>
+
+          <div>
+            <span>Cumplimiento</span>
+            <strong id="complianceCounter">25%</strong>
+          </div>
+
+        </article>
+
+      </section>
+
+
+      <!-- ACTIVIDADES + COMPROMISOS -->
+      <section class="main-grid">
+
+        <!-- ACTIVIDADES -->
+        <article class="panel">
+
+          <div class="panel-header">
+
+            <div class="panel-title">
+
+              <i class="fa-regular fa-calendar-days"></i>
+
+              <h2>
+                Próximas actividades
+              </h2>
+
+            </div>
+
+            <button
+              class="text-button"
+              id="addActivityButton"
+            >
+              Agregar
+            </button>
+
+          </div>
+
+
+          <div
+            class="activities-list"
+            id="activitiesList"
+          >
+
+            <article class="activity-item">
+
+              <div class="date-box">
+                <strong>3</strong>
+                <span>OCT</span>
+              </div>
+
+              <div class="activity-info">
+
+                <strong>
+                  Reunión con acudientes 8°B
+                </strong>
+
+                <span>
+                  Reunión · Revisión de situación y acuerdos.
+                </span>
+
+              </div>
+
+              <div class="activity-hour">
+                08:00
+              </div>
+
+              <div class="item-actions">
+
+                <button
+                  class="edit-button activity-edit"
+                  title="Editar"
+                >
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+
+                <button
+                  class="delete-button activity-delete"
+                  title="Eliminar"
+                >
+                  <i class="fa-regular fa-trash-can"></i>
+                </button>
+
+              </div>
+
+            </article>
+
+
+            <article class="activity-item">
+
+              <div class="date-box">
+                <strong>3</strong>
+                <span>OCT</span>
+              </div>
+
+              <div class="activity-info">
+
+                <strong>
+                  Mediación entre estudiantes
+                </strong>
+
+                <span>
+                  Mediación · Espacio guiado de diálogo.
+                </span>
+
+              </div>
+
+              <div class="activity-hour">
+                10:30
+              </div>
+
+              <div class="item-actions">
+
+                <button
+                  class="edit-button activity-edit"
+                >
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+
+                <button
+                  class="delete-button activity-delete"
+                >
+                  <i class="fa-regular fa-trash-can"></i>
+                </button>
+
+              </div>
+
+            </article>
+
+
+            <article class="activity-item">
+
+              <div class="date-box">
+                <strong>6</strong>
+                <span>OCT</span>
+              </div>
+
+              <div class="activity-info">
+
+                <strong>
+                  Comité de convivencia
+                </strong>
+
+                <span>
+                  Comité · Seguimiento de casos institucionales.
+                </span>
+
+              </div>
+
+              <div class="activity-hour">
+                14:00
+              </div>
+
+              <div class="item-actions">
+
+                <button
+                  class="edit-button activity-edit"
+                >
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+
+                <button
+                  class="delete-button activity-delete"
+                >
+                  <i class="fa-regular fa-trash-can"></i>
+                </button>
+
+              </div>
+
+            </article>
+
+          </div>
+
+        </article>
+
+
+        <!-- COMPROMISOS -->
+        <article class="panel">
+
+          <div class="panel-header">
+
+            <div class="panel-title">
+
+              <i class="fa-solid fa-list-check"></i>
+
+              <h2>
+                Compromisos
+              </h2>
+
+            </div>
+
+            <button
+              class="text-button"
+              id="addCommitmentButton"
+            >
+              Agregar
+            </button>
+
+          </div>
+
+
+          <div
+            class="commitment-list"
+            id="commitmentList"
+          >
+
+            <article class="commitment-item">
+
+              <label class="check-area">
+
+                <input
+                  type="checkbox"
+                  class="commitment-checkbox"
+                >
+
+                <span class="custom-checkbox"></span>
+
+              </label>
+
+              <div class="commitment-info">
+
+                <strong>
+                  Verificar acuerdos del caso #2315
+                </strong>
+
+                <span>
+                  Responsable: Coordinación de convivencia
+                </span>
+
+              </div>
+
+              <div class="item-actions">
+
+                <button
+                  class="edit-button commitment-edit"
+                >
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+
+                <button
+                  class="delete-button commitment-delete"
+                >
+                  <i class="fa-regular fa-trash-can"></i>
+                </button>
+
+              </div>
+
+            </article>
+
+
+            <article class="commitment-item">
+
+              <label class="check-area">
+
+                <input
+                  type="checkbox"
+                  class="commitment-checkbox"
+                >
+
+                <span class="custom-checkbox"></span>
+
+              </label>
+
+              <div class="commitment-info">
+
+                <strong>
+                  Contactar acudiente del grado 9°A
+                </strong>
+
+                <span>
+                  Antes del viernes
+                </span>
+
+              </div>
+
+              <div class="item-actions">
+
+                <button
+                  class="edit-button commitment-edit"
+                >
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+
+                <button
+                  class="delete-button commitment-delete"
+                >
+                  <i class="fa-regular fa-trash-can"></i>
+                </button>
+
+              </div>
+
+            </article>
+
+
+            <article class="commitment-item completed">
+
+              <label class="check-area">
+
+                <input
+                  type="checkbox"
+                  class="commitment-checkbox"
+                  checked
+                >
+
+                <span class="custom-checkbox"></span>
+
+              </label>
+
+              <div class="commitment-info">
+
+                <strong>
+                  Compartir estrategia preventiva con 8°B
+                </strong>
+
+                <span>
+                  En reunión con director de grupo
+                </span>
+
+              </div>
+
+              <div class="item-actions">
+
+                <button
+                  class="edit-button commitment-edit"
+                >
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+
+                <button
+                  class="delete-button commitment-delete"
+                >
+                  <i class="fa-regular fa-trash-can"></i>
+                </button>
+
+              </div>
+
+            </article>
+
+
+            <article class="commitment-item">
+
+              <label class="check-area">
+
+                <input
+                  type="checkbox"
+                  class="commitment-checkbox"
+                >
+
+                <span class="custom-checkbox"></span>
+
+              </label>
+
+              <div class="commitment-info">
+
+                <strong>
+                  Revisar compromisos del comité
+                </strong>
+
+                <span>
+                  Próxima sesión institucional
+                </span>
+
+              </div>
+
+              <div class="item-actions">
+
+                <button
+                  class="edit-button commitment-edit"
+                >
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+
+                <button
+                  class="delete-button commitment-delete"
+                >
+                  <i class="fa-regular fa-trash-can"></i>
+                </button>
+
+              </div>
+
+            </article>
+
+          </div>
+
+        </article>
+
+      </section>
+
+
+      <!-- ACCIONES DE CONVIVENCIA -->
+      <section class="actions-panel">
+
+        <div class="section-title">
+
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+          <h2>
+            Acciones de convivencia
+          </h2>
+
+        </div>
+
+
+        <div class="actions-grid">
+
+          <button
+            class="action-card"
+            id="registerMediationButton"
+          >
+
+            <div class="action-icon">
+              <i class="fa-solid fa-handshake"></i>
+            </div>
+
+            <div>
+
+              <strong>
+                Registrar mediación
+              </strong>
+
+              <span>
+                Documenta un espacio de diálogo y acuerdos.
+              </span>
+
+            </div>
+
+            <i class="fa-solid fa-chevron-right"></i>
+
+          </button>
+
+
+          <a
+            href="/Sentir/Client/ScreenCommitte/Reportes/reportes.html"
+            class="action-card"
+          >
+
+            <div class="action-icon">
+              <i class="fa-solid fa-chart-column"></i>
+            </div>
+
+            <div>
+
+              <strong>
+                Consultar tendencias
+              </strong>
+
+              <span>
+                Observa indicadores generales de convivencia.
+              </span>
+
+            </div>
+
+            <i class="fa-solid fa-chevron-right"></i>
+
+          </a>
+
+
+          <a
+            href="/Sentir/Client/ScreenCommitte/Alertas/alertas.html"
+            class="action-card"
+          >
+
+            <div class="action-icon">
+              <i class="fa-regular fa-bell"></i>
+            </div>
+
+            <div>
+
+              <strong>
+                Revisar alertas
+              </strong>
+
+              <span>
+                Atiende las situaciones que requieren revisión.
+              </span>
+
+            </div>
+
+            <i class="fa-solid fa-chevron-right"></i>
+
+          </a>
+
+        </div>
+
+      </section>
+
+
+      <!-- MEDIACIONES -->
+      <section class="mediations-panel">
+
+        <div class="panel-header">
+
+          <div class="panel-title">
+
+            <i class="fa-solid fa-handshake"></i>
+
+            <h2>
+              Mediaciones registradas
+            </h2>
+
+          </div>
+
+          <button
+            class="text-button"
+            id="addMediationButton"
+          >
+            Agregar mediación
+          </button>
+
+        </div>
+
+
+        <div
+          class="mediation-list"
+          id="mediationList"
+        >
+
+          <article class="mediation-item">
+
+            <div class="mediation-icon">
+              <i class="fa-solid fa-handshake"></i>
+            </div>
+
+            <div class="mediation-info">
+
+              <strong>
+                Estudiantes 8°B
+              </strong>
+
+              <span>
+                01 de oct de 2026 · Mantener comunicación respetuosa,
+                evitar confrontaciones y solicitar acompañamiento
+                docente cuando sea necesario.
+              </span>
+
+            </div>
+
+            <div class="item-actions">
+
+              <button class="edit-button mediation-edit">
+                <i class="fa-solid fa-pen"></i>
+              </button>
+
+              <button class="delete-button mediation-delete">
+                <i class="fa-regular fa-trash-can"></i>
+              </button>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <!-- MODAL -->
+  <div
+    class="modal"
+    id="formModal"
+  >
+
+    <div class="modal-card">
+
+      <button
+        class="modal-close"
+        id="modalClose"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <span class="modal-label">
+        Convivencia
+      </span>
+
+      <h2 id="modalTitle">
+        Nueva actividad
+      </h2>
+
+
+      <form id="dynamicForm">
+
+        <div class="form-group">
+
+          <label>
+            Título
+          </label>
+
+          <input
+            type="text"
+            id="formTitle"
+            placeholder="Escribe un título"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Descripción
+          </label>
+
+          <textarea
+            id="formDescription"
+            placeholder="Describe brevemente..."
+            required
+          ></textarea>
+
+        </div>
+
+
+        <div
+          class="form-row"
+          id="dateTimeRow"
+        >
+
+          <div class="form-group">
+
+            <label>
+              Fecha
+            </label>
+
+            <input
+              type="date"
+              id="formDate"
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Hora
+            </label>
+
+            <input
+              type="time"
+              id="formTime"
+            >
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="submit"
+          class="save-button"
+        >
+          Guardar
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <div
+    class="mobile-overlay"
+    id="mobileOverlay"
+  ></div>
+
+
+  <div
+    class="toast"
+    id="toast"
+  ></div>
+
+
+  <script src="convivencia.js"></script>
+
+</body>
+
+</html>

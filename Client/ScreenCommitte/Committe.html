@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SENTIR | Comité de Convivencia</title>
+
+  <link rel="stylesheet" href="Committe.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+      <div class="logo-container">
+
+        <a href="/Sentir/Client/ScreenCommitte/Committe.html" class="logo-link">
+
+          <img
+            src="/Sentir/Shared/TeacherResources/logolado.png"
+            alt="Logo SENTIR"
+            class="logo"
+          >
+
+        </a>
+
+      </div>
+
+      <nav class="nav-menu">
+
+        <a href="/Sentir/Client/ScreenCommitte/Committe.html" class="nav-link active">
+          <i class="fa-solid fa-house"></i>
+          <span>Inicio</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Casos/casos.html" class="nav-link">
+          <i class="fa-regular fa-file-lines"></i>
+          <span>Casos reportados</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Alertas/alertas.html" class="nav-link">
+          <i class="fa-regular fa-bell"></i>
+          <span>Alertas</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Seguimiento/seguimiento.html" class="nav-link">
+          <i class="fa-solid fa-chart-simple"></i>
+          <span>Seguimiento</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Convivencia/convivencia.html" class="nav-link">
+          <i class="fa-solid fa-people-group"></i>
+          <span>Convivencia</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Reportes/reportes.html" class="nav-link">
+          <i class="fa-solid fa-chart-column"></i>
+          <span>Reportes</span>
+        </a>
+
+        <a href="/Sentir/Client/ScreenCommitte/Perfil/perfil.html" class="nav-link">
+          <i class="fa-regular fa-user"></i>
+          <span>Mi perfil</span>
+        </a>
+
+      </nav>
+
+      <div class="sidebar-message">
+        <i class="fa-solid fa-heart"></i>
+
+        <p>
+          Construimos espacios
+          <strong>más seguros y humanos</strong>
+        </p>
+      </div>
+
+    </aside>
+
+
+    <!-- CONTENIDO -->
+    <main class="main-content">
+
+      <!-- HEADER -->
+      <header class="header">
+
+        <button class="menu-button" id="menuButton">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="header-spacer"></div>
+
+        <button class="notification-button">
+          <i class="fa-regular fa-bell"></i>
+          <span class="notification-count">3</span>
+        </button>
+
+        <div class="profile-wrapper">
+
+          <button class="profile-box" id="profileBox">
+
+            <div class="profile-photo-container">
+
+              <img
+                id="profilePhoto"
+                class="profile-photo"
+                alt="Foto del profesor"
+              >
+
+              <i
+                id="profileFallback"
+                class="fa-solid fa-user profile-fallback"
+              ></i>
+
+            </div>
+
+            <div class="profile-text">
+              <strong>Carlos Ramírez</strong>
+              <span>Comité de Convivencia</span>
+            </div>
+
+            <i class="fa-solid fa-chevron-down profile-arrow"></i>
+
+          </button>
+
+          <div class="profile-menu" id="profileMenu">
+
+            <button id="changePhotoButton">
+              <i class="fa-regular fa-image"></i>
+              Cambiar foto
+            </button>
+
+            <a href="/Sentir/Client/ScreenCommitte/Perfil/perfil.html">
+              <i class="fa-regular fa-user"></i>
+              Mi perfil
+            </a>
+
+          </div>
+
+          <input
+            type="file"
+            id="photoInput"
+            accept="image/*"
+            hidden
+          >
+
+        </div>
+
+      </header>
+
+
+      <!-- HERO -->
+      <section class="hero">
+
+        <div class="hero-left">
+
+          <span class="hero-tag">
+            <i class="fa-solid fa-heart"></i>
+            Convivencia escolar
+          </span>
+
+          <h1>¡HOLA!</h1>
+
+          <p>
+            Aquí puedes consultar el estado general de la convivencia,
+            revisar alertas, hacer seguimiento a los casos y acompañar
+            a nuestra comunidad educativa.
+          </p>
+
+          <div class="hero-buttons">
+
+            <a href="/Sentir/Client/ScreenCommitte/Casos/casos.html" class="primary-button">
+              <i class="fa-regular fa-file-lines"></i>
+              Ver casos
+            </a>
+
+            <a href="/Sentir/Client/ScreenCommitte/Alertas/alertas.html" class="secondary-button">
+              <i class="fa-regular fa-bell"></i>
+              Ver alertas
+            </a>
+
+          </div>
+
+        </div>
+
+        <div class="hero-right">
+
+          <img
+            src="/Sentir/Shared/TeacherResources/PersonajesConvivencia.png"
+            alt="Integrante del Comité de Convivencia"
+            class="hero-image"
+          >
+
+          <div class="hero-message">
+            “Escuchar, acompañar y actuar también construye convivencia”
+            <span>♥</span>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- TARJETAS PRINCIPALES -->
+      <section class="stats-section">
+
+        <article class="stat-card">
+
+          <div class="stat-icon purple">
+            <i class="fa-solid fa-folder-open"></i>
+          </div>
+
+          <div class="stat-content">
+            <strong>18</strong>
+            <p>Casos activos</p>
+            <span>Actualmente abiertos</span>
+          </div>
+
+        </article>
+
+
+        <article class="stat-card">
+
+          <div class="stat-icon blue">
+            <i class="fa-solid fa-user-group"></i>
+          </div>
+
+          <div class="stat-content">
+            <strong>11</strong>
+            <p>En seguimiento</p>
+            <span>Con acompañamiento activo</span>
+          </div>
+
+        </article>
+
+
+        <article class="stat-card">
+
+          <div class="stat-icon pink">
+            <i class="fa-regular fa-bell"></i>
+          </div>
+
+          <div class="stat-content">
+            <strong>5</strong>
+            <p>Alertas pendientes</p>
+            <span>Requieren revisión</span>
+          </div>
+
+        </article>
+
+
+        <article class="stat-card">
+
+          <div class="stat-icon green">
+            <i class="fa-solid fa-heart"></i>
+          </div>
+
+          <div class="stat-content">
+            <strong>74%</strong>
+            <p>Clima favorable</p>
+            <span>Percepción institucional</span>
+          </div>
+
+        </article>
+
+      </section>
+
+
+      <!-- BLOQUES -->
+      <section class="content-grid">
+
+        <!-- CASOS -->
+        <article class="panel">
+
+          <div class="panel-header">
+
+            <div>
+              <span class="section-label">Prioridad</span>
+              <h2>Casos que requieren atención</h2>
+            </div>
+
+            <a href="/Sentir/Client/ScreenCommitte/Casos/casos.html">
+              Ver todos
+            </a>
+
+          </div>
+
+          <div class="case-list">
+
+            <div class="case-item">
+
+              <div class="student-avatar">
+                ML
+              </div>
+
+              <div class="case-info">
+                <strong>María López</strong>
+                <span>7° · Acoso escolar</span>
+              </div>
+
+              <span class="badge danger">
+                Prioritario
+              </span>
+
+            </div>
+
+
+            <div class="case-item">
+
+              <div class="student-avatar">
+                JP
+              </div>
+
+              <div class="case-info">
+                <strong>Juan Pérez</strong>
+                <span>6° · Conflicto entre estudiantes</span>
+              </div>
+
+              <span class="badge warning">
+                Medio
+              </span>
+
+            </div>
+
+
+            <div class="case-item">
+
+              <div class="student-avatar">
+                AT
+              </div>
+
+              <div class="case-info">
+                <strong>Ana Torres</strong>
+                <span>8° · Aislamiento social</span>
+              </div>
+
+              <span class="badge danger">
+                Alto
+              </span>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- ALERTAS -->
+        <article class="panel">
+
+          <div class="panel-header">
+
+            <div>
+              <span class="section-label">Novedades</span>
+              <h2>Alertas recientes</h2>
+            </div>
+
+            <a href="/Sentir/Client/ScreenCommitte/Alertas/alertas.html">
+              Ver todas
+            </a>
+
+          </div>
+
+          <div class="alert-list">
+
+            <div class="alert-item">
+
+              <div class="alert-icon danger">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+              </div>
+
+              <div>
+                <strong>Posible acoso escolar</strong>
+                <span>Comentarios ofensivos recurrentes</span>
+              </div>
+
+              <small>2 h</small>
+
+            </div>
+
+
+            <div class="alert-item">
+
+              <div class="alert-icon warning">
+                <i class="fa-solid fa-user-group"></i>
+              </div>
+
+              <div>
+                <strong>Conflicto entre estudiantes</strong>
+                <span>Situación durante el descanso</span>
+              </div>
+
+              <small>5 h</small>
+
+            </div>
+
+
+            <div class="alert-item">
+
+              <div class="alert-icon blue">
+                <i class="fa-solid fa-face-meh"></i>
+              </div>
+
+              <div>
+                <strong>Cambio de comportamiento</strong>
+                <span>Variación emocional observada</span>
+              </div>
+
+              <small>Ayer</small>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      </section>
+
+
+      <!-- ACCESOS -->
+      <section class="quick-section">
+
+        <div class="section-title">
+
+          <span>Accesos rápidos</span>
+
+          <h2>
+            ¿Qué quieres revisar?
+          </h2>
+
+          <p>
+            Accede rápidamente a las secciones principales del comité.
+          </p>
+
+        </div>
+
+
+        <div class="quick-grid">
+
+          <a href="/Sentir/Client/ScreenCommitte/Casos/casos.html" class="quick-card">
+
+            <div class="quick-icon">
+              <i class="fa-regular fa-file-lines"></i>
+            </div>
+
+            <strong>
+              Casos reportados
+            </strong>
+
+            <span>
+              Consulta las situaciones registradas.
+            </span>
+
+          </a>
+
+
+          <a href="/Sentir/Client/ScreenCommitte/Seguimiento/seguimiento.html" class="quick-card">
+
+            <div class="quick-icon">
+              <i class="fa-solid fa-chart-simple"></i>
+            </div>
+
+            <strong>
+              Seguimiento
+            </strong>
+
+            <span>
+              Observa la evolución de los casos.
+            </span>
+
+          </a>
+
+
+          <a href="/Sentir/Client/ScreenCommitte/Convivencia/convivencia.html" class="quick-card">
+
+            <div class="quick-icon">
+              <i class="fa-solid fa-people-group"></i>
+            </div>
+
+            <strong>
+              Convivencia
+            </strong>
+
+            <span>
+              Actividades, campañas y estrategias.
+            </span>
+
+          </a>
+
+
+          <a href="/Sentir/Client/ScreenCommitte/Reportes/reportes.html" class="quick-card">
+
+            <div class="quick-icon">
+              <i class="fa-solid fa-chart-column"></i>
+            </div>
+
+            <strong>
+              Reportes
+            </strong>
+
+            <span>
+              Consulta resúmenes institucionales.
+            </span>
+
+          </a>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <div class="toast" id="toast"></div>
+
+
+  <script src="Committe.js"></script>
+
+</body>
+
+</html>

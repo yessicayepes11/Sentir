@@ -14,3 +14,49 @@
 .overview-legend-dot.high { background: var(--riesgo-alto); }
 .overview-legend-dot.medium { background: var(--riesgo-medio); }
 .overview-legend-dot.stable { background: var(--riesgo-estable); }
+
+/* ===== Procesos de terapia: origen del proceso ===== */
+.origin-chips { margin-bottom: 10px; }
+.mini-student-card .process-origin {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 auto 8px;
+    align-self: center;
+    font-size: 0.72rem;
+}
+.signal-source-badge.psychology { background: #EEFBF4; color: #1F8A5B; border-color: #CDEFDD; }
+.process-since {
+    margin: 8px 0 0;
+    font-size: 0.74rem;
+    color: #8A8AA0;
+}
+.process-since i { margin-right: 4px; }
+
+/* ===== Añadir estudiante: búsqueda por nombre o identificación ===== */
+.ap-search { position: relative; }
+.ap-search i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #A39BC4; }
+.ap-search input { padding-left: 40px !important; width: 100%; }
+.ap-results { display: flex; flex-direction: column; gap: 8px; max-height: 260px; overflow-y: auto; margin-top: 4px; padding-right: 2px; }
+.ap-hint { margin: 6px 0; font-size: 0.82rem; color: #8A8AA0; }
+.ap-hint i { margin-right: 6px; }
+.ap-result {
+    display: flex; align-items: center; gap: 12px; width: 100%;
+    padding: 10px 12px; border: 1.5px solid #EEE8FF; border-radius: 14px;
+    background: #fff; cursor: pointer; text-align: left; font-family: inherit;
+    transition: border-color .15s, background .15s;
+}
+.ap-result:hover { border-color: #C9B8FF; background: #FAF8FF; }
+.ap-result.selected { border-color: #6C4CF1; background: #F3EFFF; }
+.ap-result.disabled { cursor: not-allowed; opacity: .55; }
+.ap-result img, .ap-selected img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.ap-result-info { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.ap-result-info strong, .ap-selected strong { font-size: 0.9rem; color: #1E1B3A; }
+.ap-result-info small, .ap-selected small { font-size: 0.75rem; color: #8A8AA0; }
+.ap-check { color: #D9D1F7; font-size: 1.1rem; }
+.ap-result.selected .ap-check { color: #6C4CF1; }
+.ap-tag { font-size: 0.7rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: #F1F1F6; color: #77779A; white-space: nowrap; }
+.ap-selected { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 14px; background: #F3EFFF; margin-bottom: 14px; }
+.ap-selected div { display: flex; flex-direction: column; }
+.modal-btn-confirm:disabled { opacity: .5; cursor: not-allowed; }
+.sentir-modal-actions [hidden], .sentir-modal-body [hidden] { display: none !important; }

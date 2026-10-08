@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../shared/sentir-shared.css">
     <link rel="stylesheet" href="Home.css">
+    <link rel="stylesheet" href="../../responsive.css">
 </head>
 <body data-page="inicio">
 
@@ -91,8 +92,7 @@
                                 <div class="welcome-character-glow"></div>
                                 <span class="welcome-float-chip chip-top"><i class="fa-solid fa-users"></i> Seguimiento</span>
                                 <span class="welcome-float-chip chip-bottom"><i class="fa-solid fa-shield-heart"></i> Acompañamiento</span>
-                                <!-- ⚠️ Reemplaza este archivo por la ilustración femenina que ibas a enviar -->
-                                <img src="../assets/psicologa.png" alt="Ilustración Bienvenida" class="welcome-character-img" onerror="this.style.display='none'">
+                                <img data-avatar-ia="personal" src="../assets/psicologa.png" alt="Ilustración Bienvenida" class="welcome-character-img" onerror="this.style.display='none'">
                             </div>
                         </div>
 
@@ -127,14 +127,16 @@
                                 <i class="fa-solid fa-brain" style="color: var(--morado-sentir);"></i>
                                 <h4>Sugerencia de la IA</h4>
                                 <span class="ai-tag">SENTIR AI</span>
+                                <button type="button" class="ai-refresh" id="aiRefreshBtn" title="Pedir otra sugerencia a la IA" aria-label="Pedir otra sugerencia a la IA"><i class="fa-solid fa-rotate"></i></button>
                             </div>
                             <p id="aiInsightText">Analizando los registros de ánimo de la institución…</p>
                             <details class="ai-traceability" id="aiTraceability">
                                 <summary><i class="fa-solid fa-chart-line" aria-hidden="true"></i> Ver base del análisis</summary>
                                 <div class="ai-traceability-body" id="aiTraceabilityBody"></div>
                             </details>
-                            <p class="ai-tip">💡 Tip: Te sugerimos agendar un taller de manejo del tiempo y técnicas de respiración diafragmática con este grupo, o asignar una actividad de relajación desde Control de Actividades.</p>
-                            <button class="btn-secondary" id="createWorkshopBtn" style="margin-top: 10px;">Agendar Taller Grupal</button>
+                            <p class="ai-tip" id="aiTipText"></p>
+                            <p class="ai-meta" id="aiInsightMeta"></p>
+                            <button class="btn-secondary" id="createWorkshopBtn" style="margin-top: 10px;" disabled><i class="fa-solid fa-wand-magic-sparkles"></i> Crear actividad con IA</button>
                         </div>
 
                         <div class="sidebar-box">
@@ -195,5 +197,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="../shared/sentir-shared.js"></script>
     <script src="Home.js"></script>
+<script src="/Shared/AvatarIA/AvatarIA.js"></script>
 </body>
 </html>

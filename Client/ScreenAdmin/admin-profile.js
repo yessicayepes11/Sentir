@@ -197,6 +197,8 @@
             profile = { ...profile, ...result.profile };
             updateHeader();
             closeModal();
+            // Si cambió la foto, la IA vuelve a crear el avatar de la portada
+            if (window.SentirAvatar) window.SentirAvatar.actualizar();
             notify(result.message || 'Perfil actualizado correctamente');
         } catch (error) {
             console.error('Actualizar perfil administrador:', error);

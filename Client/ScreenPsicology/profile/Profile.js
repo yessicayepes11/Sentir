@@ -172,9 +172,15 @@ async function guardarFormulario(event) {
     boton.textContent = 'Guardando…';
 
     try {
+        const conFoto = Boolean(fotoNueva);
         const respuesta = await guardarPerfil(datos, fotoNueva);
         mensaje(respuesta.message || 'Tu perfil se actualizó correctamente.');
-        showToast({ title: 'Perfil actualizado', message: 'Tus datos se guardaron correctamente.', icon: 'fa-user-pen', type: 'success' });
+        showToast({
+            title: 'Perfil actualizado',
+            message: conFoto ? 'Con tu nueva foto, la IA está creando tu avatar animado para la portada.' : 'Tus datos se guardaron correctamente.',
+            icon: conFoto ? 'fa-wand-magic-sparkles' : 'fa-user-pen', type: 'success'
+        });
+        if (conFoto && window.SentirAvatar) window.SentirAvatar.actualizar();
     } catch (error) {
         mensaje(error.message, true);
         boton.disabled = false;

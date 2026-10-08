@@ -5,6 +5,7 @@ import multer from 'multer';
 import { Router } from 'express';
 import { connection } from '../../config/mysql/dbmysql.js';
 import { leerTokenEstudiante } from '../../config/studentToken.js';
+import { fotoCambiada } from '../../config/avatarIA.js';
 
 // Perfil del estudiante en "Mi espacio personal": ver y editar sus datos y los de su acudiente.
 // Quién es el estudiante sale SIEMPRE del token firmado del inicio de sesión.
@@ -221,6 +222,7 @@ router.put('/perfil', upload.single('foto'), async (req, res) => {
 
         await db.commit();
         transaccion = false;
+        if (req.file) fotoCambiada(idUsuario); // la IA empieza ya el avatar de la foto nueva
 
         return res.json({ message: 'Tu perfil se actualizó', perfil: await leerPerfil(idUsuario) });
     } catch (error) {

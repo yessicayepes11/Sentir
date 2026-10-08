@@ -134,13 +134,45 @@ function getStudents() { return SentirStore.get('students', []); }
 function saveStudents(list) { SentirStore.set('students', list); }
 function getAlerts() { return SentirStore.get('alerts', []); }
 function saveAlerts(list) { SentirStore.set('alerts', list); }
-function getInterventions() { return SentirStore.get('interventions', DEFAULT_INTERVENTIONS); }
+function getInterventions() { return SentirStore.get('interventions', {}); }
 function saveInterventions(obj) { SentirStore.set('interventions', obj); }
-function getGuardians() { return SentirStore.get('guardians', DEFAULT_GUARDIANS); }
+function getGuardians() { return SentirStore.get('guardians', {}); }
 function getAgenda() { return SentirStore.get('agenda', []); }
 function saveAgenda(list) { SentirStore.set('agenda', list); }
 function getActivities() { return SentirStore.get('activities', DEFAULT_ACTIVITIES); }
 function saveActivities(list) { SentirStore.set('activities', list); }
+
+/* Trae de la base de datos las intervenciones del estudiante y las deja en la
+   memoria del módulo (las usan el historial y el expediente en PDF). */
+async function cargarIntervenciones(name) {
+    const student = getStudents().find(s => s.name === name);
+    if (!student || !student.idUsuario) return getStudentHistory(name);
+
+    const datos = await sentirApi('/intervenciones/' + student.idUsuario);
+    const lista = (datos.intervenciones || []).map(iv => {
+        const partes = [];
+        // Quita el punto final que ya traiga el texto, para no repetirlo
+        const sinPunto = (texto) => String(texto || '').trim().replace(/[.\s]+$/, '');
+        if (iv.factores) partes.push(`Factores: ${sinPunto(iv.factores)}.`);
+        partes.push(`Situación: ${sinPunto(iv.situacion)}.`);
+        if (iv.causas) partes.push(`Causas: ${sinPunto(iv.causas)}.`);
+        partes.push(`Proceso realizado: ${sinPunto(iv.proceso)}.`);
+        if (iv.avance) partes.push(`Avance: ${sinPunto(iv.avance)}.`);
+        if (iv.observaciones) partes.push(`Observaciones: ${sinPunto(iv.observaciones)}.`);
+        return {
+            id: iv.id,
+            fechaISO: iv.fecha || '',
+            fecha: iv.fecha ? new Date(iv.fecha + 'T00:00:00').toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Sin fecha',
+            titulo: iv.psicologa ? `Intervención · ${iv.psicologa}` : 'Intervención registrada',
+            detalle: partes.join(' ')
+        };
+    });
+
+    const todas = getInterventions();
+    todas[name] = lista;
+    saveInterventions(todas);
+    return lista;
+}
 
 function getStudentHistory(name) {
     const all = getInterventions();
@@ -154,7 +186,7 @@ function addInterventionRecord(name, record) {
 }
 function getGuardianContacts(name) {
     const all = getGuardians();
-    return all[name] || [{ nombre: 'Acudiente registrado', parentesco: 'Contacto principal', telefono: '+57 300 000 0000', correo: 'acudiente@correo.com', principal: true }];
+    return all[name] || [];
 }
 
 /* --------------------------------------------------------------------------
@@ -254,16 +286,8 @@ function initNotificationDropdown() {
     if (!bell || !dropdown) return;
 
     const wrap = bell.closest('.notification-wrap') || bell.parentElement;
-    const badge = bell.querySelector('.badge');
-    const alertas = getAlerts().filter(a => a.estado === 'Nueva');
-
-    dropdown.innerHTML = `<div class="notif-header">Alertas Recientes</div>` + (
-        alertas.length
-            ? alertas.map(a => `<button type="button" class="notif-item is-urgent" role="menuitem" data-goto="alertas.html">🚨 ${a.estudiante} requiere atención inmediata</button>`).join('')
-            : `<div class="notif-item" role="status">✅ No hay alertas nuevas por ahora</div>`
-    ) + `<button type="button" class="notif-item" role="menuitem" data-goto="agenda.html">📅 Revisa tu agenda de hoy</button>`;
-
-    if (badge) badge.style.display = alertas.length ? 'flex' : 'none';
+    refrescarNotificaciones();
+    setInterval(refrescarNotificaciones, 60000);   // revisa avisos nuevos cada minuto
 
     const setOpen = (open) => {
         dropdown.classList.toggle('show', open);
@@ -271,6 +295,8 @@ function initNotificationDropdown() {
         if (open) {
             const firstItem = dropdown.querySelector('[role="menuitem"]');
             if (firstItem) requestAnimationFrame(() => firstItem.focus());
+            // Al abrir, los avisos que se ven quedan como leídos
+            setTimeout(() => { if (dropdown.classList.contains('show')) marcarNotificacionesLeidas(); }, 1500);
         }
     };
 
@@ -280,13 +306,6 @@ function initNotificationDropdown() {
         setOpen(open);
         bell.style.transform = 'scale(1.08)';
         setTimeout(() => bell.style.transform = 'scale(1)', 180);
-    });
-
-    dropdown.querySelectorAll('.notif-item[data-goto]').forEach(item => {
-        item.addEventListener('click', (e) => {
-            e.stopPropagation();
-            window.location.href = resolveModulePath(item.dataset.goto);
-        });
     });
 
     document.addEventListener('keydown', (e) => {
@@ -320,11 +339,27 @@ function performPsychologistLogout() {
     window.location.replace('/Client/administrativo.html');
 }
 
+// Botón "Cerrar sesión" en el encabezado de todas las pantallas (junto al perfil):
+// siempre visible, también en celular, donde la barra lateral está oculta
+function addHeaderLogoutButton() {
+    const header = document.querySelector('.header-profile');
+    if (!header || header.querySelector('.header-logout-btn')) return;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'header-logout-btn';
+    button.dataset.action = 'logout';
+    button.title = 'Cerrar sesión';
+    button.setAttribute('aria-label', 'Cerrar sesión');
+    button.innerHTML = '<i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i><span>Cerrar sesión</span>';
+    header.appendChild(button);
+}
+
 function initLogoutButtons() {
+    addHeaderLogoutButton();
     document.querySelectorAll('[data-action="logout"]').forEach(button => {
         button.addEventListener('click', (e) => {
             e.preventDefault();
-            performPsychologistLogout();
+            if (window.confirm('¿Deseas cerrar sesión?')) performPsychologistLogout();
         });
     });
 }
@@ -473,15 +508,240 @@ function getCaseSignalReason(studentName) {
 }
 
 function getNextStudentAgenda(studentName) {
+    const student = getStudents().find(s => s.name === studentName);
+    const ahora = new Date();
+    const horaAhora = `${String(ahora.getHours()).padStart(2, '0')}:${String(ahora.getMinutes()).padStart(2, '0')}`;
+    const hoy = todayISO();
     return getAgenda()
-        .filter(a => a.nombre === studentName && a.fecha >= todayISO())
+        .filter(a => a.estado === 'Programada')
+        .filter(a => (student && a.idUsuario ? String(a.idUsuario) === String(student.idUsuario) : a.nombre === studentName)
+            && (a.fecha > hoy || (a.fecha === hoy && a.hora > horaAhora)))
         .sort((a, b) => (a.fecha + a.hora).localeCompare(b.fecha + b.hora))[0] || null;
 }
 
 function goToAgendaForStudent(studentName) {
-    const student = getStudents().find(s => s.name === studentName);
-    const params = new URLSearchParams({ student: studentName, grade: student ? student.grade : '', followup: '1' });
-    window.location.href = resolveModulePath('agenda.html') + '?' + params.toString();
+    openFollowupModal(studentName);
+}
+
+/* --------------------------------------------------------------------------
+   AGENDAR / REPROGRAMAR CITA
+   La cita ocupa una franja de "Mi disponibilidad" (o una fecha y hora nueva,
+   que se agrega a la disponibilidad) y se guarda en la tabla cita.
+   Al estudiante le llega una notificación.
+   opciones.cita: cita existente → reprogramar (o aceptar con otro horario si estaba pendiente)
+   -------------------------------------------------------------------------- */
+const TIPOS_CITA = ['Seguimiento de caso', 'Sesión individual', 'Reunión con acudiente', 'Reunión con docente', 'Consulta breve'];
+
+function hora12Corta(hora) {
+    const [h, m] = String(hora).split(':').map(Number);
+    return `${((h + 11) % 12) + 1}:${String(m).padStart(2, '0')} ${h < 12 ? 'a. m.' : 'p. m.'}`;
+}
+
+async function openFollowupModal(studentName, opciones = {}) {
+    const editar = opciones.cita || null;
+    const student = getStudents().find(s => s.name === studentName)
+        || (editar ? { name: editar.nombre, grade: editar.grado, idUsuario: editar.idUsuario } : null);
+    if (!student || !student.idUsuario) {
+        showToast({ title: 'Sin datos', message: 'No se encontró al estudiante en la base de datos.', icon: 'fa-circle-exclamation', type: 'urgent' });
+        return;
+    }
+
+    const proximas = getAgenda()
+        .filter(a => a.estado === 'Programada' && String(a.idUsuario) === String(student.idUsuario) && a.fecha >= todayISO())
+        .filter(a => !editar || a.idCita !== editar.idCita)
+        .sort((a, b) => (a.fecha + a.hora).localeCompare(b.fecha + b.hora));
+
+    const eraPendiente = editar && editar.estado === 'Pendiente';
+    const titulo = !editar ? 'Agendar cita' : eraPendiente ? 'Proponer otro horario' : 'Reprogramar cita';
+    const textoBoton = !editar ? 'Agendar cita' : eraPendiente ? 'Aceptar con este horario' : 'Guardar cambios';
+
+    const overlay = openSentirModal(`
+        <div class="sentir-modal-header">
+            <div class="sentir-modal-icon"><i class="fa-solid ${editar ? 'fa-calendar-days' : 'fa-calendar-plus'}"></i></div>
+            <div><h3>${titulo}</h3><p>${escaparHTML(student.name)} · Grado ${escaparHTML(student.grade)} · Se le avisará al estudiante</p></div>
+        </div>
+        <div class="sentir-modal-body" id="fuBody"><p class="history-empty"><i class="fa-solid fa-spinner fa-spin"></i> Buscando horarios libres…</p></div>
+        <div class="sentir-modal-actions" id="fuActions"><button class="modal-btn-cancel" id="fuCancel">Cancelar</button></div>
+    `);
+    const $ = (sel) => overlay.querySelector(sel);
+    $('#fuCancel').addEventListener('click', () => closeSentirModal(overlay));
+
+    let franjas = [];
+    try {
+        franjas = (await sentirApi('/disponibilidad/libres?dias=30')).franjas || [];
+    } catch (error) {
+        $('#fuBody').innerHTML = `<p class="history-empty">${escaparHTML(error.message)}</p>`;
+        return;
+    }
+
+    const proximasHTML = proximas.length ? `
+        <div class="fu-upcoming"><i class="fa-solid fa-circle-info"></i> Ya tiene ${proximas.length === 1 ? 'una cita' : proximas.length + ' citas'}:
+            ${proximas.slice(0, 3).map(a => `<strong>${escaparHTML(a.titulo)}</strong> el ${formatCaseDate(a.fecha).toLowerCase()} a las ${hora12Corta(a.hora)}`).join('; ')}
+        </div>` : '';
+    const actualHTML = editar ? `
+        <div class="fu-upcoming"><i class="fa-solid fa-clock-rotate-left"></i> ${eraPendiente ? 'El estudiante pidió' : 'Horario actual'}:
+            <strong>${formatCaseDate(editar.fecha).toLowerCase()} a las ${hora12Corta(editar.hora)}</strong>
+        </div>` : '';
+
+    const dias = [...new Set(franjas.map(f => f.fecha))];
+    let diaElegido = dias[0] || null;
+    let franjaElegida = null;
+    // Sin franjas libres se escribe directamente la fecha y la hora
+    let modo = franjas.length ? 'disponibilidad' : 'manual';
+
+    const tipoInicial = editar ? (TIPOS_CITA.includes(editar.titulo) ? editar.titulo : 'Otro') : TIPOS_CITA[0];
+    const tipoOtroInicial = editar && tipoInicial === 'Otro' && editar.titulo !== 'Solicitud del estudiante' ? editar.titulo : '';
+    const motivoInicial = editar ? editar.descripcion : (student.proceso && student.proceso.motivo ? 'Seguimiento: ' + student.proceso.motivo : '');
+
+    $('#fuBody').innerHTML = `
+        ${actualHTML}${proximasHTML}
+        <div class="modal-field"><label>TIPO DE CITA</label>
+            <select id="fuTipo">${TIPOS_CITA.map(t => `<option value="${t}" ${t === tipoInicial ? 'selected' : ''}>${t}</option>`).join('')}<option value="Otro" ${tipoInicial === 'Otro' ? 'selected' : ''}>Otro</option></select>
+        </div>
+        <div class="modal-field" id="fuOtroCampo" ${tipoInicial === 'Otro' ? '' : 'hidden'}><label>¿CUÁL? (TIPO DE CITA)</label>
+            <input type="text" id="fuTipoOtro" maxlength="60" placeholder="Ej. Taller grupal, Orientación vocacional..." value="${escaparHTML(tipoOtroInicial)}">
+        </div>
+
+        <div class="modal-field"><label>${editar ? 'NUEVO HORARIO' : 'HORARIO'}</label>
+            <div class="period-tabs fu-modo" id="fuModo">
+                <button type="button" data-modo="disponibilidad" ${franjas.length ? '' : 'disabled'}><i class="fa-solid fa-business-time"></i> De mi disponibilidad${franjas.length ? ` (${franjas.length})` : ''}</button>
+                <button type="button" data-modo="manual"><i class="fa-solid fa-pen-to-square"></i> Otra fecha y hora</button>
+            </div>
+        </div>
+
+        <div data-fu="disponibilidad">
+            <div class="modal-field"><label>DÍA</label><div class="fu-days" id="fuDias"></div></div>
+            <div class="modal-field"><label>HORA</label><div class="fu-hours" id="fuHoras"></div></div>
+        </div>
+
+        <div data-fu="manual">
+            ${franjas.length ? '' : '<p class="fu-note"><i class="fa-solid fa-circle-info"></i> No tienes horarios libres en los próximos 30 días. Escribe la fecha y la hora: se agregará a tu disponibilidad.</p>'}
+            <div class="modal-field-row fu-manual">
+                <div class="modal-field"><label>FECHA</label><input type="date" id="fuFecha" min="${todayISO()}" value="${editar && editar.fecha >= todayISO() ? editar.fecha : addDaysISO(1)}"></div>
+                <div class="modal-field"><label>HORA</label><input type="time" id="fuHora" step="300" value="${editar ? editar.hora : '08:00'}"></div>
+            </div>
+            <div class="modal-field"><label>DURACIÓN</label>
+                <select id="fuDuracion">${[15, 20, 30, 45, 60, 90, 120].map(d => `<option value="${d}" ${d === Number(editar && editar.duracion || 60) ? 'selected' : ''}>${d < 60 ? d + ' min' : d === 60 ? '1 hora' : d === 90 ? '1 h 30 min' : '2 horas'}</option>`).join('')}</select>
+            </div>
+        </div>
+
+        <div class="modal-field"><label>MOTIVO DE LA CITA</label>
+            <textarea id="fuMotivo" rows="3" placeholder="Ej. Revisar avances del plan de seguridad acordado.">${escaparHTML(motivoInicial)}</textarea>
+        </div>
+        <p class="modal-error" id="fuError"><i class="fa-solid fa-circle-exclamation"></i> <span></span></p>`;
+    $('#fuActions').insertAdjacentHTML('beforeend', `<button class="modal-btn-confirm" id="fuSave"><i class="fa-solid fa-check"></i> ${textoBoton}</button>`);
+
+    const errorMsg = $('#fuError');
+    const mostrarError = (texto) => { errorMsg.querySelector('span').innerText = texto; errorMsg.classList.add('show'); };
+    overlay.addEventListener('input', () => errorMsg.classList.remove('show'));
+
+    $('#fuTipo').addEventListener('change', () => {
+        const otro = $('#fuTipo').value === 'Otro';
+        $('#fuOtroCampo').hidden = !otro;
+        if (otro) $('#fuTipoOtro').focus();
+    });
+
+    const mostrarModo = () => {
+        overlay.querySelectorAll('#fuModo [data-modo]').forEach(b => b.classList.toggle('active', b.dataset.modo === modo));
+        overlay.querySelectorAll('[data-fu]').forEach(el => { el.hidden = el.dataset.fu !== modo; });
+        errorMsg.classList.remove('show');
+    };
+    overlay.querySelectorAll('#fuModo [data-modo]').forEach(b => b.addEventListener('click', () => { modo = b.dataset.modo; mostrarModo(); }));
+
+    const pintarDias = () => {
+        $('#fuDias').innerHTML = dias.map(fecha => {
+            const d = new Date(fecha + 'T12:00:00');
+            const libres = franjas.filter(f => f.fecha === fecha).length;
+            return `<button type="button" class="fu-day ${fecha === diaElegido ? 'active' : ''}" data-dia="${fecha}">
+                <span>${d.toLocaleDateString('es-CO', { weekday: 'short' }).replace('.', '')}</span>
+                <strong>${d.getDate()}</strong>
+                <small>${d.toLocaleDateString('es-CO', { month: 'short' }).replace('.', '')} · ${libres}</small>
+            </button>`;
+        }).join('');
+        $('#fuDias').querySelectorAll('[data-dia]').forEach(b => b.addEventListener('click', () => {
+            diaElegido = b.dataset.dia; franjaElegida = null; pintarDias(); pintarHoras();
+        }));
+    };
+    const pintarHoras = () => {
+        $('#fuHoras').innerHTML = franjas.filter(f => f.fecha === diaElegido).map(f => `
+            <button type="button" class="fu-hour ${franjaElegida && franjaElegida.id === f.id ? 'active' : ''}" data-franja="${f.id}">
+                ${hora12Corta(f.hora)}<small>${f.duracion} min</small>
+            </button>`).join('');
+        $('#fuHoras').querySelectorAll('[data-franja]').forEach(b => b.addEventListener('click', () => {
+            franjaElegida = franjas.find(f => String(f.id) === b.dataset.franja);
+            errorMsg.classList.remove('show');
+            pintarHoras();
+        }));
+    };
+    pintarDias();
+    pintarHoras();
+    mostrarModo();
+
+    $('#fuSave').addEventListener('click', async () => {
+        const motivo = $('#fuMotivo').value.trim();
+        const tipo = $('#fuTipo').value;
+        const tipoOtro = $('#fuTipoOtro').value.trim();
+        if (tipo === 'Otro' && tipoOtro.length < 3) return mostrarError('Escribe cuál es el tipo de cita.');
+
+        let horario;
+        if (modo === 'disponibilidad') {
+            if (!franjaElegida) return mostrarError('Elige la hora de la cita.');
+            horario = { idDisponibilidad: franjaElegida.id, fecha: franjaElegida.fecha, hora: franjaElegida.hora };
+        } else {
+            const fecha = $('#fuFecha').value, hora = $('#fuHora').value;
+            if (!fecha || !hora) return mostrarError('Elige la fecha y la hora de la cita.');
+            if (new Date(`${fecha}T${hora}:00`) <= new Date()) return mostrarError('La fecha y hora de la cita deben ser futuras.');
+            horario = { fecha, hora, duracion: Number($('#fuDuracion').value) };
+        }
+        if (motivo.length < 5) return mostrarError('Escribe el motivo de la cita.');
+
+        const boton = $('#fuSave');
+        boton.disabled = true;
+        boton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Guardando…';
+        try {
+            await sentirApi(editar ? `/citas/${editar.idCita}` : '/citas', {
+                method: editar ? 'PUT' : 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idUsuario: student.idUsuario, ...horario, tipo, tipoOtro, motivo })
+            });
+            closeSentirModal(overlay);
+            showToast({
+                title: !editar ? 'Cita agendada' : eraPendiente ? 'Cita aceptada' : 'Cita reprogramada',
+                message: `${student.name}: ${formatCaseDate(horario.fecha).toLowerCase()} a las ${hora12Corta(horario.hora)}. Se le avisó al estudiante.`,
+                icon: 'fa-calendar-check', type: 'success'
+            });
+            cargarDatosReales();
+        } catch (error) {
+            mostrarError(error.message);
+            boton.disabled = false;
+            boton.innerHTML = `<i class="fa-solid fa-check"></i> ${textoBoton}`;
+        }
+    });
+}
+
+/* Citas guardadas en la base de datos, en el formato de la agenda del módulo */
+async function cargarCitasReales() {
+    const { citas } = await sentirApi('/citas');
+    const deBD = (citas || []).map(c => ({
+        id: 'cita-' + c.id,
+        idCita: c.id,
+        idUsuario: c.idUsuario,
+        fecha: c.fecha,
+        hora: c.hora,
+        duracion: c.duracion,
+        titulo: c.tipo,
+        origen: c.origen,
+        nombre: c.estudiante,
+        grado: c.grado,
+        descripcion: c.motivo,
+        estado: c.estado,
+        observacion: c.observacion,
+        conHorario: c.conHorario,
+        sinAsignar: c.sinAsignar,
+        enBD: true
+    }));
+    // La agenda es solo lo que está en la base de datos (las citas de ejemplo del navegador se descartan)
+    SentirStore.set('agenda', deBD);
 }
 
 function formatCaseDate(fechaISO) {
@@ -508,14 +768,17 @@ function renderStudentCaseContext(student) {
     }
 
     const lastRisk = student.riskHistory && student.riskHistory.length ? student.riskHistory[student.riskHistory.length - 1] : null;
+    const ultima = student.ultimaActualizacion || (lastRisk ? { fecha: lastRisk.fecha, tipo: 'Alerta registrada' } : null);
     const next = getNextStudentAgenda(student.name);
-    const nextText = next ? `${formatCaseDate(next.fecha)} · ${next.hora} · ${next.titulo}` : 'Sin seguimiento programado';
+    const nextText = next
+        ? `${formatCaseDate(next.fecha)} · ${hora12Corta(next.hora)}<small>${escaparHTML(next.titulo)}</small>`
+        : 'Sin seguimiento programado <button type="button" class="case-context-link" id="caseScheduleLink"><i class="fa-solid fa-calendar-plus"></i> Agendar</button>';
 
     context.innerHTML = `
         <div class="case-context-grid">
             <div class="case-context-item">
                 <span><i class="fa-solid fa-clock-rotate-left"></i> Última actualización</span>
-                <strong>${lastRisk ? formatCaseDate(lastRisk.fecha) : 'Sin registro reciente'}</strong>
+                <strong>${ultima ? `${formatCaseDate(ultima.fecha)}<small>${escaparHTML(ultima.tipo)}</small>` : 'Sin registro reciente'}</strong>
             </div>
             <div class="case-context-item">
                 <span><i class="fa-solid fa-calendar-check"></i> Próxima acción</span>
@@ -523,6 +786,8 @@ function renderStudentCaseContext(student) {
             </div>
         </div>
     `;
+    const link = context.querySelector('#caseScheduleLink');
+    if (link) link.addEventListener('click', () => openFollowupModal(student.name));
 }
 
 function initMobileSidebar() {
@@ -543,22 +808,21 @@ function initMobileSidebar() {
         document.body.appendChild(backdrop);
     }
 
-    // En escritorio, "toggled" = sidebar oculto. En móvil, "toggled" = sidebar abierto como menú lateral.
+    // El botón hamburguesa solo existe en celular/tablet (≤900px): ahí "toggled" = menú lateral abierto.
+    // En escritorio el menú lateral siempre está visible y el botón se oculta (ver sentir-shared.css).
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) { /* preferencia antigua de "ocultar menú" */ }
+
     function setToggled(toggled) {
+        if (!isMobile()) toggled = false;
         container.classList.toggle('sidebar-toggled', toggled);
         backdrop.classList.toggle('show', toggled && isMobile());
-        toggleBtn.setAttribute('aria-expanded', String(isMobile() ? toggled : !toggled));
-        if (!isMobile()) {
-            try { localStorage.setItem(STORAGE_KEY, toggled ? '1' : '0'); } catch (e) { /* almacenamiento no disponible */ }
-        }
+        document.body.classList.toggle('sidebar-open', toggled && isMobile());
+        toggleBtn.setAttribute('aria-label', toggled ? 'Cerrar menú de navegación' : 'Abrir menú de navegación');
+        toggleBtn.setAttribute('aria-expanded', String(toggled));
     }
 
-    // Estado inicial: en escritorio se respeta la preferencia guardada; en móvil siempre arranca oculto.
-    let initialToggled = false;
-    if (!isMobile()) {
-        try { initialToggled = localStorage.getItem(STORAGE_KEY) === '1'; } catch (e) { /* ignorar */ }
-    }
-    setToggled(initialToggled);
+    // Siempre arranca con el menú cerrado (en escritorio está fijo y visible)
+    setToggled(false);
 
     toggleBtn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -574,9 +838,23 @@ function initMobileSidebar() {
         }
     });
 
+    // Al pasar de celular a escritorio (o al revés) el menú vuelve a su estado normal
+    let eraMovil = isMobile();
     window.addEventListener('resize', () => {
-        backdrop.classList.toggle('show', isMobile() && container.classList.contains('sidebar-toggled'));
+        if (isMobile() !== eraMovil) {
+            eraMovil = isMobile();
+            setToggled(false);
+        }
     });
+
+    // Escape cierra el menú en celular; al elegir una opción también se cierra
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isMobile() && container.classList.contains('sidebar-toggled')) {
+            setToggled(false);
+            toggleBtn.focus();
+        }
+    });
+    sidebar.querySelectorAll('a.nav-item').forEach(a => a.addEventListener('click', () => { if (isMobile()) setToggled(false); }));
 }
 
 /* --------------------------------------------------------------------------
@@ -597,6 +875,7 @@ function openStudentPanel(name) {
 
     renderRiskTimeline(student);
     renderStudentCaseContext(student);
+    cargarIntervenciones(name).catch(() => {});
 
     document.body.style.overflow = 'hidden';
     overlay.classList.add('show');
@@ -737,28 +1016,92 @@ function printStudentExpediente(name) {
     setTimeout(() => win.print(), 300);
 }
 
-function openInterventionHistoryModal(studentName) {
-    const history = getStudentHistory(studentName);
-    const listHTML = history.length
-        ? history.map(item => `
-            <div class="history-entry">
-                <div class="history-entry-dot"></div>
-                <div class="history-entry-content">
-                    <div class="history-entry-top"><strong>${item.titulo}</strong><span>${item.fecha}</span></div>
-                    <p>${item.detalle}</p>
-                </div>
-            </div>`).join('')
-        : `<p class="history-empty"><i class="fa-solid fa-folder-open" style="display:block; font-size:20px; margin-bottom:8px; color:var(--lavanda);"></i>Este estudiante aún no registra intervenciones previas.</p>`;
+async function openInterventionHistoryModal(studentName) {
+    let history = getStudentHistory(studentName);
+    try {
+        history = await cargarIntervenciones(studentName);
+    } catch (error) {
+        showToast({ title: 'Sin conexión', message: 'No se pudo cargar el historial desde el servidor.', icon: 'fa-plug-circle-xmark', type: 'urgent' });
+    }
 
     const overlay = openSentirModal(`
         <div class="sentir-modal-header">
             <div class="sentir-modal-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
             <div><h3>Historial de Intervenciones</h3><p>${studentName} · Proceso de acompañamiento psicológico</p></div>
         </div>
-        <div class="sentir-modal-body"><div class="history-timeline">${listHTML}</div></div>
+        <div class="sentir-modal-body">
+            ${history.length ? `
+            <div class="hist-filter">
+                <div class="filter-chips hist-chips">
+                    <button class="chip active" data-rango="todo">Todo</button>
+                    <button class="chip" data-rango="7">Últimos 7 días</button>
+                    <button class="chip" data-rango="30">Últimos 30 días</button>
+                    <button class="chip" data-rango="anio">Este año</button>
+                </div>
+                <div class="modal-field-row">
+                    <div class="modal-field"><label>DESDE</label><input type="date" id="histDesde" max="${todayISO()}"></div>
+                    <div class="modal-field"><label>HASTA</label><input type="date" id="histHasta" max="${todayISO()}"></div>
+                </div>
+                <p class="hist-count" id="histCount"></p>
+            </div>` : ''}
+            <div class="history-timeline" id="histLista"></div>
+        </div>
         <div class="sentir-modal-actions"><button class="modal-btn-cancel" id="closeHistoryModal">Cerrar</button></div>
     `);
     overlay.querySelector('#closeHistoryModal').addEventListener('click', () => closeSentirModal(overlay));
+
+    const lista = overlay.querySelector('#histLista');
+    const pintar = (items) => {
+        lista.innerHTML = items.length
+            ? items.map(item => `
+                <div class="history-entry">
+                    <div class="history-entry-dot"></div>
+                    <div class="history-entry-content">
+                        <div class="history-entry-top"><strong>${item.titulo}</strong><span>${item.fecha}</span></div>
+                        <p>${item.detalle}</p>
+                    </div>
+                </div>`).join('')
+            : history.length
+                ? '<p class="history-empty"><i class="fa-solid fa-calendar-xmark" style="display:block; font-size:20px; margin-bottom:8px; color:var(--lavanda);"></i>No hay intervenciones en ese rango de fechas.</p>'
+                : '<p class="history-empty"><i class="fa-solid fa-folder-open" style="display:block; font-size:20px; margin-bottom:8px; color:var(--lavanda);"></i>Este estudiante aún no registra intervenciones previas.</p>';
+    };
+
+    if (!history.length) return pintar([]);
+
+    const desde = overlay.querySelector('#histDesde');
+    const hasta = overlay.querySelector('#histHasta');
+    const chips = overlay.querySelectorAll('.hist-chips .chip');
+    const contador = overlay.querySelector('#histCount');
+    const isoDeHace = (dias) => { const d = new Date(); d.setDate(d.getDate() - dias); return d.toLocaleDateString('en-CA'); };
+
+    const filtrar = () => {
+        if (desde.value && hasta.value && desde.value > hasta.value) {
+            contador.innerText = 'La fecha "desde" no puede ser posterior a "hasta".';
+            contador.classList.add('error');
+            return pintar([]);
+        }
+        contador.classList.remove('error');
+        const items = history.filter(h => {
+            if (!h.fechaISO) return !desde.value && !hasta.value;
+            return (!desde.value || h.fechaISO >= desde.value) && (!hasta.value || h.fechaISO <= hasta.value);
+        });
+        contador.innerText = `Mostrando ${items.length} de ${history.length} intervenciones`;
+        pintar(items);
+    };
+
+    chips.forEach(chip => chip.addEventListener('click', () => {
+        chips.forEach(c => c.classList.toggle('active', c === chip));
+        const rango = chip.dataset.rango;
+        hasta.value = rango === 'todo' ? '' : todayISO();
+        desde.value = rango === 'todo' ? '' : rango === 'anio' ? `${new Date().getFullYear()}-01-01` : isoDeHace(Number(rango) - 1);
+        filtrar();
+    }));
+    [desde, hasta].forEach(input => input.addEventListener('change', () => {
+        chips.forEach(c => c.classList.remove('active'));
+        filtrar();
+    }));
+
+    filtrar();
 }
 
 function openRegisterInterventionModal(studentName) {
@@ -768,13 +1111,14 @@ function openRegisterInterventionModal(studentName) {
             <div><h3>Registrar Intervención</h3><p>${studentName} · Se sumará al historial de acompañamiento</p></div>
         </div>
         <div class="sentir-modal-body">
-            <div class="modal-field"><label>FECHA</label><input type="date" id="ivDate" value="${todayISO()}"></div>
+            <div class="modal-field"><label>FECHA</label><input type="date" id="ivDate" value="${todayISO()}" max="${todayISO()}"></div>
             <div class="modal-field"><label>FACTORES IDENTIFICADOS</label><textarea id="ivFactors" rows="2" placeholder="Ej. Ansiedad, aislamiento social..."></textarea></div>
             <div class="modal-field"><label>SITUACIÓN</label><textarea id="ivSituation" rows="2" placeholder="Describe la situación actual"></textarea></div>
             <div class="modal-field"><label>CAUSAS IDENTIFICADAS</label><textarea id="ivCauses" rows="2" placeholder="Posibles causas asociadas"></textarea></div>
             <div class="modal-field"><label>PROCESO REALIZADO</label><textarea id="ivProcess" rows="2" placeholder="Acciones y estrategias aplicadas"></textarea></div>
             <div class="modal-field"><label>AVANCE / EVOLUCIÓN</label><textarea id="ivProgress" rows="2" placeholder="Evolución observada"></textarea></div>
-            <p class="modal-error" id="ivError"><i class="fa-solid fa-circle-exclamation"></i> Describe al menos la situación y el proceso realizado.</p>
+            <div class="modal-field"><label>OBSERVACIONES</label><textarea id="ivObservations" rows="2" placeholder="Acuerdos, próximos pasos, remisiones..."></textarea></div>
+            <p class="modal-error" id="ivError"><i class="fa-solid fa-circle-exclamation"></i> <span>Describe al menos la situación y el proceso realizado.</span></p>
         </div>
         <div class="sentir-modal-actions">
             <button class="modal-btn-cancel" id="ivCancel">Cancelar</button>
@@ -783,134 +1127,374 @@ function openRegisterInterventionModal(studentName) {
     `);
 
     overlay.querySelector('#ivCancel').addEventListener('click', () => closeSentirModal(overlay));
-    overlay.querySelector('#ivConfirm').addEventListener('click', () => {
+    overlay.querySelector('#ivConfirm').addEventListener('click', async () => {
+        const errorMsg = overlay.querySelector('#ivError');
+        const mostrarError = (texto) => {
+            errorMsg.querySelector('span').innerText = texto;
+            errorMsg.classList.add('show');
+        };
+
         const situation = overlay.querySelector('#ivSituation').value.trim();
         const process = overlay.querySelector('#ivProcess').value.trim();
-        const errorMsg = overlay.querySelector('#ivError');
-        if (!situation || !process) { errorMsg.classList.add('show'); return; }
+        if (!situation || !process) return mostrarError('Describe al menos la situación y el proceso realizado.');
         errorMsg.classList.remove('show');
 
-        const factors = overlay.querySelector('#ivFactors').value.trim();
-        const causes = overlay.querySelector('#ivCauses').value.trim();
-        const progress = overlay.querySelector('#ivProgress').value.trim();
-        const dateValue = overlay.querySelector('#ivDate').value;
-        const formattedDate = dateValue ? new Date(dateValue + 'T00:00:00').toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Sin fecha';
+        const student = getStudents().find(s => s.name === studentName);
+        if (!student || !student.idUsuario) return mostrarError('No se encontró al estudiante en la base de datos.');
 
-        const parts = [];
-        if (factors) parts.push(`Factores: ${factors}.`);
-        parts.push(`Situación: ${situation}.`);
-        if (causes) parts.push(`Causas: ${causes}.`);
-        parts.push(`Proceso realizado: ${process}.`);
-        if (progress) parts.push(`Avance: ${progress}.`);
+        const boton = overlay.querySelector('#ivConfirm');
+        boton.disabled = true;
+        boton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Guardando…';
 
-        addInterventionRecord(studentName, { fecha: formattedDate, titulo: 'Intervención registrada', detalle: parts.join(' ') });
-        closeSentirModal(overlay);
-        showToast({ title: 'Intervención registrada', message: `Se guardó el registro en el historial de ${studentName}.`, icon: 'fa-notes-medical', type: 'success' });
+        try {
+            const resultado = await sentirApi('/intervenciones', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    idUsuario: student.idUsuario,
+                    fecha: overlay.querySelector('#ivDate').value,
+                    factores: overlay.querySelector('#ivFactors').value.trim(),
+                    situacion: situation,
+                    causas: overlay.querySelector('#ivCauses').value.trim(),
+                    proceso: process,
+                    avance: overlay.querySelector('#ivProgress').value.trim(),
+                    observaciones: overlay.querySelector('#ivObservations').value.trim()
+                })
+            });
+
+            closeSentirModal(overlay);
+            showToast({
+                title: 'Intervención registrada',
+                message: `Se guardó en el historial de ${studentName}.` + (resultado.alertasEnAtencion ? ' Sus alertas nuevas pasaron a "En atención".' : ''),
+                icon: 'fa-notes-medical',
+                type: 'success'
+            });
+
+            cargarIntervenciones(studentName).catch(() => {});
+            cargarDatosReales();   // actualiza alertas, casos y cifras
+        } catch (error) {
+            mostrarError(error.message);
+            boton.disabled = false;
+            boton.innerHTML = '<i class="fa-solid fa-check"></i> Guardar Intervención';
+        }
     });
 }
 
-function openContactGuardianModal(studentName) {
-    const contacts = getGuardianContacts(studentName);
-    const listHTML = contacts.map(c => `
-        <div class="contact-entry ${c.principal ? 'is-principal' : ''}">
-            <div class="contact-entry-info">
-                <strong>${c.nombre}${c.principal ? '<span class="contact-principal-tag">CONFIANZA</span>' : '<span class="contact-alt-tag">ALTERNATIVO</span>'}</strong>
-                <span>${c.parentesco}</span>
-                ${c.correo ? `<a href="https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(c.correo)}" target="_blank" rel="noopener" class="contact-email-link"><i class="fa-solid fa-envelope"></i> ${c.correo}</a>` : ''}
-            </div>
-            <span class="contact-phone-display"><i class="fa-solid fa-phone"></i> ${c.telefono}</span>
-        </div>
-    `).join('');
+/* --------------------------------------------------------------------------
+   CONTACTAR ACUDIENTE (llamada, WhatsApp, contacto alternativo y registro en BD)
+   -------------------------------------------------------------------------- */
+const MEDIOS_CONTACTO = {
+    llamada: { label: 'Llamada', icon: 'fa-phone' },
+    whatsapp: { label: 'WhatsApp', icon: 'fa-brands fa-whatsapp' },
+    correo: { label: 'Correo', icon: 'fa-envelope' },
+    presencial: { label: 'Presencial', icon: 'fa-people-arrows' }
+};
 
-    const hasAlternate = contacts.some(c => !c.principal);
+function escaparHTML(valor) {
+    return String(valor ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+// WhatsApp necesita el número con indicativo de país (Colombia = 57)
+function numeroWhatsApp(telefono) {
+    const d = String(telefono || '').replace(/\D/g, '');
+    if (d.length === 10 && d.startsWith('3')) return '57' + d;
+    return d;
+}
+
+function telefonoBonito(telefono) {
+    const d = String(telefono || '').replace(/\D/g, '');
+    if (d.length === 10) return `${d.slice(0, 3)} ${d.slice(3, 6)} ${d.slice(6)}`;
+    if (d.length === 12 && d.startsWith('57')) return `+57 ${d.slice(2, 5)} ${d.slice(5, 8)} ${d.slice(8)}`;
+    return d || 'Sin número';
+}
+
+function mensajeWhatsApp(contacto, studentName) {
+    const psicologa = getPsychProfile().name || 'la psicóloga';
+    const saludo = new Date().getHours() < 12 ? 'Buenos días' : 'Buenas tardes';
+    return `${saludo}, ${contacto.nombre}. Le escribe ${psicologa}, del área de psicología de la institución, en relación con ${studentName}. Necesitamos comunicarnos con usted lo antes posible. ¿Me puede indicar a qué hora podemos hablar? Gracias.`;
+}
+
+async function openContactGuardianModal(studentName) {
+    const student = getStudents().find(s => s.name === studentName);
+    if (!student || !student.idUsuario) {
+        showToast({ title: 'Sin datos', message: 'No se encontró al estudiante en la base de datos.', icon: 'fa-circle-exclamation', type: 'urgent' });
+        return;
+    }
+
+    let datos = { contactos: [], registros: [] };
+    let vista = 'lista';          // lista | whatsapp | alternativo | registrar
+    let elegido = null;           // contacto seleccionado para WhatsApp o registro
 
     const overlay = openSentirModal(`
         <div class="sentir-modal-header">
             <div class="sentir-modal-icon" style="background:#FEF2F2; color:var(--riesgo-alto);"><i class="fa-solid fa-phone"></i></div>
-            <div><h3>Contactar Acudiente</h3><p>${studentName} · Números disponibles para contacto inmediato</p></div>
+            <div><h3>Contactar Acudiente</h3><p>${escaparHTML(studentName)} · Llama, escribe por WhatsApp y deja constancia del contacto</p></div>
         </div>
-        <div class="sentir-modal-body">
-            <div class="contact-list" id="contactListBody">${listHTML}</div>
-            ${!hasAlternate ? `<button class="btn-secondary" id="addAltContactBtn" style="width:100%;"><i class="fa-solid fa-user-plus"></i> Agregar contacto alternativo (opcional)</button>` : ''}
-        </div>
-        <div class="sentir-modal-actions">
-            <button class="modal-btn-cancel" id="closeContactModal">Cerrar</button>
-            <button class="modal-btn-confirm" id="confirmContactLogged"><i class="fa-solid fa-check"></i> Registrar como Contactado</button>
-        </div>
+        <div class="sentir-modal-body" id="gcBody"><p class="history-empty"><i class="fa-solid fa-spinner fa-spin"></i> Cargando contactos…</p></div>
+        <div class="sentir-modal-actions" id="gcActions"></div>
     `);
+    const body = overlay.querySelector('#gcBody');
+    const acciones = overlay.querySelector('#gcActions');
 
-    overlay.querySelector('#closeContactModal').addEventListener('click', () => closeSentirModal(overlay));
+    const cargar = async () => {
+        datos = await sentirApi('/acudientes/' + student.idUsuario);
+        // El expediente en PDF usa estos contactos
+        const todos = getGuardians();
+        todos[studentName] = datos.contactos;
+        SentirStore.set('guardians', todos);
+    };
 
-    const addAltBtn = overlay.querySelector('#addAltContactBtn');
-    if (addAltBtn) {
-        addAltBtn.addEventListener('click', () => {
-            const formHTML = `
-                <div class="contact-entry" id="newAltContactForm" style="flex-direction:column; align-items:stretch; gap:10px;">
-                    <div class="modal-field"><label>NOMBRE DEL CONTACTO ALTERNATIVO</label><input type="text" id="altName" placeholder="Ej. Tío, vecino de confianza..."></div>
-                    <div class="modal-field-row">
-                        <div class="modal-field"><label>PARENTESCO</label><input type="text" id="altRelation" placeholder="Ej. Tío"></div>
-                        <div class="modal-field"><label>TELÉFONO</label><input type="text" id="altPhone" placeholder="+57 300 000 0000"></div>
-                    </div>
-                    <div class="modal-field"><label>CORREO (OPCIONAL)</label><input type="email" id="altEmail" placeholder="correo@ejemplo.com"></div>
-                    <button class="modal-btn-confirm" id="saveAltContact" style="align-self:flex-end;"><i class="fa-solid fa-check"></i> Guardar Contacto</button>
-                </div>`;
-            addAltBtn.insertAdjacentHTML('beforebegin', formHTML);
-            addAltBtn.remove();
+    const mostrarError = (texto) => {
+        const caja = overlay.querySelector('#gcError');
+        if (!caja) return showToast({ title: 'Atención', message: texto, icon: 'fa-circle-exclamation', type: 'urgent' });
+        caja.querySelector('span').innerText = texto;
+        caja.classList.add('show');
+    };
+    const errorHTML = '<p class="modal-error" id="gcError"><i class="fa-solid fa-circle-exclamation"></i> <span></span></p>';
 
-            overlay.querySelector('#saveAltContact').addEventListener('click', () => {
-                const nombre = overlay.querySelector('#altName').value.trim();
-                const telefono = overlay.querySelector('#altPhone').value.trim();
-                if (!nombre || !telefono) {
-                    showToast({ title: 'Faltan datos', message: 'Escribe al menos el nombre y el teléfono del contacto.', icon: 'fa-circle-exclamation', type: 'info' });
-                    return;
-                }
-                const all = getGuardians();
-                if (!all[studentName]) all[studentName] = getGuardianContacts(studentName);
-                all[studentName].push({
-                    nombre, parentesco: (overlay.querySelector('#altRelation').value.trim() || 'Contacto alternativo') + ' (alternativo)',
-                    telefono, correo: overlay.querySelector('#altEmail').value.trim(), principal: false
-                });
-                SentirStore.set('guardians', all);
-                closeSentirModal(overlay);
-                showToast({ title: 'Contacto alternativo agregado', message: `${nombre} ya queda disponible para ${studentName}.`, icon: 'fa-user-plus', type: 'success' });
-            });
-        });
-    }
-
-    overlay.querySelector('#confirmContactLogged').addEventListener('click', () => {
-        addInterventionRecord(studentName, {
-            fecha: new Date().toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' }),
-            titulo: 'Acudiente contactado',
-            detalle: 'Se estableció contacto telefónico con el acudiente para informar sobre la situación del estudiante.'
-        });
-        closeSentirModal(overlay);
-        showToast({ title: 'Contacto registrado', message: `Se dejó constancia del contacto con el acudiente de ${studentName}.`, icon: 'fa-phone', type: 'success' });
+    const registrar = (payload) => sentirApi(`/acudientes/${student.idUsuario}/contactos`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
     });
+
+    const pintar = () => {
+        const { contactos, registros } = datos;
+
+        if (vista === 'lista') {
+            const listaHTML = contactos.length ? contactos.map((c, i) => `
+                <div class="contact-entry ${c.principal ? 'is-principal' : ''}">
+                    <div class="contact-entry-info">
+                        <strong>${escaparHTML(c.nombre)}${c.principal ? '<span class="contact-principal-tag">ACUDIENTE</span>' : '<span class="contact-alt-tag">ALTERNATIVO</span>'}</strong>
+                        <span>${escaparHTML(c.parentesco)} · ${telefonoBonito(c.telefono)}</span>
+                        ${c.correo ? `<a href="https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(c.correo)}" target="_blank" rel="noopener" class="contact-email-link"><i class="fa-solid fa-envelope"></i> ${escaparHTML(c.correo)}</a>` : ''}
+                    </div>
+                    <div class="contact-quick-actions">
+                        <button type="button" class="gc-btn wa" data-wa="${i}" title="Enviar mensaje por WhatsApp"><i class="fa-brands fa-whatsapp"></i></button>
+                        ${c.principal ? '' : `<button type="button" class="gc-btn del" data-del="${c.id}" title="Quitar contacto alternativo"><i class="fa-solid fa-trash-can"></i></button>`}
+                    </div>
+                </div>`).join('')
+                : '<p class="history-empty">Este estudiante no tiene acudiente registrado. Agrega un contacto alternativo.</p>';
+
+            const historialHTML = registros.length ? registros.map(r => `
+                <div class="gc-log">
+                    <i class="${(MEDIOS_CONTACTO[r.medio] || MEDIOS_CONTACTO.llamada).icon.includes('fa-brands') ? '' : 'fa-solid '}${(MEDIOS_CONTACTO[r.medio] || MEDIOS_CONTACTO.llamada).icon}"></i>
+                    <div>
+                        <strong>${escaparHTML(r.nombre)} · ${(MEDIOS_CONTACTO[r.medio] || MEDIOS_CONTACTO.llamada).label}</strong>
+                        <small>${new Date(r.fecha).toLocaleString('es-CO', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit' })}${r.psicologa ? ' · ' + escaparHTML(r.psicologa) : ''}</small>
+                        ${r.observacion ? `<p>${escaparHTML(r.observacion)}</p>` : ''}
+                    </div>
+                </div>`).join('')
+                : '<p class="gc-empty">Aún no se ha registrado ningún contacto.</p>';
+
+            body.innerHTML = `
+                <div class="contact-list">${listaHTML}</div>
+                <button class="btn-secondary" id="gcAddAlt" style="width:100%; margin-top:12px;"><i class="fa-solid fa-user-plus"></i> Agregar contacto alternativo</button>
+                <h4 class="gc-subtitle"><i class="fa-solid fa-clock-rotate-left"></i> Contactos realizados</h4>
+                <div class="gc-logs">${historialHTML}</div>`;
+            acciones.innerHTML = `
+                <button class="modal-btn-cancel" id="gcClose">Cerrar</button>
+                ${contactos.length ? '<button class="modal-btn-confirm" id="gcRegister"><i class="fa-solid fa-check"></i> Registrar como Contactado</button>' : ''}`;
+
+            body.querySelectorAll('[data-wa]').forEach(b => b.addEventListener('click', () => {
+                elegido = contactos[Number(b.dataset.wa)];
+                vista = 'whatsapp'; pintar();
+            }));
+            body.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', async () => {
+                if (!confirm('¿Quitar este contacto alternativo?')) return;
+                try {
+                    await sentirApi('/acudientes/alternativos/' + b.dataset.del, { method: 'DELETE' });
+                    await cargar(); pintar();
+                    showToast({ title: 'Contacto eliminado', message: 'Se quitó el contacto alternativo.', icon: 'fa-trash-can', type: 'info' });
+                } catch (error) { mostrarError(error.message); }
+            }));
+            body.querySelector('#gcAddAlt').addEventListener('click', () => { vista = 'alternativo'; pintar(); });
+            acciones.querySelector('#gcClose').addEventListener('click', () => closeSentirModal(overlay));
+            const regBtn = acciones.querySelector('#gcRegister');
+            if (regBtn) regBtn.addEventListener('click', () => { elegido = contactos[0]; vista = 'registrar'; pintar(); });
+            return;
+        }
+
+        if (vista === 'whatsapp') {
+            const numero = numeroWhatsApp(elegido.telefono);
+            body.innerHTML = `
+                <div class="gc-selected"><i class="fa-brands fa-whatsapp"></i><div><strong>${escaparHTML(elegido.nombre)}</strong><small>${escaparHTML(elegido.parentesco)} · ${telefonoBonito(elegido.telefono)}</small></div></div>
+                <div class="modal-field"><label>MENSAJE</label><textarea id="gcMensaje" rows="6">${escaparHTML(mensajeWhatsApp(elegido, studentName))}</textarea></div>
+                <p class="gc-note"><i class="fa-solid fa-circle-info"></i> Se abrirá WhatsApp con el mensaje listo para enviar y el contacto quedará registrado.</p>
+                ${numero.length < 10 ? '<p class="gc-warn"><i class="fa-solid fa-triangle-exclamation"></i> Este número parece incompleto. Verifícalo antes de enviar.</p>' : ''}
+                ${errorHTML}`;
+            acciones.innerHTML = `
+                <button class="modal-btn-cancel" id="gcBack"><i class="fa-solid fa-arrow-left"></i> Atrás</button>
+                <button class="modal-btn-confirm gc-wa-send" id="gcSendWa"><i class="fa-brands fa-whatsapp"></i> Enviar por WhatsApp</button>`;
+
+            acciones.querySelector('#gcBack').addEventListener('click', () => { vista = 'lista'; pintar(); });
+            acciones.querySelector('#gcSendWa').addEventListener('click', async () => {
+                const mensaje = body.querySelector('#gcMensaje').value.trim();
+                if (!mensaje) return mostrarError('Escribe el mensaje que quieres enviar.');
+                // Se abre primero (dentro del clic) para que el navegador no bloquee la ventana
+                window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`, '_blank', 'noopener');
+                try {
+                    await registrar({ nombre: elegido.nombre, parentesco: elegido.parentesco, telefono: elegido.telefono, medio: 'whatsapp', mensaje, observacion: 'Mensaje enviado por WhatsApp.' });
+                    await cargar();
+                    vista = 'lista'; pintar();
+                    showToast({ title: 'WhatsApp abierto', message: `Se registró el mensaje a ${elegido.nombre}.`, icon: 'fa-comment-dots', type: 'success' });
+                } catch (error) { mostrarError(error.message); }
+            });
+            return;
+        }
+
+        if (vista === 'alternativo') {
+            body.innerHTML = `
+                <p class="gc-note" style="margin:0 0 12px;"><i class="fa-solid fa-circle-info"></i> Se guardará como acudiente alternativo de ${escaparHTML(studentName)}.</p>
+                <div class="modal-field-row">
+                    <div class="modal-field"><label>NOMBRE</label><input type="text" id="altName" maxlength="20" placeholder="Ej. Luz Marina"></div>
+                    <div class="modal-field"><label>APELLIDO</label><input type="text" id="altSurname" maxlength="20" placeholder="Ej. Gómez Ruiz"></div>
+                </div>
+                <div class="modal-field-row">
+                    <div class="modal-field"><label>TIPO DE DOCUMENTO</label>
+                        <select id="altDocType">
+                            <option value="Cédula">Cédula</option>
+                            <option value="Tarjeta identidad">Tarjeta de identidad</option>
+                            <option value="PPI">PPI</option>
+                            <option value="Pasaporte">Pasaporte</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+                    <div class="modal-field"><label>NÚMERO DE DOCUMENTO</label><input type="text" id="altDoc" inputmode="numeric" maxlength="15" placeholder="Ej. 43555111"></div>
+                </div>
+                <div class="modal-field-row">
+                    <div class="modal-field"><label>PARENTESCO</label><input type="text" id="altRelation" placeholder="Ej. Tía, abuelo, vecina"></div>
+                    <div class="modal-field"><label>CELULAR</label><input type="text" id="altPhone" placeholder="300 000 0000" inputmode="numeric"></div>
+                </div>
+                <div class="modal-field-row">
+                    <div class="modal-field"><label>OCUPACIÓN (OPCIONAL)</label><input type="text" id="altJob" placeholder="Ej. Comerciante"></div>
+                    <div class="modal-field"><label>CORREO (OPCIONAL)</label><input type="email" id="altEmail" placeholder="correo@ejemplo.com"></div>
+                </div>
+                ${errorHTML}`;
+            acciones.innerHTML = `
+                <button class="modal-btn-cancel" id="gcBack"><i class="fa-solid fa-arrow-left"></i> Atrás</button>
+                <button class="modal-btn-confirm" id="gcSaveAlt"><i class="fa-solid fa-check"></i> Guardar contacto</button>`;
+            setTimeout(() => body.querySelector('#altName').focus(), 50);
+
+            acciones.querySelector('#gcBack').addEventListener('click', () => { vista = 'lista'; pintar(); });
+            acciones.querySelector('#gcSaveAlt').addEventListener('click', async (e) => {
+                const valor = (id) => body.querySelector(id).value.trim();
+                const nombre = valor('#altName');
+                const apellido = valor('#altSurname');
+                const documento = valor('#altDoc').replace(/\D/g, '');
+                const telefono = valor('#altPhone').replace(/\D/g, '');
+                if (!nombre || !apellido) return mostrarError('Escribe el nombre y el apellido del contacto.');
+                if (documento.length < 5) return mostrarError('Escribe el número de documento del contacto.');
+                if (!valor('#altRelation')) return mostrarError('Escribe el parentesco con el estudiante.');
+                if (telefono.length < 7) return mostrarError('Escribe un número de celular válido.');
+                e.currentTarget.disabled = true;
+                try {
+                    await sentirApi(`/acudientes/${student.idUsuario}/alternativos`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            nombre, apellido, documento,
+                            tipoDocumento: body.querySelector('#altDocType').value,
+                            parentesco: valor('#altRelation'),
+                            ocupacion: valor('#altJob'),
+                            telefono,
+                            correo: valor('#altEmail')
+                        })
+                    });
+                    await cargar();
+                    vista = 'lista'; pintar();
+                    showToast({ title: 'Contacto alternativo agregado', message: `${nombre} ${apellido} quedó guardado como acudiente alternativo de ${studentName}.`, icon: 'fa-user-plus', type: 'success' });
+                } catch (error) {
+                    mostrarError(error.message);
+                    acciones.querySelector('#gcSaveAlt').disabled = false;
+                }
+            });
+            return;
+        }
+
+        if (vista === 'registrar') {
+            body.innerHTML = `
+                <div class="modal-field"><label>¿A QUIÉN CONTACTASTE?</label>
+                    <div class="referral-list">${contactos.map((c, i) => `
+                        <label class="referral-option">
+                            <input type="radio" name="gcQuien" value="${i}" ${c === elegido ? 'checked' : ''}>
+                            <div><strong>${escaparHTML(c.nombre)}</strong><span>${escaparHTML(c.parentesco)} · ${telefonoBonito(c.telefono)}</span></div>
+                        </label>`).join('')}
+                    </div>
+                </div>
+                <div class="modal-field"><label>¿CÓMO FUE EL CONTACTO?</label>
+                    <div class="gc-medios">${Object.entries(MEDIOS_CONTACTO).map(([clave, m], i) => `
+                        <label class="gc-medio"><input type="radio" name="gcMedio" value="${clave}" ${i === 0 ? 'checked' : ''}><span><i class="${m.icon.includes('fa-brands') ? '' : 'fa-solid '}${m.icon}"></i> ${m.label}</span></label>`).join('')}
+                    </div>
+                </div>
+                <div class="modal-field"><label>¿QUÉ SE HABLÓ? (OBSERVACIÓN)</label><textarea id="gcObs" rows="3" placeholder="Ej. Se informó a la madre sobre la situación; asistirá a reunión el jueves."></textarea></div>
+                ${errorHTML}`;
+            acciones.innerHTML = `
+                <button class="modal-btn-cancel" id="gcBack"><i class="fa-solid fa-arrow-left"></i> Atrás</button>
+                <button class="modal-btn-confirm" id="gcSaveLog"><i class="fa-solid fa-check"></i> Guardar registro</button>`;
+
+            acciones.querySelector('#gcBack').addEventListener('click', () => { vista = 'lista'; pintar(); });
+            acciones.querySelector('#gcSaveLog').addEventListener('click', async (e) => {
+                const quien = body.querySelector('input[name="gcQuien"]:checked');
+                if (!quien) return mostrarError('Elige a quién contactaste.');
+                const contacto = contactos[Number(quien.value)];
+                const boton = e.currentTarget;
+                boton.disabled = true;
+                try {
+                    await registrar({
+                        nombre: contacto.nombre,
+                        parentesco: contacto.parentesco,
+                        telefono: contacto.telefono,
+                        medio: body.querySelector('input[name="gcMedio"]:checked').value,
+                        observacion: body.querySelector('#gcObs').value.trim()
+                    });
+                    await cargar();
+                    vista = 'lista'; pintar();
+                    showToast({ title: 'Contacto registrado', message: `Quedó constancia del contacto con ${contacto.nombre}.`, icon: 'fa-phone', type: 'success' });
+                    cargarDatosReales();   // las alertas nuevas del estudiante pasan a "En atención"
+                } catch (error) {
+                    mostrarError(error.message);
+                    boton.disabled = false;
+                }
+            });
+        }
+    };
+
+    try {
+        await cargar();
+        pintar();
+    } catch (error) {
+        body.innerHTML = `<p class="history-empty"><i class="fa-solid fa-plug-circle-xmark"></i> ${escaparHTML(error.message)}</p>`;
+        acciones.innerHTML = '<button class="modal-btn-cancel" id="gcClose">Cerrar</button>';
+        acciones.querySelector('#gcClose').addEventListener('click', () => closeSentirModal(overlay));
+    }
 }
 
-function openMedicalReferralModal(studentName) {
-    const networks = [
-        { nombre: 'EPS Sura - Salud Mental', tipo: 'Red asegurada', contacto: '018000 51 15 15' },
-        { nombre: 'Centro de Salud Mental Comunitario', tipo: 'Atención especializada', contacto: 'Coordinar con Coordinación Académica' },
-        { nombre: 'Línea Amiga 106', tipo: 'Línea de apoyo emocional 24/7', contacto: '106' }
-    ];
-    const listHTML = networks.map(n => `
-        <label class="referral-option">
-            <input type="radio" name="referralNetwork" value="${n.nombre}">
-            <div><strong>${n.nombre}</strong><span>${n.tipo} · ${n.contacto}</span></div>
-        </label>
-    `).join('');
+/* --------------------------------------------------------------------------
+   DERIVAR A RED DE APOYO (la psicóloga escribe la EPS; se guarda en la BD)
+   -------------------------------------------------------------------------- */
+async function openMedicalReferralModal(studentName) {
+    const student = getStudents().find(s => s.name === studentName);
+    if (!student || !student.idUsuario) {
+        showToast({ title: 'Sin datos', message: 'No se encontró al estudiante en la base de datos.', icon: 'fa-circle-exclamation', type: 'urgent' });
+        return;
+    }
 
     const overlay = openSentirModal(`
         <div class="sentir-modal-header">
             <div class="sentir-modal-icon"><i class="fa-solid fa-house-medical"></i></div>
-            <div><h3>Derivar a Red de Apoyo Médica</h3><p>${studentName} · Selecciona la red externa a la que se remitirá el caso</p></div>
+            <div><h3>Derivar a Red de Apoyo Médica</h3><p>${escaparHTML(studentName)} · Escribe la EPS o entidad a la que se remite el caso</p></div>
         </div>
         <div class="sentir-modal-body">
-            <div class="referral-list">${listHTML}</div>
-            <div class="modal-field"><label>FECHA DE LA DERIVACIÓN</label><input type="date" id="referralDate" value="${todayISO()}"></div>
-            <div class="modal-field"><label>MOTIVO (OPCIONAL)</label><textarea id="referralNote" rows="2" placeholder="Motivo y contexto de la derivación..."></textarea></div>
-            <p class="modal-error" id="referralError"><i class="fa-solid fa-circle-exclamation"></i> Selecciona una red de apoyo antes de confirmar.</p>
+            <div class="modal-field"><label>NOMBRE DE LA EPS O ENTIDAD</label><input type="text" id="referralEps" maxlength="150" placeholder="Ej. Nueva EPS, Sanitas, Salud Total..."></div>
+            <div class="modal-field-row">
+                <div class="modal-field"><label>SERVICIO (OPCIONAL)</label><input type="text" id="referralService" maxlength="100" placeholder="Ej. Psiquiatría, Psicología clínica"></div>
+                <div class="modal-field"><label>FECHA DE LA DERIVACIÓN</label><input type="date" id="referralDate" value="${todayISO()}" max="${todayISO()}"></div>
+            </div>
+            <div class="modal-field"><label>MOTIVO DE LA DERIVACIÓN</label><textarea id="referralNote" rows="3" placeholder="Motivo y contexto de la derivación..."></textarea></div>
+            <p class="modal-error" id="referralError"><i class="fa-solid fa-circle-exclamation"></i> <span></span></p>
+            <h4 class="gc-subtitle"><i class="fa-solid fa-clock-rotate-left"></i> Derivaciones anteriores</h4>
+            <div class="gc-logs" id="referralHistory"><p class="gc-empty"><i class="fa-solid fa-spinner fa-spin"></i> Cargando…</p></div>
         </div>
         <div class="sentir-modal-actions">
             <button class="modal-btn-cancel" id="cancelReferral">Cancelar</button>
@@ -918,23 +1502,61 @@ function openMedicalReferralModal(studentName) {
         </div>
     `);
 
-    overlay.querySelector('#cancelReferral').addEventListener('click', () => closeSentirModal(overlay));
-    overlay.querySelector('#confirmReferral').addEventListener('click', () => {
-        const selected = overlay.querySelector('input[name="referralNetwork"]:checked');
-        const errorMsg = overlay.querySelector('#referralError');
-        if (!selected) { errorMsg.classList.add('show'); return; }
-        errorMsg.classList.remove('show');
+    const $ = (sel) => overlay.querySelector(sel);
+    const errorMsg = $('#referralError');
+    const mostrarError = (texto) => { errorMsg.querySelector('span').innerText = texto; errorMsg.classList.add('show'); };
+    overlay.addEventListener('input', () => errorMsg.classList.remove('show'));
+    setTimeout(() => $('#referralEps').focus(), 50);
 
-        const note = overlay.querySelector('#referralNote').value.trim();
-        const dateVal = overlay.querySelector('#referralDate').value || todayISO();
-        const formattedDate = new Date(dateVal + 'T00:00:00').toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' });
-        addInterventionRecord(studentName, {
-            fecha: formattedDate,
-            titulo: 'Derivación a red de apoyo médica',
-            detalle: `Se derivó el caso a ${selected.value}.${note ? ' Motivo: ' + note : ''}`
-        });
-        closeSentirModal(overlay);
-        showToast({ title: 'Derivación confirmada', message: `${studentName} fue remitido a ${selected.value}.`, icon: 'fa-house-medical', type: 'success' });
+    const pintarHistorial = async () => {
+        try {
+            const { derivaciones } = await sentirApi('/derivaciones/' + student.idUsuario);
+            $('#referralHistory').innerHTML = derivaciones.length ? derivaciones.map(d => `
+                <div class="gc-log">
+                    <i class="fa-solid fa-house-medical"></i>
+                    <div>
+                        <strong>${escaparHTML(d.eps)}${d.servicio ? ' · ' + escaparHTML(d.servicio) : ''}</strong>
+                        <small>${new Date(d.fecha + 'T00:00:00').toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' })}${d.psicologa ? ' · ' + escaparHTML(d.psicologa) : ''} · ${escaparHTML(d.estado)}</small>
+                        <p>${escaparHTML(d.motivo)}</p>
+                    </div>
+                </div>`).join('')
+                : '<p class="gc-empty">Este estudiante no tiene derivaciones registradas.</p>';
+        } catch (error) {
+            $('#referralHistory').innerHTML = `<p class="gc-empty">${escaparHTML(error.message)}</p>`;
+        }
+    };
+    pintarHistorial();
+
+    $('#cancelReferral').addEventListener('click', () => closeSentirModal(overlay));
+    $('#confirmReferral').addEventListener('click', async () => {
+        const eps = $('#referralEps').value.trim();
+        const motivo = $('#referralNote').value.trim();
+        if (eps.length < 2) return mostrarError('Escribe el nombre de la EPS o entidad.');
+        if (motivo.length < 5) return mostrarError('Escribe el motivo de la derivación.');
+
+        const boton = $('#confirmReferral');
+        boton.disabled = true;
+        boton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Guardando…';
+        try {
+            await sentirApi('/derivaciones', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    idUsuario: student.idUsuario,
+                    eps,
+                    servicio: $('#referralService').value.trim(),
+                    fecha: $('#referralDate').value || todayISO(),
+                    motivo
+                })
+            });
+            closeSentirModal(overlay);
+            showToast({ title: 'Derivación confirmada', message: `${studentName} fue remitido a ${eps}.`, icon: 'fa-house-medical', type: 'success' });
+            cargarDatosReales();   // las alertas nuevas del estudiante pasan a "En atención"
+        } catch (error) {
+            mostrarError(error.message);
+            boton.disabled = false;
+            boton.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Confirmar Derivación';
+        }
     });
 }
 
@@ -1229,28 +1851,87 @@ function aplicarPerfilReal(perfil) {
     renderHeaderProfile();
 }
 
-function refrescarNotificaciones() {
+/* --------------------------------------------------------------------------
+   CAMPANITA: avisos guardados en la base de datos (alertas de riesgo, solicitudes
+   de ayuda, alertas de docentes y avisos de citas). Todos llegan también por correo.
+   -------------------------------------------------------------------------- */
+const ICONO_AVISO = {
+    alerta_riesgo: '🚨', solicitud_ayuda: '🆘', alerta_docente: '👩‍🏫',
+    cita_solicitada: '📅', cita_cancelada_estudiante: '🗓️'
+};
+let avisosPsicologia = [];
+
+function tiempoRelativo(fecha) {
+    const min = Math.round((Date.now() - new Date(fecha).getTime()) / 60000);
+    if (min < 1) return 'Ahora';
+    if (min < 60) return `Hace ${min} min`;
+    const h = Math.round(min / 60);
+    if (h < 24) return `Hace ${h} h`;
+    const d = Math.round(h / 24);
+    return d === 1 ? 'Ayer' : `Hace ${d} días`;
+}
+
+function pintarNotificaciones() {
     const dropdown = document.getElementById('notifDropdown');
     const bell = document.getElementById('notifBell');
     if (!dropdown || !bell) return;
+    const sinLeer = avisosPsicologia.filter(a => !a.leida).length;
 
-    const alertas = getAlerts().filter(a => a.estado === 'Nueva');
+    dropdown.innerHTML = `<div class="notif-header">Notificaciones ${sinLeer ? `<button type="button" class="notif-readall" id="notifReadAll">Marcar todo como leído</button>` : ''}</div>`
+        + (avisosPsicologia.length
+            ? avisosPsicologia.slice(0, 12).map(a => `
+                <button type="button" class="notif-item ${a.leida ? '' : 'is-unread'} ${['alto', 'critico'].includes(a.nivel) ? 'is-urgent' : ''}" role="menuitem"
+                        data-id="${a.id}" data-goto="${String(a.tipo).startsWith('cita') ? 'agenda.html' : 'alertas.html'}">
+                    <span class="notif-title">${ICONO_AVISO[a.tipo] || '🔔'} ${escaparHTML(a.titulo)}</span>
+                    <span class="notif-text">${escaparHTML(String(a.mensaje).split('\n').slice(0, 2).join(' '))}</span>
+                    <span class="notif-time">${tiempoRelativo(a.fecha)}</span>
+                </button>`).join('')
+            : '<div class="notif-item" role="status">✅ No tienes notificaciones por ahora</div>')
+        + '<button type="button" class="notif-item" role="menuitem" data-goto="agenda.html">📅 Revisa tu agenda de hoy</button>';
+
     const badge = bell.querySelector('.badge');
-    dropdown.innerHTML = `<div class="notif-header">Alertas Recientes</div>` + (
-        alertas.length
-            ? alertas.map(a => `<button type="button" class="notif-item is-urgent" role="menuitem" data-goto="alertas.html">🚨 ${a.estudiante} (${a.grado}) requiere atención</button>`).join('')
-            : `<div class="notif-item" role="status">✅ No hay alertas nuevas por ahora</div>`
-    ) + `<button type="button" class="notif-item" role="menuitem" data-goto="agenda.html">📅 Revisa tu agenda de hoy</button>`;
     if (badge) {
-        badge.textContent = alertas.length;
-        badge.style.display = alertas.length ? 'flex' : 'none';
+        badge.textContent = sinLeer > 9 ? '9+' : sinLeer;
+        badge.style.display = sinLeer ? 'flex' : 'none';
     }
+    bell.setAttribute('aria-label', sinLeer ? `Abrir notificaciones: ${sinLeer} sin leer` : 'Abrir notificaciones');
+
     dropdown.querySelectorAll('.notif-item[data-goto]').forEach(item => {
-        item.addEventListener('click', (e) => {
+        item.addEventListener('click', async (e) => {
             e.stopPropagation();
+            if (item.dataset.id) await marcarNotificacionesLeidas([Number(item.dataset.id)]);
             window.location.href = resolveModulePath(item.dataset.goto);
         });
     });
+    const todo = dropdown.querySelector('#notifReadAll');
+    if (todo) todo.addEventListener('click', (e) => { e.stopPropagation(); marcarNotificacionesLeidas(); });
+}
+
+async function marcarNotificacionesLeidas(ids) {
+    if (!avisosPsicologia.some(a => !a.leida && (!ids || ids.includes(a.id)))) return;
+    try {
+        await sentirApi('/notificaciones/leidas', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(ids ? { ids } : {})
+        });
+        avisosPsicologia.forEach(a => { if (!ids || ids.includes(a.id)) a.leida = true; });
+        pintarNotificaciones();
+    } catch (error) { /* se intentará de nuevo */ }
+}
+
+async function refrescarNotificaciones() {
+    if (!sentirToken()) return;
+    try {
+        const datos = await sentirApi('/notificaciones');
+        avisosPsicologia = datos.notificaciones || [];
+    } catch (error) {
+        return;
+    }
+    // Si el menú está abierto no se redibuja (para no mover lo que se está leyendo)
+    const dropdown = document.getElementById('notifDropdown');
+    if (dropdown && dropdown.classList.contains('show')) return;
+    pintarNotificaciones();
 }
 
 async function cargarDatosReales() {
@@ -1262,12 +1943,17 @@ async function cargarDatosReales() {
         SentirStore.set('alerts', inicio.alertas || []);
         SentirStore.set('ai_trend', inicio.tendencia || null);
         window.sentirInicio = inicio;
+        await cargarCitasReales().catch(error => console.warn('Psicología: no se pudieron cargar las citas:', error.message));
 
         initSidebarActiveState();
         refrescarNotificaciones();
         checkForNewAlerts();
 
         document.dispatchEvent(new CustomEvent('sentir:datos', { detail: { perfil, inicio } }));
+        const panel = document.getElementById('detailPanel');
+        if (panel && panel.classList.contains('open') && panel.dataset.currentStudent) {
+            renderStudentCaseContext(getStudents().find(st => st.name === panel.dataset.currentStudent));
+        }
         return { perfil, inicio };
     } catch (error) {
         console.warn('Psicología: no se pudieron cargar los datos reales:', error.message);
@@ -1282,6 +1968,12 @@ async function cargarDatosReales() {
 function limpiarDatosDeEjemplo() {
     SentirStore.set('alerts', getAlerts().filter(a => String(a.id).startsWith('ayuda-')));
     SentirStore.set('students', getStudents().filter(s => s.idUsuario));
+    const intervenciones = getInterventions();
+    ['Mateo Silva', 'Isabella Castro', 'Camila Pérez'].forEach(nombre => { delete intervenciones[nombre]; });
+    SentirStore.set('interventions', intervenciones);
+    const acudientes = getGuardians();
+    ['Mateo Silva', 'Isabella Castro', 'Camila Pérez', 'Sofía Ortiz'].forEach(nombre => { delete acudientes[nombre]; });
+    SentirStore.set('guardians', acudientes);
     // Citas de ejemplo (ag1–ag4); las que creó la psicóloga se conservan
     SentirStore.set('agenda', getAgenda().filter(a => !['ag1', 'ag2', 'ag3', 'ag4'].includes(a.id)));
     if (!getPsychProfile().usuario) SentirStore.set('psych_profile', SENTIR_DEFAULT_PROFILE);

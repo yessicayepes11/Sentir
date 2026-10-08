@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="/Shared/HelpRequest/HelpRequest.css">
     <!-- Chat con IA "Sentir IA" -->
     <link rel="stylesheet" href="/Shared/AiChat/AiChat.css">
+    <link rel="stylesheet" href="../../../responsive.css">
 </head>
 
 
@@ -334,7 +335,7 @@
                 </span>
 
 
-                <img
+                <img data-avatar-ia="estudiante"
                     src="/Shared/StudentResources/CaInsignias.png"
                     alt="Estudiante con trofeo"
                     class="badges-girl"
@@ -412,6 +413,18 @@
                 <div class="mini-nav-text">
                     <h4>Ir a recursos</h4>
                     <p>Respiraciones, meditaciones y videos para cuidarte.</p>
+                </div>
+                <div class="mini-nav-arrow">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </a>
+            <a href="/Client/ScreenStudents/EmotionalDiary/Citas/Citas.html" class="mini-nav-card pink">
+                <div class="mini-nav-icon">
+                    <i class="fa-regular fa-calendar-check"></i>
+                </div>
+                <div class="mini-nav-text">
+                    <h4>Ir a mis citas</h4>
+                    <p>Pide una cita con psicología y mira tus citas.</p>
                 </div>
                 <div class="mini-nav-arrow">
                     <i class="fa-solid fa-chevron-right"></i>
@@ -753,6 +766,8 @@
 
 <script src="/Shared/HelpRequest/HelpRequest.js"></script>
 <script src="/Shared/AiChat/AiChat.js"></script>
+<script src="/Shared/StudentNotifications/StudentNotifications.js"></script>
+<script src="/Shared/AvatarIA/AvatarIA.js"></script>
 </body>
 
 </html>

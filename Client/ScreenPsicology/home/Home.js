@@ -344,128 +344,271 @@ function formatSpanishDate(fechaISO) {
     return new Date(fechaISO + 'T00:00:00').toLocaleDateString('es-CO', { weekday: 'long', day: 'numeric', month: 'long' });
 }
 
+/* --------------------------------------------------------------------------
+   ACCESOS RÁPIDOS
+   -------------------------------------------------------------------------- */
+
+// Ventana para elegir un estudiante (por nombre o identificación)
+function elegirEstudiante(titulo, descripcion, alElegir) {
+    const estudiantes = getStudents().filter(s => s.idUsuario).sort((a, b) => a.name.localeCompare(b.name, 'es'));
+    const overlay = openSentirModal(`
+        <div class="sentir-modal-header">
+            <div class="sentir-modal-icon"><i class="fa-solid fa-user-graduate"></i></div>
+            <div><h3>${escaparHTML(titulo)}</h3><p>${escaparHTML(descripcion)}</p></div>
+        </div>
+        <div class="sentir-modal-body">
+            <div class="modal-field">
+                <div class="ap-search"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="eeBuscar" placeholder="Nombre o número de identificación" autocomplete="off"></div>
+            </div>
+            <div class="ap-results" id="eeLista"></div>
+        </div>
+        <div class="sentir-modal-actions"><button class="modal-btn-cancel" id="eeCancel">Cancelar</button></div>
+    `);
+    const buscar = overlay.querySelector('#eeBuscar');
+    const lista = overlay.querySelector('#eeLista');
+    const pintar = () => {
+        const q = buscar.value.toLowerCase().trim();
+        const encontrados = estudiantes.filter(s => !q || s.name.toLowerCase().includes(q) || String(s.idUsuario).includes(q)).slice(0, 25);
+        lista.innerHTML = encontrados.length ? encontrados.map(s => `
+            <button type="button" class="ap-result" data-nombre="${escaparHTML(s.name)}">
+                <img src="${s.avatar}" alt="">
+                <span class="ap-result-info"><strong>${escaparHTML(s.name)}</strong><small>ID ${s.idUsuario} · Grado ${escaparHTML(s.grade)}</small></span>
+                <i class="fa-solid fa-chevron-right ap-check"></i>
+            </button>`).join('') : '<p class="ap-hint"><i class="fa-solid fa-user-slash"></i> No hay estudiantes que coincidan.</p>';
+        lista.querySelectorAll('[data-nombre]').forEach(b => b.addEventListener('click', () => {
+            closeSentirModal(overlay);
+            alElegir(b.dataset.nombre);
+        }));
+    };
+    buscar.addEventListener('input', pintar);
+    pintar();
+    setTimeout(() => buscar.focus(), 50);
+    overlay.querySelector('#eeCancel').addEventListener('click', () => closeSentirModal(overlay));
+}
+
 function initQuickActions() {
+    // Reporte PDF con la información actual
     document.getElementById('qaExportPdf').addEventListener('click', openReportPreviewModal);
 
+    // Derivación externa: se elige el estudiante y se guarda en la base de datos (tabla derivacion)
     document.getElementById('qaExternalReferral').addEventListener('click', () => {
-        const overlay = openSentirModal(`
-            <div class="sentir-modal-header">
-                <div class="sentir-modal-icon"><i class="fa-solid fa-square-plus"></i></div>
-                <div><h3>Registrar Derivación Externa</h3><p>Remite un caso a una institución o profesional externo</p></div>
-            </div>
-            <div class="sentir-modal-body">
-                <div class="modal-field"><label>ESTUDIANTE</label><input type="text" id="extStudent" placeholder="Nombre del estudiante"></div>
-                <div class="modal-field"><label>INSTITUCIÓN O PROFESIONAL EXTERNO</label><input type="text" id="extInstitution" placeholder="Ej. EPS, clínica especializada o profesional externo..."></div>
-                <div class="modal-field"><label>MOTIVO</label><textarea id="extReason" rows="3" placeholder="Describe brevemente el motivo"></textarea></div>
-                <p class="modal-error" id="extError"><i class="fa-solid fa-circle-exclamation"></i> Escribe el estudiante y la institución externa.</p>
-            </div>
-            <div class="sentir-modal-actions">
-                <button class="modal-btn-cancel" id="extCancel">Cancelar</button>
-                <button class="modal-btn-confirm" id="extConfirm"><i class="fa-solid fa-check"></i> Registrar</button>
-            </div>
-        `);
-        overlay.querySelector('#extCancel').addEventListener('click', () => closeSentirModal(overlay));
-        overlay.querySelector('#extConfirm').addEventListener('click', () => {
-            const student = overlay.querySelector('#extStudent').value.trim();
-            const institution = overlay.querySelector('#extInstitution').value.trim();
-            const errorMsg = overlay.querySelector('#extError');
-            if (!student || !institution) { errorMsg.classList.add('show'); return; }
-            errorMsg.classList.remove('show');
-            const reason = overlay.querySelector('#extReason').value.trim();
-            addInterventionRecord(student, {
-                fecha: new Date().toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' }),
-                titulo: 'Derivación externa registrada',
-                detalle: `Se derivó a ${institution}.${reason ? ' Motivo: ' + reason : ''}`
-            });
-            closeSentirModal(overlay);
-            showToast({ title: 'Derivación externa registrada', message: `${student} fue remitido a ${institution}.`, icon: 'fa-square-plus', type: 'success' });
-        });
+        elegirEstudiante('Registrar derivación externa', 'Elige al estudiante que vas a remitir a una EPS o entidad externa', (nombre) => openMedicalReferralModal(nombre));
     });
 
+    // Notificar a Coordinación: aviso en su campanita + correo
     document.getElementById('qaNotifyCoord').addEventListener('click', () => {
         const overlay = openSentirModal(`
             <div class="sentir-modal-header">
                 <div class="sentir-modal-icon"><i class="fa-solid fa-envelope-open-text"></i></div>
-                <div><h3>Notificar a Coordinación</h3><p>Envía un mensaje directo al equipo de Coordinación Académica</p></div>
+                <div><h3>Notificar a Coordinación</h3><p>Les llegará a su campanita de notificaciones y a su correo</p></div>
             </div>
             <div class="sentir-modal-body">
-                <div class="modal-field"><label>ASUNTO</label><input type="text" id="coordSubject" placeholder="Ej. Caso prioritario - seguimiento requerido"></div>
-                <div class="modal-field"><label>MENSAJE</label><textarea id="coordMessage" rows="4" placeholder="Describe la situación que Coordinación debe conocer..."></textarea></div>
-                <p class="modal-error" id="coordError"><i class="fa-solid fa-circle-exclamation"></i> Escribe un mensaje antes de enviar.</p>
+                <div class="modal-field"><label>PARA</label>
+                    <select id="coordDestino">
+                        <option value="ambas">Coordinación académica y de convivencia</option>
+                        <option value="academica">Coordinación académica</option>
+                        <option value="convivencia">Coordinación de convivencia</option>
+                    </select>
+                </div>
+                <div class="modal-field"><label>ASUNTO</label><input type="text" id="coordSubject" maxlength="120" placeholder="Ej. Caso prioritario - seguimiento requerido"></div>
+                <div class="modal-field"><label>MENSAJE</label><textarea id="coordMessage" rows="4" maxlength="2000" placeholder="Describe la situación que Coordinación debe conocer (evita datos sensibles innecesarios)..."></textarea></div>
+                <p class="modal-error" id="coordError"><i class="fa-solid fa-circle-exclamation"></i> <span></span></p>
             </div>
             <div class="sentir-modal-actions">
                 <button class="modal-btn-cancel" id="coordCancel">Cancelar</button>
                 <button class="modal-btn-confirm" id="coordConfirm"><i class="fa-solid fa-paper-plane"></i> Enviar</button>
             </div>
         `);
-        overlay.querySelector('#coordCancel').addEventListener('click', () => closeSentirModal(overlay));
-        overlay.querySelector('#coordConfirm').addEventListener('click', () => {
-            const message = overlay.querySelector('#coordMessage').value.trim();
-            const errorMsg = overlay.querySelector('#coordError');
-            if (!message) { errorMsg.classList.add('show'); return; }
-            errorMsg.classList.remove('show');
-            closeSentirModal(overlay);
-            showToast({ title: 'Notificación enviada', message: 'Coordinación Académica recibió tu mensaje y dará seguimiento.', icon: 'fa-envelope-open-text', type: 'success' });
+        const $ = (sel) => overlay.querySelector(sel);
+        const error = (t) => { $('#coordError span').innerText = t; $('#coordError').classList.add('show'); };
+        overlay.addEventListener('input', () => $('#coordError').classList.remove('show'));
+        $('#coordCancel').addEventListener('click', () => closeSentirModal(overlay));
+        $('#coordConfirm').addEventListener('click', async (e) => {
+            const mensaje = $('#coordMessage').value.trim();
+            if (mensaje.length < 5) return error('Escribe el mensaje para Coordinación.');
+            const boton = e.currentTarget;
+            boton.disabled = true;
+            boton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Enviando…';
+            try {
+                const r = await sentirApi('/coordinacion', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ destino: $('#coordDestino').value, asunto: $('#coordSubject').value.trim(), mensaje })
+                });
+                closeSentirModal(overlay);
+                showToast({ title: 'Mensaje enviado', message: `Llegó a ${r.enviados} persona${r.enviados === 1 ? '' : 's'} de Coordinación (campanita y correo).`, icon: 'fa-envelope-open-text', type: 'success' });
+            } catch (err) {
+                error(err.message);
+                boton.disabled = false;
+                boton.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Enviar';
+            }
         });
     });
 }
 
-function renderAiInsight() {
-    const trend = getAiTrend();
-    const text = document.getElementById('aiInsightText');
-    const trace = document.getElementById('aiTraceabilityBody');
-    if (!text || !trace) return;
+/* --------------------------------------------------------------------------
+   SUGERENCIA DE LA IA + TIP
+   La IA analiza datos agregados (sin nombres) del diario y de las alertas.
+   -------------------------------------------------------------------------- */
+let sugerenciaIA = null;
 
-    if (!trend) {
-        text.innerHTML = 'Por ahora no hay una tendencia de <strong>ánimo bajo</strong> concentrada en un grado. Sentir AI seguirá analizando los registros del diario emocional.';
-        trace.innerHTML = '<p><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Se compara la cantidad de registros "Mal" y "Muy mal" por grado en los últimos 7 días frente a los 7 anteriores. No constituye un diagnóstico.</p>';
+async function renderAiInsight(pedirOtra = false) {
+    const text = document.getElementById('aiInsightText');
+    const tip = document.getElementById('aiTipText');
+    const trace = document.getElementById('aiTraceabilityBody');
+    const meta = document.getElementById('aiInsightMeta');
+    const accion = document.getElementById('createWorkshopBtn');
+    const recargar = document.getElementById('aiRefreshBtn');
+    if (!text || !trace || !sentirToken()) return;
+    if (renderAiInsight.cargando) return;
+    renderAiInsight.cargando = true;
+
+    if (pedirOtra || !sugerenciaIA) {
+        text.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sentir AI está analizando los registros de la institución…';
+        if (tip) tip.textContent = '';
+    }
+    if (recargar) recargar.disabled = true;
+
+    try {
+        sugerenciaIA = await sentirApi('/sugerencia-ia' + (pedirOtra ? '?nueva=1' : ''));
+    } catch (error) {
+        text.textContent = 'No se pudo generar la sugerencia en este momento. Intenta de nuevo en unos segundos.';
+        renderAiInsight.cargando = false;
+        if (recargar) recargar.disabled = false;
         return;
     }
+    renderAiInsight.cargando = false;
+    if (recargar) recargar.disabled = false;
 
-    const previous = Number(trend.previousCount) || 0;
-    const current = Number(trend.currentCount) || 0;
-    const variation = previous > 0 ? Math.round(((current - previous) / previous) * 100) : 0;
-    const direction = variation > 0 ? 'incremento' : variation < 0 ? 'disminución' : 'estabilidad';
-    const variationText = variation === 0 ? 'sin variación porcentual' : `${Math.abs(variation)}% de ${direction}`;
+    const s = sugerenciaIA;
+    const b = s.base || {};
+    text.textContent = s.sugerencia;
+    if (tip) tip.innerHTML = `💡 <strong>Tip:</strong> ${escaparHTML(s.tip)}`;
+    if (meta) {
+        const hace = Math.max(0, Math.round((Date.now() - new Date(s.fecha).getTime()) / 60000));
+        meta.innerHTML = s.generadoPor
+            ? `<i class="fa-solid fa-wand-magic-sparkles"></i> Generado con IA · ${hace < 1 ? 'ahora' : `hace ${hace} min`}`
+            : '<i class="fa-solid fa-calculator"></i> Calculado sin IA (la IA no respondió)';
+    }
+    if (accion) {
+        accion.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> Crear actividad con IA${s.grupo ? ` para ${escaparHTML(s.grupo)}` : ''}`;
+        accion.disabled = false;
+    }
 
-    text.innerHTML = previous > 0
-        ? `Se observa un <strong>${variationText}</strong> en registros de ${trend.topic} en el grado <strong>${trend.group}</strong>.`
-        : `El grado <strong>${trend.group}</strong> tiene <strong>${current}</strong> registro${current === 1 ? '' : 's'} de ${trend.topic} en los ${trend.currentPeriod}, sin registros de este tipo la semana anterior.`;
-
+    const niveles = Object.entries(b.alertasPorNivel || {}).map(([n, c]) => `${c} ${n.toLowerCase()}`).join(', ');
     trace.innerHTML = `
-        <div><strong>${current}</strong><span>${trend.currentPeriod}</span></div>
-        <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-        <div><strong>${previous}</strong><span>${trend.previousPeriod}</span></div>
-        <p><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Tendencia agregada de apoyo a la priorización. Requiere revisión de la psicóloga y no constituye un diagnóstico.</p>
+        ${b.grupo && b.animoBajoSemana !== null ? `
+            <div><strong>${b.animoBajoSemana}</strong><span>ánimo bajo · ${escaparHTML(b.grupo)} · 7 días</span></div>
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            <div><strong>${b.animoBajoSemanaAnterior}</strong><span>7 días anteriores</span></div>` : ''}
+        <ul class="ai-base-list">
+            <li>${b.registrosSemana || 0} registros en el diario emocional esta semana</li>
+            <li>${b.alertasActivas || 0} alertas activas${niveles ? ` (${escaparHTML(niveles)})` : ''}</li>
+            ${(b.factores || []).length ? `<li>Factores más frecuentes: ${escaparHTML(b.factores.join(', '))}</li>` : ''}
+            ${b.citasPorAceptar ? `<li>${b.citasPorAceptar} citas por aceptar</li>` : ''}
+        </ul>
+        <p><i class="fa-solid fa-circle-info" aria-hidden="true"></i> La IA solo recibe cifras agregadas por grado, nunca nombres. Es un apoyo a la priorización y no constituye un diagnóstico.</p>
     `;
 }
 
 function initCreateGroupWorkshop() {
-    document.getElementById('createWorkshopBtn').addEventListener('click', () => {
-        const overlay = openSentirModal(`
-            <div class="sentir-modal-header">
-                <div class="sentir-modal-icon"><i class="fa-solid fa-users-gear"></i></div>
-                <div><h3>Agendar Taller Grupal 11°1</h3><p>La IA preconfiguró los objetivos según la alerta detectada</p></div>
-            </div>
-            <div class="sentir-modal-body">
-                <p class="activity-detail-text">Objetivos sugeridos: manejo del tiempo y técnicas de respiración diafragmática, para reducir el estrés académico ante los exámenes de estado.</p>
-                <div class="modal-field"><label>FECHA DEL TALLER</label><input type="date" id="workshopDate" value="${todayISO()}"></div>
-                <div class="modal-field"><label>NOTA PARA EL GRUPO (OPCIONAL)</label><textarea id="workshopNote" rows="2" placeholder="Ej. Traer ropa cómoda..."></textarea></div>
-            </div>
-            <div class="sentir-modal-actions">
-                <button class="modal-btn-cancel" id="cancelWorkshop">Cancelar</button>
-                <button class="modal-btn-confirm" id="confirmWorkshop"><i class="fa-solid fa-check"></i> Confirmar y Notificar</button>
-            </div>
-        `);
-        overlay.querySelector('#cancelWorkshop').addEventListener('click', () => closeSentirModal(overlay));
-        overlay.querySelector('#confirmWorkshop').addEventListener('click', () => {
-            const date = overlay.querySelector('#workshopDate').value || todayISO();
-            const agenda = getAgenda();
-            agenda.push({ id: 'ag' + Date.now(), fecha: date, titulo: 'Taller Grupal', hora: '08:00', nombre: 'Grupo 11°1', grado: '11°1', descripcion: 'Manejo del tiempo y respiración diafragmática (sugerido por Sentir AI).' });
-            saveAgenda(agenda);
+    const accion = document.getElementById('createWorkshopBtn');
+    if (accion) accion.addEventListener('click', abrirActividadParaGrupo);
+    const recargar = document.getElementById('aiRefreshBtn');
+    if (recargar) recargar.addEventListener('click', () => renderAiInsight(true));
+}
+
+/* La IA crea una actividad según la sugerencia; se publica en Recursos y,
+   si se elige, se sugiere a todos los estudiantes del grado (aviso + correo). */
+async function abrirActividadParaGrupo() {
+    const s = sugerenciaIA || {};
+    const grupo = s.grupo || '';
+    const delGrado = grupo ? getStudents().filter(st => st.idUsuario && String(st.grade).toLowerCase() === grupo.toLowerCase()) : [];
+
+    const overlay = openSentirModal(`
+        <div class="sentir-modal-header">
+            <div class="sentir-modal-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+            <div><h3>Actividad sugerida por la IA${grupo ? ` · ${escaparHTML(grupo)}` : ''}</h3><p>Revísala antes de publicarla en los recursos de los estudiantes</p></div>
+        </div>
+        <div class="sentir-modal-body" id="gaBody"><p class="history-empty"><i class="fa-solid fa-spinner fa-spin"></i> La IA está creando la actividad…</p></div>
+        <div class="sentir-modal-actions" id="gaActions"><button class="modal-btn-cancel" id="gaCancel">Cancelar</button></div>
+    `);
+    const $ = (sel) => overlay.querySelector(sel);
+    $('#gaCancel').addEventListener('click', () => closeSentirModal(overlay));
+
+    let borrador;
+    const generar = async () => {
+        $('#gaBody').innerHTML = '<p class="history-empty"><i class="fa-solid fa-spinner fa-spin"></i> La IA está creando la actividad…</p>';
+        try {
+            borrador = (await sentirApi('/actividades/generar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ tema: s.temaActividad || 'bienestar emocional', tipo: s.tipoActividad || '', nivel: 'Bienestar general' })
+            })).borrador;
+        } catch (error) {
+            $('#gaBody').innerHTML = `<p class="history-empty">${escaparHTML(error.message)}</p>`;
+            return;
+        }
+        $('#gaBody').innerHTML = `
+            <div class="modal-field"><label>TÍTULO</label><input type="text" id="gaTitulo" maxlength="120" value="${escaparHTML(borrador.titulo)}"></div>
+            <div class="modal-field"><label>DESCRIPCIÓN</label><textarea id="gaDesc" rows="3">${escaparHTML(borrador.descripcion)}</textarea></div>
+            <div class="modal-field"><label>PASOS (UNO POR LÍNEA)</label><textarea id="gaPasos" rows="5">${escaparHTML(borrador.pasos.join('\n'))}</textarea></div>
+            <p class="fu-note"><i class="fa-solid fa-tag"></i> ${escaparHTML(borrador.tipo)} · ${borrador.duracion} min · ${escaparHTML(borrador.generadaPor)}</p>
+            ${delGrado.length ? `<label class="ga-check"><input type="checkbox" id="gaSugerir" checked> Sugerirla ${delGrado.length === 1 ? 'al estudiante' : `a los ${delGrado.length} estudiantes`} del grado ${escaparHTML(grupo)} (les llega aviso y correo)</label>` : ''}
+            <p class="modal-error" id="gaError"><i class="fa-solid fa-circle-exclamation"></i> <span></span></p>`;
+    };
+
+    $('#gaActions').insertAdjacentHTML('beforeend', `
+        <button class="modal-btn-cancel" id="gaOtra"><i class="fa-solid fa-rotate"></i> Pedir otra</button>
+        <button class="modal-btn-confirm" id="gaPublicar"><i class="fa-solid fa-check"></i> Publicar</button>`);
+    $('#gaOtra').addEventListener('click', generar);
+    await generar();
+
+    $('#gaPublicar').addEventListener('click', async (e) => {
+        if (!borrador) return;
+        const error = (t) => { const c = $('#gaError'); if (c) { c.querySelector('span').innerText = t; c.classList.add('show'); } };
+        const titulo = $('#gaTitulo').value.trim();
+        const descripcion = $('#gaDesc').value.trim();
+        if (titulo.length < 3 || descripcion.length < 10) return error('Revisa el título y la descripción.');
+
+        const boton = e.currentTarget;
+        boton.disabled = true;
+        boton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Publicando…';
+        try {
+            const form = new FormData();
+            form.append('titulo', titulo);
+            form.append('descripcion', descripcion);
+            form.append('tipo', borrador.tipo);
+            form.append('nivel', borrador.nivel || 'Bienestar general');
+            form.append('duracion', String(borrador.duracion || 0));
+            form.append('pasos', $('#gaPasos').value);
+            form.append('generadaPor', borrador.generadaPor || 'IA');
+            const creada = await sentirApi('/actividades', { method: 'POST', body: form });
+
+            let sugeridas = 0;
+            if ($('#gaSugerir') && $('#gaSugerir').checked) {
+                for (const st of delGrado) {
+                    try {
+                        await sentirApi(`/actividades/${creada.id}/sugerir`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ idUsuario: st.idUsuario, nota: `Actividad para el grado ${grupo}.` })
+                        });
+                        sugeridas += 1;
+                    } catch (err) { /* sigue con los demás */ }
+                }
+            }
             closeSentirModal(overlay);
-            showToast({ title: 'Taller agendado', message: 'Se notificó al grupo 11°1 y se agregó a la Agenda.', icon: 'fa-users-gear', type: 'success' });
-        });
+            showToast({
+                title: 'Actividad publicada',
+                message: sugeridas ? `"${titulo}" quedó en Recursos y se sugirió a ${sugeridas} estudiante${sugeridas === 1 ? '' : 's'} de ${grupo}.` : `"${titulo}" quedó en los recursos de los estudiantes.`,
+                icon: 'fa-spa', type: 'success'
+            });
+        } catch (err) {
+            error(err.message);
+            boton.disabled = false;
+            boton.innerHTML = '<i class="fa-solid fa-check"></i> Publicar';
+        }
     });
 }
 

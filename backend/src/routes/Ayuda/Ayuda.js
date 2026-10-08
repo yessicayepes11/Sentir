@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { connection } from '../../config/mysql/dbmysql.js';
 import { codigosValidos, nivelValido, nivelDeFactores, nivelMayor } from '../../config/factoresRiesgo.js';
 import { avisarPsicologia } from '../../config/alertasPsicologia.js';
+import { notificar } from '../../config/citas.js';
 
 const router = Router();
 
@@ -111,6 +112,21 @@ router.post('/solicitar', async (req, res) => {
             console.log(`Solicitud de ayuda ${resultado.insertId}: ${aviso.notificaciones} notificaciones, correo a ${aviso.correos} destinatario(s)`);
         } catch (errorAviso) {
             console.error(`Solicitud de ayuda ${resultado.insertId}: no se pudo avisar a psicología:`, errorAviso.message);
+        }
+
+        // Confirmación al estudiante: campanita + correo (queda en su historial de ayudas)
+        try {
+            await notificar(connection.promise(), {
+                destino: rows[0].id_usuario,
+                idAyuda: resultado.insertId,
+                tipo: 'ayuda_enviada',
+                titulo: origen === 'chat' ? 'Sentir IA avisó a psicología' : 'Recibimos tu solicitud de ayuda',
+                mensaje: `Tu solicitud de ayuda (prioridad ${prioridad.toLowerCase()}) llegó al equipo de psicología. `
+                    + 'Pronto se pondrán en contacto contigo. Puedes ver su estado en "Mis citas", en tu historial de ayudas.'
+                    + '\nSi estás en peligro inmediato, llama a la línea de emergencias 123.'
+            });
+        } catch (errorAviso) {
+            console.error(`Solicitud de ayuda ${resultado.insertId}: no se pudo avisar al estudiante:`, errorAviso.message);
         }
 
         return res.status(201).json({ message: 'Tu solicitud fue enviada al psicólogo/a institucional' });

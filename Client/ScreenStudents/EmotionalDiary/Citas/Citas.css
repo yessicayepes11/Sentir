@@ -1,0 +1,110 @@
+/* =========================================================
+   MIS CITAS (usa el diseño base de FollowUp.css)
+========================================================= */
+.citas-hero .hero-illustration { display: flex; align-items: flex-end; justify-content: center; }
+.citas-hero .citas-girl { max-height: 260px; width: auto; object-fit: contain; }
+
+.citas-grid {
+    max-width: 1400px;
+    margin: 18px auto 30px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 18px;
+    align-items: start;
+}
+.citas-card {
+    background: #fff;
+    border-radius: 26px;
+    padding: 22px;
+    border: 1px solid rgba(108, 77, 246, .08);
+    box-shadow: 0 14px 34px rgba(60, 40, 140, .07);
+    min-width: 0;
+}
+.citas-card-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.citas-card-head h2 { font-size: 20px; color: #2b2453; margin: 0; }
+.citas-card-head p { font-size: 13px; color: #8a84a8; margin: 2px 0 0; }
+.citas-card-icon { width: 46px; height: 46px; flex-shrink: 0; border-radius: 15px; display: grid; place-items: center; font-size: 20px; color: #fff; background: linear-gradient(135deg, #6c4df6, #9a7bff); }
+.citas-card-icon.purple { background: linear-gradient(135deg, #d059ac, #f28bc8); }
+
+.citas-label { display: block; font-size: 12px; font-weight: 700; color: #6f6893; margin: 12px 0 8px; text-transform: uppercase; letter-spacing: .4px; }
+.citas-modes { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: #F3EFFF; padding: 4px; border-radius: 14px; }
+.citas-modes button { border: none; background: transparent; padding: 10px 6px; border-radius: 11px; font-family: inherit; font-size: 13px; font-weight: 600; color: #6f6893; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.citas-modes button.active { background: #fff; color: #6c4df6; box-shadow: 0 3px 10px rgba(80, 60, 160, .1); }
+[data-cita][hidden] { display: none !important; }
+
+.citas-days { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; max-width: 100%; }
+.citas-day { flex: 0 0 auto; min-width: 62px; display: flex; flex-direction: column; align-items: center; padding: 8px 6px; border-radius: 14px; border: 1.5px solid #E6E1F7; background: #fff; cursor: pointer; font-family: inherit; }
+.citas-day span { font-size: 11px; font-weight: 700; color: #8a84a8; text-transform: capitalize; }
+.citas-day strong { font-size: 18px; color: #2b2453; }
+.citas-day small { font-size: 10.5px; color: #8a84a8; }
+.citas-day.active { border-color: #6c4df6; background: #F3EFFF; }
+.citas-day.active strong, .citas-day.active span { color: #6c4df6; }
+.citas-hours { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
+.citas-hour { display: flex; flex-direction: column; align-items: center; padding: 10px 6px; border-radius: 12px; border: 1.5px solid #E6E1F7; background: #fff; cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: 600; color: #2b2453; }
+.citas-hour small { font-size: 10.5px; color: #8a84a8; font-weight: 500; }
+.citas-hour.active { background: #6c4df6; border-color: #6c4df6; color: #fff; }
+.citas-hour.active small { color: rgba(255, 255, 255, .85); }
+
+.citas-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.citas-card input, .citas-card textarea {
+    width: 100%; box-sizing: border-box; border: 1.5px solid #E6E1F7; border-radius: 14px; padding: 12px 14px;
+    font-family: inherit; font-size: 14px; color: #2b2453; background: #FBFAFF; outline: none; resize: vertical;
+}
+.citas-card input:focus, .citas-card textarea:focus { border-color: #6c4df6; box-shadow: 0 0 0 3px rgba(108, 77, 246, .12); }
+.citas-hint { font-size: 12.5px; color: #8a6d1d; background: #FFFBEB; padding: 10px 12px; border-radius: 12px; margin: 12px 0 0; }
+
+.citas-msg { display: none; font-size: 13px; padding: 10px 12px; border-radius: 12px; margin: 12px 0 0; }
+.citas-msg.show { display: block; }
+.citas-msg.error { background: #FEF2F2; color: #DC2626; }
+.citas-msg.ok { background: #ECFDF5; color: #15803D; }
+.citas-submit { margin-top: 14px; width: 100%; border: none; border-radius: 16px; padding: 14px; background: linear-gradient(135deg, #6c4df6, #8f6bff); color: #fff; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 10px 24px rgba(108, 77, 246, .28); }
+.citas-submit:disabled { opacity: .6; cursor: wait; }
+.citas-privacy { font-size: 12px; color: #4d8f71; background: #EFFAF4; padding: 9px 12px; border-radius: 12px; margin: 12px 0 0; }
+.citas-privacy i { margin-right: 6px; }
+
+.citas-filters { display: flex; gap: 8px; margin-bottom: 12px; }
+.citas-filters button { border: 1.5px solid #E6E1F7; background: #fff; border-radius: 20px; padding: 7px 16px; font-family: inherit; font-size: 12.5px; font-weight: 600; color: #6f6893; cursor: pointer; }
+.citas-filters button.active { background: #6c4df6; border-color: #6c4df6; color: #fff; }
+.citas-list { display: flex; flex-direction: column; gap: 10px; max-height: 560px; overflow-y: auto; }
+.citas-empty { font-size: 13px; color: #8a84a8; margin: 8px 0; }
+.citas-empty i { margin-right: 6px; }
+.citas-item { display: grid; grid-template-columns: 54px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px; border-radius: 18px; background: #FAF8FF; border: 1px solid #EEE9FB; }
+.citas-item-date { width: 54px; height: 58px; border-radius: 14px; background: #fff; border: 1px solid #EEE9FB; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.citas-item-date strong { font-size: 20px; color: #6c4df6; line-height: 1; }
+.citas-item-date span { font-size: 11px; color: #8a84a8; text-transform: capitalize; }
+.citas-item-info strong { display: block; font-size: 13.5px; color: #2b2453; }
+.citas-item-info small { display: block; font-size: 12px; color: #8a84a8; margin-top: 2px; }
+.citas-item-motivo { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.citas-item-obs { color: #B45309 !important; }
+.citas-item-side { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.citas-state { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 12px; white-space: nowrap; display: inline-flex; align-items: center; gap: 5px; }
+.citas-state.pending { background: #FEF3C7; color: #B45309; }
+.citas-state.ok { background: rgba(34, 197, 94, .13); color: #15803D; }
+.citas-state.done { background: #EEF2FF; color: #4F46E5; }
+.citas-state.missed { background: #FEF2F2; color: #DC2626; }
+.citas-cancel { border: 1px solid #F3D0D0; background: #fff; color: #DC2626; border-radius: 10px; padding: 5px 10px; font-family: inherit; font-size: 11.5px; font-weight: 600; cursor: pointer; }
+
+/* Historial de ayudas (ocupa todo el ancho, debajo de las citas) */
+.ayudas-card { grid-column: 1 / -1; }
+.ayudas-card .citas-list { max-height: 420px; }
+.citas-card-icon.green { background: linear-gradient(135deg, #2fa775, #5cc898); }
+.ayudas-new { margin-left: auto; flex-shrink: 0; border: 1.5px solid #E6E1F7; background: #fff; color: #6c4df6; border-radius: 14px; padding: 9px 14px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.ayudas-new:hover { background: #F3EFFF; }
+.ayuda-item .citas-item-date strong { font-size: 18px; }
+.ayuda-item .citas-item-motivo { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.citas-state.new { background: #FEF3C7; color: #B45309; }
+.citas-state.care { background: #EFEAFE; color: #6c4df6; }
+
+@media (max-width: 1100px) {
+    .citas-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+    .citas-card { padding: 16px; border-radius: 20px; }
+    .citas-row { grid-template-columns: 1fr; }
+    .citas-item { grid-template-columns: 46px minmax(0, 1fr); }
+    .citas-item-side { grid-column: 1 / -1; flex-direction: row; justify-content: space-between; align-items: center; }
+    .citas-modes button { font-size: 12px; }
+    .citas-hero .citas-girl { max-height: 180px; }
+    .ayudas-card .citas-card-head { flex-wrap: wrap; }
+    .ayudas-new { margin-left: 0; width: 100%; justify-content: center; }
+}

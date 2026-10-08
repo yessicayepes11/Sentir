@@ -136,6 +136,10 @@
             El psicólogo/a institucional recibió tu mensaje y se comunicará contigo.
             Si es una emergencia, busca de inmediato a un adulto de confianza.
         </p>
+        <p>
+            Te enviamos la confirmación a tu correo y a las notificaciones. Puedes ver
+            el estado de tus solicitudes en <a href="/Client/ScreenStudents/EmotionalDiary/Citas/Citas.html#ayudas">Mis citas › Mis solicitudes de ayuda</a>.
+        </p>
         <button class="hr-secondary" id="finishHelpRequest" type="button">Listo</button>
     </div>
 
@@ -321,6 +325,10 @@
 
             $("helpRequestForm").hidden = true;
             $("helpRequestSuccess").hidden = false;
+
+            // Confirmación en la campanita y en el historial de ayudas (si la página los tiene)
+            if (window.SentirNotificaciones) window.SentirNotificaciones.actualizar();
+            document.dispatchEvent(new CustomEvent("sentir:ayuda-enviada"));
         } catch (error) {
             errorText.textContent = "No se pudo conectar con el servidor. Inténtalo de nuevo.";
         } finally {

@@ -4995,3 +4995,55 @@ img {
         flex-basis: 100%;
     }
 }
+
+/* =========================================================
+   AGENDAR CITA: horarios de psicología, propuesta y mis citas
+========================================================= */
+.appt-login { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 18px; border-radius: 18px; background: #F5F1FF; margin-top: 14px; }
+.appt-login > i { font-size: 22px; color: #6c4df6; }
+.appt-login p { font-size: 14px; color: #4b4570; line-height: 1.5; margin: 0; }
+.appt-login .appointment-submit { text-decoration: none; width: auto; }
+.appt-modes { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: #F3EFFF; padding: 4px; border-radius: 14px; margin-bottom: 14px; }
+.appt-modes button { border: none; background: transparent; padding: 10px 6px; border-radius: 11px; font-family: inherit; font-size: 12.5px; font-weight: 600; color: #6f6893; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.appt-modes button.active { background: #fff; color: #6c4df6; box-shadow: 0 3px 10px rgba(80, 60, 160, .1); }
+.appt-slots-block { margin-bottom: 14px; }
+.appt-days { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; }
+.appt-day { flex: 0 0 auto; min-width: 58px; display: flex; flex-direction: column; align-items: center; padding: 8px 6px; border-radius: 14px; border: 1.5px solid #E6E1F7; background: #fff; cursor: pointer; font-family: inherit; }
+.appt-day span { font-size: 11px; font-weight: 700; color: #8a84a8; text-transform: capitalize; }
+.appt-day strong { font-size: 17px; color: #2b2453; }
+.appt-day small { font-size: 10.5px; color: #8a84a8; }
+.appt-day.active { border-color: #6c4df6; background: #F3EFFF; }
+.appt-day.active strong, .appt-day.active span { color: #6c4df6; }
+.appt-hours { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 8px; margin-top: 10px; }
+.appt-hour { display: flex; flex-direction: column; align-items: center; padding: 9px 6px; border-radius: 12px; border: 1.5px solid #E6E1F7; background: #fff; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; color: #2b2453; }
+.appt-hour small { font-size: 10px; color: #8a84a8; font-weight: 500; }
+.appt-hour.active { background: #6c4df6; border-color: #6c4df6; color: #fff; }
+.appt-hour.active small { color: rgba(255,255,255,.85); }
+.appt-empty { font-size: 13px; color: #8a84a8; margin: 6px 0; }
+.appt-empty i { margin-right: 6px; }
+.appt-mine { margin-top: 20px; border-top: 1px solid #EEE9FB; padding-top: 16px; }
+.appt-mine h3 { font-size: 15px; color: #2b2453; margin: 0 0 10px; display: flex; align-items: center; gap: 8px; }
+.appt-mine-list { display: flex; flex-direction: column; gap: 8px; max-height: 220px; overflow-y: auto; }
+.appt-mine-item { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 14px; background: #FAF8FF; border: 1px solid #EEE9FB; }
+.appt-mine-item strong { display: block; font-size: 13px; color: #2b2453; }
+.appt-mine-item small { display: block; font-size: 11.5px; color: #8a84a8; }
+.appt-mine-item .appt-obs { color: #B45309; margin-top: 2px; }
+.appt-state { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 12px; white-space: nowrap; display: inline-flex; align-items: center; gap: 5px; }
+.appt-state.pending { background: #FEF3C7; color: #B45309; }
+.appt-state.ok { background: rgba(34, 197, 94, .13); color: #15803D; }
+.appt-state.done { background: #EEF2FF; color: #4F46E5; }
+.appt-state.missed { background: #FEF2F2; color: #DC2626; }
+.appt-cancel { border: 1px solid #F3D0D0; background: #fff; color: #DC2626; border-radius: 10px; padding: 6px 10px; font-family: inherit; font-size: 11.5px; font-weight: 600; cursor: pointer; }
+.appointment-submit:disabled { opacity: .6; cursor: wait; }
+@media (max-width: 560px) {
+    .appt-mine-item { grid-template-columns: 1fr; }
+    .appt-modes button { font-size: 11.5px; }
+}
+/* Correcciones: el aviso de ingreso solo aparece sin sesión y la fila de días no ensancha la ventana */
+.appt-login[hidden], .appt-mine[hidden], [data-appt][hidden] { display: none !important; }
+.appointment-form-side { min-width: 0; }
+.appt-days { max-width: 100%; }
+@media (min-width: 701px) {
+    .appointment-modal { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); max-height: calc(100vh - 40px); }
+    .appointment-form-side { max-height: calc(100vh - 40px); overflow-y: auto; }
+}

@@ -1,2 +1,10 @@
 node_modules/
 backend/.env
+
+# Archivos que suben los usuarios (fotos de perfil, actividades, avatares IA):
+# cada computador tiene los suyos, igual que su base de datos
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Lista local de los estudiantes de demostración creados en esta base de datos
+backend/scripts/estudiantesDemo.json

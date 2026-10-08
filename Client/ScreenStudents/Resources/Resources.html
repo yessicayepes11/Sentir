@@ -49,6 +49,7 @@
     <link rel="stylesheet" href="/Shared/HelpRequest/HelpRequest.css">
     <!-- Chat con IA "Sentir IA" -->
     <link rel="stylesheet" href="/Shared/AiChat/AiChat.css">
+    <link rel="stylesheet" href="../../responsive.css">
 </head>
 
 
@@ -269,7 +270,7 @@
 
             <div class="hero-character">
 
-                <img
+                <img data-avatar-ia="estudiante"
                     src="/Shared/StudentResources/Resources.png"
                     alt="Estudiante relajándose"
                 >
@@ -332,6 +333,32 @@
                     <i class="fa-solid fa-chevron-right"></i>
                 </div>
             </a>
+            <a href="/Client/ScreenStudents/EmotionalDiary/Citas/Citas.html" class="mini-nav-card citas">
+                <div class="mini-nav-icon">
+                    <i class="fa-regular fa-calendar-check"></i>
+                </div>
+                <div class="mini-nav-text">
+                    <h4>Ir a mis citas</h4>
+                    <p>Pide una cita con psicología y mira tus citas.</p>
+                </div>
+                <div class="mini-nav-arrow">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </a>
+        </section>
+
+
+        <!-- ACTIVIDADES PUBLICADAS POR PSICOLOGÍA (Control de Actividades) -->
+        <section class="psy-activities" id="psyActivities" hidden>
+            <div class="psy-activities-head">
+                <div>
+                    <span class="psy-activities-label"><i class="fa-solid fa-user-doctor"></i> De tu psicóloga</span>
+                    <h2>Actividades de tu psicóloga</h2>
+                    <p>Ejercicios que preparó psicología para cuidarte. Las que te sugirió aparecen primero.</p>
+                </div>
+                <span class="psy-activities-count" id="psyActivitiesCount"></span>
+            </div>
+            <div class="psy-activities-grid" id="psyActivitiesGrid"></div>
         </section>
 
 
@@ -1611,6 +1638,9 @@
 <script src="/Client/ScreenStudents/EmotionalDiary/ProfileEditor.js"></script>
 <script src="/Shared/HelpRequest/HelpRequest.js"></script>
 <script src="/Shared/AiChat/AiChat.js"></script>
+<script src="/Shared/StudentNotifications/StudentNotifications.js"></script>
+<script src="/Client/ScreenStudents/Resources/ActividadesPsicologia.js"></script>
+<script src="/Shared/AvatarIA/AvatarIA.js"></script>
 </body>
 
 </html>

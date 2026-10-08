@@ -1,6 +1,7 @@
 import { connection } from './mysql/dbmysql.js';
 import { enviarCorreo, correoConfigurado } from './correo.js';
 import { NOMBRE_NIVEL, nombresDe } from './factoresRiesgo.js';
+import { notificar, capitalizarNombre } from './citas.js';
 
 // =========================================================
 // AVISO A PSICOLOGÍA cuando llega una solicitud de ayuda
@@ -99,4 +100,57 @@ export async function avisarPsicologia(solicitud) {
     });
 
     return { notificaciones: psicologos.length, correos: destinatarios.length };
+}
+
+// =========================================================
+// CAMBIO DE ESTADO DE LAS ALERTAS DE UN ESTUDIANTE (lo hace psicología)
+// Actualiza la tabla `ayuda` y avisa (campanita + correo) a cada docente que
+// envió alguna de esas alertas. Por confidencialidad, el aviso al docente solo
+// dice el estado, nunca lo que psicología registró del caso.
+//   estado: 'En atención' | 'Resuelta'
+//   desde:  estados que se cambian (por defecto todos menos el nuevo)
+// Devuelve el resultado del UPDATE (affectedRows).
+// =========================================================
+
+const MENSAJE_DOCENTE = {
+    'En atención': {
+        tipo: 'alerta_en_atencion',
+        titulo: (n) => `Tu alerta sobre ${n} está en atención`,
+        mensaje: (n, f) => `Psicología ya está atendiendo la alerta que enviaste el ${f} sobre ${n}. Gracias por reportarla; si notas algo nuevo, envía otra alerta.`
+    },
+    'Resuelta': {
+        tipo: 'alerta_resuelta',
+        titulo: (n) => `Tu alerta sobre ${n} fue cerrada`,
+        mensaje: (n, f) => `Psicología cerró el caso de la alerta que enviaste el ${f} sobre ${n}. Si vuelves a notar una situación de riesgo, envía una nueva alerta.`
+    }
+};
+
+export async function cambiarEstadoAlertas(db, idEstudiante, estado, desde = null) {
+    const estados = desde || ['Nueva', 'En atención', 'Resuelta'].filter((e) => e !== estado);
+    const [alertasDocente] = await db.query(
+        `SELECT id_ayuda, id_docente, nombre, fecha FROM ayuda
+         WHERE id_usuario = ? AND estado IN (?) AND origen = 'docente' AND id_docente IS NOT NULL`,
+        [idEstudiante, estados]
+    );
+    const [resultado] = await db.query('UPDATE ayuda SET estado = ? WHERE id_usuario = ? AND estado IN (?)', [estado, idEstudiante, estados]);
+
+    const plantilla = MENSAJE_DOCENTE[estado];
+    if (plantilla) {
+        for (const a of alertasDocente) {
+            const nombre = capitalizarNombre(a.nombre);
+            const fecha = new Date(a.fecha).toLocaleDateString('es-CO', { day: 'numeric', month: 'long' });
+            try {
+                await notificar(db, {
+                    destino: a.id_docente,
+                    idAyuda: a.id_ayuda,
+                    tipo: plantilla.tipo,
+                    titulo: plantilla.titulo(nombre),
+                    mensaje: plantilla.mensaje(nombre, fecha)
+                });
+            } catch (error) {
+                console.error(`Alerta ${a.id_ayuda}: no se pudo avisar al docente:`, error.message);
+            }
+        }
+    }
+    return resultado;
 }

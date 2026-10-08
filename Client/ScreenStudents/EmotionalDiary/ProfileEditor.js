@@ -150,6 +150,17 @@
 
         if (chipName) chipName.textContent = nombre;
         if (chipAvatar) chipAvatar.innerHTML = avatarHTML(datos.foto, nombre);
+
+        // Saludo con el nombre en la portada (p. ej. "¡Hola, Jaquelin Villamil!" en Mi diario emocional)
+        const saludo = $("diaryGreeting");
+        if (saludo) {
+            const palabra = (p) => p.charAt(0).toLocaleUpperCase("es") + p.slice(1).toLocaleLowerCase("es");
+            const nombres = String(datos.nombre || "").trim().split(/\s+/).filter(Boolean).map(palabra);
+            const apellido = String(datos.apellido || "").trim().split(/\s+/).filter(Boolean).map(palabra)[0] || "";
+            const completo = [...nombres, apellido].filter(Boolean).join(" ");
+            $("diaryGreetingName").textContent = completo;
+            saludo.hidden = !completo;
+        }
     }
 
     async function fetchPerfil() {
@@ -367,6 +378,8 @@
 
             form.hidden = true;
             $("peDone").hidden = false;
+            // Si cambió la foto, la IA vuelve a crear el avatar de la portada
+            if (window.SentirAvatar) window.SentirAvatar.actualizar();
         } catch (err) {
             error.textContent = "No se pudo conectar con el servidor. Inténtalo de nuevo.";
         } finally {

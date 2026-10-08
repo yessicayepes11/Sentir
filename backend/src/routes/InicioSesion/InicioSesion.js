@@ -14,6 +14,7 @@ async function contrasenaCorrecta(usuario, contrasena) {
     return valida;
 }
 import { crearTokenDocente, crearTokenEstudiante, crearTokenUsuario } from '../../config/studentToken.js';
+import { fotoCambiada } from '../../config/avatarIA.js';
 
 const router = Router();
 
@@ -88,6 +89,9 @@ router.post('/login', async (req, res) => {
             ? crearTokenDocente(usuario.id_usuario)
             : crearTokenUsuario(usuario.id_usuario);
 
+        // El avatar del banner de saludo empieza a crearse (o se confirma que está listo) ya, sin esperar a la página
+        fotoCambiada(usuario.id_usuario);
+
         return res.json({
             message: 'Inicio de sesión exitoso',
             usuario: usuarioResponse,
@@ -148,6 +152,7 @@ router.post('/estudiante', async (req, res) => {
         }
 
         fallosPorIp.delete(ip);
+        fotoCambiada(estudiante.id_usuario); // el avatar empieza a crearse desde el ingreso
 
         return res.json({
             message: 'Ingreso correcto',

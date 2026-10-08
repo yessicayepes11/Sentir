@@ -1,0 +1,375 @@
+Quiero que crees un avatar profesional de cuerpo completo basado EXCLUSIVAMENTE en la persona que aparece en la FOTO DE PERFIL proporcionada.
+
+IMPORTANTE:
+- La primera imagen es la REFERENCIA PRINCIPAL DE IDENTIDAD. Debes estudiar cuidadosamente todos los rasgos visibles de esa persona.
+- La segunda imagen es únicamente una REFERENCIA DE ESTILO, CALIDAD, NIVEL DE DETALLE, COMPOSICIÓN Y ACABADO VISUAL. NO debes copiar el rostro, peinado, ropa, cuerpo ni identidad del personaje de la segunda imagen.
+- El resultado debe representar inequívocamente a la persona de la primera fotografía, pero convertida en un avatar 3D profesional de alta calidad.
+- No inventes una persona diferente.
+- No sustituyas sus rasgos por los de la segunda imagen.
+- No hagas una caricatura exagerada.
+- Conserva la identidad y características físicas reconocibles de la persona de la fotografía.
+
+════════════════════════════════════
+1. ANÁLISIS DETALLADO DE LA FOTO DE PERFIL
+════════════════════════════════════
+
+Antes de generar el avatar, analiza minuciosamente la fotografía de referencia.
+
+Identifica y conserva:
+
+• Forma general del rostro.
+• Proporciones faciales.
+• Forma y tamaño de la frente.
+• Forma de las cejas.
+• Distancia entre las cejas y los ojos.
+• Forma de los ojos.
+• Tamaño relativo de los ojos.
+• Dirección y forma de la mirada.
+• Párpados.
+• Forma y proporción de la nariz.
+• Puente nasal.
+• Punta de la nariz.
+• Anchura de la nariz.
+• Forma de los labios.
+• Proporción entre labio superior e inferior.
+• Forma de la boca.
+• Forma de la mandíbula.
+• Forma del mentón.
+• Pómulos.
+• Mejillas.
+• Anchura del rostro.
+• Proporción entre las diferentes zonas de la cara.
+• Tono de piel.
+• Textura y características naturales de la piel.
+• Pecas, lunares, pequeñas marcas o detalles visibles, cuando sean claramente apreciables.
+• Forma, volumen, textura y color del cabello.
+• Dirección natural del cabello.
+• Volumen del cabello.
+• Longitud aproximada del cabello.
+• Forma de las patillas.
+• Vello facial, si existe.
+• Forma de las orejas.
+• Cuello y proporciones generales.
+
+También analiza cuidadosamente:
+
+• Tipo de gafas.
+• Forma de la montura.
+• Color de la montura.
+• Tamaño de las gafas respecto al rostro.
+• Posición de las gafas.
+• Ropa visible.
+• Colores predominantes.
+• Cuello, capucha, cierres, cordones y demás detalles de la vestimenta.
+
+Las gafas son especialmente importantes: si aparecen en la fotografía, deben formar parte del avatar y conservar su diseño, proporciones y apariencia general.
+
+════════════════════════════════════
+2. IDENTIDAD VISUAL
+════════════════════════════════════
+
+La prioridad absoluta es preservar la identidad visual de la persona de la fotografía.
+
+El avatar debe parecer una versión 3D profesional y estilizada de ESA MISMA PERSONA.
+
+NO debes:
+
+- Cambiar la forma del rostro.
+- Cambiar el color de piel.
+- Cambiar artificialmente los rasgos faciales.
+- Crear un rostro genérico.
+- Hacer que parezca otra persona.
+- Utilizar el rostro del personaje de referencia.
+- Copiar los rasgos del personaje de la segunda imagen.
+- Exagerar ojos, nariz, boca o mandíbula de forma caricaturesca.
+- Alterar innecesariamente el peinado.
+- Eliminar características distintivas.
+
+La transformación debe ser:
+
+FOTOGRAFÍA REAL → AVATAR 3D PROFESIONAL
+
+y NO:
+
+FOTOGRAFÍA REAL → PERSONAJE GENÉRICO.
+
+════════════════════════════════════
+3. ESTILO VISUAL
+════════════════════════════════════
+
+Utiliza como referencia la SEGUNDA IMAGEN únicamente para conseguir un acabado de:
+
+• Personaje 3D profesional.
+• Alta calidad.
+• Render cinematográfico.
+• Modelado 3D detallado.
+• Iluminación suave y profesional.
+• Materiales realistas.
+• Texturas de piel cuidadosamente trabajadas.
+• Cabello 3D detallado.
+• Ropa con geometría y materiales realistas.
+• Sombras suaves.
+• Reflejos naturales.
+• Acabado limpio.
+• Apariencia moderna.
+• Estética profesional y educativa.
+• Calidad comparable a un personaje 3D producido profesionalmente.
+
+El resultado debe tener un nivel de detalle similar al personaje de referencia.
+
+Quiero especial atención en:
+
+### ROSTRO
+La piel debe tener una textura 3D refinada y natural, con pequeñas variaciones de tono, volumen facial, iluminación suave y detalles sutiles.
+
+### OJOS
+Los ojos deben tener profundidad tridimensional, córnea, iris, pupila, reflejos de luz y apariencia natural.
+
+### CABELLO
+El cabello debe estar modelado mechón por mechón de manera estilizada pero realista, conservando la textura, volumen, dirección y forma observables en la fotografía.
+
+No uses un bloque de cabello genérico.
+
+### GAFAS
+Si la persona utiliza gafas, deben ser modeladas con precisión:
+- montura
+- grosor
+- lentes
+- patillas
+- posición
+- proporción
+- color
+- reflejos sutiles
+
+### ROPA
+La ropa debe presentar:
+- pliegues naturales
+- costuras
+- volumen
+- textura del tejido
+- sombras
+- materiales físicamente plausibles
+- detalles pequeños visibles en la fotografía
+
+════════════════════════════════════
+4. CUERPO COMPLETO
+════════════════════════════════════
+
+Quiero un avatar de CUERPO COMPLETO.
+
+Como la fotografía de referencia muestra principalmente el rostro y la parte superior del cuerpo, debes extrapolar el cuerpo de manera natural y proporcional, sin inventar características extravagantes.
+
+Mantén una anatomía humana natural.
+
+No hagas:
+
+- cuerpo excesivamente musculoso
+- cuerpo excesivamente delgado
+- proporciones caricaturescas
+- cabeza desproporcionadamente grande
+- manos deformes
+- brazos excesivamente largos
+- piernas artificiales
+
+El personaje debe tener proporciones humanas naturales y coherentes con la apariencia de la persona de referencia.
+
+════════════════════════════════════
+5. VESTIMENTA
+════════════════════════════════════
+
+Utiliza la ropa visible en la fotografía como referencia principal.
+
+Conserva, en la medida en que sea posible:
+
+- colores
+- estilo
+- tipo de prenda
+- capucha
+- cordones
+- cierres
+- cuello
+- textura
+- forma general
+
+Si una parte del cuerpo no es visible en la fotografía, completa la vestimenta de forma discreta, moderna y coherente con el estilo de la persona.
+
+NO copies la ropa del personaje de la segunda imagen.
+
+════════════════════════════════════
+6. POSE
+════════════════════════════════════
+
+Crea una pose profesional, natural y amigable.
+
+Preferiblemente:
+
+- cuerpo completo
+- postura erguida
+- hombros relajados
+- expresión amable
+- ligera sonrisa natural
+- actitud profesional
+- mirada hacia la cámara
+
+La pose debe transmitir:
+
+PROFESIONALISMO + CERCANÍA + CONFIANZA + JUVENTUD + TECNOLOGÍA/EDUCACIÓN.
+
+Evita poses exageradas.
+
+════════════════════════════════════
+7. EXPRESIÓN FACIAL
+════════════════════════════════════
+
+Conserva la expresión general de la fotografía.
+
+La persona debe transmitir una expresión:
+
+- amable
+- tranquila
+- segura
+- accesible
+- natural
+
+Utiliza una sonrisa ligera y auténtica.
+
+No hagas una sonrisa exagerada.
+
+No cambies la forma de la boca para crear una expresión genérica.
+
+════════════════════════════════════
+8. CALIDAD DEL RENDER
+════════════════════════════════════
+
+Quiero un resultado visual de calidad profesional, como si hubiera sido creado por un estudio especializado en personajes 3D.
+
+Utiliza:
+
+- iluminación cinematográfica suave
+- iluminación de estudio
+- sombras naturales
+- ambient occlusion sutil
+- materiales físicamente plausibles
+- piel con subsurface scattering
+- ojos con profundidad realista
+- cabello 3D de alta densidad
+- ropa con simulación de tela
+- geometría limpia
+- detalles de alta resolución
+- bordes limpios
+- acabado premium
+
+El personaje debe verse como un avatar 3D profesional listo para utilizarse en:
+
+- una plataforma educativa
+- una página web
+- un perfil profesional
+- una aplicación
+- material académico
+- presentaciones
+- videos educativos
+- contenido institucional.
+
+════════════════════════════════════
+9. FONDO
+════════════════════════════════════
+
+Utiliza un fondo limpio y profesional.
+
+Preferiblemente:
+
+- fondo transparente, si es posible;
+
+o
+
+- fondo neutro muy limpio y discreto.
+
+El personaje debe estar completamente separado del fondo.
+
+No agregues elementos innecesarios.
+
+════════════════════════════════════
+10. COMPOSICIÓN
+════════════════════════════════════
+
+El personaje debe aparecer completamente visible, desde la cabeza hasta los pies.
+
+Cuerpo centrado.
+
+Buena iluminación.
+
+Sin cortar:
+
+- cabello
+- cabeza
+- brazos
+- manos
+- piernas
+- pies
+- ropa
+
+Deja un pequeño margen alrededor del personaje.
+
+Genera una imagen de alta resolución.
+
+════════════════════════════════════
+11. REGLA FUNDAMENTAL DE REFERENCIAS
+════════════════════════════════════
+
+PRIMERA IMAGEN:
+IDENTIDAD DEL PERSONAJE.
+
+SEGUNDA IMAGEN:
+REFERENCIA DE ESTILO Y CALIDAD.
+
+No mezcles las identidades.
+
+No copies el rostro de la segunda imagen.
+
+No copies el cabello de la segunda imagen.
+
+No copies sus gafas.
+
+No copies su ropa.
+
+No copies sus proporciones corporales.
+
+No copies sus características faciales.
+
+Utiliza únicamente la segunda imagen para comprender el tipo de avatar 3D profesional que quiero conseguir.
+
+════════════════════════════════════
+12. OBJETIVO FINAL
+════════════════════════════════════
+
+El resultado final debe parecer:
+
+"Esta persona de la fotografía fue convertida profesionalmente en un personaje 3D de alta calidad."
+
+Debe conservar una fuerte semejanza visual con la persona de la primera imagen.
+
+Quiero un personaje 3D:
+
+- detallado
+- profesional
+- moderno
+- amigable
+- realista-estilizado
+- de cuerpo completo
+- con excelente modelado facial
+- con cabello muy detallado
+- con ropa detallada
+- con gafas fieles a la referencia
+- con materiales realistas
+- con iluminación cinematográfica
+- con acabado premium.
+
+NO quiero una caricatura básica.
+NO quiero un emoji.
+NO quiero un personaje genérico.
+NO quiero un dibujo 2D.
+NO quiero que simplemente cambies la fotografía a estilo cartoon.
+
+Quiero un AVATAR 3D PROFESIONAL completamente modelado, con el nivel de detalle y acabado visual de la segunda imagen, pero cuya identidad corresponda cuidadosamente a la persona de la primera fotografía.
+
+Antes de generar, analiza las dos imágenes y utiliza la primera como fuente principal de identidad y la segunda exclusivamente como referencia de estilo y calidad.

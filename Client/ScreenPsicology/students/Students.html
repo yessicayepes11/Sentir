@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../shared/sentir-shared.css">
     <link rel="stylesheet" href="Students.css">
+    <link rel="stylesheet" href="../../responsive.css">
 </head>
 <body data-page="estudiantes">
 
@@ -70,9 +71,10 @@
                     <div>
                         <span class="view-eyebrow">GESTIÓN Y SEGUIMIENTO</span>
                         <h1>Estudiantes</h1>
-                        <p class="subtitle-view">Explora, filtra y da seguimiento al bienestar emocional de cada estudiante de la institución.</p>
+                        <p class="subtitle-view">Estudiantes en proceso de terapia: derivados por docentes, por el chat de Sentir IA, los que pidieron ayuda por su cuenta y los que añadiste tú.</p>
                     </div>
-                    <button class="btn-primary-action" id="addStudentBtn"><i class="fa-solid fa-user-plus"></i> Nuevo Estudiante</button>
+                    <!-- Añade a un estudiante (ya registrado por la secretaría) al proceso de terapia -->
+                    <button class="btn-primary-action" id="addStudentBtn"><i class="fa-solid fa-user-plus"></i> Añadir estudiante</button>
                 </div>
 
                 <div class="students-overview" id="studentsOverview">
@@ -85,6 +87,14 @@
                         <i class="fa-solid fa-magnifying-glass"></i>
                         <input type="text" placeholder="Buscar por nombre, grado o ID..." id="studentsSearch">
                     </div>
+                    <!-- Origen del proceso -->
+                    <div class="filter-chips origin-chips" id="originChips">
+                        <button class="chip active" data-origin="all">Todos los orígenes <span id="countOriginAll">0</span></button>
+                        <button class="chip" data-origin="docente"><i class="fa-solid fa-chalkboard-user"></i> Reporte docente <span id="countOriginDocente">0</span></button>
+                        <button class="chip" data-origin="formulario"><i class="fa-solid fa-hand-holding-heart"></i> Pidió ayuda <span id="countOriginFormulario">0</span></button>
+                        <button class="chip" data-origin="chat"><i class="fa-solid fa-brain"></i> Chat Sentir IA <span id="countOriginChat">0</span></button>
+                        <button class="chip" data-origin="psicologia"><i class="fa-solid fa-user-doctor"></i> Añadido por psicología <span id="countOriginPsicologia">0</span></button>
+                    </div>
                     <div class="filter-chips" id="studentsChips">
                         <button class="chip active" data-filter="all">Todos <span id="countAll">0</span></button>
                         <button class="chip chip-high" data-filter="high">Riesgo Alto <span id="countHigh">0</span></button>
@@ -94,7 +104,7 @@
                 </div>
 
                 <div class="students-grid" id="studentsGrid"></div>
-                <p class="empty-state-msg" id="studentsEmptyMsg">No encontramos estudiantes que coincidan con tu búsqueda.</p>
+                <p class="empty-state-msg" id="studentsEmptyMsg">No hay estudiantes en proceso que coincidan con tu búsqueda.</p>
 
             </div>
         </main>
@@ -119,6 +129,7 @@
                     <button class="btn-action-trigger alert-btn" id="panelContactBtn"><i class="fa-solid fa-phone"></i> Contactar Acudiente de Inmediato</button>
                     <button class="btn-action-trigger secondary-btn" id="panelDeriveBtn"><i class="fa-solid fa-house-medical"></i> Derivar a Red de Apoyo Médica</button>
                     <button class="btn-action-trigger history-btn" id="viewInterventionHistoryBtn"><i class="fa-solid fa-clock-rotate-left"></i> Historial de Intervenciones</button>
+                    <button class="btn-action-trigger secondary-btn" id="closeProcessBtn"><i class="fa-solid fa-circle-check"></i> Cerrar proceso de terapia</button>
                 </div>
             </div>
         </div>

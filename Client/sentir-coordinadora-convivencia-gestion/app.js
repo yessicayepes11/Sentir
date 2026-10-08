@@ -71,6 +71,8 @@
     $("#mobileMenuBtn")?.addEventListener("click",()=>{sidebar?.classList.add("open");backdrop?.classList.add("show")});
     backdrop?.addEventListener("click",()=>{sidebar?.classList.remove("open");backdrop.classList.remove("show")});
     $$(".nav-link").forEach(a=>a.addEventListener("click",()=>{sidebar?.classList.remove("open");backdrop?.classList.remove("show")}));
+    // Escape cierra el menú lateral en celular
+    document.addEventListener("keydown",e=>{if(e.key==="Escape"&&sidebar?.classList.contains("open")){sidebar.classList.remove("open");backdrop?.classList.remove("show")}});
 
     const np=$("#notificationPanel"), pm=$("#profileMenu");
     $("#notificationBtn")?.addEventListener("click",(e)=>{e.stopPropagation();np?.classList.toggle("open");pm?.classList.remove("open")});

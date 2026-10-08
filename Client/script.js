@@ -1,4 +1,15 @@
-window.addEventListener("load", () => {
+// Se arranca apenas el HTML está listo (antes se esperaba a que cargara TODO: Bootstrap, fuentes e imágenes)
+document.addEventListener("DOMContentLoaded", () => {
+
+    // Anima una imagen apenas ella termina de cargar (o de inmediato si ya está en caché)
+    const cuandoCargue = (img, animar) => {
+        if (!img) return;
+        if (img.complete && img.naturalWidth) animar();
+        else {
+            img.addEventListener("load", animar, { once: true });
+            img.addEventListener("error", () => { img.style.opacity = 1; }, { once: true });
+        }
+    };
 
     const logo = document.querySelector(".logo");
     const titulo = document.querySelector(".titulo");
@@ -9,7 +20,7 @@ window.addEventListener("load", () => {
     const closeLoginModalBtn = document.getElementById("closeLoginModal");
     const loginSubmitBtn = document.getElementById("loginSubmitBtn");
 
-    if (logo) {
+    cuandoCargue(logo, () => {
         logo.animate(
             [
                 {
@@ -22,11 +33,12 @@ window.addEventListener("load", () => {
                 }
             ],
             {
-                duration:1000,
+                duration:600,
+                easing:"ease-out",
                 fill:"forwards"
             }
         );
-    }
+    });
 
     if (titulo) {
         titulo.animate(
@@ -35,14 +47,14 @@ window.addEventListener("load", () => {
                 { opacity:1 }
             ],
             {
-                duration:1200,
-                delay:500,
+                duration:600,
+                delay:150,
                 fill:"forwards"
             }
         );
     }
 
-    if (personajes) {
+    cuandoCargue(personajes, () => {
         personajes.animate(
             [
                 {
@@ -55,12 +67,13 @@ window.addEventListener("load", () => {
                 }
             ],
             {
-                duration:1200,
-                delay:900,
+                duration:750,
+                delay:200,
+                easing:"cubic-bezier(.2,.8,.2,1)",
                 fill:"forwards"
             }
         );
-    }
+    });
 
     if (perfilSelect) {
         perfilSelect.addEventListener("change", () => {

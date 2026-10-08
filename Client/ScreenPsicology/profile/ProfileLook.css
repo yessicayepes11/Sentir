@@ -149,3 +149,10 @@
     .psy-look .hero-side-text { display: none; }
     .psy-look .profile-side-column { display: flex; }
 }
+
+/* Tablet ancha: la ilustración no tapa el texto */
+@media (max-width: 1200px) and (min-width: 851px) {
+    .psy-look .hero-content { max-width: 58%; }
+    .psy-look .teacher-image-slot { right: 30px; }
+    .psy-look .hero-side-text { display: none; }
+}

@@ -5,9 +5,11 @@ import multer from 'multer';
 import { Router } from 'express';
 import { connection } from '../../config/mysql/dbmysql.js';
 import { leerTokenUsuario } from '../../config/studentToken.js';
+import { fotoCambiada } from '../../config/avatarIA.js';
 import { correoConfigurado, enviarCorreo } from '../../config/correo.js';
 import { clasificarTexto, nombresDe, NOMBRE_NIVEL } from '../../config/factoresRiesgo.js';
 import { pedirTexto } from '../../config/ia.js';
+import { notificar, capitalizarNombre } from '../../config/citas.js';
 
 // =========================================================
 // PERFIL DEL DOCENTE
@@ -196,6 +198,7 @@ router.put('/perfil', upload.single('foto'), async (req, res) => {
         }
 
         await db.query(`UPDATE usuario SET ${campos.join(', ')} WHERE id_usuario = ?`, [...valores, idUsuario]);
+        if (req.file) fotoCambiada(idUsuario); // la IA empieza ya el avatar de la foto nueva
 
         return res.json({ message: 'Tu perfil se actualizó correctamente.', ...(await leerPerfil(idUsuario)) });
     } catch (error) {
@@ -383,6 +386,20 @@ router.post('/alertas', async (req, res) => {
             console.error(`Alerta docente ${resultado.insertId}: no se pudo avisar a psicología:`, errorAviso.message);
         }
 
+        // Confirmación al docente (campanita + correo)
+        try {
+            await notificar(db, {
+                destino: idUsuario,
+                idAyuda: resultado.insertId,
+                tipo: 'alerta_enviada',
+                titulo: `Alerta enviada: ${capitalizarNombre(nombreEstudiante)}`,
+                mensaje: `Tu alerta sobre ${capitalizarNombre(nombreEstudiante)} (${estudiante.grado}) llegó al equipo de psicología. `
+                    + 'Te avisaremos aquí y por correo cuando la atiendan.'
+            });
+        } catch (errorAviso) {
+            console.error(`Alerta docente ${resultado.insertId}: no se pudo confirmar al docente:`, errorAviso.message);
+        }
+
         return res.status(201).json({ message: 'Tu alerta fue enviada al equipo de orientación y psicología.', id: resultado.insertId });
     } catch (error) {
         console.error('Alerta docente:', error.message);
@@ -391,8 +408,63 @@ router.post('/alertas', async (req, res) => {
 });
 
 // =========================================================
+// NOTIFICACIONES DEL DOCENTE (campanita)
+//   GET /notificaciones          mis avisos (alerta enviada, en atención, cerrada...)
+//   PUT /notificaciones/leidas   marcar como leídos (todos o { ids: [...] })
+// =========================================================
+
+router.get('/notificaciones', async (req, res) => {
+    try {
+        const idUsuario = await docenteDeLaSesion(req, res);
+        if (!idUsuario) return;
+        const [filas] = await connection.promise().query(
+            `SELECT id_notificacion, id_ayuda, tipo, titulo, mensaje, leida, fecha
+             FROM notificacion WHERE id_usuario_destino = ?
+             ORDER BY fecha DESC, id_notificacion DESC LIMIT 30`,
+            [idUsuario]
+        );
+        return res.json({
+            sinLeer: filas.filter((n) => !n.leida).length,
+            notificaciones: filas.map((n) => ({
+                id: n.id_notificacion,
+                idAyuda: n.id_ayuda,
+                tipo: n.tipo,
+                titulo: n.titulo,
+                mensaje: n.mensaje,
+                leida: Boolean(n.leida),
+                fecha: n.fecha
+            }))
+        });
+    } catch (error) {
+        console.error('Notificaciones del docente:', error.message);
+        return res.status(500).json({ message: 'No se pudieron cargar tus notificaciones.' });
+    }
+});
+
+router.put('/notificaciones/leidas', async (req, res) => {
+    try {
+        const idUsuario = await docenteDeLaSesion(req, res);
+        if (!idUsuario) return;
+        const ids = Array.isArray((req.body || {}).ids)
+            ? req.body.ids.map((id) => String(id).replace(/\D/g, '')).filter(Boolean)
+            : [];
+        await connection.promise().query(
+            ids.length
+                ? 'UPDATE notificacion SET leida = 1 WHERE id_usuario_destino = ? AND id_notificacion IN (?)'
+                : 'UPDATE notificacion SET leida = 1 WHERE id_usuario_destino = ?',
+            ids.length ? [idUsuario, ids] : [idUsuario]
+        );
+        return res.json({ message: 'Listo.' });
+    } catch (error) {
+        console.error('Marcar notificaciones del docente:', error.message);
+        return res.status(500).json({ message: 'No se pudieron actualizar tus notificaciones.' });
+    }
+});
+
+// =========================================================
 // MIS ALERTAS: las alertas que envió el docente que inició sesión
-// Estado: "Recibido" cuando alguna psicóloga ya leyó la notificación.
+// Estado: "Recibido" cuando alguna psicóloga ya leyó la notificación;
+// "Revisado por orientación" cuando psicología la atendió o la cerró.
 // =========================================================
 
 router.get('/alertas', async (req, res) => {
@@ -401,9 +473,10 @@ router.get('/alertas', async (req, res) => {
         if (!idUsuario) return;
 
         const [filas] = await connection.promise().query(
-            `SELECT a.id_ayuda, a.nombre, a.grado, a.descripcion, a.prioridad, a.nivel_riesgo,
+            `SELECT a.id_ayuda, a.nombre, a.grado, a.descripcion, a.prioridad, a.nivel_riesgo, a.estado AS estado_caso,
                     DATE_FORMAT(a.fecha, '%Y-%m-%dT%H:%i:%s') AS fecha, u.foto,
-                    (SELECT MAX(n.leida) FROM notificacion n WHERE n.id_ayuda = a.id_ayuda) AS leida
+                    (SELECT MAX(n.leida) FROM notificacion n
+                      WHERE n.id_ayuda = a.id_ayuda AND n.id_usuario_destino <> a.id_docente) AS leida
              FROM ayuda a
              LEFT JOIN usuario u ON u.id_usuario = a.id_usuario
              WHERE a.origen = 'docente' AND a.id_docente = ?
@@ -425,7 +498,9 @@ router.get('/alertas', async (req, res) => {
                 descripcion: coincide ? resto.join('\n').trim() : String(fila.descripcion || ''),
                 prioridad: fila.prioridad,
                 nivelRiesgo: fila.nivel_riesgo,
-                estado: Number(fila.leida) === 1 ? 'Recibido' : 'Enviado'
+                estado: ['En atención', 'Resuelta'].includes(fila.estado_caso)
+                    ? 'Revisado por orientación'
+                    : Number(fila.leida) === 1 ? 'Recibido' : 'Enviado'
             };
         });
 

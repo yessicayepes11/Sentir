@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <!-- Solo se entra después de ingresar con identificación y clave -->
+    <script src="/Client/ScreenStudents/EmotionalDiary/sessionGuard.js"></script>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Mis citas | SENTIR</title>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    >
+
+    <link rel="stylesheet" href="../FollowUp/FollowUp.css">
+    <link rel="stylesheet" href="Citas.css">
+    <!-- Barra superior y ventana de perfil (compartido con Mi diario) -->
+    <link rel="stylesheet" href="/Client/ScreenStudents/EmotionalDiary/ProfileEditor.css">
+    <!-- Formulario "Pide ayuda al psicólogo/a" (lo usa el chat como salida de ayuda) -->
+    <link rel="stylesheet" href="/Shared/HelpRequest/HelpRequest.css">
+    <!-- Chat con IA "Sentir IA" -->
+    <link rel="stylesheet" href="/Shared/AiChat/AiChat.css">
+    <link rel="stylesheet" href="../../../responsive.css">
+</head>
+
+
+<body>
+
+<div class="app">
+
+    <!-- =====================================================
+         FONDO OSCURO CUANDO SE ABRE EL SIDEBAR EN CELULAR
+    ====================================================== -->
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <!-- CABECERA SIDEBAR EN CELULAR -->
+
+        <div class="mobile-sidebar-header">
+
+            <span>Menú</span>
+
+            <button
+                class="close-sidebar"
+                id="closeSidebar"
+                aria-label="Cerrar menú"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <div class="sidebar-top">
+
+            <!-- =============================================
+                 LOGO
+
+                 Coloca tu imagen aquí:
+
+                 assets/logo-sentir.png
+            ============================================== -->
+
+            <a
+                href="/Client/ScreenStudents/Students.html"
+                class="logo-container"
+            >
+
+                <img
+                    src="/Shared/StudentResources/Logo-nombrelado.png"
+                    alt="Logo SENTIR"
+                    class="logo-img"
+                    id="logoSentir"
+                >
+
+
+                <!-- SOLO APARECE SI NO ENCUENTRA LA IMAGEN -->
+
+                <div
+                    class="logo-fallback"
+                    id="logoFallback"
+                >
+
+                    <div class="fallback-heart">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+
+                    <div>
+
+                        <strong>sentir</strong>
+
+                        <small>
+                            Tu bienestar<br>
+                            te acompaña
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </a>
+
+
+            <!-- NAVEGACIÓN -->
+
+            <nav class="sidebar-menu">
+
+                <a
+                    href="/Client/ScreenStudents/Students.html"
+                    class="sin-subrayado menu-item"
+                >
+                    <i class="fa-solid fa-house"></i>
+                    <span>Inicio</span>
+                </a>
+
+
+
+                <a
+                    href="/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.html"
+                    class="sin-subrayado menu-item"
+                >
+                    <i class="fa-solid fa-user-lock"></i>
+                    <span>Mi espacio personal</span>
+                </a>
+
+                <a
+                    href="/Client/Auth/StudentScreen/Apartados/Ayuda.html"
+                    class="menu-item"
+                >
+                    <i class="fa-solid fa-life-ring"></i>
+                    <span>Pedir ayuda</span>
+                </a>
+
+            </nav>
+
+        </div>
+
+
+        <!-- PARTE INFERIOR -->
+
+        <div class="sidebar-bottom">
+
+            <div class="wellness-message">
+
+                <div class="wellness-plant">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+
+
+                <div class="wellness-text">
+
+                    <h4>
+                        Tu bienestar importa
+                    </h4>
+
+                    <p>
+                        Aquí siempre encontrarás
+                        un espacio seguro.
+                    </p>
+
+                </div>
+
+
+                <i class="fa-solid fa-heart mini-heart"></i>
+
+            </div>
+
+
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         CONTENIDO PRINCIPAL
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <header class="topbar">
+
+
+            <!-- BOTÓN HAMBURGUESA -->
+
+            <button
+                class="hamburger-button"
+                id="hamburgerButton"
+                aria-label="Abrir menú"
+            >
+
+                <i class="fa-solid fa-bars"></i>
+
+            </button>
+
+
+
+            <!-- LOGO MÓVIL -->
+
+            <a
+                href="/Client/ScreenStudents/Students.html"
+                class="mobile-logo"
+            >
+
+                <img
+                    src="/Shared/StudentResources/Logo-nombrelado.png"
+                    alt="SENTIR"
+                    id="mobileLogoImage"
+                >
+
+                <span
+                    class="mobile-logo-fallback"
+                    id="mobileLogoFallback"
+                >
+                    <i class="fa-solid fa-heart"></i>
+                    sentir
+                </span>
+
+            </a>
+
+
+
+
+
+
+
+
+
+        </header>
+
+
+
+        <!-- BARRA SUPERIOR: cerrar sesión (izquierda) y mi perfil (derecha) -->
+        <div class="diary-userbar">
+            <button class="logout-chip" id="studentLogout" type="button">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Cerrar sesión
+            </button>
+
+            <button class="profile-chip" id="openStudentProfile" type="button" aria-label="Ver y editar mi perfil">
+                <span class="profile-chip-avatar" id="profileChipAvatar">
+                    <i class="fa-solid fa-user"></i>
+                </span>
+                <span class="profile-chip-text">
+                    <strong id="profileChipName">Mi perfil</strong>
+                    <small>Ver y editar mi perfil</small>
+                </span>
+                <i class="fa-solid fa-pen profile-chip-edit"></i>
+            </button>
+        </div>
+
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <section class="hero-followup citas-hero">
+
+            <div class="hero-copy">
+
+                <span class="hero-label">
+                    Tu espacio con psicología
+                    <i class="fa-solid fa-heart"></i>
+                </span>
+
+                <h1>
+                    Mis citas
+                </h1>
+
+                <p>
+                    Mira tus citas con psicología, elige un horario disponible
+                    o propón el que mejor te funcione. Te avisamos en la campanita
+                    y por correo cuando la psicóloga responda, y te recordamos
+                    tus próximas citas. Aquí también ves tu historial de ayudas.
+                </p>
+
+            </div>
+
+            <div class="hero-illustration">
+                <span class="hero-heart heart-one">
+                    <i class="fa-solid fa-heart"></i>
+                </span>
+                <img data-avatar-ia="estudiante"
+                    src="/Shared/StudentResources/Estudiante.png"
+                    alt="Estudiante"
+                    class="girl-image citas-girl"
+                    onerror="this.style.display='none'"
+                >
+            </div>
+
+        </section>
+
+
+        <!-- NAVEGACIÓN: debajo del cuadro, igual que en el diario -->
+        <section class="mini-nav">
+            <a href="/Client/ScreenStudents/EmotionalDiary/EmotionalDiary.html" class="mini-nav-card blue">
+                <div class="mini-nav-icon">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <div class="mini-nav-text">
+                    <h4>Ir a mi diario</h4>
+                    <p>Escribe cómo te sientes hoy y registra tus emociones.</p>
+                </div>
+                <div class="mini-nav-arrow">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </a>
+
+            <a href="/Client/ScreenStudents/EmotionalDiary/FollowUp/FollowUp.html" class="mini-nav-card purple">
+                <div class="mini-nav-icon">
+                    <i class="fa-solid fa-chart-simple"></i>
+                </div>
+                <div class="mini-nav-text">
+                    <h4>Ir a seguimiento</h4>
+                    <p>Conoce tu evolución y descubre patrones en tu bienestar.</p>
+                </div>
+                <div class="mini-nav-arrow">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </a>
+
+            <a href="/Client/ScreenStudents/EmotionalDiary/Badges/Badges.html" class="mini-nav-card pink">
+                <div class="mini-nav-icon">
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <div class="mini-nav-text">
+                    <h4>Ir a insignias</h4>
+                    <p>Reconoce tus logros y avanza en tu bienestar emocional.</p>
+                </div>
+                <div class="mini-nav-arrow">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </a>
+
+            <a href="/Client/ScreenStudents/Resources/Resources.html" class="mini-nav-card green">
+                <div class="mini-nav-icon">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+                <div class="mini-nav-text">
+                    <h4>Ir a recursos</h4>
+                    <p>Respiraciones, meditaciones y videos para cuidarte.</p>
+                </div>
+                <div class="mini-nav-arrow">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </a>
+        </section>
+
+
+        <!-- =================================================
+             CITAS: pedir una cita (disponibilidad) y mis citas
+        ================================================== -->
+
+        <section class="citas-grid">
+
+            <article class="citas-card" id="citasDisponibilidad">
+                <header class="citas-card-head">
+                    <span class="citas-card-icon"><i class="fa-regular fa-calendar-plus"></i></span>
+                    <div>
+                        <h2>Pedir una cita</h2>
+                        <p>Horarios libres de psicología en los próximos 30 días</p>
+                    </div>
+                </header>
+
+                <form id="citaForm" novalidate>
+                    <div class="citas-modes" id="citaModos">
+                        <button type="button" class="active" data-modo="horarios"><i class="fa-regular fa-calendar-check"></i> Horarios disponibles</button>
+                        <button type="button" data-modo="propuesta"><i class="fa-regular fa-pen-to-square"></i> Proponer otro horario</button>
+                    </div>
+
+                    <div data-cita="horarios">
+                        <span class="citas-label">Día</span>
+                        <div class="citas-days" id="citaDias"></div>
+                        <span class="citas-label">Hora</span>
+                        <div class="citas-hours" id="citaHoras"></div>
+                    </div>
+
+                    <div data-cita="propuesta" hidden>
+                        <p class="citas-hint"><i class="fa-solid fa-circle-info"></i> La psicóloga revisará si puede atenderte en ese horario.</p>
+                        <div class="citas-row">
+                            <label><span class="citas-label">Fecha</span><input type="date" id="citaFecha"></label>
+                            <label><span class="citas-label">Hora</span><input type="time" id="citaHora" step="300" value="08:00"></label>
+                        </div>
+                    </div>
+
+                    <label>
+                        <span class="citas-label">Motivo de la cita</span>
+                        <textarea id="citaMotivo" rows="3" maxlength="1000" placeholder="Cuéntanos brevemente cómo podemos acompañarte..."></textarea>
+                    </label>
+
+                    <p class="citas-msg" id="citaMensaje" role="status"></p>
+
+                    <button type="submit" class="citas-submit" id="citaEnviar">
+                        <i class="fa-regular fa-paper-plane"></i> Solicitar cita
+                    </button>
+
+                    <p class="citas-privacy"><i class="fa-solid fa-shield-heart"></i> Tu información será tratada con cuidado y privacidad.</p>
+                </form>
+            </article>
+
+            <article class="citas-card" id="citasMias">
+                <header class="citas-card-head">
+                    <span class="citas-card-icon purple"><i class="fa-regular fa-calendar"></i></span>
+                    <div>
+                        <h2>Mis citas</h2>
+                        <p>Tus citas con psicología y en qué estado están</p>
+                    </div>
+                </header>
+
+                <div class="citas-filters" id="citaFiltros">
+                    <button type="button" class="active" data-filtro="proximas">Próximas</button>
+                    <button type="button" data-filtro="historial">Historial</button>
+                </div>
+
+                <div class="citas-list" id="citaLista">
+                    <p class="citas-empty"><i class="fa-solid fa-spinner fa-spin"></i> Cargando tus citas…</p>
+                </div>
+            </article>
+
+            <!-- HISTORIAL DE AYUDAS PEDIDAS AL PSICÓLOGO/A -->
+            <article class="citas-card ayudas-card" id="ayudas">
+                <header class="citas-card-head">
+                    <span class="citas-card-icon green"><i class="fa-solid fa-life-ring"></i></span>
+                    <div>
+                        <h2>Mis solicitudes de ayuda</h2>
+                        <p>Historial de las ayudas que le has pedido al psicólogo/a y en qué estado están</p>
+                    </div>
+                    <button type="button" class="ayudas-new" data-open-help-request>
+                        <i class="fa-solid fa-plus"></i> Pedir ayuda
+                    </button>
+                </header>
+                <div class="citas-list" id="ayudaLista">
+                    <p class="citas-empty"><i class="fa-solid fa-spinner fa-spin"></i> Cargando tu historial…</p>
+                </div>
+            </article>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+
+<!-- =========================================================
+     DROPDOWN PERFIL
+========================================================= -->
+
+
+
+
+<script src="Citas.js"></script>
+<script src="/Client/ScreenStudents/EmotionalDiary/ProfileEditor.js"></script>
+
+<script src="/Shared/HelpRequest/HelpRequest.js"></script>
+<script src="/Shared/AiChat/AiChat.js"></script>
+<script src="/Shared/StudentNotifications/StudentNotifications.js"></script>
+<script src="/Shared/AvatarIA/AvatarIA.js"></script>
+</body>
+</html>

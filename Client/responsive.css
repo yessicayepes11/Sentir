@@ -1,0 +1,92 @@
+/* =====================================================================
+   SENTIR · CAPA RESPONSIVE COMÚN
+   Se carga AL FINAL de todas las pantallas (después de su propio CSS),
+   así que solo corrige lo que falla en celular, tablet o portátil pequeño
+   sin cambiar el diseño de cada módulo.
+
+   Tamaños de referencia:
+     ≤ 390px   celular pequeño
+     ≤ 600px   celular
+     ≤ 900px   tablet (el menú lateral pasa a ser menú de hamburguesa)
+     ≤ 1250px  portátil pequeño / tablet horizontal
+   ===================================================================== */
+
+/* ---------- 1. Nada se sale por los lados ---------- */
+html, body { max-width: 100%; overflow-x: clip; }
+img, video, canvas, iframe, svg { max-width: 100%; }
+
+/* Las tablas anchas se deslizan dentro de su propia caja, no mueven la página */
+.table-wrap, .table-container, .table-responsive, .students-table-wrap, .table-card, .users-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Login / registro: el brillo decorativo de 500px no puede ser más ancho que la pantalla */
+.background-blur { width: min(500px, 100vw) !important; height: min(500px, 100vw) !important; }
+
+/* ---------- 2. Botón de hamburguesa: siempre cómodo de tocar ---------- */
+@media (max-width: 900px) {
+    .menu-toggle, .mobile-menu, .mobile-menu-btn, .hamburger, .menu-btn, .sidebar-toggle, .nav-toggle {
+        min-width: 42px;
+        min-height: 42px;
+    }
+}
+@media (max-width: 390px) {
+    /* En convivencia el botón se encogía a 37–39px */
+    .icon-btn.mobile-menu { width: 42px; height: 42px; }
+}
+
+/* ---------- 3. Estudiante: tarjetas "Ir a mi diario / seguimiento / insignias / recursos" ----------
+   Con el menú lateral abierto, 3 columnas fijas quedaban tan angostas que el texto
+   se partía palabra por palabra. Ahora caben tantas como permita el ancho (mín. 280px). */
+.mini-nav {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)) !important;
+}
+
+/* Con 4 tarjetas (diario, seguimiento, insignias, recursos, citas): de 2 en 2, nunca 3 + 1 suelta */
+.mini-nav:has(> :nth-child(4)) { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+@media (min-width: 1500px) {
+    .mini-nav:has(> :nth-child(4)) { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+}
+@media (max-width: 700px) {
+    .mini-nav:has(> :nth-child(4)) { grid-template-columns: 1fr !important; }
+}
+
+/* Las frases "escritas a mano" del encabezado se montaban sobre el texto en celular */
+@media (max-width: 700px) {
+    .hero-note { display: none !important; }
+}
+
+/* Inicio del estudiante: los botones del saludo no se montan sobre la ilustración */
+.hero-buttons { position: relative; z-index: 3; }
+@media (min-width: 901px) and (max-width: 1250px) {
+    .hero-buttons { flex-wrap: wrap; max-width: 64%; }
+}
+
+/* ---------- 4. Encabezados con ilustración (docente y perfiles) ---------- */
+/* La frase decorativa de la derecha se cortaba o tapaba el título */
+@media (max-width: 1250px) {
+    .hero-side-text { display: none !important; }
+}
+@media (min-width: 851px) and (max-width: 1250px) {
+    .hero-content { max-width: 56%; }
+    .teacher-image-slot { right: 24px; }
+}
+/* Tablet: el texto del saludo no pasa por debajo de la ilustración */
+@media (min-width: 601px) and (max-width: 850px) {
+    .hero-content { max-width: 62%; }
+    .hero h2 { font-size: 16px; }
+}
+
+/* ---------- 5. Convivencia: el saludo quedaba debajo de la ilustración ---------- */
+@media (min-width: 901px) and (max-width: 1250px) {
+    .hero-card .hero-copy { width: 50%; }
+    .hero-card .hero-visual { width: 44%; }
+    .hero-card .hero-copy p { font-size: 14.5px; }
+}
+
+/* ---------- 6. Ventanas emergentes y textos largos en celular ---------- */
+@media (max-width: 600px) {
+    /* Palabras muy largas (correos, documentos) no rompen las tarjetas */
+    p, li, td, dd, span, strong, a { overflow-wrap: anywhere; }
+}

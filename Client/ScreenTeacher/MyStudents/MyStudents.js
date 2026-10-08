@@ -50,6 +50,14 @@ if (mobileOverlay) {
 
 }
 
+// Escape cierra el menú lateral en celular
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && sidebar && sidebar.classList.contains("open")) {
+        sidebar.classList.remove("open");
+        if (mobileOverlay) mobileOverlay.classList.remove("show");
+    }
+});
+
 
 
 /* =========================================================
@@ -954,6 +962,9 @@ studentAlertForm.addEventListener(
                     throw new Error(result.message || "No se pudo enviar la alerta.");
                 }
 
+
+                // Confirmación en la campanita
+                if (window.SentirNotificacionesDocente) window.SentirNotificacionesDocente.actualizar();
 
                 /* LIMPIAR FORMULARIO */
 

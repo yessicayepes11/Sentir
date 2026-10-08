@@ -720,303 +720,240 @@ function initEmotions() {
 }
 
 /* =========================================================
-   AGENDAR CITA
+   AGENDAR CITA CON PSICOLOGÍA
+   - Horarios disponibles: los horarios libres de psicología.
+   - Proponer otro horario: el estudiante escribe fecha y hora.
+   La solicitud queda "por aceptar" y la respuesta le llega
+   como notificación (campanita).
 ========================================================= */
+
+const API_CITAS_ESTUDIANTE = "http://localhost:3001/api/Estudiante";
+
+function sesionEstudiante() {
+    try {
+        const sesion = JSON.parse(sessionStorage.getItem("sentirEstudiante"));
+        return sesion && sesion.token ? sesion : null;
+    } catch (error) {
+        return null;
+    }
+}
+
+async function apiEstudiante(ruta, opciones = {}) {
+    const sesion = sesionEstudiante();
+    const respuesta = await fetch(API_CITAS_ESTUDIANTE + ruta, {
+        ...opciones,
+        headers: { ...(opciones.headers || {}), Authorization: "Bearer " + (sesion ? sesion.token : "") }
+    });
+    const datos = await respuesta.json().catch(() => ({}));
+    if (!respuesta.ok) throw new Error(datos.message || "No se pudo completar la acción.");
+    return datos;
+}
+
+function escaparTexto(valor) {
+    return String(valor ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+function hora12(hora) {
+    const [h, m] = String(hora).split(":").map(Number);
+    return `${((h + 11) % 12) + 1}:${String(m).padStart(2, "0")} ${h < 12 ? "a. m." : "p. m."}`;
+}
+
+const ESTADOS_CITA_ESTUDIANTE = {
+    "Pendiente": { texto: "Esperando respuesta", clase: "pending", icono: "fa-hourglass-half" },
+    "Programada": { texto: "Confirmada", clase: "ok", icono: "fa-circle-check" },
+    "Realizada": { texto: "Realizada", clase: "done", icono: "fa-check-double" },
+    "No asistió": { texto: "No asististe", clase: "missed", icono: "fa-user-xmark" },
+    "Rechazada": { texto: "No se pudo agendar", clase: "missed", icono: "fa-circle-xmark" },
+    "Cancelada": { texto: "Cancelada", clase: "missed", icono: "fa-ban" }
+};
 
 function initAppointmentModal() {
 
-    const modal =
-        document.getElementById(
-            "appointmentModal"
-        );
+    const modal = document.getElementById("appointmentModal");
+    const open = document.getElementById("openAppointment");
+    const close = document.getElementById("closeAppointment");
+    const finish = document.getElementById("finishAppointment");
+    const form = document.getElementById("appointmentForm");
+    const success = document.getElementById("appointmentSuccess");
+    const summary = document.getElementById("appointmentSummary");
+    const dateInput = document.getElementById("appointmentDate");
+    const image = document.getElementById("appointmentImage");
+    const login = document.getElementById("appointmentLogin");
+    const mine = document.getElementById("myAppointments");
+    const mineList = document.getElementById("myAppointmentsList");
 
+    if (!modal || !open || !form) return;
 
-    const open =
-        document.getElementById(
-            "openAppointment"
-        );
+    // Si todavía no existe AgendarCita.png, se oculta la imagen rota y queda el placeholder
+    if (image) image.addEventListener("error", () => { image.style.display = "none"; });
 
-
-    const close =
-        document.getElementById(
-            "closeAppointment"
-        );
-
-
-    const finish =
-        document.getElementById(
-            "finishAppointment"
-        );
-
-
-    const form =
-        document.getElementById(
-            "appointmentForm"
-        );
-
-
-    const success =
-        document.getElementById(
-            "appointmentSuccess"
-        );
-
-
-    const summary =
-        document.getElementById(
-            "appointmentSummary"
-        );
-
-
-    const dateInput =
-        document.getElementById(
-            "appointmentDate"
-        );
-
-
-    const image =
-        document.getElementById(
-            "appointmentImage"
-        );
-
-
-    if (
-        !modal ||
-        !open ||
-        !form
-    ) {
-
-        return;
-
-    }
-
-
-    /*
-    Si todavía no existe
-    AgendarCita.png,
-    ocultamos la imagen rota
-    y queda el placeholder.
-    */
-
-    if (image) {
-
-        image.addEventListener(
-            "error",
-            function () {
-
-                image.style.display =
-                    "none";
-
-            }
-        );
-
-    }
-
-
-    /*
-    Fecha mínima = hoy
-    */
-
+    // Fecha mínima = hoy
     if (dateInput) {
-
-        const today =
-            new Date();
-
-
-        const localToday =
-            new Date(
-
-                today.getTime() -
-
-                today.getTimezoneOffset()
-                * 60000
-
-            )
-                .toISOString()
-                .split("T")[0];
-
-
-        dateInput.min =
-            localToday;
-
+        const hoy = new Date();
+        dateInput.min = new Date(hoy.getTime() - hoy.getTimezoneOffset() * 60000).toISOString().split("T")[0];
     }
 
+    let modo = "horarios";
+    let horarios = [];
+    let diaElegido = null;
+    let horarioElegido = null;
 
-    open.addEventListener(
-        "click",
-        function () {
+    const dias = document.getElementById("appointmentDays");
+    const horas = document.getElementById("appointmentHours");
 
-            form.hidden =
-                false;
+    function mostrarModo() {
+        modal.querySelectorAll("#appointmentModes [data-modo]").forEach(b => b.classList.toggle("active", b.dataset.modo === modo));
+        modal.querySelectorAll("[data-appt]").forEach(el => { el.hidden = el.dataset.appt !== modo; });
+    }
+    modal.querySelectorAll("#appointmentModes [data-modo]").forEach(b => b.addEventListener("click", () => { modo = b.dataset.modo; mostrarModo(); }));
 
-
-            if (success) {
-
-                success.hidden =
-                    true;
-
-            }
-
-
-            openModal(modal);
-
+    function pintarDias() {
+        const fechas = [...new Set(horarios.map(h => h.fecha))];
+        if (!fechas.length) {
+            dias.innerHTML = '<p class="appt-empty"><i class="fa-regular fa-calendar-xmark"></i> En este momento no hay horarios libres. Usa "Proponer otro horario".</p>';
+            horas.innerHTML = "";
+            return;
         }
-    );
-
-
-    if (close) {
-
-        close.addEventListener(
-            "click",
-            function () {
-
-                closeModal(modal);
-
-            }
-        );
-
+        if (!diaElegido || !fechas.includes(diaElegido)) diaElegido = fechas[0];
+        dias.innerHTML = fechas.map(fecha => {
+            const d = new Date(fecha + "T12:00:00");
+            return `<button type="button" class="appt-day ${fecha === diaElegido ? "active" : ""}" data-dia="${fecha}">
+                <span>${d.toLocaleDateString("es-CO", { weekday: "short" }).replace(".", "")}</span>
+                <strong>${d.getDate()}</strong>
+                <small>${d.toLocaleDateString("es-CO", { month: "short" }).replace(".", "")}</small>
+            </button>`;
+        }).join("");
+        dias.querySelectorAll("[data-dia]").forEach(b => b.addEventListener("click", () => {
+            diaElegido = b.dataset.dia;
+            horarioElegido = null;
+            pintarDias();
+        }));
+        pintarHoras();
     }
 
-
-    if (finish) {
-
-        finish.addEventListener(
-            "click",
-            function () {
-
-                closeModal(modal);
-
-            }
-        );
-
+    function pintarHoras() {
+        horas.innerHTML = horarios.filter(h => h.fecha === diaElegido).map(h => `
+            <button type="button" class="appt-hour ${horarioElegido && horarioElegido.id === h.id ? "active" : ""}" data-horario="${h.id}" title="Con ${escaparTexto(h.psicologa)}">
+                ${hora12(h.hora)}<small>${h.duracion} min</small>
+            </button>`).join("");
+        horas.querySelectorAll("[data-horario]").forEach(b => b.addEventListener("click", () => {
+            horarioElegido = horarios.find(h => String(h.id) === b.dataset.horario);
+            pintarHoras();
+        }));
     }
 
-
-    modal.addEventListener(
-        "click",
-        function (event) {
-
-            if (
-                event.target === modal
-            ) {
-
-                closeModal(modal);
-
-            }
-
+    async function cargarMisCitas() {
+        if (!mine || !sesionEstudiante()) return;
+        try {
+            const { citas } = await apiEstudiante("/citas");
+            const recientes = (citas || []).slice(0, 6);
+            mine.hidden = !recientes.length;
+            mineList.innerHTML = recientes.map(c => {
+                const e = ESTADOS_CITA_ESTUDIANTE[c.estado] || ESTADOS_CITA_ESTUDIANTE.Pendiente;
+                const cancelable = c.estado === "Pendiente" || c.estado === "Programada";
+                return `<div class="appt-mine-item">
+                    <div>
+                        <strong>${escaparTexto(c.cuando.charAt(0).toUpperCase() + c.cuando.slice(1))}</strong>
+                        <small>${escaparTexto(c.tipo)}${c.psicologa ? " · " + escaparTexto(c.psicologa) : ""}</small>
+                        ${c.observacion ? `<small class="appt-obs">${escaparTexto(c.observacion)}</small>` : ""}
+                    </div>
+                    <span class="appt-state ${e.clase}"><i class="fa-solid ${e.icono}"></i> ${e.texto}</span>
+                    ${cancelable ? `<button type="button" class="appt-cancel" data-cancelar="${c.id}">Cancelar</button>` : ""}
+                </div>`;
+            }).join("");
+            mineList.querySelectorAll("[data-cancelar]").forEach(b => b.addEventListener("click", async () => {
+                if (!confirm("¿Seguro que quieres cancelar esta cita?")) return;
+                try {
+                    await apiEstudiante(`/citas/${b.dataset.cancelar}/cancelar`, { method: "PUT" });
+                    showToast("Tu cita fue cancelada.");
+                    cargarMisCitas();
+                    cargarHorarios();
+                } catch (error) {
+                    showToast(error.message);
+                }
+            }));
+        } catch (error) {
+            mine.hidden = true;
         }
-    );
+    }
 
+    async function cargarHorarios() {
+        dias.innerHTML = '<p class="appt-empty"><i class="fa-solid fa-spinner fa-spin"></i> Buscando horarios…</p>';
+        horas.innerHTML = "";
+        try {
+            horarios = (await apiEstudiante("/horarios")).horarios || [];
+        } catch (error) {
+            horarios = [];
+        }
+        horarioElegido = null;
+        pintarDias();
+    }
 
-    form.addEventListener(
-        "submit",
-        function (event) {
+    open.addEventListener("click", function () {
+        const conSesion = Boolean(sesionEstudiante());
+        if (login) login.hidden = conSesion;
+        form.hidden = !conSesion;
+        if (success) success.hidden = true;
+        if (conSesion) {
+            modo = "horarios";
+            mostrarModo();
+            cargarHorarios();
+            cargarMisCitas();
+        } else if (mine) {
+            mine.hidden = true;
+        }
+        openModal(modal);
+    });
 
-            event.preventDefault();
+    if (close) close.addEventListener("click", () => closeModal(modal));
+    if (finish) finish.addEventListener("click", () => {
+        if (success) success.hidden = true;
+        form.hidden = false;
+        closeModal(modal);
+    });
+    modal.addEventListener("click", (event) => { if (event.target === modal) closeModal(modal); });
 
+    form.addEventListener("submit", async function (event) {
+        event.preventDefault();
 
-            const date =
-                document.getElementById(
-                    "appointmentDate"
-                ).value;
+        const motivo = document.getElementById("appointmentReason").value.trim();
+        let horario;
+        if (modo === "horarios") {
+            if (!horarioElegido) return showToast("Elige un día y una hora disponibles.");
+            horario = { idDisponibilidad: horarioElegido.id };
+        } else {
+            const fecha = document.getElementById("appointmentDate").value;
+            const hora = document.getElementById("appointmentTime").value;
+            if (!fecha || !hora) return showToast("Elige la fecha y la hora que prefieres.");
+            horario = { fecha, hora };
+        }
+        if (motivo.length < 5) return showToast("Cuéntanos brevemente el motivo de la cita.");
 
-
-            const time =
-                document.getElementById(
-                    "appointmentTime"
-                ).value;
-
-
-            const reason =
-                document.getElementById(
-                    "appointmentReason"
-                ).value.trim();
-
-
-            if (
-                !date ||
-                !time ||
-                !reason
-            ) {
-
-                showToast(
-                    "Completa todos los campos."
-                );
-
-                return;
-
-            }
-
-
-            const appointment = {
-
-                date:
-                    date,
-
-                time:
-                    time,
-
-                reason:
-                    reason,
-
-                status:
-                    "pending",
-
-                createdAt:
-                    new Date().toISOString()
-
-            };
-
-
-            localStorage.setItem(
-
-                "sentirAppointmentDraft",
-
-                JSON.stringify(
-                    appointment
-                )
-
-            );
-
-
+        const boton = form.querySelector(".appointment-submit");
+        if (boton) boton.disabled = true;
+        try {
+            const respuesta = await apiEstudiante("/citas", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ ...horario, motivo })
+            });
             if (summary) {
-
-                summary.textContent =
-
-                    "Tu solicitud quedó registrada para el " +
-
-                    formatDate(date) +
-
-                    " a las " +
-
-                    time +
-
-                    ".";
-
+                summary.textContent = `Pediste tu cita para el ${respuesta.cuando.replace(/\.$/, "")}. Cuando la psicóloga la acepte te llegará un aviso en la campanita.`;
             }
-
-
-            form.hidden =
-                true;
-
-
-            if (success) {
-
-                success.hidden =
-                    false;
-
-            }
-
-
-            showToast(
-                "Solicitud de cita guardada."
-            );
-
-
+            form.hidden = true;
+            if (success) success.hidden = false;
             form.reset();
-
+            showToast("Solicitud de cita enviada.");
+            cargarMisCitas();
+            if (window.SentirNotificaciones) window.SentirNotificaciones.actualizar();
+        } catch (error) {
+            showToast(error.message);
+        } finally {
+            if (boton) boton.disabled = false;
         }
-    );
+    });
 
+    mostrarModo();
 }
 
 

@@ -20,7 +20,7 @@
 /* Calendario mensual */
 .calendar-wrapper { background: var(--white); border: 1px solid #E5E7EB; border-radius: 24px; padding: 24px; margin-bottom: 26px; }
 .calendar-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
-.calendar-nav h3 { font-size: 15px; font-weight: 700; color: var(--dark-slate); text-transform: capitalize; }
+.calendar-nav h3 { font-size: 15px; font-weight: 700; color: var(--dark-slate); }
 .calendar-nav-btn { background: var(--bg-light); border: none; width: 34px; height: 34px; border-radius: 10px; color: var(--morado-sentir); cursor: pointer; transition: background 0.2s ease; }
 .calendar-nav-btn:hover { background: #EDF2F7; }
 
@@ -83,3 +83,132 @@
     .appointment-actions { justify-content: center; }
     .calendar-wrapper { padding: 16px; }
 }
+
+/* ===== Mi disponibilidad (semana) ===== */
+.availability-card { background: var(--white); border: 1px solid #E5E7EB; border-radius: 24px; padding: 22px; margin-bottom: 26px; }
+.availability-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+.availability-head h2 { font-size: 16px; font-weight: 700; color: var(--dark-slate); display: flex; align-items: center; gap: 8px; }
+.availability-head h2 i { color: var(--morado-sentir); }
+.availability-head p { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+.availability-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.week-nav { display: flex; align-items: center; gap: 8px; }
+.week-nav span { font-size: 12.5px; font-weight: 700; color: var(--dark-slate); min-width: 150px; text-align: center; }
+.small-btn { padding: 8px 14px; font-size: 12px; border-radius: 10px; }
+.small-btn:disabled { opacity: .45; cursor: default; }
+
+.week-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; }
+.week-loading { grid-column: 1 / -1; text-align: center; font-size: 12.5px; color: var(--text-muted); padding: 24px; }
+.week-day { background: var(--bg-light); border-radius: 16px; padding: 12px 10px; display: flex; flex-direction: column; gap: 10px; min-height: 190px; border: 2px solid transparent; }
+.week-day.is-today { border-color: var(--morado-sentir); }
+.week-day.is-past { opacity: .6; }
+.week-day-head strong { display: block; font-size: 12.5px; color: var(--dark-slate); }
+.week-day-head span { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+.week-slots { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.week-slot { font-size: 10.5px; font-weight: 600; color: var(--morado-sentir); background: rgba(108, 77, 246, 0.1); border-radius: 8px; padding: 5px 7px; display: flex; align-items: center; gap: 5px; line-height: 1.3; }
+.week-slot.reserved { color: #B45309; background: #FFFBEB; }
+.week-empty { font-size: 11px; color: var(--text-muted); }
+.week-edit-btn { border: 1px dashed #C9B8FF; background: var(--white); color: var(--morado-sentir); border-radius: 10px; padding: 7px; font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600; cursor: pointer; transition: background .15s ease; }
+.week-edit-btn:hover:not(:disabled) { background: rgba(108, 77, 246, 0.08); }
+.week-edit-btn:disabled { border-style: solid; border-color: #E5E7EB; color: var(--text-muted); cursor: default; }
+.week-total { font-size: 11.5px; color: var(--text-muted); font-weight: 600; margin-top: 12px; }
+
+/* Ventanas de disponibilidad */
+.day-picker { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+.day-pick { cursor: pointer; margin: 0 !important; text-transform: none !important; letter-spacing: 0 !important; }
+.day-pick input { position: absolute; opacity: 0; pointer-events: none; }
+.day-pick span { display: flex; flex-direction: column; align-items: center; padding: 8px 2px; border-radius: 12px; border: 1.5px solid #E5E7EB; font-size: 12px; font-weight: 700; color: var(--dark-slate); transition: all .15s ease; }
+.day-pick small { font-size: 10.5px; font-weight: 600; color: var(--text-muted); }
+.day-pick input:checked + span { border-color: var(--morado-sentir); background: rgba(108, 77, 246, 0.08); color: var(--morado-sentir); }
+.day-pick.disabled { cursor: not-allowed; opacity: .4; }
+.time-blocks { display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px; }
+.time-block, .day-add-row { display: flex; align-items: center; gap: 8px; }
+.time-block input, .day-add-row input, .day-add-row select, .day-slot select { flex: 1; min-width: 0; padding: 9px 10px; border: 1px solid #E5E7EB; border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 12.5px; background: var(--white); }
+.time-block span, .day-add-row span { font-size: 12px; color: var(--text-muted); }
+.slot-preview { font-size: 12px; color: var(--dark-slate); background: rgba(108, 77, 246, 0.06); padding: 10px 12px; border-radius: 12px; }
+.slot-preview i { color: var(--morado-sentir); margin-right: 4px; }
+.day-slot-list { display: flex; flex-direction: column; gap: 8px; max-height: 260px; overflow-y: auto; margin-bottom: 16px; }
+.day-slot { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 12px; background: var(--bg-light); }
+.day-slot > i { color: var(--morado-sentir); }
+.day-slot.reserved > i { color: #B45309; }
+.day-slot-time { font-size: 12.5px; font-weight: 600; color: var(--dark-slate); flex: 1; }
+.day-slot select { flex: 0 0 120px; }
+.day-slot-tag { font-size: 10.5px; font-weight: 700; color: #B45309; background: #FFFBEB; padding: 3px 10px; border-radius: 10px; }
+.day-add { display: flex; flex-direction: column; gap: 8px; padding: 12px; border-radius: 14px; border: 1px dashed #DCD3FB; }
+.day-add label { font-size: 10.5px; font-weight: 700; color: var(--text-muted); letter-spacing: .4px; }
+
+@media (max-width: 1100px) {
+    .week-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+    .week-grid { grid-template-columns: 1fr; }
+    .week-day { min-height: 0; }
+    .availability-actions { width: 100%; }
+    .availability-actions .btn-primary-action { width: 100%; justify-content: center; }
+    .week-nav span { min-width: 0; flex: 1; }
+    .day-picker { grid-template-columns: repeat(4, 1fr); }
+    .day-add-row { flex-wrap: wrap; }
+}
+
+/* Periodo de la disponibilidad: un día / semana / mes */
+.period-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; background: var(--bg-light); padding: 4px; border-radius: 12px; }
+.period-tabs button { border: none; background: transparent; padding: 9px 6px; border-radius: 9px; font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 600; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all .15s ease; }
+.period-tabs button.active { background: var(--white); color: var(--morado-sentir); box-shadow: 0 2px 6px rgba(30, 27, 75, 0.08); }
+.sentir-modal-body [data-solo][hidden] { display: none !important; }
+#cwMesDias .day-pick span { padding: 10px 2px; }
+.calendar-free { font-size: 9.5px; font-weight: 700; color: #15803D; background: rgba(34, 197, 94, 0.12); border-radius: 6px; padding: 2px 6px; display: flex; align-items: center; gap: 4px; width: fit-content; }
+
+/* ===== Pestañas de la agenda ===== */
+.agenda-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; background: var(--white); border: 1px solid #E5E7EB; border-radius: 18px; padding: 6px; margin-bottom: 22px; }
+.agenda-tab { display: flex; align-items: center; justify-content: center; gap: 8px; border: none; background: transparent; padding: 12px 10px; border-radius: 13px; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all .2s ease; }
+.agenda-tab:hover { background: var(--bg-light); color: var(--dark-slate); }
+.agenda-tab.active { background: var(--gradiente-sentir, var(--morado-sentir)); color: var(--white); box-shadow: 0 6px 16px rgba(108, 77, 246, 0.25); }
+.agenda-tab em { font-style: normal; font-size: 11px; font-weight: 700; min-width: 20px; padding: 1px 7px; border-radius: 10px; background: rgba(108, 77, 246, 0.12); color: var(--morado-sentir); }
+.agenda-tab em:empty { display: none; }
+.agenda-tab.active em { background: rgba(255, 255, 255, 0.25); color: var(--white); }
+.agenda-panel[hidden] { display: none !important; }
+.date-filter-note { display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 600; color: var(--dark-slate); background: rgba(108, 77, 246, 0.07); padding: 10px 14px; border-radius: 12px; margin-bottom: 16px; }
+.date-filter-note[hidden] { display: none; }
+.date-filter-note i { color: var(--morado-sentir); }
+.date-filter-note button { margin-left: auto; border: none; background: var(--white); color: var(--morado-sentir); font-family: 'Poppins', sans-serif; font-size: 11.5px; font-weight: 700; padding: 5px 12px; border-radius: 8px; cursor: pointer; }
+@media (max-width: 640px) {
+    .agenda-tabs { grid-template-columns: 1fr; }
+    .agenda-tab { justify-content: flex-start; }
+}
+
+/* ===== Citas: estados, solicitudes por aceptar ===== */
+.agenda-summary-card.pending .agenda-summary-icon { background: rgba(245, 158, 11, 0.15); color: #B45309; }
+.agenda-tab em.alert { background: #F59E0B; color: #fff; }
+.agenda-tab.active em.alert { background: #fff; color: #B45309; }
+
+.pending-requests { background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 20px; padding: 18px; margin-bottom: 22px; }
+.pending-head h3 { font-size: 15px; font-weight: 700; color: #92400E; display: flex; align-items: center; gap: 8px; }
+.pending-head h3 span { font-size: 11px; background: #F59E0B; color: #fff; border-radius: 10px; padding: 2px 9px; }
+.pending-head p { font-size: 12px; color: #A16207; margin: 4px 0 14px; }
+.pending-list { display: flex; flex-direction: column; gap: 10px; }
+.pending-card { display: grid; grid-template-columns: 150px minmax(0, 1fr) auto; gap: 14px; align-items: center; background: var(--white); border-radius: 14px; padding: 12px 14px; border: 1px solid #FEF3C7; }
+.pending-when strong { display: block; font-size: 13px; color: var(--dark-slate); }
+.pending-when span { font-size: 11.5px; color: #B45309; font-weight: 600; }
+.pending-info h4 { font-size: 13.5px; color: var(--dark-slate); }
+.pending-info h4 small { font-size: 11px; color: var(--text-muted); font-weight: 600; margin-left: 4px; }
+.pending-info p { font-size: 12px; color: #4B5563; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.pending-actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.pending-actions button { border: 1px solid #E5E7EB; background: var(--white); border-radius: 10px; padding: 7px 11px; font-family: 'Poppins', sans-serif; font-size: 11.5px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; color: var(--dark-slate); }
+.pending-actions .pa-accept { background: var(--morado-sentir); border-color: var(--morado-sentir); color: #fff; }
+.pending-actions .pa-reject { color: var(--riesgo-alto); }
+.pending-actions button:hover { filter: brightness(0.96); }
+
+.appt-status { display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 700; padding: 2px 9px; border-radius: 10px; margin-left: 6px; vertical-align: middle; }
+.appt-status.scheduled { background: rgba(108, 77, 246, 0.1); color: var(--morado-sentir); }
+.appt-status.pending { background: #FEF3C7; color: #B45309; }
+.appt-status.done { background: rgba(34, 197, 94, 0.12); color: #15803D; }
+.appt-status.missed { background: #FEF2F2; color: var(--riesgo-alto); }
+.fu-detail p.appt-status { margin-left: 0; font-size: 12px; padding: 8px 12px; border-radius: 10px; }
+.appointment-card.estado-done, .appointment-card.estado-missed { opacity: .75; }
+.appt-meta i { color: var(--morado-sentir); margin: 0 2px; }
+.calendar-event.is-pending { outline: 1.5px dashed currentColor; outline-offset: -1px; }
+
+@media (max-width: 760px) {
+    .pending-card { grid-template-columns: 1fr; }
+    .pending-actions { justify-content: flex-start; }
+}
+.appointment-time span { text-transform: none; }

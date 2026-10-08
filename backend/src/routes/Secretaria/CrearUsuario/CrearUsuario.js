@@ -8,6 +8,7 @@ import { Router } from 'express';
 import { connection } from '../../../config/mysql/dbmysql.js';
 import { leerTokenDocente } from '../../../config/studentToken.js';
 import { cifrarContrasena } from '../../../config/contrasenas.js';
+import { fotoCambiada } from '../../../config/avatarIA.js';
 
 const router = Router();
 const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z\d\s]).{8,}$/;
@@ -550,6 +551,7 @@ router.put('/perfil-docente', requireTeacherSession, upload.single('foto'), asyn
             'UPDATE usuario SET correo = ?, celular = ?, foto = COALESCE(?, foto) WHERE id_usuario = ? AND id_rol = 5',
             [email, phone, storedPhoto, usuarioId]
         );
+        if (req.file) fotoCambiada(usuarioId); // la IA empieza ya el avatar de la foto nueva
 
         const profile = await getTeacherProfile(usuarioId);
         return res.json({ message: 'Perfil actualizado correctamente', profile: { ...profile, photo } });
@@ -649,6 +651,7 @@ router.put('/perfil-administrador', upload.single('foto'), async (req, res) => {
             'UPDATE usuario SET nombre = ?, apellido = ?, correo = ?, celular = ?, foto = ? WHERE id_usuario = ?',
             values
         );
+        if (req.file) fotoCambiada(administrator.id_usuario); // la IA empieza ya el avatar de la foto nueva
 
         return res.json({
             message: 'Perfil administrador actualizado correctamente',
@@ -796,6 +799,7 @@ router.put('/actualizar/:id', upload.single('foto'), async (req, res) => {
         await saveStudentData(usuarioId, studentData);
         await connection.promise().commit();
         transactionStarted = false;
+        if (req.file) fotoCambiada(usuarioId); // la IA empieza ya el avatar de la foto nueva
 
         return res.json({
             message: 'Usuario actualizado correctamente',
@@ -837,7 +841,12 @@ const NOMBRES_TABLAS = {
     estudiante_docente: 'notas de estudiantes',
     intervension: 'intervenciones',
     relajacion: 'recursos de relajación',
+    relajacion_sugerida: 'actividades sugeridas',
     recurso_ia: 'recursos creados con IA',
+    proceso_terapia: 'procesos de terapia',
+    acudiente: 'contactos alternativos (acudientes)',
+    contacto_acudiente: 'contactos con acudientes',
+    derivacion: 'derivaciones a red de apoyo',
     actividad_recurso: 'actividades de recursos'
 };
 

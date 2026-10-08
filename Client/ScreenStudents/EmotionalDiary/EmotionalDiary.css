@@ -2015,3 +2015,26 @@ button{border:none;background:none;}
         grid-template-columns: 1fr;
     }
 }
+
+/* Saludo con el nombre del estudiante que inició sesión */
+.hero .hero-greeting{
+    margin-top:14px;
+    color:#5b3df0;
+    font-size:clamp(18px,1.6vw,22px);
+    font-weight:600;
+    line-height:1.2;
+}
+.hero .hero-greeting strong{ color:#2e168e; font-weight:800; }
+.hero-greeting[hidden]{ display:none !important; }
+.hero-greeting + h1{ margin-top:4px; }
+
+/* Avatar creado con IA junto al saludo (aparece cuando ya existe) */
+.hero .hero-greeting{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.hero .hero-greeting img.hero-greeting-avatar.avatar-ia{
+    width:52px !important; height:52px !important; max-width:none !important;
+    object-fit:cover !important; object-position:50% 0 !important;
+    border-radius:50% !important; border:3px solid #fff !important;
+    background:linear-gradient(135deg,#b8a8ff,#6c4df6) !important;
+    box-shadow:0 6px 16px rgba(46,22,142,.22) !important; filter:none !important;
+    animation:none; margin:0 !important; flex:0 0 auto;
+}

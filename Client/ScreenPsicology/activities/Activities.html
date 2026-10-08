@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../shared/sentir-shared.css">
     <link rel="stylesheet" href="Activities.css">
+    <link rel="stylesheet" href="../../responsive.css">
 </head>
 <body data-page="actividades">
 
@@ -70,9 +71,12 @@
                     <div>
                         <span class="view-eyebrow">BIENESTAR Y RELAJACIÓN</span>
                         <h1>Control de Actividades</h1>
-                        <p class="subtitle-view">Crea y administra actividades de relajación para que los estudiantes las practiquen según sus necesidades.</p>
+                        <p class="subtitle-view">Crea actividades de bienestar (tú o con ayuda de la IA). Se publican en los recursos de los estudiantes y puedes sugerirlas a quien las necesite.</p>
                     </div>
-                    <button class="btn-primary-action" id="addActivityBtn"><i class="fa-solid fa-plus"></i> Nueva Actividad</button>
+                    <div class="activities-header-actions">
+                        <button class="btn-secondary-action" id="aiActivityBtn"><i class="fa-solid fa-wand-magic-sparkles"></i> Crear con IA</button>
+                        <button class="btn-primary-action" id="addActivityBtn"><i class="fa-solid fa-plus"></i> Nueva Actividad</button>
+                    </div>
                 </div>
 
                 <div class="activities-summary" id="activitiesSummary"></div>

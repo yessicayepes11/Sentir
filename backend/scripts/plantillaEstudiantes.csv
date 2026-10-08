@@ -1,0 +1,2 @@
+documento;tipo_documento;nombres;apellidos;fecha_nacimiento;grado;correo;celular;foto;acudiente_documento;acudiente_nombres;acudiente_apellidos;acudiente_parentesco;acudiente_ocupacion;acudiente_correo;acudiente_celular
+1000000000;Tarjeta de identidad;Nombre Ejemplo;Apellido Ejemplo;2012-05-14;9-3;nombre.apellido@iesantaelena.edu.co;3000000000;foto-ejemplo.jpg;43000000;Nombre;Acudiente;Madre;Comerciante;acudiente@correo.com;3100000000

@@ -37,6 +37,7 @@
         href="/Shared/HelpRequest/HelpRequest.css"
     >
 
+    <link rel="stylesheet" href="../responsive.css">
 </head>
 
 <body>
@@ -302,7 +303,7 @@
 
                 <div class="hero-character-glow"></div>
 
-                <img
+                <img data-avatar-ia="estudiante"
                     src="/Shared/StudentResources/MainStudents.png"
                     alt="Estudiante Sentir"
                 >
@@ -965,11 +966,34 @@
 
 
             <p class="appointment-description">
-                Elige el día y la hora que mejor te funcionen.
+                Elige uno de los horarios libres de psicología o propón el que mejor te funcione.
+                Te avisaremos en la campanita cuando la psicóloga responda.
             </p>
 
 
+            <!-- Sin sesión: hay que entrar a "Mi espacio personal" para pedir la cita -->
+            <div class="appt-login" id="appointmentLogin" hidden>
+                <i class="fa-solid fa-lock"></i>
+                <p>Para pedir una cita primero ingresa a <strong>Mi espacio personal</strong> con tu número de identificación y tu clave.</p>
+                <a class="appointment-submit" href="/Client/ScreenStudents/EmotionalDiary/DiaryAccess/DiaryAccess.html?volver=%2FClient%2FScreenStudents%2FStudents.html">
+                    <i class="fa-solid fa-right-to-bracket"></i> Ingresar
+                </a>
+            </div>
+
+
             <form id="appointmentForm">
+
+                <div class="appt-modes" id="appointmentModes">
+                    <button type="button" class="active" data-modo="horarios"><i class="fa-regular fa-calendar-check"></i> Horarios disponibles</button>
+                    <button type="button" data-modo="propuesta"><i class="fa-regular fa-pen-to-square"></i> Proponer otro horario</button>
+                </div>
+
+                <div class="appt-slots-block" data-appt="horarios">
+                    <div class="appt-days" id="appointmentDays"></div>
+                    <div class="appt-hours" id="appointmentHours"></div>
+                </div>
+
+                <div data-appt="propuesta" hidden>
 
                 <div class="form-row">
 
@@ -986,7 +1010,6 @@
                             <input
                                 type="date"
                                 id="appointmentDate"
-                                required
                             >
 
                         </div>
@@ -1006,7 +1029,6 @@
 
                             <select
                                 id="appointmentTime"
-                                required
                             >
 
                                 <option value="">
@@ -1050,6 +1072,8 @@
                         </div>
 
                     </label>
+
+                </div>
 
                 </div>
 
@@ -1115,7 +1139,7 @@
                 </div>
 
                 <h3>
-                    ¡Solicitud guardada!
+                    ¡Solicitud enviada!
                 </h3>
 
                 <p id="appointmentSummary"></p>
@@ -1131,6 +1155,13 @@
 
                 </button>
 
+            </div>
+
+
+            <!-- Citas del estudiante -->
+            <div class="appt-mine" id="myAppointments" hidden>
+                <h3><i class="fa-regular fa-calendar"></i> Mis citas</h3>
+                <div class="appt-mine-list" id="myAppointmentsList"></div>
             </div>
 
         </div>
@@ -1149,5 +1180,7 @@
 <script src="/Client/ScreenStudents/Students.js"></script>
 <script src="/Shared/HelpRequest/HelpRequest.js"></script>
 
+<script src="/Shared/StudentNotifications/StudentNotifications.js"></script>
+<script src="/Shared/AvatarIA/AvatarIA.js"></script>
 </body>
 </html>

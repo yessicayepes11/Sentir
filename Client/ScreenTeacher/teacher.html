@@ -20,9 +20,12 @@
     <!-- Perfil del docente que inició sesión (botón del encabezado, ventana y saludo) -->
     <link rel="stylesheet" href="TeacherProfile.css">
     <script src="TeacherProfile.js"></script>
+    <!-- Campanita de notificaciones (avisos de las alertas enviadas) -->
+    <script src="TeacherNotifications.js"></script>
     <!-- Mis alertas recientes (con filtros) -->
     <script src="TeacherAlerts.js"></script>
 
+    <link rel="stylesheet" href="../responsive.css">
 </head>
 
 
@@ -427,7 +430,7 @@
 
                     <div class="teacher-image-slot">
 
-                        <img
+                        <img data-avatar-ia="personal"
                         src="/Shared/TeacherResources/ImgenDocentes.png"
                         alt="Docente"
                         >
@@ -1370,6 +1373,7 @@
 <script src="teacher.js"></script>
 
 
+<script src="/Shared/AvatarIA/AvatarIA.js"></script>
 </body>
 
 </html>

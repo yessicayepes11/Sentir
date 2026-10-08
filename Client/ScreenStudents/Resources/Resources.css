@@ -3626,3 +3626,46 @@ body.mp-open {
         grid-template-columns: 1fr;
     }
 }
+
+/* Tarjeta "Ir a mis citas" */
+.mini-nav-card.citas { background: linear-gradient(110deg, #fff7ec, #ffecd6); }
+.mini-nav-card.citas .mini-nav-icon { color: #d9822b; }
+.mini-nav-card.citas .mini-nav-arrow { background: #e8943f; }
+
+/* =========================================================
+   ACTIVIDADES DE TU PSICÓLOGA
+========================================================= */
+.psy-activities { max-width: 1400px; margin: 18px auto 0; background: #fff; border-radius: 28px; padding: 24px; border: 1px solid rgba(108, 77, 246, .08); box-shadow: 0 14px 34px rgba(60, 40, 140, .06); }
+.psy-activities[hidden] { display: none !important; }
+.psy-activities-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
+.psy-activities-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: #6c4df6; background: #F3EFFF; padding: 5px 12px; border-radius: 20px; }
+.psy-activities-head h2 { font-size: 24px; color: #2b2453; margin: 8px 0 4px; }
+.psy-activities-head p { font-size: 14px; color: #6f6893; margin: 0; }
+.psy-activities-count { font-size: 12.5px; font-weight: 700; color: #d059ac; background: #FFF0F8; padding: 6px 14px; border-radius: 20px; }
+.psy-activities-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr)); gap: 16px; }
+.pa-card { position: relative; display: flex; flex-direction: column; gap: 10px; padding: 18px; border-radius: 22px; background: #FBFAFF; border: 1px solid #EEE9FB; min-width: 0; }
+.pa-card.is-suggested { background: linear-gradient(160deg, #FFF5FB, #F7F1FF); border-color: #F5C9E4; }
+.pa-badge { align-self: flex-start; font-size: 11px; font-weight: 700; color: #fff; background: linear-gradient(135deg, #d059ac, #f28bc8); padding: 4px 10px; border-radius: 20px; display: inline-flex; align-items: center; gap: 5px; }
+.pa-top { display: flex; gap: 12px; align-items: center; }
+.pa-icon { width: 44px; height: 44px; flex-shrink: 0; border-radius: 14px; display: grid; place-items: center; font-size: 18px; color: #fff; background: linear-gradient(135deg, #8f6bff, #6c4df6); }
+.pa-type { font-size: 11.5px; font-weight: 700; color: #8a84a8; text-transform: uppercase; letter-spacing: .3px; }
+.pa-top h3 { font-size: 16.5px; color: #2b2453; margin: 2px 0 0; }
+.pa-desc { font-size: 13.5px; color: #5f5a80; line-height: 1.55; margin: 0; }
+.pa-note { font-size: 13px; color: #9d2f78; background: #FFE9F5; border-radius: 12px; padding: 8px 12px; margin: 0; }
+.pa-note i { margin-right: 6px; }
+.pa-media { width: 100%; border-radius: 14px; max-height: 220px; object-fit: cover; background: #EEE9FB; }
+audio.pa-media { height: 44px; background: transparent; }
+.pa-steps { font-size: 13px; color: #4b4570; }
+.pa-steps summary { cursor: pointer; font-weight: 700; color: #6c4df6; }
+.pa-steps ol { margin: 8px 0 0 20px; display: flex; flex-direction: column; gap: 5px; line-height: 1.5; }
+.pa-actions { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
+.pa-link { align-self: flex-start; display: inline-flex; align-items: center; gap: 7px; border: 1.5px solid #E6E1F7; background: #fff; color: #6c4df6; border-radius: 12px; padding: 8px 14px; font-family: inherit; font-size: 13px; font-weight: 600; text-decoration: none; cursor: pointer; word-break: break-all; }
+.pa-link .fa-youtube { color: #ef4444; }
+.pa-video iframe { width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 14px; }
+.pa-video[hidden] { display: none; }
+.pa-more { grid-column: 1 / -1; justify-self: center; border: none; background: #F3EFFF; color: #6c4df6; border-radius: 14px; padding: 11px 22px; font-family: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer; }
+@media (max-width: 600px) {
+    .psy-activities { padding: 18px 14px; border-radius: 22px; }
+    .psy-activities-head h2 { font-size: 20px; }
+}
+.psy-activities-grid { align-items: start; }

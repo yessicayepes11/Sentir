@@ -311,6 +311,7 @@
         if (!respuesta.ok) throw new Error(resultado.message || "No se pudo enviar la alerta.");
 
         await cargarAlertas();   // la nueva alerta aparece en "Mis alertas recientes"
+        if (window.SentirNotificacionesDocente) window.SentirNotificacionesDocente.actualizar();   // confirmación en la campanita
         return resultado;
     }
 

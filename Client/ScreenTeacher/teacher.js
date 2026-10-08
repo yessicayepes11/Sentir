@@ -71,6 +71,14 @@ if (mobileOverlay) {
 
 }
 
+// Escape cierra el menú lateral en celular
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && sidebar && sidebar.classList.contains("open")) {
+        sidebar.classList.remove("open");
+        if (mobileOverlay) mobileOverlay.classList.remove("show");
+    }
+});
+
 
 
 /* =========================================================

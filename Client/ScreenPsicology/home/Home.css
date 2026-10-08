@@ -132,3 +132,31 @@
 .followup-mini-action:hover { background:var(--morado-sentir); color:white; border-color:var(--morado-sentir); }
 .followups-empty { padding:13px; border-radius:12px; background:#F7FCF8; color:#43845D; font-size:10px; text-align:center; border:1px solid #E2F2E7; }
 .followups-empty i { margin-right:5px; }
+
+/* ===== Responsive de Inicio ===== */
+/* Con el menú lateral abierto no caben dos columnas hasta ~1200px: se apilan */
+@media (max-width: 1200px) {
+    .grid-layout { grid-template-columns: 1fr; }
+    .right-column { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; align-items: start; }
+    .right-column > * { margin-bottom: 0 !important; }
+    .welcome-box { padding: 40px 40px; }
+}
+@media (max-width: 700px) {
+    .right-column { grid-template-columns: 1fr; }
+    .welcome-box { padding: 30px 20px; }
+    .welcome-text h1 { font-size: 28px; }
+    .welcome-text h2 { font-size: 16px; }
+}
+
+/* Sugerencia de la IA: botón para pedir otra, origen y base del análisis */
+.ai-header { position: relative; }
+.ai-refresh { margin-left: auto; width: 30px; height: 30px; border-radius: 9px; border: 1px solid #E5E7EB; background: var(--white); color: var(--morado-sentir); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; }
+.ai-refresh:hover { background: rgba(108, 77, 246, 0.08); }
+.ai-refresh:disabled { opacity: .5; cursor: wait; }
+.ai-meta { font-size: 10.5px; color: var(--text-muted); margin-top: 8px; }
+.ai-meta i { color: var(--morado-sentir); margin-right: 4px; }
+.ai-base-list { grid-column: 1 / -1; margin: 2px 0 0; padding-left: 16px; font-size: 11.5px; color: var(--text-secondary); line-height: 1.6; }
+#createWorkshopBtn { display: inline-flex; align-items: center; gap: 6px; }
+#createWorkshopBtn:disabled { opacity: .55; cursor: wait; }
+.ga-check { display: flex; align-items: flex-start; gap: 8px; font-size: 12.5px; color: var(--dark-slate); background: rgba(108, 77, 246, 0.06); padding: 10px 12px; border-radius: 12px; cursor: pointer; }
+.ga-check input { margin-top: 3px; accent-color: var(--morado-sentir); }

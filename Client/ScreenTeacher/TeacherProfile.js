@@ -350,6 +350,8 @@
 
             pintarEncabezado();
             pintarVentana();
+            // Si cambió la foto, la IA vuelve a crear el avatar de la portada
+            if (window.SentirAvatar) window.SentirAvatar.actualizar();
             mensaje(respuesta.message || "Tu perfil se actualizó correctamente.");
         } catch (error) {
             mensaje(error.message, true);

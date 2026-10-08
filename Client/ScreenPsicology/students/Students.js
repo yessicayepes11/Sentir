@@ -2,7 +2,11 @@ document.addEventListener('DOMContentLoaded', () => {
     initSentirCore();
     renderStudents();
     initFiltersAndSearch();
-    initNewStudentModal();
+    initAddStudentModal();
+    initCloseProcess();
+
+    // Estudiantes en proceso de terapia (los carga sentir-shared.js desde la base de datos)
+    document.addEventListener('sentir:datos', renderStudents);
     applyUrlParams();
 });
 
@@ -27,20 +31,39 @@ const RISK_CONFIG = {
 };
 
 let currentFilter = 'all';
+let currentOrigin = 'all';
+
+const ORIGEN_PROCESO = {
+    docente: { label: 'Reporte docente', icon: 'fa-chalkboard-user', cls: 'teacher' },
+    formulario: { label: 'Pidió ayuda', icon: 'fa-hand-holding-heart', cls: 'student' },
+    chat: { label: 'Chat Sentir IA', icon: 'fa-brain', cls: 'ai' },
+    psicologia: { label: 'Añadido por psicología', icon: 'fa-user-doctor', cls: 'psychology' }
+};
+
+function escaparTexto(valor) {
+    return String(valor ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+// Solo los estudiantes que tienen un proceso de terapia activo
+function getStudentsEnProceso() {
+    return getStudents().filter(s => s.proceso);
+}
 
 function renderStudents() {
-    const students = getStudents();
+    const students = getStudentsEnProceso();
     const grid = document.getElementById('studentsGrid');
 
     grid.innerHTML = students.map(s => {
         const cfg = RISK_CONFIG[s.risk];
         return `
-        <div class="mini-student-card" data-risk="${s.risk}" data-name="${s.name.toLowerCase()}" data-id="${s.id.toLowerCase()}" data-fullname="${s.name}" role="button" tabindex="0">
+        <div class="mini-student-card" data-risk="${s.risk}" data-origin="${s.proceso.origen}" data-name="${escaparTexto(s.name.toLowerCase())} ${escaparTexto(String(s.grade).toLowerCase())}" data-id="${s.id.toLowerCase()}" data-fullname="${escaparTexto(s.name)}" role="button" tabindex="0">
             <span class="badge-risk ${cfg.badgeClass}">${cfg.label}</span>
             <img src="${s.avatar}" class="mini-avatar" alt="${s.name}">
             <h4>${s.name}</h4>
             <p>Grado: ${s.grade} • ID: ${s.id}</p>
-            <span class="mood-pill ${cfg.moodClass}">${s.mood === 'happy' ? '😊' : s.mood === 'neutral' ? '😐' : '😔'} ${s.moodText}</span>
+            <span class="signal-source-badge ${(ORIGEN_PROCESO[s.proceso.origen] || ORIGEN_PROCESO.formulario).cls} process-origin"><i class="fa-solid ${(ORIGEN_PROCESO[s.proceso.origen] || ORIGEN_PROCESO.formulario).icon}"></i>${(ORIGEN_PROCESO[s.proceso.origen] || ORIGEN_PROCESO.formulario).label}</span>
+            <span class="mood-pill ${cfg.moodClass}">${s.mood === 'happy' ? '😊' : s.mood === 'neutral' ? '😐' : '😔'} ${escaparTexto(s.moodText)}</span>
+            <p class="process-since"><i class="fa-solid fa-calendar-day"></i> En proceso desde ${formatCaseDate(s.proceso.fechaInicio)}</p>
         </div>`;
     }).join('');
 
@@ -60,6 +83,14 @@ function renderStudents() {
 }
 
 function updateChipCounts(students) {
+    const porOrigen = (o) => students.filter(s => s.proceso && s.proceso.origen === o).length;
+    const poner = (id, n) => { const el = document.getElementById(id); if (el) el.innerText = n; };
+    poner('countOriginAll', students.length);
+    poner('countOriginDocente', porOrigen('docente'));
+    poner('countOriginFormulario', porOrigen('formulario'));
+    poner('countOriginChat', porOrigen('chat'));
+    poner('countOriginPsicologia', porOrigen('psicologia'));
+
     document.getElementById('countAll').innerText = students.length.toLocaleString('es-CO');
     const high = students.filter(s => s.risk === 'high').length;
     const medium = students.filter(s => s.risk === 'medium').length;
@@ -74,7 +105,11 @@ function updateChipCounts(students) {
 function renderOverviewBar(total, high, medium, stable) {
     const bar = document.getElementById('studentsOverviewBar');
     const legend = document.getElementById('studentsOverviewLegend');
-    if (!total) return;
+    if (!total) {
+        bar.innerHTML = '';
+        legend.innerHTML = '<span class="overview-legend-item">Aún no hay estudiantes en proceso de terapia.</span>';
+        return;
+    }
 
     const pct = (n) => (n / total) * 100;
     bar.innerHTML = `
@@ -98,8 +133,9 @@ function applyFilters() {
 
     cards.forEach(card => {
         const matchesRisk = currentFilter === 'all' || card.dataset.risk === currentFilter;
+        const matchesOrigin = currentOrigin === 'all' || card.dataset.origin === currentOrigin;
         const matchesQuery = query === '' || card.dataset.name.includes(query) || card.dataset.id.includes(query);
-        const show = matchesRisk && matchesQuery;
+        const show = matchesRisk && matchesOrigin && matchesQuery;
         card.style.display = show ? 'block' : 'none';
         if (show) visible++;
     });
@@ -116,82 +152,201 @@ function initFiltersAndSearch() {
             applyFilters();
         });
     });
+    document.querySelectorAll('#originChips .chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            document.querySelectorAll('#originChips .chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            currentOrigin = chip.dataset.origin;
+            applyFilters();
+        });
+    });
     document.getElementById('studentsSearch').addEventListener('input', applyFilters);
 }
 
-function initNewStudentModal() {
-    document.getElementById('addStudentBtn').addEventListener('click', () => {
+
+/* =========================================================
+   AÑADIR ESTUDIANTE AL PROCESO DE TERAPIA
+   El estudiante ya debe estar registrado por la secretaría.
+========================================================= */
+function initAddStudentModal() {
+    const boton = document.getElementById('addStudentBtn');
+    if (!boton) return;
+
+    boton.addEventListener('click', () => {
+        const todos = getStudents()
+            .filter(st => st.idUsuario)
+            .sort((a, b) => a.name.localeCompare(b.name, 'es'));
+        let elegido = null;
+
         const overlay = openSentirModal(`
             <div class="sentir-modal-header">
                 <div class="sentir-modal-icon"><i class="fa-solid fa-user-plus"></i></div>
-                <div><h3>Registrar Nuevo Estudiante</h3><p>Se sumará al ecosistema emocional de la institución</p></div>
+                <div><h3>Añadir estudiante al proceso de terapia</h3><p id="apPasoTexto">Paso 1 de 2 · Busca al estudiante por su nombre o número de identificación</p></div>
             </div>
             <div class="sentir-modal-body">
-                <div class="modal-avatar-preview">
-                    <img id="newAvatarPreview" src="https://ui-avatars.com/api/?name=Nuevo+Estudiante&background=B8A8FF&color=1E1B4B&bold=true" alt="Vista previa">
-                    <span>El avatar se genera automáticamente a partir del nombre y el nivel de riesgo.</span>
-                </div>
-                <div class="modal-field"><label>NOMBRE COMPLETO</label><input type="text" id="newName" placeholder="Ej. Laura Jiménez Restrepo"></div>
-                <div class="modal-field-row">
-                    <div class="modal-field"><label>GRADO</label><input type="text" id="newGrade" placeholder="Ej. 10°2"></div>
-                    <div class="modal-field"><label>ID ESTUDIANTE</label><input type="text" id="newId" placeholder="Autogenerado"></div>
-                </div>
-                <div class="modal-field">
-                    <label>NIVEL DE RIESGO</label>
-                    <div class="risk-select-group" id="newRiskGroup">
-                        <div class="risk-option selected" data-risk="stable">Estable</div>
-                        <div class="risk-option" data-risk="medium">Medio</div>
-                        <div class="risk-option" data-risk="high">Alto</div>
+                <div id="apPaso1">
+                    <div class="modal-field">
+                        <label>NOMBRE O NÚMERO DE IDENTIFICACIÓN</label>
+                        <div class="ap-search"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="apBuscar" placeholder="Ej. Misael o 5294178" autocomplete="off"></div>
                     </div>
+                    <div class="ap-results" id="apResultados"></div>
                 </div>
-                <div class="modal-field"><label>NOTA EMOCIONAL (OPCIONAL)</label><input type="text" id="newMood" placeholder="Ej. Ánimo estable, buena participación"></div>
-                <p class="modal-error" id="newError"><i class="fa-solid fa-circle-exclamation"></i> Escribe al menos el nombre y el grado.</p>
+                <div id="apPaso2" hidden>
+                    <div class="ap-selected" id="apSeleccionado"></div>
+                    <div class="modal-field"><label>MOTIVO DEL INGRESO</label><textarea id="apMotivo" rows="4" placeholder="Ej. Remisión de coordinación, seguimiento por duelo, solicitud del acudiente..."></textarea></div>
+                </div>
+                <p class="modal-error" id="apError"><i class="fa-solid fa-circle-exclamation"></i> <span></span></p>
             </div>
             <div class="sentir-modal-actions">
-                <button class="modal-btn-cancel" id="newCancel">Cancelar</button>
-                <button class="modal-btn-confirm" id="newConfirm"><i class="fa-solid fa-check"></i> Registrar Estudiante</button>
+                <button class="modal-btn-cancel" id="apCancel">Cancelar</button>
+                <button class="modal-btn-confirm" id="apSiguiente" disabled>Siguiente <i class="fa-solid fa-arrow-right"></i></button>
+                <button class="modal-btn-confirm" id="apGuardar" hidden><i class="fa-solid fa-check"></i> Guardar</button>
             </div>
         `);
 
-        let selectedRisk = 'stable';
-        const nameInput = overlay.querySelector('#newName');
-        const avatarPreview = overlay.querySelector('#newAvatarPreview');
+        const $ = (sel) => overlay.querySelector(sel);
+        const buscar = $('#apBuscar');
+        const resultados = $('#apResultados');
+        const siguiente = $('#apSiguiente');
+        const guardar = $('#apGuardar');
+        const cancelar = $('#apCancel');
+        const caja = $('#apError');
 
-        function refreshPreview() {
-            const name = nameInput.value.trim() || 'Nuevo Estudiante';
-            avatarPreview.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=${RISK_CONFIG[selectedRisk].color}&color=fff&bold=true`;
-        }
-        nameInput.addEventListener('input', refreshPreview);
+        const mostrarError = (texto) => { caja.querySelector('span').innerText = texto; caja.classList.add('show'); };
+        const ocultarError = () => caja.classList.remove('show');
 
-        overlay.querySelectorAll('.risk-option').forEach(opt => {
-            opt.addEventListener('click', () => {
-                overlay.querySelectorAll('.risk-option').forEach(o => o.classList.remove('selected'));
-                opt.classList.add('selected');
-                selectedRisk = opt.dataset.risk;
-                refreshPreview();
-            });
+        // Lista los estudiantes que coinciden con lo que se va escribiendo
+        const pintarResultados = () => {
+            const q = buscar.value.toLowerCase().trim();
+            if (!q) {
+                resultados.innerHTML = '<p class="ap-hint"><i class="fa-solid fa-keyboard"></i> Escribe el nombre o el número de identificación del estudiante.</p>';
+                return;
+            }
+            const coinciden = todos.filter(st => st.name.toLowerCase().includes(q) || String(st.idUsuario).includes(q));
+            if (!coinciden.length) {
+                resultados.innerHTML = '<p class="ap-hint"><i class="fa-solid fa-user-slash"></i> No hay estudiantes que coincidan. Si no está registrado, la secretaría debe registrarlo primero.</p>';
+                return;
+            }
+            resultados.innerHTML = coinciden.map(st => `
+                <button type="button" class="ap-result${st.proceso ? ' disabled' : ''}${elegido && elegido.idUsuario === st.idUsuario ? ' selected' : ''}" data-id="${st.idUsuario}" ${st.proceso ? 'disabled' : ''}>
+                    <img src="${st.avatar}" alt="">
+                    <span class="ap-result-info"><strong>${escaparTexto(st.name)}</strong><small>ID ${st.idUsuario} · Grado ${escaparTexto(st.grade)}</small></span>
+                    ${st.proceso ? '<span class="ap-tag">Ya en proceso</span>' : '<i class="fa-solid fa-circle-check ap-check"></i>'}
+                </button>`).join('');
+        };
+
+        resultados.addEventListener('click', (e) => {
+            const item = e.target.closest('.ap-result');
+            if (!item || item.disabled) return;
+            elegido = todos.find(st => String(st.idUsuario) === item.dataset.id);
+            resultados.querySelectorAll('.ap-result').forEach(r => r.classList.toggle('selected', r === item));
+            siguiente.disabled = false;
+            ocultarError();
+        });
+        resultados.addEventListener('dblclick', (e) => { if (e.target.closest('.ap-result:not(.disabled)')) siguiente.click(); });
+
+        buscar.addEventListener('input', () => { ocultarError(); pintarResultados(); });
+        pintarResultados();
+        setTimeout(() => buscar.focus(), 50);
+
+        const irAPaso = (paso) => {
+            ocultarError();
+            $('#apPaso1').hidden = paso !== 1;
+            $('#apPaso2').hidden = paso !== 2;
+            siguiente.hidden = paso !== 1;
+            guardar.hidden = paso !== 2;
+            cancelar.innerHTML = paso === 1 ? 'Cancelar' : '<i class="fa-solid fa-arrow-left"></i> Atrás';
+            $('#apPasoTexto').innerText = paso === 1
+                ? 'Paso 1 de 2 · Busca al estudiante por su nombre o número de identificación'
+                : 'Paso 2 de 2 · Escribe el motivo del ingreso y guarda';
+            if (paso === 2) {
+                $('#apSeleccionado').innerHTML = `
+                    <img src="${elegido.avatar}" alt="">
+                    <div><strong>${escaparTexto(elegido.name)}</strong><small>ID ${elegido.idUsuario} · Grado ${escaparTexto(elegido.grade)}</small></div>`;
+                setTimeout(() => $('#apMotivo').focus(), 50);
+            }
+        };
+
+        siguiente.addEventListener('click', () => {
+            if (!elegido) return mostrarError('Selecciona un estudiante de la lista.');
+            irAPaso(2);
         });
 
-        overlay.querySelector('#newCancel').addEventListener('click', () => closeSentirModal(overlay));
-        overlay.querySelector('#newConfirm').addEventListener('click', () => {
-            const name = nameInput.value.trim();
-            const grade = overlay.querySelector('#newGrade').value.trim();
-            const errorMsg = overlay.querySelector('#newError');
-            if (!name || !grade) { errorMsg.classList.add('show'); return; }
-            errorMsg.classList.remove('show');
-
-            const idVal = overlay.querySelector('#newId').value.trim() || `#${Math.floor(1000 + Math.random() * 9000)}`;
-            const moodVal = overlay.querySelector('#newMood').value.trim() || (selectedRisk === 'high' ? 'Requiere seguimiento cercano' : selectedRisk === 'medium' ? 'En observación' : 'Ánimo estable');
-            const avatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=${RISK_CONFIG[selectedRisk].color}&color=fff&bold=true`;
-
-            const students = getStudents();
-            const nextCaseNum = students.length + 1;
-            students.unshift({ name, grade, id: idVal, caseNumber: 'CASO-' + String(nextCaseNum).padStart(4, '0'), risk: selectedRisk, mood: selectedRisk === 'high' ? 'sad' : selectedRisk === 'medium' ? 'neutral' : 'happy', moodText: moodVal, avatar });
-            saveStudents(students);
-
+        cancelar.addEventListener('click', () => {
+            if (!$('#apPaso2').hidden) return irAPaso(1);
             closeSentirModal(overlay);
-            renderStudents();
-            showToast({ title: 'Estudiante registrado', message: `${name} ya hace parte del ecosistema Sentir.`, icon: 'fa-user-plus', type: 'success' });
+        });
+
+        $('#apMotivo').addEventListener('input', ocultarError);
+
+        guardar.addEventListener('click', async () => {
+            const motivo = $('#apMotivo').value.trim();
+            if (motivo.length < 5) return mostrarError('Escribe el motivo del ingreso.');
+
+            guardar.disabled = true;
+            guardar.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Guardando…';
+            try {
+                await sentirApi('/procesos', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ idUsuario: elegido.idUsuario, motivo })
+                });
+                closeSentirModal(overlay);
+                showToast({ title: 'Estudiante añadido', message: `${elegido.name} quedó en proceso de terapia.`, icon: 'fa-user-plus', type: 'success' });
+                await cargarDatosReales();
+            } catch (error) {
+                mostrarError(error.message);
+                guardar.disabled = false;
+                guardar.innerHTML = '<i class="fa-solid fa-check"></i> Guardar';
+            }
+        });
+    });
+}
+
+/* =========================================================
+   CERRAR EL PROCESO DE TERAPIA (desde el expediente)
+========================================================= */
+function initCloseProcess() {
+    const boton = document.getElementById('closeProcessBtn');
+    if (!boton) return;
+
+    boton.addEventListener('click', () => {
+        const nombre = document.getElementById('detailPanel').dataset.currentStudent;
+        const estudiante = getStudents().find(st => st.name === nombre);
+        if (!estudiante || !estudiante.proceso) return;
+
+        const overlay = openSentirModal(`
+            <div class="sentir-modal-header">
+                <div class="sentir-modal-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <div><h3>Cerrar proceso de terapia</h3><p>${escaparTexto(nombre)} · Sus alertas abiertas quedarán resueltas</p></div>
+            </div>
+            <div class="sentir-modal-body">
+                <div class="modal-field"><label>OBSERVACIÓN DE CIERRE</label><textarea id="cpObs" rows="3" placeholder="Ej. Objetivos cumplidos, remitido a EPS, cambio de institución..."></textarea></div>
+            </div>
+            <div class="sentir-modal-actions">
+                <button class="modal-btn-cancel" id="cpCancel">Cancelar</button>
+                <button class="modal-btn-confirm" id="cpConfirm"><i class="fa-solid fa-check"></i> Cerrar proceso</button>
+            </div>
+        `);
+
+        overlay.querySelector('#cpCancel').addEventListener('click', () => closeSentirModal(overlay));
+        overlay.querySelector('#cpConfirm').addEventListener('click', async () => {
+            const confirmar = overlay.querySelector('#cpConfirm');
+            confirmar.disabled = true;
+            try {
+                await sentirApi(`/procesos/${estudiante.proceso.id}/cerrar`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ observacion: overlay.querySelector('#cpObs').value.trim() })
+                });
+                closeSentirModal(overlay);
+                closePanel();
+                showToast({ title: 'Proceso cerrado', message: `El proceso de ${nombre} quedó cerrado.`, icon: 'fa-circle-check', type: 'success' });
+                await cargarDatosReales();
+            } catch (error) {
+                showToast({ title: 'No se pudo cerrar', message: error.message, icon: 'fa-circle-exclamation', type: 'urgent' });
+                confirmar.disabled = false;
+            }
         });
     });
 }

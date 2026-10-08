@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../shared/sentir-shared.css">
     <link rel="stylesheet" href="Agenda.css">
+    <link rel="stylesheet" href="../../responsive.css">
 </head>
 <body data-page="agenda">
 
@@ -77,6 +78,34 @@
 
                 <div class="agenda-summary" id="agendaSummary"></div>
 
+                <div class="agenda-tabs" id="agendaTabs" role="tablist" aria-label="Secciones de la agenda">
+                    <button type="button" class="agenda-tab" role="tab" data-tab="disponibilidad"><i class="fa-solid fa-business-time"></i><span>Ver disponibilidad</span><em id="tabCountDispo"></em></button>
+                    <button type="button" class="agenda-tab" role="tab" data-tab="citas"><i class="fa-solid fa-list-check"></i><span>Ver mis citas</span><em id="tabCountCitas"></em></button>
+                    <button type="button" class="agenda-tab" role="tab" data-tab="calendario"><i class="fa-solid fa-calendar-days"></i><span>Ver calendario completo</span></button>
+                </div>
+
+                <section class="availability-card agenda-panel" id="availabilitySection" data-panel="disponibilidad">
+                    <div class="availability-head">
+                        <div>
+                            <h2><i class="fa-solid fa-business-time"></i> Mi disponibilidad</h2>
+                            <p>Horarios de la semana en los que puedes atender. Se guardan en Sentir.</p>
+                        </div>
+                        <div class="availability-actions">
+                            <div class="week-nav">
+                                <button type="button" class="calendar-nav-btn" id="weekPrev" aria-label="Semana anterior"><i class="fa-solid fa-chevron-left"></i></button>
+                                <span id="weekLabel">Semana</span>
+                                <button type="button" class="calendar-nav-btn" id="weekNext" aria-label="Semana siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+                            </div>
+                            <button type="button" class="btn-secondary small-btn" id="weekTodayBtn">Esta semana</button>
+                            <button type="button" class="btn-primary-action" id="createWeekBtn"><i class="fa-solid fa-calendar-plus"></i> Crear disponibilidad</button>
+                        </div>
+                    </div>
+                    <div class="week-grid" id="weekGrid"></div>
+                    <p class="week-total" id="weekTotal"></p>
+                </section>
+
+                <section class="agenda-panel" data-panel="citas">
+                <div class="pending-requests" id="pendingRequests" hidden></div>
                 <div class="agenda-toolbar">
                     <div class="header-search agenda-search">
                         <i class="fa-solid fa-magnifying-glass"></i>
@@ -87,15 +116,18 @@
                             <button class="chip active" data-filter="all">Todas</button>
                             <button class="chip" data-filter="today">Hoy</button>
                             <button class="chip" data-filter="upcoming">Próximas</button>
-                        </div>
-                        <div class="view-toggle" id="agendaViewToggle">
-                            <button class="view-toggle-btn active" data-view="list"><i class="fa-solid fa-list"></i> Lista</button>
-                            <button class="view-toggle-btn" data-view="calendar"><i class="fa-solid fa-calendar-days"></i> Calendario</button>
+                            <button class="chip" data-filter="past">Pasadas</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="calendar-wrapper" id="calendarWrapper" style="display:none;">
+                <div class="date-filter-note" id="dateFilterNote" hidden></div>
+                <div class="agenda-columns" id="agendaColumns"></div>
+                <p class="empty-state-msg" id="agendaEmptyMsg">No tienes citas que coincidan con la búsqueda.</p>
+                </section>
+
+                <section class="agenda-panel" data-panel="calendario">
+                <div class="calendar-wrapper" id="calendarWrapper">
                     <div class="calendar-nav">
                         <button class="calendar-nav-btn" id="calPrevBtn"><i class="fa-solid fa-chevron-left"></i></button>
                         <h3 id="calMonthLabel">Mes</h3>
@@ -107,9 +139,7 @@
                     <div class="calendar-grid" id="calendarGrid"></div>
                     <div class="calendar-legend" id="calendarLegend"></div>
                 </div>
-
-                <div class="agenda-columns" id="agendaColumns"></div>
-                <p class="empty-state-msg" id="agendaEmptyMsg">No tienes citas que coincidan con la búsqueda.</p>
+                </section>
 
             </div>
         </main>
@@ -118,5 +148,6 @@
 
     <script src="../shared/sentir-shared.js"></script>
     <script src="Agenda.js"></script>
+    <script src="Disponibilidad.js"></script>
 </body>
 </html>

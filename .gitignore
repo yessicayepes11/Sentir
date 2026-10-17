@@ -8,3 +8,4 @@ backend/uploads/*
 
 # Lista local de los estudiantes de demostración creados en esta base de datos
 backend/scripts/estudiantesDemo.json
+backend/.env.aiven

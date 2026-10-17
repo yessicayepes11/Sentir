@@ -1,3 +1,4 @@
+import BASE_URL from '../../config/baseUrl.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -60,7 +61,7 @@ function urlValida(valor) {
 function archivoPublico(ruta) {
     const valor = String(ruta || '').trim();
     if (!valor) return '';
-    return valor.startsWith('http') ? valor : `http://localhost:3001${valor}`;
+    return valor.startsWith('http') ? valor : `${BASE_URL}${valor}`;
 }
 
 async function psicologaDeLaSesion(req, res) {

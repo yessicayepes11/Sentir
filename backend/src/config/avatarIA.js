@@ -1,3 +1,4 @@
+import BASE_URL from './baseUrl.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
@@ -63,8 +64,8 @@ export function avatarGuardado(id) {
     if (!archivos.length) return null;
     const archivo = archivos[archivos.length - 1];
     const [, , huella] = archivo.split('.')[0].split('-');
-    const recorte = fs.existsSync(path.join(carpeta, nombreRecorte(archivo))) ? `http://localhost:3001/uploads/avatares/${nombreRecorte(archivo)}` : '';
-    return { archivo, huella, recorte, url: `http://localhost:3001/uploads/avatares/${archivo}` };
+    const recorte = fs.existsSync(path.join(carpeta, nombreRecorte(archivo))) ? `${BASE_URL}/uploads/avatares/${nombreRecorte(archivo)}` : '';
+    return { archivo, huella, recorte, url: `${BASE_URL}/uploads/avatares/${archivo}` };
 }
 
 // Guarda el recorte del avatar ACTUAL del usuario (solo imágenes webp o png de hasta 5 MB)

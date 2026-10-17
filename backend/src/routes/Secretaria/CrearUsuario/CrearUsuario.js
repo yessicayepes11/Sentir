@@ -1,3 +1,4 @@
+import BASE_URL from '../../../config/baseUrl.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
@@ -317,7 +318,7 @@ function toPublicPhotoUrl(photo) {
             ? `/${normalizedPath}`
             : `/uploads/${path.basename(normalizedPath)}`;
 
-    return `http://localhost:3001${uploadPath}`;
+    return `${BASE_URL}${uploadPath}`;
 }
 
 async function getColumnNames() {
@@ -408,7 +409,7 @@ router.get('/listar', async (req, res) => {
             documentType: usuario.documentType || 'Cédula',
             roleId: Number(usuario.roleId),
             committeeMember: Number(usuario.committeeMember) === 1,
-            photo: usuario.foto ? (usuario.foto.startsWith('http') ? usuario.foto : `http://localhost:3001${usuario.foto}`) : '',
+            photo: usuario.foto ? (usuario.foto.startsWith('http') ? usuario.foto : `${BASE_URL}${usuario.foto}`) : '',
             role: usuario.role?.trim() || 'Sin rol',
             grade: usuario.studentGrade || '',
             groupDirector: usuario.directorGrupo === null ? '' : (Number(usuario.directorGrupo) === 1 ? 'Sí' : 'No'),

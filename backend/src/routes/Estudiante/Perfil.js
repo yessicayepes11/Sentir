@@ -1,3 +1,4 @@
+import BASE_URL from '../../config/baseUrl.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -39,7 +40,7 @@ function idDesdeToken(req) {
 function fotoPublica(foto) {
     const valor = String(foto || '').trim();
     if (!valor) return '';
-    return valor.startsWith('http') ? valor : `http://localhost:3001${valor}`;
+    return valor.startsWith('http') ? valor : `${BASE_URL}${valor}`;
 }
 
 function edadDesde(fechaNacimiento) {

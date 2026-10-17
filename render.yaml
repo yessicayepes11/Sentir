@@ -41,6 +41,5 @@ services:
   - type: web
     name: sentir-frontend
     runtime: static
-    rootDir: Client
-    buildCommand: echo "sitio estatico"
-    staticPublishPath: .
+    buildCommand: mkdir -p dist && cp -r Client Shared dist/ && echo '<meta http-equiv="refresh" content="0; url=/Client/index.html">' > dist/index.html
+    staticPublishPath: dist

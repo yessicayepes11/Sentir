@@ -41,6 +41,7 @@ class Server {
     }
 
     routes() {
+        this.app.get('/', (req, res) => res.json({ ok: true, servicio: 'Sentir API' }));
         this.app.use('/api/CrearUsuario', CrearUsuarioRouter);
         this.app.use('/api/InicioSesion', InicioSesionRouter);
         this.app.use('/api/Ayuda', AyudaRouter);

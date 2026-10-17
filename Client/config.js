@@ -2,7 +2,7 @@
 // Si tu servicio en Render tiene otro nombre, cambia PRODUCCION.
 (function () {
     var LOCAL = 'http://localhost:3001';
-    var PRODUCCION = 'https://sentir-backend.onrender.com';
+    var PRODUCCION = 'https://sentir-backend-8ovd.onrender.com';
     var host = window.location.hostname;
     var esLocal = host === 'localhost' || host === '127.0.0.1' || host === '';
     var base = window.SENTIR_API_BASE || (esLocal ? LOCAL : PRODUCCION);

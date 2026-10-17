@@ -42,6 +42,9 @@ class Server {
         // Sirve el frontend desde el mismo servidor
         this.app.use('/Client', express.static(path.join(repoDir, 'Client')));
         this.app.use('/Shared', express.static(path.join(repoDir, 'Shared')));
+        // Algunas páginas usan rutas con el nombre de la carpeta del proyecto (/Sentir/...)
+        this.app.use('/Sentir/Client', express.static(path.join(repoDir, 'Client')));
+        this.app.use('/Sentir/Shared', express.static(path.join(repoDir, 'Shared')));
     }
 
     routes() {

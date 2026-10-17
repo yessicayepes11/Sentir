@@ -4,7 +4,7 @@ services:
     runtime: node
     rootDir: backend
     plan: free
-    buildCommand: npm install -g pnpm && pnpm install
+    buildCommand: npm install
     startCommand: node app.js
     envVars:
       - key: NODE_VERSION

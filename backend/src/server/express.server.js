@@ -18,6 +18,7 @@ import PanelIAPsicologiaRouter from '../routes/Psicologia/PanelIA.js';
 import ActividadesEstudianteRouter from '../routes/Estudiante/Actividades.js';
 import AvatarRouter from '../routes/Avatar/Avatar.js';
 
+const repoDir = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 const uploadsDir = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../uploads');
 
 class Server {
@@ -38,10 +39,13 @@ class Server {
         // en caché y no lo vuelve a descargar en cada página
         this.app.use('/uploads/avatares', express.static(path.join(uploadsDir, 'avatares'), { maxAge: '365d', immutable: true }));
         this.app.use('/uploads', express.static(uploadsDir));
+        // Sirve el frontend desde el mismo servidor
+        this.app.use('/Client', express.static(path.join(repoDir, 'Client')));
+        this.app.use('/Shared', express.static(path.join(repoDir, 'Shared')));
     }
 
     routes() {
-        this.app.get('/', (req, res) => res.json({ ok: true, servicio: 'Sentir API' }));
+        this.app.get('/', (req, res) => res.redirect('/Client/index.html'));
         this.app.use('/api/CrearUsuario', CrearUsuarioRouter);
         this.app.use('/api/InicioSesion', InicioSesionRouter);
         this.app.use('/api/Ayuda', AyudaRouter);

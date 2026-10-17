@@ -37,9 +37,3 @@ services:
         value: openai/gpt-oss-120b
       - key: PSICOLOGIA_CORREOS
         sync: false
-
-  - type: web
-    name: sentir-frontend
-    runtime: static
-    buildCommand: mkdir -p dist && cp -r Client Shared dist/ && echo '<meta http-equiv="refresh" content="0; url=/Client/index.html">' > dist/index.html
-    staticPublishPath: dist

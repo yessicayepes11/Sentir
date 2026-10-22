@@ -4,7 +4,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { connection } from './mysql/dbmysql.js';
-import { respaldarArchivo, borrarRespaldo } from './archivos.js';
+import { respaldarArchivo, borrarRespaldo, asegurarArchivo } from './archivos.js';
 
 // =========================================================
 // AVATAR ANIMADO CON IA (para la portada de Inicio de cada rol)
@@ -90,7 +90,7 @@ async function leerFoto(foto) {
         return { datos: Buffer.from(await r.arrayBuffer()), tipo: (r.headers.get('content-type') || 'image/jpeg').split(';')[0] };
     }
     const ruta = path.join(uploadsDir, path.basename(valor));
-    if (!fs.existsSync(ruta)) throw new Error('la foto no existe en /uploads');
+    if (!(await asegurarArchivo(ruta))) throw new Error('la foto no existe en /uploads');
     const ext = path.extname(ruta).toLowerCase();
     const TIPOS = { '.png': 'image/png', '.webp': 'image/webp', '.avif': 'image/avif' };
     return { datos: fs.readFileSync(ruta), tipo: TIPOS[ext] || 'image/jpeg' };

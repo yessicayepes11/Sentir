@@ -56,6 +56,33 @@ export async function borrarRespaldo(absolutas) {
     }
 }
 
+// Si el archivo no está en el disco pero sí en la base de datos, se vuelve a escribir. Devuelve si existe.
+export async function asegurarArchivo(absoluta) {
+    if (fs.existsSync(absoluta)) return true;
+    if (!absoluta.startsWith(uploadsDir + path.sep)) return false;
+    try {
+        await crearTabla();
+        const [[fila]] = await connection.promise().query('SELECT datos FROM archivo_subido WHERE ruta = ?', [rutaRelativa(absoluta)]);
+        if (!fila) return false;
+        fs.mkdirSync(path.dirname(absoluta), { recursive: true });
+        fs.writeFileSync(absoluta, fila.datos);
+        return true;
+    } catch (error) {
+        console.error('Archivos (recuperar):', error.message);
+        return false;
+    }
+}
+
+// Middleware para /uploads: recupera desde MySQL el archivo pedido antes de que express.static lo busque
+export async function recuperarSubida(req, res, next) {
+    try {
+        await asegurarArchivo(path.join(uploadsDir, ...decodeURIComponent(req.path).split('/').filter(Boolean)));
+    } catch {
+        // ruta mal formada: express.static responde 404
+    }
+    next();
+}
+
 // Middleware global: cuando una petición con archivo (multer) termina bien, el archivo se respalda
 export function respaldarSubidas(req, res, next) {
     res.on('finish', () => {

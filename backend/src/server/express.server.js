@@ -17,7 +17,7 @@ import ActividadesPsicologiaRouter from '../routes/Psicologia/Actividades.js';
 import PanelIAPsicologiaRouter from '../routes/Psicologia/PanelIA.js';
 import ActividadesEstudianteRouter from '../routes/Estudiante/Actividades.js';
 import AvatarRouter from '../routes/Avatar/Avatar.js';
-import { respaldarSubidas } from '../config/archivos.js';
+import { respaldarSubidas, recuperarSubida } from '../config/archivos.js';
 
 const repoDir = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 const uploadsDir = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../uploads');
@@ -40,6 +40,7 @@ class Server {
 
         // Cada avatar tiene un nombre único (cambia cuando se crea uno nuevo): el navegador lo guarda
         // en caché y no lo vuelve a descargar en cada página
+        this.app.use('/uploads', recuperarSubida);
         this.app.use('/uploads/avatares', express.static(path.join(uploadsDir, 'avatares'), { maxAge: '365d', immutable: true }));
         this.app.use('/uploads', express.static(uploadsDir));
         // Sirve el frontend desde el mismo servidor

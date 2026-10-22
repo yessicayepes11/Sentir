@@ -17,6 +17,7 @@ import ActividadesPsicologiaRouter from '../routes/Psicologia/Actividades.js';
 import PanelIAPsicologiaRouter from '../routes/Psicologia/PanelIA.js';
 import ActividadesEstudianteRouter from '../routes/Estudiante/Actividades.js';
 import AvatarRouter from '../routes/Avatar/Avatar.js';
+import { respaldarSubidas } from '../config/archivos.js';
 
 const repoDir = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 const uploadsDir = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../uploads');
@@ -34,6 +35,8 @@ class Server {
         this.app.use(cors());
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
+        // Los archivos subidos también se guardan en MySQL (el disco de Render se borra al reiniciar)
+        this.app.use(respaldarSubidas);
 
         // Cada avatar tiene un nombre único (cambia cuando se crea uno nuevo): el navegador lo guarda
         // en caché y no lo vuelve a descargar en cada página

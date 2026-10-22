@@ -4,6 +4,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { connection } from './mysql/dbmysql.js';
+import { respaldarArchivo, borrarRespaldo } from './archivos.js';
 
 // =========================================================
 // AVATAR ANIMADO CON IA (para la portada de Inicio de cada rol)
@@ -76,6 +77,7 @@ export function guardarRecorte(id, archivo, datos) {
     const esPng = datos.length > 8 && datos.readUInt32BE(0) === 0x89504e47;
     if (!(esWebp || esPng) || datos.length > 5 * 1024 * 1024) return false;
     fs.writeFileSync(path.join(carpeta, nombreRecorte(archivo)), datos);
+    respaldarArchivo(path.join(carpeta, nombreRecorte(archivo)), datos);
     return true;
 }
 
@@ -399,8 +401,11 @@ export function crearAvatar(id, foto, tipoUsuario = 'personal') {
             const hecho = await dibujarDetallado(foto, rasgos, tipoUsuario);
             const nombre = `usuario-${id}-${huellaFoto(foto)}-${Date.now()}.${hecho.ext}`;
             fs.writeFileSync(path.join(carpeta, nombre), hecho.datos);
+            await respaldarArchivo(path.join(carpeta, nombre), hecho.datos);
             // Se borran los anteriores (incluidos los sencillos .svg de la versión anterior)
-            fs.readdirSync(carpeta).filter((f) => (f.startsWith(`usuario-${id}-`) || f.startsWith(`recorte-usuario-${id}-`)) && f !== nombre).forEach((f) => fs.rmSync(path.join(carpeta, f), { force: true }));
+            const viejos = fs.readdirSync(carpeta).filter((f) => (f.startsWith(`usuario-${id}-`) || f.startsWith(`recorte-usuario-${id}-`)) && f !== nombre).map((f) => path.join(carpeta, f));
+            viejos.forEach((f) => fs.rmSync(f, { force: true }));
+            borrarRespaldo(viejos);
             fallos.delete(llave);
             return avatarGuardado(id);
         } catch (error) {

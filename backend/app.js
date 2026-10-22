@@ -4,6 +4,7 @@ import Server from './src/server/express.server.js';
 import { dbConnectMysql } from './src/config/mysql/dbmysql.js';
 import { iniciarRecordatorios } from './src/config/recordatorios.js';
 import { prepararAvataresPersonal } from './src/config/avatarIA.js';
+import { sincronizarArchivos } from './src/config/archivos.js';
 
 
 async function main() {
@@ -11,6 +12,9 @@ async function main() {
         // Conexión a la base de datos
         //await dbConnectMongoose();
         await dbConnectMysql();
+
+        // Fotos, avatares y archivos que el disco perdió (Render) se recuperan desde MySQL
+        await sincronizarArchivos();
 
 
         const server = new Server();
